@@ -1,0 +1,18 @@
+{
+  "AuctionPage": {
+    "Title": "Auctions"
+  },
+  "HomePage": {
+    "HeroTitle": "Bid with Joy, Win with Equity",
+    "BrowseButton": "Browse",
+    "FeaturedAuctions": "Featured Auctions",
+    "DealsOfThisWeek": "Deals of This Week",
+    "OpeningBid": "Current Bid",
+    "UpComingAuctions": "Up Coming Auctions",
+    "ViewProductButton": "View Product",
+    "ViewAllButton": "View All",
+    "Categories": "Categories",
+    "Winners": "Winners",
+    "LatestAuctionWinners": "Latest Auction Winners"
+  }
+}

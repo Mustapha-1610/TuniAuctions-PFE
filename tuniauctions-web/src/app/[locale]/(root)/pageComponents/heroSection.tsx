@@ -1,7 +1,15 @@
+"use client";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
-export default function HeroSection() {
+interface Props {
+  Title: string;
+  BrowseButtonText: string;
+}
+export default function HeroSection({ Title, BrowseButtonText }: Props) {
   const router = useRouter();
+  const t = useTranslations("HomePage");
+
   return (
     <>
       <div className="flex overflow-hidden relative flex-col justify-center items-center self-stretch w-full min-h-[800px] max-md:max-w-full">
@@ -20,14 +28,14 @@ export default function HeroSection() {
               WebkitTextFillColor: "transparent",
             }}
           >
-            Bid with Joy, Win with Equity
+            {Title}
           </div>
 
           <div
             onClick={() => router.push("/auctions")}
             className="flex cursor-pointer gap-2 items-center justify-center  rounded-xl  px-14 py-6 mt-12 text-base font-medium tracking-wide leading-4 text-slate-200 bg-slate-900  max-md:mt-10"
           >
-            <div>Browse</div>
+            <div>{BrowseButtonText}</div>
             <img
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/639fc77328cf500e9ea233d9c3682ae9f503b1720be594ad214343a3b01b007c?apiKey=452d394c7c1e42459c0e2415b6f84ad2&"

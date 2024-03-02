@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { FaEnvelope, FaTimes } from "react-icons/fa";
 
 interface IBid {
   name: string;
@@ -13,6 +14,10 @@ const MyComponent: React.FC = () => {
     { name: "Leslie Alexander", timeAgo: "23 minutes ago", amount: "24.5$" },
     { name: "Jane Cooper", timeAgo: "23 minutes ago", amount: "24.5$" },
   ]);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const handleChatClose = () => {
+    setIsChatOpen(false);
+  };
 
   return (
     <div className="flex mt-12 mb-8  flex-col items-center bg-white px-4 md:px-8 lg:px-12 xl:px-16">
@@ -135,8 +140,127 @@ const MyComponent: React.FC = () => {
           </div>
         </div>
       </div>
+      <div>
+        {/* Your other components... */}
+        <button
+          onClick={() => setIsChatOpen(true)}
+          className="fixed bottom-4 right-4 lg:bottom-6 lg:right-6 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-200"
+        >
+          <FaEnvelope className="text-xl" />
+        </button>
+        {isChatOpen && <ChatBox onClose={handleChatClose} />}
+      </div>
     </div>
   );
 };
 
 export default MyComponent;
+
+interface messageProps {
+  message: string;
+  isUser: boolean;
+}
+function ChatMessage({ message, isUser }: messageProps) {
+  return (
+    <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
+      <div
+        className={`rounded-lg px-4 py-2 m-2 ${
+          isUser ? "bg-blue-500 text-white" : "bg-gray-200 text-black"
+        }`}
+        style={{ maxWidth: "200px", wordWrap: "break-word" }}
+      >
+        {message}
+      </div>
+    </div>
+  );
+}
+
+interface ChatBoxProps {
+  onClose: (open: boolean) => void;
+}
+function ChatBox({ onClose }: ChatBoxProps) {
+  const [messages, setMessages] = useState<any>([]);
+  const [newMessage, setNewMessage] = useState<any>("");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleSend = async () => {
+    const userMessages = newMessage;
+    setNewMessage("");
+    await handleGoogleApiSend(userMessages);
+  };
+
+  const handleGoogleApiSend = async (message: string) => {
+    try {
+      const response = await fetch("/api/googleApi", {
+        method: "POST",
+        body: JSON.stringify({
+          userInput: message,
+        }),
+      });
+      const res = await response.json();
+      if (res.success) {
+        setMessages([
+          ...messages,
+          { message: message, isUser: true },
+          { message: res.success, isUser: false },
+        ]);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return (
+    <div
+      className="fixed bottom-4 right-4 lg:bottom-6 lg:right-6 p-6 bg-white border rounded-xl"
+      style={{
+        height: "55vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-end",
+      }}
+    >
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-lg font-semibold">Chat</h3>
+        <button
+          onClick={() => onClose(true)}
+          className="text-gray-500 hover:text-gray-700"
+        >
+          <FaTimes />
+        </button>
+      </div>
+      <div className="overflow-y-auto flex-grow">
+        {messages.map((message: messageProps, index: number) => (
+          <ChatMessage
+            key={index}
+            message={message.message}
+            isUser={message.isUser}
+          />
+        ))}
+        <div ref={messagesEndRef} />
+      </div>
+      <div className="mt-4 flex items-center">
+        <input
+          type="text"
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+          className="flex-grow border rounded-lg p-2 mr-2"
+        />
+        <button
+          onClick={handleSend}
+          className="bg-blue-500 text-white rounded-lg px-4 py-2"
+        >
+          Send
+        </button>
+      </div>
+    </div>
+  );
+}

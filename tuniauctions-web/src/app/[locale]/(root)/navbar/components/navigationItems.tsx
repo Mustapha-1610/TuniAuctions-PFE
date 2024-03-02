@@ -5,8 +5,11 @@ import { FaHome } from "react-icons/fa";
 import { RiAuctionFill } from "react-icons/ri";
 import { BsPatchQuestionFill } from "react-icons/bs";
 import { FaBuildingCircleExclamation } from "react-icons/fa6";
+import { useLocale } from "next-intl";
+
 export default function NavigationItems() {
   const [activeItem, setActiveItem] = useState("home");
+  const locale = useLocale();
 
   const handleItemClick = (item: any) => {
     setActiveItem(item);
@@ -16,13 +19,8 @@ export default function NavigationItems() {
       <li className="flex items-center">
         {" "}
         <Link
-          className={`text-sm  flex items-center ${
-            activeItem === "home"
-              ? "text-blue-300 font-bold"
-              : "text-gray-400 hover:text-gray-500"
-          }`}
-          href="/"
-          onClick={() => handleItemClick("home")}
+          className={"text-sm  flex items-center text-blue-300 font-bold"}
+          href={"/" + locale}
         >
           <FaHome size={22} className="mr-2" />
           Home
@@ -46,12 +44,8 @@ export default function NavigationItems() {
       </li>
       <li>
         <Link
-          className={`text-sm  flex items-center ${
-            activeItem === "Auctions"
-              ? "text-blue-300 font-bold"
-              : "text-gray-400 hover:text-gray-500"
-          }`}
-          href="/auctions"
+          className={"text-sm  flex items-center text-blue-300 font-bold"}
+          href={"/" + locale + "/auctions"}
           onClick={() => handleItemClick("Auctions")}
         >
           <RiAuctionFill size={22} className="mr-2" />
@@ -76,11 +70,7 @@ export default function NavigationItems() {
       </li>
       <li>
         <Link
-          className={`text-sm  flex items-center ${
-            activeItem === "About Us"
-              ? "text-blue-300 font-bold"
-              : "text-gray-400 hover:text-gray-500"
-          }`}
+          className={"text-sm  flex items-center text-blue-300 font-bold"}
           href="/aboutus"
           onClick={() => handleItemClick("About Us")}
         >
@@ -106,11 +96,7 @@ export default function NavigationItems() {
       </li>
       <li>
         <Link
-          className={`text-sm  flex items-center ${
-            activeItem === "How It Works"
-              ? "text-blue-300 font-bold"
-              : "text-gray-400 hover:text-gray-500"
-          }`}
+          className={"text-sm  flex items-center text-blue-300 font-bold"}
           href="/howitworks"
           onClick={() => handleItemClick("How It Works")}
         >

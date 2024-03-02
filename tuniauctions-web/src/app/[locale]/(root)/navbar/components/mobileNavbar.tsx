@@ -1,15 +1,20 @@
-"use client";
 import Link from "next/link";
-import { useState } from "react";
+import { ChangeEvent } from "react";
 interface ChildProps {
   toggleMenu: () => void;
   setOpenLogin: (open: boolean) => void;
   setOpenSignup: (open: boolean) => void;
+  handleLanguageChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+  locales: string[];
+  currentLocale: string;
 }
 export default function MobileNavbar({
   toggleMenu,
   setOpenLogin,
   setOpenSignup,
+  locales,
+  currentLocale,
+  handleLanguageChange,
 }: ChildProps) {
   return (
     <>
@@ -86,6 +91,17 @@ export default function MobileNavbar({
             >
               Sign Up
             </button>
+            <select
+              onChange={handleLanguageChange}
+              defaultValue={currentLocale}
+              className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
+            >
+              {locales.map((locale) => (
+                <option key={locale} value={locale}>
+                  {locale}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
       </nav>

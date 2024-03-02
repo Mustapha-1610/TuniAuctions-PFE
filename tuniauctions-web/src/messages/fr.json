@@ -1,0 +1,18 @@
+{
+  "AuctionPage": {
+    "Title": "Enchères"
+  },
+  "HomePage": {
+    "HeroTitle": "Enchérir avec joie, Gagner avec équité",
+    "BrowseButton": "Parcourir",
+    "FeaturedAuctions": "Auctions en vedette",
+    "DealsOfThisWeek": "Offres de la semaine",
+    "OpeningBid": "Offre actuelle",
+    "UpComingAuctions": "Prochaines enchères",
+    "ViewProductButton": "Voir le produit",
+    "ViewAllButton": "Voir tout",
+    "Categories": "Catégories",
+    "Winners": "Gagnants",
+    "LatestAuctionWinners": "Derniers gagnants de l'enchère"
+  }
+}

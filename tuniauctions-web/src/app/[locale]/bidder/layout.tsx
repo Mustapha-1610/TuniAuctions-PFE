@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "@/app/globals.css";
-import LandingPageNavbarComponent from "@/app/(root)/navbar/landingpageNavbar";
+import "@/app/[locale]/globals.css";
+import BidderNavbar from "./navbar/bidderNavbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,6 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <>
+      <BidderNavbar />
       <div>{children}</div>
     </>
   );

@@ -1,34 +1,40 @@
 "use client";
-import Link from "next/link";
 import React, { useState } from "react";
-import { FaHome } from "react-icons/fa";
 import NavigationItems from "./components/navigationItems";
 import MobileNavbar from "./components/mobileNavbar";
 import LoginModal from "./components/loginModal";
 import SignupModal from "./components/signupModal";
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+
+import { ChangeEvent } from "react";
+
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState("home");
   const [SignupOpen, setSignupOpen] = useState(false);
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleItemClick = (item: any) => {
-    setActiveItem(item);
-  };
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const currentLocale = pathname.split("/")[1];
+  const locales = ["en", "fr", "ar"]; // replace with your actual locales
+  const router = useRouter();
+  const changeLanguage = (lang: string) => {
+    const parts = pathname.split("/");
+    const restOfPath = parts.slice(2).join("/");
+    router.replace(`/${lang}/${restOfPath}`);
+  };
 
+  const handleLanguageChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    changeLanguage(e.target.value);
+  };
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 px-4 py-4 flex justify-between items-center bg-slate-900 z-50">
-        <a
-          className={`text-3xl font-bold leading-none ${
-            activeItem === "home" ? "text-blue-300" : ""
-          }`}
-          href="#"
-          onClick={() => handleItemClick("home")}
-        >
+        <a className={"text-3xl font-bold leading-none "} href="#">
           <p className="h-10 text-blue-200">Tuni Auctions</p>
         </a>
         <div className="lg:hidden">
@@ -76,6 +82,17 @@ function Navbar() {
         >
           Sign up
         </button>
+        <select
+          onChange={handleLanguageChange}
+          defaultValue={currentLocale}
+          className="hidden ml-2 lg:inline-block py-2 px-2 bg-slate-500  text-sm text-white font-bold rounded-xl transition duration-200"
+        >
+          {locales.map((locale) => (
+            <option key={locale} value={locale}>
+              {locale}
+            </option>
+          ))}
+        </select>
       </nav>
       <div
         className={`navbar-menu fixed top-0 left-0 right-0 overflow-y-auto z-50 ${
@@ -86,6 +103,9 @@ function Navbar() {
           toggleMenu={toggleMenu}
           setOpenLogin={setOpen}
           setOpenSignup={setSignupOpen}
+          locales={locales}
+          currentLocale={currentLocale}
+          handleLanguageChange={handleLanguageChange}
         />
       </div>
     </>

@@ -1,0 +1,18 @@
+{
+  "AuctionPage": {
+    "Title": "المزادات"
+  },
+  "HomePage": {
+    "HeroTitle": "المزايدة بفرح، الفوز بالعدالة",
+    "BrowseButton": "تصفح",
+    "FeaturedAuctions": "المزادات المميزة",
+    "DealsOfThisWeek": "صفقات هذا الأسبوع",
+    "OpeningBid": "العرض الحالي",
+    "UpComingAuctions": "المزادات القادمة",
+    "ViewProductButton": "عرض المنتج",
+    "ViewAllButton": "عرض الكل",
+    "Categories": "الفئات",
+    "Winners": "الفائزين",
+    "LatestAuctionWinners": "أحدث الفائزين في المزاد"
+  }
+}
