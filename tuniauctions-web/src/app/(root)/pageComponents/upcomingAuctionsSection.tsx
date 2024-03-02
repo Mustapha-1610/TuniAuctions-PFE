@@ -9,7 +9,7 @@ export default function UpcomingAuctionsSection() {
         />
         <div className="flex relative flex-col items-center px-16 pb-6  w-full text-center text-white whitespace-nowrap max-w-[1320px] max-md:px-5 max-md:max-w-full">
           <div className="flex flex-col">
-            <div className="text-4xl font-bold">Up Coming Auction's</div>
+            <div className="text-4xl font-bold">Up Coming Auctions</div>
           </div>
         </div>
         <div className="relative w-full max-w-[1320px] max-md:max-w-full">

@@ -55,7 +55,7 @@ export default function LoginModal({ open, setOpen, setSignupOpen }: Props) {
           </div>
           <div className="flex justify-between px-6 py-3 bg-neutral-50 w-full">
             <div className="text-sm text-neutral-600 ">
-              Don't have an account?{" "}
+              Dont have an account?{" "}
               <span className="text-blue-500">
                 <u
                   className="cursor-pointer"
