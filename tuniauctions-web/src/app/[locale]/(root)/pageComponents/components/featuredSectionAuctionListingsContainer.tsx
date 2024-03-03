@@ -8,7 +8,7 @@ export default function FeaturedSectionAuctionListingsContainer({
     <>
       <div className="flex flex-wrap gap-5 justify-center md:flex-col md:gap-0 md:px-3">
         {/* updated width to fit 4 items per row */}
-        <div className="flex flex-col w-1/4 p-4 bg-white rounded-md border border-solid border-zinc-100 md:w-full md:mb-5">
+        <div className="flex flex-col w-1/4 w-full  p-4 bg-white rounded-md border border-solid border-zinc-100 md:w-full md:mb-5">
           {/* Item content */}
           <div className="flex justify-center">
             <img
