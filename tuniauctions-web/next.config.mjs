@@ -7,6 +7,8 @@ const nextConfig = {
       { hostname: "firebasestorage.googleapis.com" },
       { hostname: "cdn.discordapp.com" },
       { hostname: "cdn.builder.io" },
+      { hostname: "cdn.britannica.com" },
+      { hostname: "upload.wikimedia.org" },
     ],
   },
 };

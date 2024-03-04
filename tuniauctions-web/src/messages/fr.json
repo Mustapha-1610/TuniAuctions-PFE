@@ -3,16 +3,33 @@
     "Title": "Enchères"
   },
   "HomePage": {
-    "HeroTitle": "Enchérir avec joie, Gagner avec équité",
+    "HeroTitle": "Enchérir avec Joie, Gagner avec Équité",
     "BrowseButton": "Parcourir",
-    "FeaturedAuctions": "Auctions en vedette",
+    "FeaturedAuctions": "Enchères en vedette",
     "DealsOfThisWeek": "Offres de la semaine",
-    "OpeningBid": "Offre actuelle",
+    "OpeningBid": "Offre de départ",
     "UpComingAuctions": "Prochaines enchères",
     "ViewProductButton": "Voir le produit",
     "ViewAllButton": "Voir tout",
     "Categories": "Catégories",
     "Winners": "Gagnants",
-    "LatestAuctionWinners": "Derniers gagnants de l'enchère"
+    "LatestAuctionWinners": "Derniers gagnants des enchères"
+  },
+  "Seller": {
+    "NavigationSection": {
+      "dashboard": "Tableau de bord",
+      "earnings": "Gains",
+      "auctionListings": "Liste des enchères",
+      "auction'sList": "Liste des enchères",
+      "create": "Créer",
+      "deliveries": "Livraisons",
+      "delivered": "Livré",
+      "pending": "En attente",
+      "transactions": "Transactions",
+      "pricing": "Tarification",
+      "documentation": "Documentation",
+      "help": "Aide",
+      "profile": "profile"
+    }
   }
 }

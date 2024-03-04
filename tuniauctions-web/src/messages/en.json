@@ -14,5 +14,22 @@
     "Categories": "Categories",
     "Winners": "Winners",
     "LatestAuctionWinners": "Latest Auction Winners"
+  },
+  "Seller": {
+    "NavigationSection": {
+      "dashboard": "Dashboard",
+      "earnings": "Earnings",
+      "auctionListings": "Auction Listings",
+      "auction'sList": "Auction's List",
+      "create": "Create",
+      "deliveries": "Deliveries",
+      "delivered": "Delivered",
+      "pending": "Pending",
+      "transactions": "Transactions",
+      "pricing": "Pricing",
+      "documentation": "Documentation",
+      "help": "Help",
+      "profile": "Profile"
+    }
   }
 }

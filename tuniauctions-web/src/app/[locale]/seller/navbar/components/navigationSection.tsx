@@ -1,6 +1,82 @@
+"use client";
+import { useLocale } from "next-intl";
 import Link from "next/link";
+import { useState } from "react";
+import { BiSolidBadgeDollar } from "react-icons/bi";
+import { FaHandHoldingDollar } from "react-icons/fa6";
+import { TbTruckDelivery } from "react-icons/tb";
+import { RiAuctionFill } from "react-icons/ri";
+import {
+  MdFormatListBulleted,
+  MdChecklist,
+  MdDashboardCustomize,
+  MdOutlinePendingActions,
+  MdLanguage,
+} from "react-icons/md";
+import { IoIosCreate } from "react-icons/io";
+import { GrTransaction, GrHelpBook } from "react-icons/gr";
+import { FaFileAlt } from "react-icons/fa";
+import { CgProfile } from "react-icons/cg";
+import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
+interface Props {
+  navigationTranslation: {
+    Dashboard: string;
+    Earnings: string;
+    AuctionListings: string;
+    AuctionsList: string;
+    CreateAuctions: string;
+    Deliveries: string;
+    Delivered: string;
+    Pending: string;
+    Transactions: string;
+    Pricing: string;
+    Documentation: string;
+    Help: string;
+    Profile: string;
+  };
+}
+export default function NavigationSection({ navigationTranslation }: Props) {
+  const [isEarningsDropdownOpen, setIsEarningsDropdownOpen] = useState(false);
+  const [isDeliveriesDropdown, setIsDeliveriesDropdown] = useState(false);
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
 
-export default function NavigationSection() {
+  const locale = useLocale();
+  const locales = [
+    {
+      lang: "en",
+      display: "English",
+      flag: "https://cdn.britannica.com/79/4479-050-6EF87027/flag-Stars-and-Stripes-May-1-1795.jpg",
+    },
+    {
+      lang: "fr",
+      display: "French",
+      flag: "https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/Flag_of_France.svg/800px-Flag_of_France.svg.png",
+    },
+    {
+      lang: "ar",
+      display: "Arabic",
+      flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Flag_of_Saudi_Arabia.svg/2560px-Flag_of_Saudi_Arabia.svg.png",
+    },
+  ]; // replace with your actual locales
+  const toggleEarningsDropdown = () => {
+    setIsEarningsDropdownOpen(!isEarningsDropdownOpen);
+  };
+  const toggleDeliveriesDropdown = () => {
+    setIsDeliveriesDropdown(!isDeliveriesDropdown);
+  };
+  const pathname = usePathname();
+  const currentLocale = pathname.split("/")[1];
+  const router = useRouter();
+  const changeLanguage = (lang: string) => {
+    const parts = pathname.split("/");
+    const restOfPath = parts.slice(2).join("/");
+    router.replace(`/${lang}/${restOfPath}`);
+  };
+
+  const handleLanguageChange = (e: string) => {
+    changeLanguage(e);
+  };
   return (
     <>
       <aside
@@ -13,126 +89,229 @@ export default function NavigationSection() {
             <div className="flex-1 px-3 bg-white divide-y space-y-1">
               <ul className="space-y-2 pb-2">
                 <li>
-                  <form action="#" method="GET" className="lg:hidden">
-                    <label className="sr-only">Search</label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg
-                          className="w-5 h-5 text-gray-500"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-                        </svg>
-                      </div>
-                      <input
-                        type="text"
-                        name="email"
-                        id="mobile-search"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-600 focus:ring-cyan-600 block w-full pl-10 p-2.5"
-                        placeholder="Search"
-                      />
-                    </div>
-                  </form>
+                  <Link
+                    href={"/" + locale + "/seller/dashboard"}
+                    className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
+                  >
+                    <MdDashboardCustomize size={30} />
+                    <span className="ml-3 flex-1 whitespace-nowrap">
+                      {navigationTranslation.Dashboard}
+                    </span>
+                  </Link>
                 </li>
                 <li>
                   <Link
-                    href={"/ar/seller/earnings"}
+                    href={"/" + locale + "/seller/earnings"}
                     className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
                   >
+                    <FaHandHoldingDollar size={32} />
+
+                    <span className="ml-3 flex-1 whitespace-nowrap">
+                      {navigationTranslation.Earnings}
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <a
+                    onClick={toggleEarningsDropdown}
+                    className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
+                  >
+                    <RiAuctionFill size={30} />
+
+                    <span className="ml-3 flex-1 whitespace-nowrap">
+                      {navigationTranslation.AuctionListings}
+                    </span>
                     <svg
-                      className="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
+                      className="w-4 h-4 ml-auto text-gray-500 transform group-hover:-rotate-180 transition duration-150"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"></path>
-                      <path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path>
+                      <path
+                        fillRule="evenodd"
+                        d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"
+                        clipRule="evenodd"
+                      ></path>
                     </svg>
-                    <span className="ml-3 flex-1 whitespace-nowrap">Test</span>
-                    <span className="bg-gray-200 text-gray-800 ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">
-                      Pro
+                  </a>
+                  {isEarningsDropdownOpen && (
+                    <ul className="ml-6 mt-2">
+                      <li>
+                        <Link
+                          href={"/" + locale + "/seller/auctionListings"}
+                          className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
+                        >
+                          <MdFormatListBulleted size={28} />
+
+                          <span className="ml-2">
+                            {navigationTranslation.AuctionsList}
+                          </span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href={"/" + locale + "/seller/createListing"}
+                          className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
+                        >
+                          <IoIosCreate size={32} />
+                          <span className="ml-2">
+                            {navigationTranslation.CreateAuctions}
+                          </span>
+                        </Link>
+                      </li>
+                    </ul>
+                  )}
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    onClick={toggleDeliveriesDropdown}
+                    className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
+                  >
+                    <TbTruckDelivery size={32} />
+
+                    <span className="ml-3 flex-1 whitespace-nowrap">
+                      {navigationTranslation.Deliveries}
+                    </span>
+                    <svg
+                      className="w-4 h-4 ml-auto text-gray-500 transform group-hover:-rotate-180 transition duration-150"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"
+                        clipRule="evenodd"
+                      ></path>
+                    </svg>
+                  </a>
+                  {isDeliveriesDropdown && (
+                    <ul className="ml-6 mt-2">
+                      <li>
+                        <Link
+                          href={"/" + locale + "/seller/pendingDeliveries"}
+                          className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
+                        >
+                          <MdOutlinePendingActions size={32} />
+                          <span className="ml-2">
+                            {navigationTranslation.Pending}
+                          </span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href={"/" + locale + "/seller/pendingDeliveries"}
+                          className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
+                        >
+                          <MdChecklist size={30} />
+                          <span className="ml-2">
+                            {navigationTranslation.Delivered}
+                          </span>
+                        </Link>
+                      </li>
+                    </ul>
+                  )}
+                </li>
+                <li>
+                  <Link
+                    href={"/" + locale + "/seller/transactions"}
+                    className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
+                  >
+                    <GrTransaction size={28} />
+
+                    <span className="ml-3 flex-1 whitespace-nowrap">
+                      {navigationTranslation.Transactions}
                     </span>
                   </Link>
                 </li>
               </ul>
               <div className="space-y-2 pt-2">
-                <a
-                  href="#"
+                <Link
+                  href={"/" + locale + "/seller/profile"}
                   className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
                 >
-                  <svg
-                    className="w-5 h-5 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
-                    aria-hidden="true"
-                    focusable="false"
-                    data-prefix="fas"
-                    data-icon="gem"
-                    role="img"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M378.7 32H133.3L256 182.7L378.7 32zM512 192l-107.4-141.3L289.6 192H512zM107.4 50.67L0 192h222.4L107.4 50.67zM244.3 474.9C247.3 478.2 251.6 480 256 480s8.653-1.828 11.67-5.062L510.6 224H1.365L244.3 474.9z"
-                    ></path>
-                  </svg>
-                  <span className="ml-4">Upgrade to Pro</span>
+                  <CgProfile size={31} />
+
+                  <span className="ml-4"> {navigationTranslation.Profile}</span>
+                </Link>
+                <Link
+                  href={"/" + locale + "/seller/pricing"}
+                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
+                >
+                  <BiSolidBadgeDollar size={32} />
+
+                  <span className="ml-4"> {navigationTranslation.Pricing}</span>
+                </Link>
+                <a
+                  href="#"
+                  target="_blank"
+                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
+                >
+                  <FaFileAlt size={29} />
+
+                  <span className="ml-3">
+                    {" "}
+                    {navigationTranslation.Documentation}
+                  </span>
                 </a>
                 <a
                   href="#"
                   target="_blank"
                   className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
                 >
-                  <svg
-                    className="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
-                    <path
-                      fill-rule="evenodd"
-                      d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
-                      clip-rule="evenodd"
-                    ></path>
-                  </svg>
-                  <span className="ml-3">Documentation</span>
+                  <GrHelpBook size={31} />
+
+                  <span className="ml-3"> {navigationTranslation.Help}</span>
                 </a>
+
                 <a
-                  href="#"
-                  target="_blank"
-                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
+                  onClick={() => {
+                    setIsLanguageDropdownOpen(!isLanguageDropdownOpen);
+                  }}
+                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
                 >
+                  <MdLanguage size={30} />
+
+                  <span className="ml-3 flex-1 whitespace-nowrap">
+                    Languages
+                  </span>
                   <svg
-                    className="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
-                  </svg>
-                  <span className="ml-3">Components</span>
-                </a>
-                <a
-                  href="#"
-                  target="_blank"
-                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
-                >
-                  <svg
-                    className="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
+                    className="w-4 h-4 ml-auto text-gray-500 transform group-hover:-rotate-180 transition duration-150"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      fill-rule="evenodd"
-                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-2 0c0 .993-.241 1.929-.668 2.754l-1.524-1.525a3.997 3.997 0 00.078-2.183l1.562-1.562C15.802 8.249 16 9.1 16 10zm-5.165 3.913l1.58 1.58A5.98 5.98 0 0110 16a5.976 5.976 0 01-2.516-.552l1.562-1.562a4.006 4.006 0 001.789.027zm-4.677-2.796a4.002 4.002 0 01-.041-2.08l-.08.08-1.53-1.533A5.98 5.98 0 004 10c0 .954.223 1.856.619 2.657l1.54-1.54zm1.088-6.45A5.974 5.974 0 0110 4c.954 0 1.856.223 2.657.619l-1.54 1.54a4.002 4.002 0 00-2.346.033L7.246 4.668zM12 10a2 2 0 11-4 0 2 2 0 014 0z"
-                      clip-rule="evenodd"
+                      fillRule="evenodd"
+                      d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"
+                      clipRule="evenodd"
                     ></path>
                   </svg>
-                  <span className="ml-3">Help</span>
                 </a>
+                {isLanguageDropdownOpen && (
+                  <ul className="ml-6 mt-2">
+                    <li>
+                      {locales.map((locale, index: any) => (
+                        <div
+                          className="text-base text-gray-900 font-bold  rounded-lg hover:bg-gray-100 flex items-center p-2 group"
+                          onClick={() => handleLanguageChange(locale.lang)}
+                        >
+                          <div className="ml-2 flex items-center" key={index}>
+                            <Image
+                              src={locale.flag}
+                              alt="countryFlag"
+                              height={10}
+                              width={32}
+                              quality={100} // Set the quality to 100 for best quality
+                            />
+                            <span className="ml-2">{locale.display}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </li>
+                  </ul>
+                )}
               </div>
             </div>
           </div>

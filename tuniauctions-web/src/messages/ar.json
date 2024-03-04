@@ -6,13 +6,30 @@
     "HeroTitle": "المزايدة بفرح، الفوز بالعدالة",
     "BrowseButton": "تصفح",
     "FeaturedAuctions": "المزادات المميزة",
-    "DealsOfThisWeek": "صفقات هذا الأسبوع",
+    "DealsOfThisWeek": "عروض هذا الأسبوع",
     "OpeningBid": "العرض الحالي",
     "UpComingAuctions": "المزادات القادمة",
     "ViewProductButton": "عرض المنتج",
     "ViewAllButton": "عرض الكل",
     "Categories": "الفئات",
     "Winners": "الفائزين",
-    "LatestAuctionWinners": "أحدث الفائزين في المزاد"
+    "LatestAuctionWinners": "آخر الفائزين بالمزادات"
+  },
+  "Seller": {
+    "NavigationSection": {
+      "dashboard": "لوحة القيادة",
+      "earnings": "الأرباح",
+      "auctionListings": "قوائم المزاد",
+      "auction'sList": "قائمة المزاد",
+      "create": "إنشاء",
+      "deliveries": "التسليمات",
+      "delivered": "تم التوصيل",
+      "pending": "قيد الانتظار",
+      "transactions": "المعاملات",
+      "pricing": "التسعير",
+      "documentation": "التوثيق",
+      "help": "المساعدة",
+      "profile": "حساب"
+    }
   }
 }

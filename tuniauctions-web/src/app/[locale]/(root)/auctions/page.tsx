@@ -1,4 +1,3 @@
-"use client";
 import { FaEnvelope } from "react-icons/fa";
 import AuctionListingItems from "./components/auctionListingItems";
 import AuctionListingsTopSection from "./components/auctionListingsTopSection";
@@ -8,7 +7,6 @@ import { useState } from "react";
 
 export default function Auctions() {
   const t = useTranslations("AuctionPage");
-  const [isChatOpen, setIsChatOpen] = useState(false);
 
   return (
     <div className="w-full mb-16 min-h-screen bg-white flex flex-col justify-start items-start">
@@ -24,7 +22,6 @@ export default function Auctions() {
                 <div className="flex flex-col ml-5 w-[77%] max-md:ml-0 max-md:w-full">
                   <div className="flex flex-col grow self-stretch px-4 pb-12 max-w-[1056px] max-md:mt-4 max-md:max-w-full">
                     <AuctionListingsTopSection />
-                    {/* Auction Listings Section */}
                     <AuctionListingItems />
                   </div>
                 </div>
