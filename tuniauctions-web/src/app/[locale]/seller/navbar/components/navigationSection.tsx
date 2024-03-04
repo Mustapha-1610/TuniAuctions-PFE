@@ -294,6 +294,7 @@ export default function NavigationSection({ navigationTranslation }: Props) {
                     <li>
                       {locales.map((locale, index: any) => (
                         <div
+                          key={index}
                           className="text-base text-gray-900 font-bold  rounded-lg hover:bg-gray-100 flex items-center p-2 group"
                           onClick={() => handleLanguageChange(locale.lang)}
                         >
