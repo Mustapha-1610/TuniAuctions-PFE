@@ -104,7 +104,7 @@ const App: React.FC = () => (
                 9,789
               </span>
               <h3 className="text-base text-white font-normal ">
-                Pending Bidder Information's
+                Pending Bidder Informations
               </h3>
             </div>
             <div className="ml-5 w-0 flex items-center justify-end flex-1 ">
