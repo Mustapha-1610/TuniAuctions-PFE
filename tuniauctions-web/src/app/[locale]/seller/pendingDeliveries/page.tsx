@@ -103,7 +103,7 @@ const App: React.FC = () => (
               <div className="max-md:max-w-full">
                 <div className="flex gap-5 max-md:flex-col max-md:gap-0 max-md:">
                   <div className="flex flex-col border-black w-[33%] max-md:ml-0 max-md:w-full">
-                    <div className="flex bg-gray-500 border flex-col grow justify-center self-stretch p-5 mx-auto w-full font-semibold bg-white rounded-lg border-black shadow-sm leading-[150%] text-zinc-800 max-md:mt-6">
+                    <div className="flex bg-gray-600 border flex-col grow justify-center self-stretch p-5 mx-auto w-full font-semibold bg-white rounded-lg border-black shadow-sm leading-[150%]  max-md:mt-6">
                       <div className="flex border-black flex-wrap gap-5 justify-between content-center">
                         <div className="flex flex-col flex-1">
                           <div className="text-white whitespace-nowrap">
@@ -123,7 +123,7 @@ const App: React.FC = () => (
                   </div>
 
                   <div className="flex flex-col border-black w-[33%] max-md:ml-0 max-md:w-full">
-                    <div className="flex border bg-gray-500 flex-col grow justify-center self-stretch p-5 mx-auto w-full font-semibold bg-white rounded-lg border-black shadow-sm leading-[150%] text-zinc-800 max-md:mt-6">
+                    <div className="flex border bg-gray-600 flex-col grow justify-center self-stretch p-5 mx-auto w-full font-semibold bg-white rounded-lg border-black shadow-sm leading-[150%] text-zinc-800 max-md:mt-6">
                       <div className="flex border-black flex-wrap gap-5 justify-between content-center">
                         <div className="flex flex-col flex-1">
                           <div className="text-white whitespace-nowrap">
@@ -143,7 +143,7 @@ const App: React.FC = () => (
                   </div>
 
                   <div className="flex pr-1 flex-col border-black w-[33%] max-md:ml-0 max-md:w-full">
-                    <div className="flex bg-gray-500 border flex-col grow justify-center self-stretch p-5 mx-auto w-full font-semibold bg-white rounded-lg border-black shadow-sm leading-[150%] text-zinc-800 max-md:mt-6">
+                    <div className="flex bg-gray-600 border flex-col grow justify-center self-stretch p-5 mx-auto w-full font-semibold bg-white rounded-lg border-black shadow-sm leading-[150%] text-zinc-800 max-md:mt-6">
                       <div className="flex border-black flex-wrap gap-5 justify-between content-center">
                         <div className="flex flex-col flex-1">
                           <div className="text-white whitespace-nowrap">
