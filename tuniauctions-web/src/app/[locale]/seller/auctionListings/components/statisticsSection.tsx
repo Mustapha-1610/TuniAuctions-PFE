@@ -5,73 +5,47 @@ import { IoMdCreate } from "react-icons/io";
 export default function StatisticsSection() {
   return (
     <>
-      <div className="justify-center max-md:max-w-full">
-        <div className="flex gap-5 max-md:flex-col max-md:gap-0 max-md:">
-          <div className="flex flex-col w-[100%] max-md:ml-0 max-md:w-full">
-            <div className="flex flex-col self-stretch pb-6 max-md:mt-6 max-md:max-w-full">
-              <div className="max-md:max-w-full">
-                <div className="flex gap-5 max-md:flex-col max-md:gap-0 max-md:">
-                  <div className="flex flex-col border-black w-[33%] max-md:ml-0 max-md:w-full">
-                    <div className="flex bg-gray-600 border flex-col grow justify-center self-stretch p-5 mx-auto w-full font-semibold bg-white rounded-lg border-black shadow-sm leading-[150%] text-zinc-800 max-md:mt-6">
-                      <div className="flex border-black flex-wrap gap-5 justify-between content-center">
-                        <div className="flex flex-col flex-1">
-                          <div className="text-white whitespace-nowrap">
-                            Total Created Auctions
-                          </div>
-                          <div className="mt-3 text-white">0</div>
-                          <div className="flex gap-2.5 justify-between py-1 pr-7 mt-3 text-xs text-emerald-400 max-md:pr-5"></div>
-                        </div>
-
-                        <IoMdCreate
-                          color="white"
-                          size={45}
-                          className="my-auto max-w-full aspect-[3.03] w-[120px]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col border-black w-[33%] max-md:ml-0 max-md:w-full">
-                    <div className="flex border bg-gray-600 flex-col grow justify-center self-stretch p-5 mx-auto w-full font-semibold bg-white rounded-lg border-black shadow-sm leading-[150%] text-zinc-800 max-md:mt-6">
-                      <div className="flex border-black flex-wrap gap-5 justify-between content-center">
-                        <div className="flex flex-col flex-1">
-                          <div className="text-white whitespace-nowrap">
-                            Total Views
-                          </div>
-                          <div className="mt-3 text-white">9,789</div>
-                          <div className="flex gap-2.5 justify-between py-1 pr-7 mt-3 text-xs text-emerald-400 max-md:pr-5"></div>
-                        </div>
-
-                        <FaEye
-                          color="white"
-                          size={55}
-                          className="my-auto max-w-full aspect-[3.03] w-[120px]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex pr-1 flex-col border-black w-[33%] max-md:ml-0 max-md:w-full">
-                    <div className="flex bg-gray-600 border flex-col grow justify-center self-stretch p-5 mx-auto w-full font-semibold bg-white rounded-lg border-black shadow-sm leading-[150%] text-zinc-800 max-md:mt-6">
-                      <div className="flex border-black flex-wrap gap-5 justify-between content-center">
-                        <div className="flex flex-col flex-1">
-                          <div className="text-white whitespace-nowrap">
-                            Total Participating Bidders
-                          </div>
-                          <div className="mt-3 text-white">9,789</div>
-                          <div className="flex gap-2.5 justify-between py-1 pr-7 mt-3 text-xs text-emerald-400 max-md:pr-5"></div>
-                        </div>
-
-                        <GiTakeMyMoney
-                          color="white"
-                          size={75}
-                          className="my-auto max-w-full aspect-[3.03] w-[120px]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+      <div className="mb-4 px-2 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div className="bg-gray-600 shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <span className="text-2xl sm:text-3xl leading-none font-bold text-white">
+                8
+              </span>
+              <h3 className="text-base text-white font-normal ">
+                Total Created Auctions
+              </h3>
+            </div>
+            <div className="ml-5 w-0 flex items-center justify-end flex-1 ">
+              <IoMdCreate size={50} color="white" />
+            </div>
+          </div>
+        </div>
+        <div className="bg-gray-600 shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <span className="text-2xl sm:text-3xl leading-none font-bold text-white">
+                2,340
+              </span>
+              <h3 className="text-base text-white font-normal ">Total Views</h3>
+            </div>
+            <div className="ml-5 w-0 flex items-center justify-end flex-1 ">
+              <FaEye size={50} color="white" />
+            </div>
+          </div>
+        </div>
+        <div className="bg-gray-600   shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <span className="text-2xl sm:text-3xl leading-none font-bold text-white">
+                3900
+              </span>
+              <h3 className="text-base text-white font-normal ">
+                Total Participating Bidders
+              </h3>
+            </div>
+            <div className="ml-5 w-0 flex items-center justify-end flex-1">
+              <GiTakeMyMoney size={55} color="white" />
             </div>
           </div>
         </div>

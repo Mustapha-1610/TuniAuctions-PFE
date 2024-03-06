@@ -3,6 +3,9 @@ import React from "react";
 import { Table } from "antd";
 import type { TableColumnsType } from "antd";
 import EarningsDisplay from "./components/earningsDisplay";
+import { IoMdCreate } from "react-icons/io";
+import { FaEye } from "react-icons/fa";
+import { GiTakeMyMoney } from "react-icons/gi";
 interface DataType {
   key: React.Key;
   name: string;
@@ -70,20 +73,10 @@ const App: React.FC = () => (
       <h1 className="text-2xl font-bold mt-8 mb-6">
         <span className="text-green-600">Earnings</span> : 299$
       </h1>
-      <div className="justify-center max-md:max-w-full">
-        <div className="flex gap-5 max-md:flex-col max-md:gap-0 max-md:">
-          <div className="flex flex-col w-[100%] max-md:ml-0 max-md:w-full">
-            <div className="flex flex-col self-stretch pb-6 max-md:mt-6 max-md:max-w-full">
-              <div className="max-md:max-w-full">
-                <div className="flex gap-5 max-md:flex-col max-md:gap-0 max-md:">
-                  <EarningsDisplay Title="Basic" Amount={200} />
-                  <EarningsDisplay Title="Standard" Amount={300} />
-                  <EarningsDisplay Title="Premium" Amount={1000} />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="mb-4 px-2 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        <EarningsDisplay Amount={2} Title="Basic" />
+        <EarningsDisplay Amount={4} Title="Standard" />
+        <EarningsDisplay Amount={5} Title="Premium" />
       </div>
       <Table
         columns={columns}
