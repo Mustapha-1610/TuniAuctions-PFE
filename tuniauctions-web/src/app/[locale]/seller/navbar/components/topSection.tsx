@@ -1,9 +1,6 @@
 "use client";
 import { useSellerNavbarStore } from "@/helpers/store/sellerNavbarState";
-import { usePathname, useRouter } from "next/navigation";
-import { ChangeEvent } from "react";
 import { MdNotifications } from "react-icons/md";
-import { IoIosNotificationsOutline } from "react-icons/io";
 import Link from "next/link";
 export default function TopSellerNavbarSection() {
   const isSideBarOpenTest = useSellerNavbarStore(

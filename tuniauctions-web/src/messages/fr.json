@@ -29,7 +29,8 @@
       "pricing": "Tarification",
       "documentation": "Documentation",
       "help": "Aide",
-      "profile": "profile"
+      "profile": "profile",
+      "logout": "Déconnecter"
     }
   }
 }

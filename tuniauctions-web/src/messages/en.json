@@ -29,7 +29,8 @@
       "pricing": "Pricing",
       "documentation": "Documentation",
       "help": "Help",
-      "profile": "Profile"
+      "profile": "Profile",
+      "logout": "Sign Out"
     }
   }
 }

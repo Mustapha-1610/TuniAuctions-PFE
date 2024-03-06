@@ -29,7 +29,8 @@
       "pricing": "التسعير",
       "documentation": "التوثيق",
       "help": "المساعدة",
-      "profile": "حساب"
+      "profile": "حساب",
+      "logout": "تسجيل الخروج"
     }
   }
 }
