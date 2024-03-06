@@ -19,9 +19,9 @@ export default function LocaleLayout({
   params: { locale: string };
 }) {
   return (
-    <NextIntlClientProvider>
+    <>
       <LandingPageNavbarComponent />
       {children}
-    </NextIntlClientProvider>
+    </>
   );
 }

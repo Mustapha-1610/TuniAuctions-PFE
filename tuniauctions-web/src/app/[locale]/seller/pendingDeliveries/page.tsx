@@ -107,7 +107,7 @@ const App: React.FC = () => (
                       <div className="flex border-black flex-wrap gap-5 justify-between content-center">
                         <div className="flex flex-col flex-1">
                           <div className="text-white whitespace-nowrap">
-                            Pending Bidder Information's
+                            Pending Bidder Informations
                           </div>
                           <div className="mt-3 text-white">9,789$</div>
                           <div className="flex gap-2.5 justify-between py-1 pr-7 mt-3 text-xs text-emerald-400 max-md:pr-5"></div>

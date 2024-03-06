@@ -9,7 +9,7 @@ export default function PackageCountSection() {
             className="w-3/4"
           />
           <div className="pb-8">
-            <h2 className="font-bold pb-4 text-3xl">Standard Listing's</h2>
+            <h2 className="font-bold pb-4 text-3xl">Standard Listings</h2>
             <p className="font-bold text-xl">Count : 0</p>
           </div>
         </div>
@@ -20,7 +20,7 @@ export default function PackageCountSection() {
             className="w-3/4"
           />
           <div className="pb-8">
-            <h2 className="font-bold pb-4 text-3xl">Premium Listing's</h2>
+            <h2 className="font-bold pb-4 text-3xl">Premium Listings</h2>
             <p className="font-bold text-xl">Count : 0</p>
           </div>
         </div>

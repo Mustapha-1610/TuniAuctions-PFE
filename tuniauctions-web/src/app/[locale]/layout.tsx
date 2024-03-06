@@ -20,7 +20,9 @@ export default function LocaleLayout({
 }) {
   return (
     <html lang={locale}>
-      <body>{children}</body>
+      <NextIntlClientProvider>
+        <body>{children}</body>
+      </NextIntlClientProvider>
     </html>
   );
 }

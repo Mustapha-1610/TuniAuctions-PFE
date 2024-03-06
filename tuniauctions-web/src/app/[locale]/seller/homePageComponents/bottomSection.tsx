@@ -5,7 +5,7 @@ export default function BottomSection() {
         <div className="bg-white shadow rounded-lg mb-4 p-4 sm:p-6 h-full">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-bold leading-none text-gray-900">
-              Upcoming Auction's
+              Upcoming Auctions
             </h3>
             <a
               href="#"
@@ -181,7 +181,7 @@ export default function BottomSection() {
                     </p>
                   </div>
                   <div className="inline-flex items-center text-base font-semibold text-gray-900">
-                    Pending Bidder Location Information's
+                    Pending Bidder Location Informations
                   </div>
                 </div>
               </li>
