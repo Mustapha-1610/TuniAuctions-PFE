@@ -71,7 +71,7 @@ export default function NavigationItems() {
       <li>
         <Link
           className={"text-sm  flex items-center text-blue-300 font-bold"}
-          href="/aboutus"
+          href={"/" + locale + "/aboutus"}
           onClick={() => handleItemClick("About Us")}
         >
           <FaBuildingCircleExclamation size={22} className="mr-2" />
@@ -97,7 +97,7 @@ export default function NavigationItems() {
       <li>
         <Link
           className={"text-sm  flex items-center text-blue-300 font-bold"}
-          href="/howitworks"
+          href={"/" + locale + "/howitworks"}
           onClick={() => handleItemClick("How It Works")}
         >
           <BsPatchQuestionFill size={22} className="mr-2" />

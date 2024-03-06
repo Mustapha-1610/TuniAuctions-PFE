@@ -68,7 +68,7 @@ export default function NavigationSection({ navigationTranslation }: Props) {
       <ul className="space-y-2 pb-2">
         <li>
           <Link
-            href={"/" + locale + "/seller/dashboard"}
+            href={"/" + locale + "/seller"}
             className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
           >
             <MdDashboardCustomize size={30} />

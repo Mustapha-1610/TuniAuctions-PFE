@@ -1,4 +1,3 @@
-import { useTranslations } from "next-intl";
 import { create } from "zustand";
 
 export const useSellerNavbarStore = create((set) => ({
