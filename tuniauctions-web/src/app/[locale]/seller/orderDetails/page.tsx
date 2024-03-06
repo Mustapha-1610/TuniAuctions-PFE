@@ -16,7 +16,7 @@ const MyComponent: React.FC = () => {
     <div className="flex ml-2 overflow-hidden bg-white pt-16">
       <div
         id="main-content"
-        className="h-full w-10/12  relative overflow-y-auto lg:ml-64"
+        className="h-full w-11/12  relative overflow-y-auto lg:ml-64"
       >
         <div className="flex flex-col px-9 py-11 bg-white max-md:px-5">
           <div className="max-md:max-w-full">

@@ -18,8 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <SellerNavbar />
-      <div>{children}</div>
+      <NextIntlClientProvider>
+        <SellerNavbar />
+        {children}
+      </NextIntlClientProvider>
     </>
   );
 }

@@ -5,7 +5,7 @@ const CustomForm = () => {
     <div className="flex ml-2 overflow-hidden bg-white pt-16">
       <div
         id="main-content"
-        className="h-full w-10/12  relative overflow-y-auto lg:ml-64"
+        className="h-full w-11/12  relative overflow-y-auto lg:ml-64"
       >
         <h2 className="text-xl font-semibold text-gray-800 mb-6">
           Add New Product

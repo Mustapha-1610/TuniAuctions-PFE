@@ -1,5 +1,5 @@
 "use client";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 interface Props {
@@ -8,8 +8,7 @@ interface Props {
 }
 export default function HeroSection({ Title, BrowseButtonText }: Props) {
   const router = useRouter();
-  const t = useTranslations("HomePage");
-
+  const locale = useLocale();
   return (
     <>
       <div className="flex overflow-hidden relative flex-col justify-center items-center self-stretch w-full min-h-[800px] max-md:max-w-full">
@@ -32,7 +31,7 @@ export default function HeroSection({ Title, BrowseButtonText }: Props) {
           </div>
 
           <div
-            onClick={() => router.push("/auctions")}
+            onClick={() => router.push("/" + locale + "/seller")}
             className="flex cursor-pointer gap-2 items-center justify-center  rounded-xl  px-14 py-6 mt-12 text-base font-medium tracking-wide leading-4 text-slate-200 bg-slate-900  max-md:mt-10"
           >
             <div>{BrowseButtonText}</div>

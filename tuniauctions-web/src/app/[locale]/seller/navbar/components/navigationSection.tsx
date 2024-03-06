@@ -201,7 +201,7 @@ export default function NavigationSection({ navigationTranslation }: Props) {
                       </li>
                       <li>
                         <Link
-                          href={"/" + locale + "/seller/pendingDeliveries"}
+                          href={"/" + locale + "/seller/delivered"}
                           className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
                         >
                           <MdChecklist size={30} />

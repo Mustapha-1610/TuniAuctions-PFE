@@ -19,10 +19,8 @@ export default function LocaleLayout({
   params: { locale: string };
 }) {
   return (
-    <NextIntlClientProvider>
-      <html lang={locale}>
-        <body>{children}</body>
-      </html>
-    </NextIntlClientProvider>
+    <html lang={locale}>
+      <body>{children}</body>
+    </html>
   );
 }

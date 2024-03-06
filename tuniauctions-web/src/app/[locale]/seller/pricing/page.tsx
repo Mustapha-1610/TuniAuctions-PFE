@@ -1,10 +1,15 @@
+import { useLocale } from "next-intl";
+import Link from "next/link";
+
 export default function Pricing() {
+  const locale = useLocale();
+
   return (
     <>
       <div className="flex ml-2 overflow-hidden bg-white pt-16">
         <div
           id="main-content"
-          className="h-full w-10/12  relative overflow-y-auto lg:ml-64"
+          className="h-full w-11/12  relative overflow-y-auto lg:ml-64"
         >
           <div className="flex flex-col items-start px-11  pb-4 bg-white max-md:px-5">
             <div className="text-4xl leading-10 text-slate-900 tracking-[2.4px] max-md:max-w-full">
@@ -12,7 +17,10 @@ export default function Pricing() {
             </div>
 
             <div className="self-center mt-10 w-full max-w-[1340px] max-md:max-w-full">
-              <div className="flex gap-5 max-lg:flex-col max-md:gap-0 max-lg:">
+              <Link
+                href={"/" + locale + "/seller/checkout"}
+                className="flex gap-5 max-lg:flex-col max-md:gap-0 max-lg:"
+              >
                 <div className="flex flex-col w-[33%] max-lg:ml-0 max-lg:w-full">
                   <div className="flex flex-col items-start px-4 py-10 mx-auto w-full text-black whitespace-nowrap bg-white rounded-xl border border-black border-solid shadow-2xl max-md:mt-10">
                     <div className="flex gap-5 justify-between items-start self-center max-w-full w-[269px]">
@@ -130,7 +138,7 @@ export default function Pricing() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
