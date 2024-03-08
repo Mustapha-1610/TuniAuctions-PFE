@@ -30,70 +30,60 @@ export default function MyComponent() {
                   beautiful Super Retina XDR OLED display, available in 6.1-inch
                   and 6.7-inch versions,{" "}
                 </div>
-                <div className="flex flex-col mt-6 max-w-full text-xl bg-white rounded-2xl  w-[620px]">
-                  <div className="flex gap-5 justify-between px-4 py-5  w-full whitespace-nowrap bg-white border border-black border-solid max-md:flex-wrap max-md:max-w-full">
-                    <div className="flex gap-2.5">
-                      <FaMoneyBillWave
-                        className="shrink-0  h-[54px] w-[42px]"
-                        size={20}
-                        color="black"
-                      />
-                      <div className="flex-auto my-auto">Orignal price</div>
-                    </div>
-                    <div className="my-auto text-right">3OO$</div>
+                <div className="flex z-10 flex-col items-center px-7 py-5 mt-6 max-w-full bg-white rounded-3xl border border-black border-solid w-[619px] max-md:px-5">
+                  <div className="flex items-center justify-center px-14 text-5xl font-bold text-center text-black whitespace-nowrap bg-white rounded-full border border-black border-solid h-[156px] stroke-[1px] w-[156px] max-md:px-5 max-md:text-4xl">
+                    4:49
                   </div>
-                  {/* table item */}
-                  <div className="flex gap-5 justify-between px-4 py-5  w-full whitespace-nowrap bg-white border border-black border-solid max-md:flex-wrap max-md:max-w-full">
-                    <div className="flex gap-2.5">
-                      <GiTakeMyMoney
-                        className="shrink-0  h-[54px] w-[42px]"
-                        size={40}
-                        color="black"
-                      />
-                      <div className="flex-auto my-auto">Opening Bid</div>
-                    </div>
-                    <div className="my-auto text-right">20$</div>
+
+                  <div className="flex gap-3 justify-between px-2 py-3 mt-6 text-base font-bold text-center text-black bg-white border border-black border-solid max-md:w-full">
+                    <div>Balance:</div>
+                    <div>$300</div>
                   </div>
-                  {/* table item */}
-                  <div className="flex gap-5 justify-between px-4 py-5  w-full whitespace-nowrap bg-white border border-black border-solid max-md:flex-wrap max-md:max-w-full">
-                    <div className="flex gap-2.5">
-                      <LuCalendarDays
-                        className="shrink-0  h-[54px] w-[42px]"
-                        size={20}
-                        color="black"
-                      />
-                      <div className="flex-auto my-auto">Starting Date</div>
-                    </div>
-                    <div className="my-auto text-right">
-                      10/09/2001 16:08 PM
+
+                  <div className="flex flex-col gap-3 self-stretch mt-8 text-base font-bold text-center text-black max-md:flex-wrap max-md:mt-6 max-md:max-w-full">
+                    <input
+                      type="text"
+                      placeholder="Place Bid"
+                      className="grow justify-center items-center px-16 py-6 bg-zinc-300 rounded-[41px] max-md:px-5 text-center"
+                    />
+
+                    <div className="grow justify-center items-center px-16 py-6 whitespace-nowrap bg-slate-900 w-fit max-md:px-5 text-white">
+                      Submit
                     </div>
                   </div>
-                  {/* table item */}
-                  <div className="flex gap-5 justify-between px-4 py-5  w-full whitespace-nowrap bg-white border border-black border-solid max-md:flex-wrap max-md:max-w-full">
-                    <div className="flex gap-2.5">
-                      <MdOutlineGroups
-                        className="shrink-0  h-[54px] w-[42px]"
-                        size={20}
-                        color="black"
-                      />
-                      <div className="flex-auto my-auto">Participants</div>
-                    </div>
-                    <div className="my-auto text-right">10/100</div>
+
+                  <div className="mt-4 text-base font-bold text-center text-black whitespace-nowrap">
+                    Bidding History
                   </div>
-                  {/* table item */}
-                  <div className="flex gap-5 justify-between px-4 py-5  w-full whitespace-nowrap bg-white border border-black border-solid max-md:flex-wrap max-md:max-w-full">
-                    <div className="flex gap-2.5">
-                      <FaRegCircleCheck
-                        className="shrink-0  h-[54px] w-[42px]"
-                        size={20}
-                        color="black"
-                      />
-                      <div className="flex-auto my-auto">Guarantee</div>
+                  <div className="flex overflow-hidden relative flex-col justify-center self-stretch py-1 border border-black border-solid leading-[150%] min-h-[141px] stroke-[1px] stroke-black max-md:max-w-full">
+                    <div className="flex relative flex-col px-1.5 py-1  max-md:max-w-full">
+                      <div className="flex gap-5 justify-between py-1.5 w-full border border-white border-solid max-md:flex-wrap max-md:max-w-full">
+                        <div className="flex gap-4 text-base font-medium whitespace-nowrap text-neutral-900">
+                          <img
+                            loading="lazy"
+                            srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&"
+                            className="shrink-0 w-14 aspect-square"
+                          />
+                          <div className="my-auto">$1,300</div>
+                        </div>
+                        <div className="flex-auto my-auto text-sm text-slate-500">
+                          12/19/2023, 6:45 PM
+                        </div>
+                      </div>
+                      <div className="flex gap-5 justify-between py-1.5 w-full border border-white border-solid max-md:flex-wrap max-md:max-w-full">
+                        <div className="flex gap-4 text-base font-medium whitespace-nowrap text-neutral-900">
+                          <img
+                            loading="lazy"
+                            srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&"
+                            className="shrink-0 w-14 aspect-square"
+                          />
+                          <div className="my-auto">$1,300</div>
+                        </div>
+                        <div className="flex-auto my-auto text-sm text-slate-500">
+                          12/19/2023, 6:45 PM
+                        </div>
+                      </div>
                     </div>
-                    <div className="my-auto text-right">1 Year</div>
-                  </div>
-                  <div className="z-10 justify-center cursor-pointer items-center px-16 py-9 -mb-1 text-center text-white whitespace-nowrap rounded-none border border-black border-solid bg-gray-700 max-md:px-5 max-md:max-w-full">
-                    Participate
                   </div>
                 </div>
               </div>
