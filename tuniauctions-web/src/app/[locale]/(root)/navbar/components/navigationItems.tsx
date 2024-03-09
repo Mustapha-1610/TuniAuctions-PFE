@@ -19,7 +19,7 @@ export default function NavigationItems() {
       <li className="flex items-center">
         {" "}
         <Link
-          className={"text-sm  flex items-center text-blue-300 font-bold"}
+          className={"text-sm  flex items-center text-black font-bold"}
           href={"/" + locale}
         >
           <FaHome size={22} className="mr-2" />
@@ -44,7 +44,7 @@ export default function NavigationItems() {
       </li>
       <li>
         <Link
-          className={"text-sm  flex items-center text-blue-300 font-bold"}
+          className={"text-sm  flex items-center text-black font-bold"}
           href={"/" + locale + "/auctions"}
           onClick={() => handleItemClick("Auctions")}
         >
@@ -70,7 +70,7 @@ export default function NavigationItems() {
       </li>
       <li>
         <Link
-          className={"text-sm  flex items-center text-blue-300 font-bold"}
+          className={"text-sm  flex items-center text-black font-bold"}
           href={"/" + locale + "/aboutus"}
           onClick={() => handleItemClick("About Us")}
         >
@@ -96,7 +96,7 @@ export default function NavigationItems() {
       </li>
       <li>
         <Link
-          className={"text-sm  flex items-center text-blue-300 font-bold"}
+          className={"text-sm  flex items-center text-black font-bold"}
           href={"/" + locale + "/howitworks"}
           onClick={() => handleItemClick("How It Works")}
         >

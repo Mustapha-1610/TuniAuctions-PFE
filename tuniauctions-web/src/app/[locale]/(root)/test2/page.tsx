@@ -112,8 +112,8 @@ export default function MyComponent() {
                 />
                 <div className="self-stretch px-14 pt-2 pb-3.5 mt-6 text-xl bg-white rounded-lg border border-white border-solid max-md:pr-6 max-md:pl-5 max-md:max-w-full">
                   Save big! Get 20% off everything. Shop now and treat yourself
-                  to the things you love at amazing prices. This offer won't
-                  last long, so don't miss out!
+                  to the things you love at amazing prices. This offer wont last
+                  long, so dont miss out!
                 </div>
               </div>
             </div>
