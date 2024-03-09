@@ -35,7 +35,7 @@ function Navbar() {
     <>
       <nav className="fixed top-0 left-0 right-0 px-4 py-4 flex justify-between items-center bg-neutral-50 z-50">
         <a className={"text-3xl font-bold leading-none "} href="#">
-          <p className="h-10 text-blue-200">Tuni Auctions</p>
+          <p className="h-10 text-black">Tuni Auctions</p>
         </a>
         <div className="lg:hidden">
           <button
