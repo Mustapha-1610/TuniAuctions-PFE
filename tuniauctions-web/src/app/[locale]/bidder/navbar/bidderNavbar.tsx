@@ -6,8 +6,13 @@ import LoginModal from "./components/loginModal";
 import SignupModal from "./components/signupModal";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import { FaRegUser } from "react-icons/fa";
+import { CiLogout } from "react-icons/ci";
 
 import { ChangeEvent } from "react";
+import { MdNotifications } from "react-icons/md";
+import Link from "next/link";
+import Image from "next/image";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,12 +36,18 @@ function Navbar() {
   const handleLanguageChange = (e: ChangeEvent<HTMLSelectElement>) => {
     changeLanguage(e.target.value);
   };
+  const [isNotificationMenuOpen, setIsnotificationMenuOpen] =
+    useState<boolean>(false);
+  const [isBidderProfileOptionsOpen, setIsBidderProfileOptionsOpen] =
+    useState<Boolean>(false);
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 px-4 py-4 flex justify-between items-center bg-neutral-50 z-50">
-        <a className={"text-3xl font-bold leading-none "} href="#">
-          <p className="h-10 text-black">Tuni Auctions</p>
-        </a>
+      <nav className="fixed top-0 left-0 right-0 px-4 py-2  flex justify-between items-center bg-neutral-50 z-50">
+        <div className="flex items-center">
+          <a className={"text-lg font-bold leading-none "} href="#">
+            Tuni-Auctions
+          </a>
+        </div>
         <div className="lg:hidden">
           <button
             className="navbar-burger flex items-center text-blue-600 p-3"
@@ -58,41 +69,91 @@ function Navbar() {
           }`}
         >
           <NavigationItems />
-          <LoginModal
-            open={open}
-            setOpen={setOpen}
-            setSignupOpen={setSignupOpen}
-          />
-          <SignupModal
-            open={SignupOpen}
-            setOpen={setSignupOpen}
-            setLoginOpen={setOpen}
-          />
         </ul>
-        <button
-          className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-300 hover:bg-gray-100 text-sm text-black font-bold  rounded-xl transition duration-200"
-          onClick={() => setOpen(true)}
-        >
-          Sign In
-        </button>
-
-        <button
-          className="hidden lg:inline-block py-2 px-6 bg-slate-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200"
-          onClick={() => setSignupOpen(true)}
-        >
-          Sign up
-        </button>
-        <select
-          onChange={handleLanguageChange}
-          defaultValue={currentLocale}
-          className="hidden ml-2 lg:inline-block py-2 px-2 bg-slate-500  text-sm text-white font-bold rounded-xl transition duration-200"
-        >
-          {locales.map((locale) => (
-            <option key={locale} value={locale}>
-              {locale}
-            </option>
-          ))}
-        </select>
+        <div className="flex items-center space-x-4">
+          {/* Language Select Dropdown */}
+          <select
+            onChange={handleLanguageChange}
+            defaultValue={currentLocale}
+            className="ml-2 lg:inline-block py-2 px-2 bg-slate-500 text-sm text-white font-bold rounded-xl transition duration-200"
+          >
+            {locales.map((locale) => (
+              <option key={locale} value={locale}>
+                {locale}
+              </option>
+            ))}
+          </select>
+          {/* Notifications Bell */}
+          <div className="relative">
+            <div
+              className="cursor-pointer"
+              onClick={() => console.log("Notifications clicked")} // Replace with actual click handler
+            >
+              {/* Unread Notifications Count */}
+              <div className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center">
+                <span className="text-sm font-bold">3</span>
+                {/* Example unread count */}
+              </div>
+              <MdNotifications
+                onClick={() =>
+                  setIsnotificationMenuOpen(!isNotificationMenuOpen)
+                }
+                color="black"
+                size={25}
+              />
+            </div>
+            {isNotificationMenuOpen && (
+              <div className="absolute mt-4 left-3/3 transform -translate-x-2/3 bg-white text-black border border-netral-200 rounded-md shadow-lg max-w-xl z-10">
+                <div className="py-2 px-3 border-b border-gray-300 font-bold">
+                  Notifications
+                </div>
+                <div className="h-80 w-80 overflow-y-auto">
+                  <div className="p-3 hover:bg-gray-100 cursor-pointer flex items-center">
+                    <Image
+                      height={100}
+                      width={100}
+                      data-tooltip-target="tooltip-jese"
+                      className="h-12 w-12 rounded-xl cursor-pointer"
+                      src="https://firebasestorage.googleapis.com/v0/b/tunisianauctionwebapp.appspot.com/o/TuniAuctionsReducedSizeLogo.png?alt=media&token=f087eef1-3a90-4095-99d8-349ebdb6c7aa"
+                      alt="Medium avatar"
+                    />
+                    <div className="ml-2">
+                      <p className="text-sm font-semibold">Test Notification</p>
+                      <p className="text-xs text-gray-500">
+                        {`Sent at: 16/08/2024 01:09`}
+                      </p>{" "}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+          {/* Profile Picture */}
+          <div
+            onClick={() =>
+              setIsBidderProfileOptionsOpen(!isBidderProfileOptionsOpen)
+            }
+          >
+            <img
+              onClick={() => console.log("Profile clicked")} // Replace with actual click handler
+              height="40"
+              width="40"
+              className="h-14 w-14 border border-black object-cover rounded-full cursor-pointer"
+              src="https://as2.ftcdn.net/v2/jpg/04/84/39/57/1000_F_484395747_AVqmqsGnH42LCviLB6G4RaYkgsiDPZHD.jpg" // Replace with actual profile picture source
+              alt="User avatar"
+            />
+            {isBidderProfileOptionsOpen && (
+              <div className="absolute mt-2 left-3/3 transform -translate-x-1/3 bg-white text-black border border-netral-200 rounded-lg shadow-lg max-w-xl z-10">
+                <div className="py-4 px-5 flex flex-rows  font-bold">
+                  Profile <FaRegUser size={19} className="ml-3" />
+                </div>
+                <div className="py-4 px-5 flex flex-rows  font-bold">
+                  Logout <CiLogout size={20} className="ml-2" />
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       </nav>
       <div
         className={`navbar-menu fixed top-0 left-0 right-0 overflow-y-auto z-50 ${
