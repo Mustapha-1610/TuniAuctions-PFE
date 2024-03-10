@@ -1,51 +1,26 @@
-"use client";
-import Image from "next/image";
-import React, { useState } from "react";
-import DetailsContainer from "./components/detailsContainer";
+import * as React from "react";
+import { BsThreeDots } from "react-icons/bs";
+import { RiAuctionLine } from "react-icons/ri";
+import { MdPendingActions } from "react-icons/md";
+import { GrDeliver } from "react-icons/gr";
+import StatisticsAndAdresses from "./components/statisticsAndAdresses";
+import Notifications from "./components/notifications";
+import TopSection from "./components/topSection";
+import Transactions from "./components/transactions";
+import BidderStatisticsAndAdresses from "./components/statisticsAndAdresses";
 
-interface ProfileDetails {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  birthDate: string;
-}
-
-const MyComponent: React.FC = () => {
-  const [profileDetails, setidk] = useState<ProfileDetails>({
-    firstName: "Nick",
-    lastName: "DuBuque",
-    email: "Jayden.Gislason78@gmail.com",
-    phone: "(445) 653-3771 x985",
-    birthDate: "25 Apr, 1996",
-  });
-
+export default function MyComponent() {
   return (
-    <>
-      <div className="p-16 bg-gray-900 cover min-h-screen">
-        <div className="p-8 bg-white shadow mt-20 rounded-xl ">
-          {" "}
-          <div className="grid grid-cols-1 md:grid-cols-3">
-            {" "}
-            <div className="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0"></div>
-            <div className="relative">
-              {" "}
-              <div>
-                <Image
-                  className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500"
-                  alt="test"
-                  src="https://firebasestorage.googleapis.com/v0/b/dar-seranity.appspot.com/o/false1705812777141FzQFNXyWIAsKuau.jpg?alt=media&token=f3a95180-cecb-4dbe-abb5-057cf2cba88f"
-                  height={300}
-                  width={300}
-                />
-              </div>{" "}
-            </div>{" "}
-          </div>{" "}
-          <DetailsContainer />
+    <div className="flex pt-20 flex-col justify-center">
+      <div className="flex justify-center items-center px-16 w-full  max-md:px-5 max-md:max-w-full">
+        <div className="flex flex-col items-end  pl-3.5 w-full border border-white border-solid max-w-[1320px] max-md:max-w-full">
+          {<TopSection />}
+          {<BidderStatisticsAndAdresses />}
+          {<Notifications />}
+          {<Transactions />}
+          <div className="mb-4" />
         </div>
       </div>
-    </>
+    </div>
   );
-};
-
-export default MyComponent;
+}

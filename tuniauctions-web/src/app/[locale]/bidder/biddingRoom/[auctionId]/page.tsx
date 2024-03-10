@@ -1,22 +1,16 @@
 import * as React from "react";
-import HeroSection from "../pageComponents/heroSection";
-import { FaMoneyBillWave } from "react-icons/fa";
-import { GiTakeMyMoney } from "react-icons/gi";
-import { LuCalendarDays } from "react-icons/lu";
-import { MdOutlineGroups } from "react-icons/md";
-import { FaRegCircleCheck } from "react-icons/fa6";
 
 export default function MyComponent() {
   return (
     <>
-      <div className="flex flex-col items-center px-20 pt-7 pb-16 bg-white border border-black border-solid max-md:px-5">
+      <div className="flex flex-col items-center px-20 mt-12 pt-7 pb-16 bg-white border border-black border-solid max-md:px-5">
         <div className="px-14 py-5 w-full bg-white border border-white border-solid max-w-[1540px] max-md:px-5 max-md:max-w-full">
           <div className="flex gap-5 max-md:flex-col max-md:gap-0">
             <div className="flex flex-col w-7/12 max-md:ml-0 max-md:w-full">
               <img
                 loading="lazy"
-                srcSet="https://products.shureweb.eu/shure_product_db/product_main_images/files/c25/16a/40-/original/ce632827adec4e1842caa762f10e643d.webp"
-                className="grow w-fit aspect-[1] max-md:mt-10 max-md:max-w-full"
+                srcSet="https://cdn.discordapp.com/attachments/1130136309671923852/1215778970403082350/IMG_4657.jpg?ex=65fdfd66&is=65eb8866&hm=05fe8e658be1093e2c3a9cf673b34348b1b8f8a3ba45bfbe2230fabb2f332792&"
+                className="grow w-fit object-cover aspect-[1] max-md:mt-10 max-md:max-w-full"
               />
             </div>
             <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
@@ -30,21 +24,21 @@ export default function MyComponent() {
                   beautiful Super Retina XDR OLED display, available in 6.1-inch
                   and 6.7-inch versions,{" "}
                 </div>
-                <div className="flex z-10 flex-col items-center px-7 py-5 mt-6 max-w-full bg-white rounded-3xl border border-black border-solid w-[619px] max-md:px-5">
-                  <div className="flex items-center justify-center px-14 text-5xl font-bold text-center text-black whitespace-nowrap bg-white rounded-full border border-black border-solid h-[156px] stroke-[1px] w-[156px] max-md:px-5 max-md:text-4xl">
+                <div className="flex flex-col mt-6 max-w-full text-xl bg-white rounded-2xl w-[620px]">
+                  <div className="flex items-center justify-center px-14 text-5xl font-bold text-center text-black whitespace-nowrap bg-white rounded-full border border-black border-solid h-[156px] stroke-[1px] w-[156px] max-md:px-5 max-md:text-4xl mx-auto">
                     4:49
                   </div>
 
-                  <div className="flex gap-3 justify-between px-2 py-3 mt-6 text-base font-bold text-center text-black bg-white border border-black border-solid max-md:w-full">
+                  <div className="flex gap-1 px-2 py-3 mt-6 text-base font-bold text-center text-black bg-white  border-solid max-md:w-full">
                     <div>Balance:</div>
                     <div>$300</div>
                   </div>
 
-                  <div className="flex flex-col gap-3 self-stretch mt-8 text-base font-bold text-center text-black max-md:flex-wrap max-md:mt-6 max-md:max-w-full">
+                  <div className="flex flex-col gap-3 self-stretch  text-base font-bold text-center text-black max-md:flex-wrap max-md:mt-6 max-md:max-w-full">
                     <input
                       type="text"
                       placeholder="Place Bid"
-                      className="grow justify-center items-center px-16 py-6 bg-zinc-300 rounded-[41px] max-md:px-5 text-center"
+                      className=" justify-center items-center px-2 py-6 bg-zinc-300 rounded-[41px] max-md:px-5 text-center"
                     />
 
                     <div className="grow justify-center items-center px-16 py-6 whitespace-nowrap bg-slate-900 w-fit max-md:px-5 text-white">

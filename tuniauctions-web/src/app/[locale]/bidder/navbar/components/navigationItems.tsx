@@ -5,6 +5,9 @@ import { FaHome } from "react-icons/fa";
 import { RiAuctionFill } from "react-icons/ri";
 import { BsPatchQuestionFill } from "react-icons/bs";
 import { FaBuildingCircleExclamation } from "react-icons/fa6";
+import { GiWallet } from "react-icons/gi";
+import { MdDashboardCustomize } from "react-icons/md";
+
 import { useLocale } from "next-intl";
 
 export default function NavigationItems() {
@@ -19,10 +22,10 @@ export default function NavigationItems() {
       <li className="flex items-center">
         {" "}
         <Link
-          className={"text-sm  flex items-center text-black font-bold"}
-          href={"/" + locale}
+          className={"text-sm  flex items-center text-white font-bold"}
+          href={"/" + locale + "/bidder"}
         >
-          <FaHome size={22} className="mr-2" />
+          <FaHome size={25} className="mr-2" />
           Home
         </Link>
       </li>
@@ -44,14 +47,15 @@ export default function NavigationItems() {
       </li>
       <li>
         <Link
-          className={"text-sm  flex items-center text-black font-bold"}
-          href={"/" + locale + "/auctions"}
+          className={"text-sm  flex items-center text-white font-bold"}
+          href={"/" + locale + "/bidder/auctions"}
           onClick={() => handleItemClick("Auctions")}
         >
-          <RiAuctionFill size={22} className="mr-2" />
+          <RiAuctionFill size={25} className="mr-2" />
           Auctions
         </Link>
       </li>
+
       <li className="text-gray-300">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -70,12 +74,12 @@ export default function NavigationItems() {
       </li>
       <li>
         <Link
-          className={"text-sm  flex items-center text-black font-bold"}
-          href={"/" + locale + "/aboutus"}
-          onClick={() => handleItemClick("About Us")}
+          className={"text-sm  flex items-center text-white font-bold"}
+          href={"/" + locale + "/bidder/balance"}
+          onClick={() => handleItemClick("How It Works")}
         >
-          <FaBuildingCircleExclamation size={22} className="mr-2" />
-          About Us
+          <GiWallet size={25} className="mr-2" />
+          Balance
         </Link>
       </li>
       <li className="text-gray-300">
@@ -96,11 +100,37 @@ export default function NavigationItems() {
       </li>
       <li>
         <Link
-          className={"text-sm  flex items-center text-black font-bold"}
-          href={"/" + locale + "/howitworks"}
+          className={"text-sm  flex items-center text-white font-bold"}
+          href={"/" + locale + "/bidder/dashboard"}
           onClick={() => handleItemClick("How It Works")}
         >
-          <BsPatchQuestionFill size={22} className="mr-2" />
+          <MdDashboardCustomize size={25} className="mr-2" />
+          Dashboard
+        </Link>
+      </li>
+      <li className="text-gray-300">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          stroke="currentColor"
+          className="w-4 h-4 current-fill"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+          />
+        </svg>
+      </li>
+      <li>
+        <Link
+          className={"text-sm  flex items-center text-white font-bold"}
+          href={"/" + locale + "/bidder/howitworks"}
+          onClick={() => handleItemClick("How It Works")}
+        >
+          <BsPatchQuestionFill size={25} className="mr-2" />
           How It Works
         </Link>
       </li>

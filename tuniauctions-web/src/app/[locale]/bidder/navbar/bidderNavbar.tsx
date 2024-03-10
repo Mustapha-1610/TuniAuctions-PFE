@@ -13,6 +13,9 @@ import { ChangeEvent } from "react";
 import { MdNotifications } from "react-icons/md";
 import Link from "next/link";
 import Image from "next/image";
+import { CgProfile } from "react-icons/cg";
+import { LuUser2 } from "react-icons/lu";
+import { useLocale } from "next-intl";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +24,7 @@ function Navbar() {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+  const locale = useLocale();
 
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -42,9 +46,9 @@ function Navbar() {
     useState<Boolean>(false);
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 px-4 py-2  flex justify-between items-center bg-neutral-50 z-50">
+      <nav className="fixed top-0 left-0 right-0 px-4 py-4  flex justify-between items-center bg-neutral-900 z-50">
         <div className="flex items-center">
-          <a className={"text-lg font-bold leading-none "} href="#">
+          <a className={"text-lg text-white font-bold leading-none "} href="#">
             Tuni-Auctions
           </a>
         </div>
@@ -98,7 +102,7 @@ function Navbar() {
                 onClick={() =>
                   setIsnotificationMenuOpen(!isNotificationMenuOpen)
                 }
-                color="black"
+                color="white"
                 size={25}
               />
             </div>
@@ -134,19 +138,15 @@ function Navbar() {
               setIsBidderProfileOptionsOpen(!isBidderProfileOptionsOpen)
             }
           >
-            <img
-              onClick={() => console.log("Profile clicked")} // Replace with actual click handler
-              height="40"
-              width="40"
-              className="h-14 w-14 border border-black object-cover rounded-full cursor-pointer"
-              src="https://as2.ftcdn.net/v2/jpg/04/84/39/57/1000_F_484395747_AVqmqsGnH42LCviLB6G4RaYkgsiDPZHD.jpg" // Replace with actual profile picture source
-              alt="User avatar"
-            />
+            <LuUser2 size={35} className="  cursor-pointer" color="white" />
             {isBidderProfileOptionsOpen && (
-              <div className="absolute mt-2 left-3/3 transform -translate-x-1/3 bg-white text-black border border-netral-200 rounded-lg shadow-lg max-w-xl z-10">
-                <div className="py-4 px-5 flex flex-rows  font-bold">
+              <div className="absolute mt-2 left-3/3 transform -translate-x-2/3 bg-white text-black border border-netral-200 rounded-lg shadow-lg max-w-xl z-10">
+                <Link
+                  href={"/" + locale + "/bidder/profile"}
+                  className="py-4 px-5 flex flex-rows  font-bold"
+                >
                   Profile <FaRegUser size={19} className="ml-3" />
-                </div>
+                </Link>
                 <div className="py-4 px-5 flex flex-rows  font-bold">
                   Logout <CiLogout size={20} className="ml-2" />
                 </div>

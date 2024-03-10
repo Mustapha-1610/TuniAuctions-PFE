@@ -1,22 +1,30 @@
+"use client";
 import * as React from "react";
-import HeroSection from "../pageComponents/heroSection";
-import { FaMoneyBillWave } from "react-icons/fa";
+import { FaMoneyBillWave, FaTimes } from "react-icons/fa";
 import { GiTakeMyMoney } from "react-icons/gi";
 import { LuCalendarDays } from "react-icons/lu";
 import { MdOutlineGroups } from "react-icons/md";
 import { FaRegCircleCheck } from "react-icons/fa6";
+import { BsChatSquareTextFill } from "react-icons/bs";
+import Link from "next/link";
+import { useLocale } from "next-intl";
 
 export default function MyComponent() {
+  const [isChatOpen, setIsChatOpen] = React.useState(false);
+  const handleChatClose = () => {
+    setIsChatOpen(false);
+  };
+  const locale = useLocale();
   return (
     <>
-      <div className="flex flex-col items-center px-20 pt-7 pb-16 bg-white border border-black border-solid max-md:px-5">
+      <div className="flex flex-col items-center px-20 mt-12 pt-7 pb-16 bg-white border border-black border-solid max-md:px-5">
         <div className="px-14 py-5 w-full bg-white border border-white border-solid max-w-[1540px] max-md:px-5 max-md:max-w-full">
           <div className="flex gap-5 max-md:flex-col max-md:gap-0">
             <div className="flex flex-col w-7/12 max-md:ml-0 max-md:w-full">
               <img
                 loading="lazy"
                 srcSet="https://products.shureweb.eu/shure_product_db/product_main_images/files/c25/16a/40-/original/ce632827adec4e1842caa762f10e643d.webp"
-                className="grow w-fit aspect-[1] max-md:mt-10 max-md:max-w-full"
+                className="grow w-max aspect-[1] max-md:mt-10 max-md:max-w-full"
               />
             </div>
             <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
@@ -92,9 +100,12 @@ export default function MyComponent() {
                     </div>
                     <div className="my-auto text-right">1 Year</div>
                   </div>
-                  <div className="z-10 justify-center cursor-pointer items-center px-16 py-9 -mb-1 text-center text-white whitespace-nowrap rounded-none border border-black border-solid bg-gray-700 max-md:px-5 max-md:max-w-full">
+                  <Link
+                    href={"/" + locale + "/bidder/biddingRoom/test"}
+                    className="z-10 justify-center cursor-pointer items-center px-16 py-9 -mb-1 text-center text-white whitespace-nowrap rounded-none border border-black border-solid bg-gray-700 max-md:px-5 max-md:max-w-full"
+                  >
                     Participate
-                  </div>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -166,6 +177,125 @@ export default function MyComponent() {
           </div>
         </div>
       </div>
+      <div>
+        {/* Your other components... */}
+        <button
+          onClick={() => setIsChatOpen(true)}
+          className="fixed bottom-4 right-4 lg:bottom-6 lg:right-6  font-bold py-2  rounded-full transition duration-200"
+        >
+          <BsChatSquareTextFill size={45} className="text-xl" />
+        </button>
+        {isChatOpen && <ChatBox onClose={handleChatClose} />}
+      </div>
     </>
+  );
+}
+
+interface messageProps {
+  message: string;
+  isUser: boolean;
+}
+function ChatMessage({ message, isUser }: messageProps) {
+  return (
+    <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
+      <div
+        className={`rounded-lg px-4 py-2 m-2 ${
+          isUser ? "bg-blue-500 text-white" : "bg-gray-200 text-black"
+        }`}
+        style={{ maxWidth: "200px", wordWrap: "break-word" }}
+      >
+        {message}
+      </div>
+    </div>
+  );
+}
+
+interface ChatBoxProps {
+  onClose: (open: boolean) => void;
+}
+function ChatBox({ onClose }: ChatBoxProps) {
+  const [messages, setMessages] = React.useState<any>([]);
+  const [newMessage, setNewMessage] = React.useState<any>("");
+  const messagesEndRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleSend = async () => {
+    const userMessages = newMessage;
+    setNewMessage("");
+    await handleGoogleApiSend(userMessages);
+  };
+
+  const handleGoogleApiSend = async (message: string) => {
+    try {
+      const response = await fetch("/api/googleApi", {
+        method: "POST",
+        body: JSON.stringify({
+          userInput: message,
+        }),
+      });
+      const res = await response.json();
+      if (res.success) {
+        setMessages([
+          ...messages,
+          { message: message, isUser: true },
+          { message: res.success, isUser: false },
+        ]);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return (
+    <div
+      className="fixed z-50 bottom-4 right-4 lg:bottom-6 lg:right-6 p-6 bg-gray-800  rounded-xl"
+      style={{
+        height: "55vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-end",
+      }}
+    >
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-lg text-white font-semibold">Chat</h3>
+        <button
+          onClick={() => onClose(true)}
+          className="text-gray-500 hover:text-gray-700"
+        >
+          <FaTimes />
+        </button>
+      </div>
+      <div className="overflow-y-auto flex-grow">
+        {messages.map((message: messageProps, index: number) => (
+          <ChatMessage
+            key={index}
+            message={message.message}
+            isUser={message.isUser}
+          />
+        ))}
+        <div ref={messagesEndRef} />
+      </div>
+      <div className="mt-4 flex items-center">
+        <input
+          type="text"
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+          className="flex-grow border rounded-lg p-2 mr-2"
+        />
+        <button
+          onClick={handleSend}
+          className="bg-blue-500 text-white rounded-lg px-4 py-2"
+        >
+          Send
+        </button>
+      </div>
+    </div>
   );
 }
