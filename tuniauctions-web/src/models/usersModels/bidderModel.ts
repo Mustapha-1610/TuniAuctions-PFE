@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import generalSchema from "./generalUser";
+import { z } from "zod";
 const Schema = mongoose.Schema;
 const bidderSchema = new Schema({
   fullName: {
@@ -75,7 +76,6 @@ const bidderSchema = new Schema({
   ],
 });
 bidderSchema.add(generalSchema);
-
 const bidderModel =
   mongoose.models.bidderModel || mongoose.model("bidderModel", bidderSchema);
 export default bidderModel;

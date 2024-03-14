@@ -1,6 +1,6 @@
 import { connect } from "@/db/dbConfig";
 import {
-  accountExistsError,
+  userInputCausedErrors,
   serverErrorHandler,
   successHandler,
 } from "@/serverHelpers/errorHandler";
@@ -24,18 +24,18 @@ export async function POST(request: NextRequest) {
     const reqBody = await request.json();
     const validatedForm = bidderSignupSchema.safeParse(reqBody);
     if (!validatedForm.success) {
-      return NextResponse.json({ error: "Missing Inputs!" });
+      return NextResponse.json({ error: "Missing inputs!" });
     }
     const { fullname, gender, gmailAccount, email, password } = reqBody;
     let exsistingUser = await sellerModel.findOne({
       email: email.toUpperCase(),
     });
     if (exsistingUser) {
-      return accountExistsError();
+      return userInputCausedErrors("Account exists already!");
     } else {
       exsistingUser = await bidderModel.findOne({ email: email.toUpperCase() });
       if (exsistingUser) {
-        return accountExistsError();
+        return userInputCausedErrors("Account exists already!");
       }
     }
     const verificationCode = crypto.randomUUID();

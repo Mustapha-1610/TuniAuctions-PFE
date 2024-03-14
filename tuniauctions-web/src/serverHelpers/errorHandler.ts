@@ -20,12 +20,12 @@ export function successHandler() {
   });
 }
 
-export function accountExistsError() {
+export function userInputCausedErrors(error: string) {
   return NextResponse.json({
     success: false,
     serverError: false,
     errorCode: null,
-    errorMessage: "Account exists already !",
+    errorMessage: error,
     authError: false,
   });
 }

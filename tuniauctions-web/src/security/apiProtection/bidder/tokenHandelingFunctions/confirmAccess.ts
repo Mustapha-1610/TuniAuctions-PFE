@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-export function refreshBidderAccessToken(
+export default function refreshBidderAccessToken(
   newAccessToken: string,
   response: NextResponse
 ) {
