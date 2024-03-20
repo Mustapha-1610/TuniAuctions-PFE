@@ -9,7 +9,10 @@ import { usePathname } from "next/navigation";
 
 import { ChangeEvent } from "react";
 
-function Navbar() {
+interface Props {
+  test: string;
+}
+function Navbar({ test }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [SignupOpen, setSignupOpen] = useState(false);
 
@@ -33,10 +36,12 @@ function Navbar() {
   };
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 px-4 py-4 flex justify-between items-center bg-neutral-50 z-50">
-        <a className={"text-3xl font-bold leading-none "} href="#">
-          <p className="h-10 text-black">Tuni Auctions</p>
-        </a>
+      <nav className="fixed top-0 left-0 right-0 px-4 py-4  flex justify-between items-center bg-neutral-900 z-50">
+        <div className="flex items-center">
+          <a className={"text-lg text-white font-bold leading-none "} href="#">
+            Tuni-Auctions
+          </a>
+        </div>
         <div className="lg:hidden">
           <button
             className="navbar-burger flex items-center text-blue-600 p-3"
@@ -62,6 +67,7 @@ function Navbar() {
             open={open}
             setOpen={setOpen}
             setSignupOpen={setSignupOpen}
+            translationTest={test}
           />
           <SignupModal
             open={SignupOpen}

@@ -15,12 +15,12 @@ export async function connect() {
       console.log("MongoDB connected successfully");
       connected = true;
     });
-
+    connected = true;
     connection.on("error", (err) => {
       console.log(
         "MongoDB connection error. Please make sure MongoDB is running. " + err
       );
-      process.exit();
+      connected = false;
     });
   } catch (error) {
     console.log("Something went wrong!");

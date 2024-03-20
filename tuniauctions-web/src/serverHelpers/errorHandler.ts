@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 export function serverErrorHandler(error: unknown) {
+  console.log(error);
   return NextResponse.json({
     success: false,
     serverError: true,

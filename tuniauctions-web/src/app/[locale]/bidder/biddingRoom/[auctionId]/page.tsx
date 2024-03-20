@@ -9,7 +9,7 @@ export default function MyComponent() {
             <div className="flex flex-col w-7/12 max-md:ml-0 max-md:w-full">
               <img
                 loading="lazy"
-                srcSet="https://cdn.discordapp.com/attachments/1130136309671923852/1215778970403082350/IMG_4657.jpg?ex=65fdfd66&is=65eb8866&hm=05fe8e658be1093e2c3a9cf673b34348b1b8f8a3ba45bfbe2230fabb2f332792&"
+                srcSet="https://products.shureweb.eu/shure_product_db/product_main_images/files/c25/16a/40-/original/ce632827adec4e1842caa762f10e643d.webp"
                 className="grow w-fit object-cover aspect-[1] max-md:mt-10 max-md:max-w-full"
               />
             </div>

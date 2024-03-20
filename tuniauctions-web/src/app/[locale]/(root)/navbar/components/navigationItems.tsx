@@ -1,28 +1,22 @@
-"use client";
 import Link from "next/link";
-import { useState } from "react";
 import { FaHome } from "react-icons/fa";
 import { RiAuctionFill } from "react-icons/ri";
 import { BsPatchQuestionFill } from "react-icons/bs";
 import { FaBuildingCircleExclamation } from "react-icons/fa6";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function NavigationItems() {
-  const [activeItem, setActiveItem] = useState("home");
   const locale = useLocale();
 
-  const handleItemClick = (item: any) => {
-    setActiveItem(item);
-  };
   return (
     <>
       <li className="flex items-center">
         {" "}
         <Link
-          className={"text-sm  flex items-center text-black font-bold"}
+          className={"text-sm  flex items-center text-white font-bold"}
           href={"/" + locale}
         >
-          <FaHome size={22} className="mr-2" />
+          <FaHome size={22} color="white" className="mr-2" />
           Home
         </Link>
       </li>
@@ -44,9 +38,8 @@ export default function NavigationItems() {
       </li>
       <li>
         <Link
-          className={"text-sm  flex items-center text-black font-bold"}
+          className={"text-sm  flex items-center text-white font-bold"}
           href={"/" + locale + "/auctions"}
-          onClick={() => handleItemClick("Auctions")}
         >
           <RiAuctionFill size={22} className="mr-2" />
           Auctions
@@ -70,9 +63,8 @@ export default function NavigationItems() {
       </li>
       <li>
         <Link
-          className={"text-sm  flex items-center text-black font-bold"}
+          className={"text-sm  flex items-center text-white font-bold"}
           href={"/" + locale + "/aboutus"}
-          onClick={() => handleItemClick("About Us")}
         >
           <FaBuildingCircleExclamation size={22} className="mr-2" />
           About Us
@@ -96,9 +88,8 @@ export default function NavigationItems() {
       </li>
       <li>
         <Link
-          className={"text-sm  flex items-center text-black font-bold"}
+          className={"text-sm  flex items-center text-white font-bold"}
           href={"/" + locale + "/howitworks"}
-          onClick={() => handleItemClick("How It Works")}
         >
           <BsPatchQuestionFill size={22} className="mr-2" />
           How It Works

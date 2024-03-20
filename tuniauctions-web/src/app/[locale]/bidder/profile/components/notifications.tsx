@@ -15,12 +15,10 @@ export default function Notifications() {
             />
             <div className="flex flex-col justify-center my-auto">
               <div className="text-base font-medium text-neutral-900">
-                Recieved A Big Juicy Kiss From A Really Cute Princess Called
-                Melisa
+                Auction room will be starting today at 7:00 pm! enjoy.
               </div>
               <div className="text-sm text-slate-600">
-                Recieved From Adorable Lovely Really Pretty And Funny Melisa, 16
-                Aug, 2002{" "}
+                Recieved From Mustapha Talbi, 16 Aug, 2002{" "}
               </div>
             </div>
           </div>

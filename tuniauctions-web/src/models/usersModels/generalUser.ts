@@ -9,7 +9,6 @@ const generalSchema = new Schema({
   },
   password: {
     type: String,
-    required: true,
   },
   disabled: {
     type: Boolean,

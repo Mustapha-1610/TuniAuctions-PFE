@@ -2,7 +2,6 @@ import { connect } from "@/db/dbConfig";
 import bidderModel from "@/models/usersModels/bidderModel";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-
 import {
   serverErrorHandler,
   userInputCausedErrors,
@@ -12,20 +11,19 @@ import { z } from "zod";
 import sellerModel from "@/models/usersModels/sellerModel";
 import { IBidder } from "@/models/usersModels/types/bidderTypes";
 import { returnBidderFrontData } from "@/frontHelpers/bidder/returnBidderFrontData";
+
 const loginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(3),
-  googleLogin: z.boolean(),
 });
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
     const validateBody = loginSchema.safeParse(reqBody);
     if (validateBody.success) {
-      const { email, password, googleLogin } = reqBody;
-      if (!googleLogin) {
-        return await handeLogin(email, password);
-      }
+      const { email, password } = reqBody;
+      console.log(email, password);
+      return await handeLogin(email, password);
     } else {
       return userInputCausedErrors("Missing inputs or invalid schema");
     }
@@ -51,7 +49,7 @@ async function handeLogin(email: string, password: string) {
         } else {
           if (!existingUser.verified) {
             return userInputCausedErrors("Account pending verification!");
-          } else if (!existingUser.disabled) {
+          } else if (existingUser.disabled) {
             return userInputCausedErrors("Account disabled by admins!");
           } else {
             const bidderFrontData = returnBidderFrontData(existingUser);
@@ -98,7 +96,7 @@ async function handeLogin(email: string, password: string) {
         } else {
           if (!existingUser.verified) {
             return userInputCausedErrors("Account pending verification!");
-          } else if (!existingUser.disabled) {
+          } else if (existingUser.disabled) {
             return userInputCausedErrors("Account disabled by admins!");
           } else {
             const bidderFrontData = returnBidderFrontData(existingUser);

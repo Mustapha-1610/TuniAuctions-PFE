@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "@/app/[locale]/globals.css";
 import LandingPageNavbarComponent from "@/app/[locale]/(root)/navbar/landingpageNavbar";
 import { NextIntlClientProvider } from "next-intl";
+import NavbarComponent from "./navbar/_page";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,7 @@ export default function LocaleLayout({
 }) {
   return (
     <>
-      <LandingPageNavbarComponent />
+      <NavbarComponent />
       {children}
     </>
   );

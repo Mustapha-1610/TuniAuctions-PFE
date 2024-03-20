@@ -1,6 +1,9 @@
+import { useTranslations } from "next-intl";
 import React from "react";
 
 export default function HowItWorks() {
+  const t = useTranslations("HomePage");
+
   return (
     <div className="min-h-screen bg-white mt-20 py-10 font-sans">
       <div className="max-w-4xl mx-auto text-center">
