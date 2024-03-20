@@ -5,30 +5,33 @@ import { Modal } from "antd";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import { IoIosWarning } from "react-icons/io";
-
 import { resDataType } from "@/serverHelpers/types";
 import {
   bidderSignupSchema,
   bidderSignupSchemaType,
 } from "@/zodTypes/bidder/signup";
+import { useBidderNavbarState } from "@/helpers/store/bidder/bidderNavbarState";
 
-interface Props {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-  setLoginOpen: (openLogin: boolean) => void;
-}
-export default function SignupModal({ open, setOpen, setLoginOpen }: Props) {
+export default function SignupModal() {
   const [formType, setFormType] = useState("bidder");
-
+  const isSignupModalOpen = useBidderNavbarState(
+    (state: any) => state.isSignupModalOpen
+  );
+  const setSignupModalState = useBidderNavbarState(
+    (state: any) => state.setSignupModalState
+  );
+  const setLoginModalState = useBidderNavbarState(
+    (state: any) => state.setLoginModalState
+  );
   return (
     <>
       <Modal
         title=""
         centered
-        open={open}
+        open={isSignupModalOpen}
         width={600}
         footer={null}
-        onCancel={() => setOpen(false)}
+        onCancel={setSignupModalState}
       >
         <div className="flex flex-col bg-white">
           <div className="flex flex-col items-center justify-center flex-grow">
@@ -68,7 +71,11 @@ export default function SignupModal({ open, setOpen, setLoginOpen }: Props) {
               <div className=" text-sm text-gray-500">
                 Have an account?
                 <span className="text-blue-500 cursor-pointer">
-                  <u onClick={() => (setOpen(false), setLoginOpen(true))}>
+                  <u
+                    onClick={() => (
+                      setSignupModalState(), setLoginModalState()
+                    )}
+                  >
                     Sign in
                   </u>
                 </span>

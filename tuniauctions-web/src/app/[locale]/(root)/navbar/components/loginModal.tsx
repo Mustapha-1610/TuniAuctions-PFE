@@ -7,22 +7,12 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { resDataType } from "@/serverHelpers/types";
 import { IoIosWarning } from "react-icons/io";
-interface Props {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-  setSignupOpen: (openSignup: boolean) => void;
-  translationTest: string;
-}
+import { useBidderNavbarState } from "@/helpers/store/bidder/bidderNavbarState";
 
-export default function LoginModal({
-  open,
-  setOpen,
-  setSignupOpen,
-  translationTest,
-}: Props) {
+export default function LoginModal() {
   const loginSchema = z.object({
     email: z.string().email(),
-    password: z.string().min(6, translationTest),
+    password: z.string().min(6, "test for now till we implement translation"),
   });
   type formfields = z.infer<typeof loginSchema>;
   const {
@@ -55,15 +45,24 @@ export default function LoginModal({
       console.log(err);
     }
   };
+  const isLoginModalopen = useBidderNavbarState(
+    (state: any) => state.isLoginModalOpen
+  );
+  const setSignupModalState = useBidderNavbarState(
+    (state: any) => state.setSignupModalState
+  );
+  const setLoginModalState = useBidderNavbarState(
+    (state: any) => state.setLoginModalState
+  );
   return (
     <>
       <Modal
         title=""
         centered
-        open={open}
+        open={isLoginModalopen}
         width={600}
         footer={null}
-        onCancel={() => setOpen(false)}
+        onCancel={setLoginModalState}
       >
         <div className="flex flex-col">
           <div className="text-center font-bold text-lg">Sign In</div>
@@ -119,7 +118,7 @@ export default function LoginModal({
               <span className="text-blue-500">
                 <u
                   className="cursor-pointer"
-                  onClick={() => (setOpen(false), setSignupOpen(true))}
+                  onClick={() => (setLoginModalState(), setSignupModalState())}
                 >
                   Sign up
                 </u>

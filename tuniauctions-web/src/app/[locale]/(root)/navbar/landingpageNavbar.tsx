@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 
 import { ChangeEvent } from "react";
+import { useBidderNavbarState } from "@/helpers/store/bidder/bidderNavbarState";
 
 interface Props {
   test: string;
@@ -34,6 +35,12 @@ function Navbar({ test }: Props) {
   const handleLanguageChange = (e: ChangeEvent<HTMLSelectElement>) => {
     changeLanguage(e.target.value);
   };
+  const setSignupModalState = useBidderNavbarState(
+    (state: any) => state.setSignupModalState
+  );
+  const setLoginModalState = useBidderNavbarState(
+    (state: any) => state.setLoginModalState
+  );
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 px-4 py-4  flex justify-between items-center bg-neutral-900 z-50">
@@ -63,28 +70,19 @@ function Navbar({ test }: Props) {
           }`}
         >
           <NavigationItems />
-          <LoginModal
-            open={open}
-            setOpen={setOpen}
-            setSignupOpen={setSignupOpen}
-            translationTest={test}
-          />
-          <SignupModal
-            open={SignupOpen}
-            setOpen={setSignupOpen}
-            setLoginOpen={setOpen}
-          />
+          <LoginModal />
+          <SignupModal />
         </ul>
         <button
           className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-300 hover:bg-gray-100 text-sm text-black font-bold  rounded-xl transition duration-200"
-          onClick={() => setOpen(true)}
+          onClick={setLoginModalState}
         >
           Sign In
         </button>
 
         <button
           className="hidden lg:inline-block py-2 px-6 bg-slate-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200"
-          onClick={() => setSignupOpen(true)}
+          onClick={setSignupModalState}
         >
           Sign up
         </button>
