@@ -18,6 +18,7 @@
     "@types/nodemailer": "^6.4.14",
     "antd": "^5.14.2",
     "bcryptjs": "^2.4.3",
+    "firebase": "^10.9.0",
     "jsonwebtoken": "^9.0.2",
     "mongob": "^1.0.0",
     "mongoose-tsgen": "^9.2.10",

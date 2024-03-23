@@ -4,8 +4,7 @@ import {
   serverErrorHandler,
   successHandler,
 } from "@/serverHelpers/errorHandler";
-import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
+import { NextRequest } from "next/server";
 import bcrypt from "bcryptjs";
 import bidderModel from "@/models/usersModels/bidderModel";
 import sellerModel from "@/models/usersModels/sellerModel";
@@ -17,7 +16,7 @@ export async function POST(request: NextRequest) {
     const reqBody = await request.json();
     const validatedForm = bidderSignupSchema.safeParse(reqBody);
     if (!validatedForm.success) {
-      return NextResponse.json({ error: "Missing inputs!" });
+      return userInputCausedErrors("missingInputs");
     }
     const { fullName, gender, email, password } = reqBody;
     await connect();
@@ -25,11 +24,11 @@ export async function POST(request: NextRequest) {
       email: email.toUpperCase(),
     });
     if (exsistingUser) {
-      return userInputCausedErrors("Account exists already!");
+      return userInputCausedErrors("accountExists");
     } else {
       exsistingUser = await bidderModel.findOne({ email: email.toUpperCase() });
       if (exsistingUser) {
-        return userInputCausedErrors("Account exists already!");
+        return userInputCausedErrors("accountExists");
       }
     }
     const verificationCode = crypto.randomUUID();

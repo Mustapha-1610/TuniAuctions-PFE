@@ -1,6 +1,14 @@
 import { create } from "zustand";
 
-export const useBidderNavbarState = create((set) => ({
+interface BidderNavbarState {
+  isLoginModalOpen: boolean;
+  isSignupModalOpen: boolean;
+  isGenderSignupFormModalOpen: boolean;
+  setLoginModalState: () => void;
+  setSignupModalState: () => void;
+  setGenderSignupFormModalState: () => void;
+}
+export const useBidderNavbarState = create<BidderNavbarState>((set) => ({
   isLoginModalOpen: false,
   isSignupModalOpen: false,
   isGenderSignupFormModalOpen: false,
@@ -12,9 +20,4 @@ export const useBidderNavbarState = create((set) => ({
     set((state: any) => ({
       isGenderSignupFormModalOpen: !state.isGenderSignupFormModalOpen,
     })),
-  isSideBarOpen: false,
-  increasePopulation: () => set((state: any) => ({ bears: state.bears! })),
-  removeAllBears: () => set({ bears: 0 }),
-  changeSideBarState: () =>
-    set((state: any) => ({ isSideBarOpen: !state.isSideBarOpen })),
 }));

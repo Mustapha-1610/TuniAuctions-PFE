@@ -11,6 +11,11 @@ import { z } from "zod";
 import sellerModel from "@/models/usersModels/sellerModel";
 import { IBidder } from "@/models/usersModels/types/bidderTypes";
 import { returnBidderFrontData } from "@/frontHelpers/bidder/returnBidderFrontData";
+import {
+  ISeller,
+  ISellerFrontData,
+} from "@/models/usersModels/types/sellerTypes";
+import { returnSellerFrontData } from "@/frontHelpers/seller/returnSellerFrontData";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -22,10 +27,9 @@ export async function POST(request: NextRequest) {
     const validateBody = loginSchema.safeParse(reqBody);
     if (validateBody.success) {
       const { email, password } = reqBody;
-      console.log(email, password);
       return await handeLogin(email, password);
     } else {
-      return userInputCausedErrors("Missing inputs or invalid schema");
+      return userInputCausedErrors("missingInputs");
     }
   } catch (err) {
     return serverErrorHandler(err);
@@ -40,17 +44,15 @@ async function handeLogin(email: string, password: string) {
     });
     if (existingUser) {
       if (existingUser.gmailAccount) {
-        return userInputCausedErrors(
-          "Account only accessible through gmail login!"
-        );
+        return userInputCausedErrors("gmailAccount");
       } else {
         if (!bcrypt.compareSync(password, existingUser.password)) {
-          return userInputCausedErrors("Wrong mail or password!");
+          return userInputCausedErrors("wrongInputs");
         } else {
           if (!existingUser.verified) {
-            return userInputCausedErrors("Account pending verification!");
+            return userInputCausedErrors("unverifiedAccount");
           } else if (existingUser.disabled) {
-            return userInputCausedErrors("Account disabled by admins!");
+            return userInputCausedErrors("disabledAccount");
           } else {
             const bidderFrontData = returnBidderFrontData(existingUser);
 
@@ -89,43 +91,47 @@ async function handeLogin(email: string, password: string) {
         }
       }
     } else {
-      existingUser = await sellerModel.findOne({ email: email.toUpperCase() });
-      if (existingUser) {
-        if (!bcrypt.compareSync(password, existingUser.password)) {
-          return userInputCausedErrors("Wrong mail or password!");
+      let existingSeller: ISeller | null = await sellerModel.findOne({
+        email: email.toUpperCase(),
+      });
+      console.log(email);
+      if (existingSeller) {
+        if (!bcrypt.compareSync(password, existingSeller.password)) {
+          return userInputCausedErrors("wrongInputs");
         } else {
-          if (!existingUser.verified) {
-            return userInputCausedErrors("Account pending verification!");
-          } else if (existingUser.disabled) {
-            return userInputCausedErrors("Account disabled by admins!");
+          if (!existingSeller.verified) {
+            return userInputCausedErrors("unverifiedAccount");
+          } else if (existingSeller.disabled) {
+            return userInputCausedErrors("disabledAccount");
           } else {
-            const bidderFrontData = returnBidderFrontData(existingUser);
+            const sellerFrontData: ISellerFrontData =
+              returnSellerFrontData(existingSeller);
             const response = NextResponse.json({
               success: true,
-              bidderFrontData,
+              sellerFrontData,
             });
             const accessToken = jwt.sign(
-              { bidder_id: existingUser._id },
+              { seller_id: existingSeller._id },
               process.env.ACCESS_TOKEN_SECRET!,
               {
                 expiresIn: "10m",
               }
             );
             const refreshToken = jwt.sign(
-              { bidder_id: existingUser._id },
+              { seller_id: existingSeller._id },
               process.env.REFRESH_TOKEN_SECRET!,
               {
                 expiresIn: "1y",
               }
             );
-            existingUser.refreshToken = refreshToken;
-            await existingUser.save();
-            response.cookies.set("accessBidderToken", accessToken, {
+            existingSeller.refreshToken = refreshToken;
+            await existingSeller.save();
+            response.cookies.set("accessSellerToken", accessToken, {
               httpOnly: true,
               sameSite: "none",
               secure: true,
             });
-            response.cookies.set("refreshBidderToken", refreshToken, {
+            response.cookies.set("refreshSellerToken", refreshToken, {
               httpOnly: true,
               sameSite: "none",
               secure: true,
@@ -134,7 +140,7 @@ async function handeLogin(email: string, password: string) {
           }
         }
       } else {
-        return userInputCausedErrors("Wrong mail or password!");
+        return userInputCausedErrors("wrongInputs");
       }
     }
   } catch (err) {

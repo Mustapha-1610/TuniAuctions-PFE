@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const sellerSchema = new Schema({
   name: {
     type: String,
+    required: true,
   },
   description: {
     type: String,
@@ -11,11 +12,9 @@ const sellerSchema = new Schema({
   },
   businessPicture: {
     type: String,
-    required: true,
   },
   coverPicture: {
     type: String,
-    required: true,
   },
   registrationLicense: {
     type: String,

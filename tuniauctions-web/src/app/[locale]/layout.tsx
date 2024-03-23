@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/app/[locale]/globals.css";
 import useMessage from "antd/es/message/useMessage";
-import { NextIntlClientProvider } from "next-intl";
+import { NextIntlClientProvider, useMessages } from "next-intl";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,10 +18,14 @@ export default function LocaleLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
+  const messages = useMessages();
+
   return (
     <html lang={locale}>
       <body>
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          {children}
+        </NextIntlClientProvider>
       </body>
     </html>
   );

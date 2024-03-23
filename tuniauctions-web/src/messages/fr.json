@@ -29,8 +29,81 @@
       "pricing": "Tarification",
       "documentation": "Documentation",
       "help": "Aide",
-      "profile": "profile",
-      "logout": "Déconnecter"
+      "profile": "Profil",
+      "logout": "Déconnexion"
+    }
+  },
+  "errors": {
+    "authErros": {
+      "accountExists": "Le compte existe déjà !",
+      "missingInputs": "Entrées manquantes !",
+      "disabledAccount": "Compte désactivé par les administrateurs",
+      "unverifiedAccount": "Compte en attente de vérification !",
+      "gmailAccount": "Compte uniquement accessible via la connexion Gmail !",
+      "wrongInputs": "Adresse e-mail ou mot de passe incorrect !",
+      "sellerGmailLogin": "Compte vendeur uniquement accessible via la connexion régulière !"
+    }
+  },
+  "loginModal": {
+    "signin": "Se connecter",
+    "signup": "S'inscrire",
+    "submit": "Soumettre",
+    "loading": "Chargement ...",
+    "or": "OU",
+    "dontHaveAnAccount": "Vous n'avez pas de compte ?",
+    "forgotPassword": "Mot de passe oublié ?",
+    "email": "Adresse e-mail",
+    "password": "Mot de passe",
+    "zodErrors": {
+      "email": "E-mail invalide !",
+      "password": "Le mot de passe doit contenir entre 6 et 40 caractères !"
+    }
+  },
+  "signupModal": {
+    "bidderText": "Enchérisseur",
+    "sellerText": "Vendeur",
+    "signupText": "S'inscrire",
+    "signinText": "Se connecter",
+    "haveAnAccount": "Vous avez déjà un compte ?",
+    "bidder": {
+      "success": "Nous avons bien reçu votre demande de création de compte. Veuillez noter que votre compte est actuellement en cours de vérification par nos administrateurs pour garantir l'exactitude des informations fournies. Vous recevrez un e-mail avec plus de détails une fois la vérification terminée. Merci pour votre patience et votre compréhension.",
+      "fullName": "Prénom",
+      "email": "E-mail",
+      "password": "Mot de passe",
+      "gender": "Genre",
+      "male": "Homme",
+      "female": "Femme",
+      "terms": "J'accepte les conditions d'utilisation et la politique de confidentialité.",
+      "submit": "Soumettre",
+      "loading": "Chargement ...",
+      "zodErrors": {
+        "fullName": "Le prénom doit contenir entre 6 et 35 caractères !",
+        "email": "E-mail invalide !",
+        "password": "Le mot de passe doit contenir entre 6 et 40 caractères !",
+        "gender": "Vous devez choisir entre masculin ou féminin !"
+      }
+    },
+    "seller": {
+      "success": "Nous avons bien reçu votre demande de création de compte. Veuillez noter que votre compte est actuellement en cours de vérification par nos administrateurs pour garantir l'exactitude des informations fournies. Vous recevrez un e-mail avec plus de détails une fois la vérification terminée. Merci pour votre patience et votre compréhension.",
+      "name": "Nom de l'entreprise",
+      "email": "E-mail",
+      "password": "Mot de passe",
+      "description": "Description",
+      "registrationLicense": "Télécharger la licence d'enregistrement",
+      "street": "Rue",
+      "apply": "Appliquer",
+      "terms": "J'accepte les conditions d'utilisation et la politique de confidentialité.",
+      "loading": "Chargement ...",
+      "zodErrors": {
+        "name": "Le nom de l'entreprise doit contenir entre 3 et 30 caractères !",
+        "email": "E-mail invalide !",
+        "password": "Le mot de passe doit contenir entre 6 et 40 caractères !",
+        "description": "La description de l'entreprise doit comporter plus de 20 caractères !",
+        "registrationLicense": "La licence d'enregistrement est requise pour la demande de compte vendeur !",
+        "street": "Vous devez fournir le nom de la rue !",
+        "city": "Les informations sur la ville sont requises !",
+        "municipality": "Les informations sur la municipalité sont requises !"
+      }
     }
   }
 }

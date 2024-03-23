@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavigationItems from "./components/navigationItems";
 import MobileNavbar from "./components/mobileNavbar";
 import LoginModal from "./components/loginModal";
@@ -9,22 +9,17 @@ import { usePathname } from "next/navigation";
 
 import { ChangeEvent } from "react";
 import { useBidderNavbarState } from "@/helpers/store/bidder/bidderNavbarState";
+import GoogleGenderSignupModal from "./components/googleSignupModal";
 
-interface Props {
-  test: string;
-}
-function Navbar({ test }: Props) {
+function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [SignupOpen, setSignupOpen] = useState(false);
-
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const currentLocale = pathname.split("/")[1];
-  const locales = ["en", "fr", "ar"]; // replace with your actual locales
+  const locales = ["en", "fr", "ar"];
   const router = useRouter();
   const changeLanguage = (lang: string) => {
     const parts = pathname.split("/");
@@ -35,12 +30,8 @@ function Navbar({ test }: Props) {
   const handleLanguageChange = (e: ChangeEvent<HTMLSelectElement>) => {
     changeLanguage(e.target.value);
   };
-  const setSignupModalState = useBidderNavbarState(
-    (state: any) => state.setSignupModalState
-  );
-  const setLoginModalState = useBidderNavbarState(
-    (state: any) => state.setLoginModalState
-  );
+
+  const { setSignupModalState, setLoginModalState } = useBidderNavbarState();
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 px-4 py-4  flex justify-between items-center bg-neutral-900 z-50">
@@ -105,8 +96,8 @@ function Navbar({ test }: Props) {
       >
         <MobileNavbar
           toggleMenu={toggleMenu}
-          setOpenLogin={setOpen}
-          setOpenSignup={setSignupOpen}
+          setOpenLogin={setLoginModalState}
+          setOpenSignup={setSignupModalState}
           locales={locales}
           currentLocale={currentLocale}
           handleLanguageChange={handleLanguageChange}

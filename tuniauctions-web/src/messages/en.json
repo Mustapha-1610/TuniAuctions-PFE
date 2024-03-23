@@ -32,5 +32,79 @@
       "profile": "Profile",
       "logout": "Sign Out"
     }
+  },
+  "errors": {
+    "authErros": {
+      "accountExists": "Account exists allready!",
+      "missingInputs": "Missing inputs!",
+      "disabledAccount": "Account disabled by admins",
+      "unverifiedAccount": "Account pending verification!",
+      "gmailAccount": "Account only accessible through gmail login!",
+      "wrongInputs": "Wrong mail or password!",
+      "sellerGmailLogin": "Seller account only accessible through regular login!"
+    }
+  },
+  "loginModal": {
+    "signin": "Sign in",
+    "signup": "Sign up",
+    "submit": "Submit",
+    "loading": "Loading ...",
+    "or": "OR",
+    "dontHaveAnAccount": "Dont have an account?",
+    "forgotPassword": "Forget password?",
+    "email": "Email Adress",
+    "password": "Password",
+    "zodErrors": {
+      "email": "Invalid Email!",
+      "password": "Password must be between 6 and 40 charecters!"
+    }
+  },
+  "signupModal": {
+    "bidderText": "Bidder",
+    "sellerText": "Seller",
+    "signupText": "Sign up",
+    "signinText": "Sign in",
+    "haveAnAccount": "Have an account?",
+    "bidder": {
+      "success": "We have received your request to create a new account. Please note that your account is currently under verification by our administrators to ensure the accuracy of the information provided. You will receive an email with further details once the verification process is complete. Thank you for your patience and understanding.",
+
+      "fullName": "Firt name",
+      "email": "Email",
+      "password": "Password",
+      "gender": "Gender",
+      "male": "Male",
+      "female": "Female",
+      "terms": "I agree to the Terms of Service and Privacy Policy.",
+      "submit": "Submit",
+      "loading": "Loading ...",
+      "zodErrors": {
+        "fullName": "Full Name must be between 6 and 35 charecters!",
+        "email": "Invalid email!",
+        "password": "Password must be between 6 and 40 charecters!",
+        "gender": "You must choose male or female!"
+      }
+    },
+    "seller": {
+      "success": "We have received your request to create a new account. Please note that your account is currently under verification by our administrators to ensure the accuracy of the information provided. You will receive an email with further details once the verification process is complete. Thank you for your patience and understanding.",
+      "name": "Business Name",
+      "email": "Email",
+      "password": "Password",
+      "description": "Description",
+      "registrationLicense": "Upload Registration License",
+      "street": "Street",
+      "apply": "Apply",
+      "terms": "I agree to the Terms of Service and Privacy Policy.",
+      "loading": "Loading ...",
+      "zodErrors": {
+        "name": "Business Name must be between 3 and 30 charecters!",
+        "email": "Invalid email!",
+        "password": "Password must be between 6 and 40 charecters!",
+        "description": "Business description must be higher then 20 charecters!",
+        "registrationLicense": "Registration license is required for seller account application!",
+        "street": "You must provide street name!",
+        "city": "City information is required!",
+        "municipality": "Municipality information is required!"
+      }
+    }
   }
 }

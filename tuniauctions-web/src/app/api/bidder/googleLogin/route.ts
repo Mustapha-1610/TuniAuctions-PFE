@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     });
     if (existingBidder) {
       if (existingBidder.disabled) {
-        return userInputCausedErrors("Account disabled by admins!");
+        return userInputCausedErrors("accountExists");
       } else {
         const bidderFrontData = returnBidderFrontData(existingBidder);
 
@@ -65,14 +65,12 @@ export async function POST(request: NextRequest) {
         email: bidderCredentials.email.toUpperCase(),
       });
       if (existingBidder) {
-        return userInputCausedErrors(
-          "Seller account only accessible through regular login!"
-        );
+        return userInputCausedErrors("sellerGmailLogin");
       } else {
         return userInputCausedErrors("redirectSignup");
       }
     }
   } else {
-    return userInputCausedErrors("Missing inputs or invalid schema");
+    return userInputCausedErrors("missingInputs");
   }
 }

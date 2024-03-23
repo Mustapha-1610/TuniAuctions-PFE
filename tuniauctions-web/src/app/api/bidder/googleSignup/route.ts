@@ -8,7 +8,10 @@ import { z } from "zod";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { returnBidderFrontData } from "@/frontHelpers/bidder/returnBidderFrontData";
 import bidderModel from "@/models/usersModels/bidderModel";
-import { IBidder } from "@/models/usersModels/types/bidderTypes";
+import {
+  IBidder,
+  IBidderFrontData,
+} from "@/models/usersModels/types/bidderTypes";
 import sellerModel from "@/models/usersModels/sellerModel";
 
 const bidderGoogleSignupSchema = z.object({
@@ -48,7 +51,8 @@ export async function POST(request: NextRequest) {
         verified: true,
         gmailAccount: true,
       });
-      const bidderFrontData = returnBidderFrontData(newBidder);
+      const bidderFrontData: IBidderFrontData =
+        returnBidderFrontData(newBidder);
       const response = NextResponse.json({
         success: true,
         bidderFrontData,

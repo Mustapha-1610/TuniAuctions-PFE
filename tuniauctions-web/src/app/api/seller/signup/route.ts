@@ -1,28 +1,17 @@
 import { connect } from "@/db/dbConfig";
 import sellerModel from "@/models/usersModels/sellerModel";
-import {
-  ISeller,
-  ISellerFrontData,
-} from "@/models/usersModels/types/sellerTypes";
+import { ISeller } from "@/models/usersModels/types/sellerTypes";
 import {
   serverErrorHandler,
   userInputCausedErrors,
 } from "@/serverHelpers/errorHandler";
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
 import bcrypt from "bcryptjs";
 import { sendSellerAccountReviewMail } from "@/emails/seller/sellerMailLogic";
-import { returnSellerFrontData } from "@/frontHelpers/seller/returnSellerFrontData";
-const sellerSignupSchema = z.object({
-  name: z.string(),
-  email: z.string().email(),
-  password: z.string().min(3),
-  description: z.string().min(30),
-  registrationLicense: z.string(),
-  city: z.string(),
-  municipality: z.string(),
-  street: z.string(),
-});
+import { IBidder } from "@/models/usersModels/types/bidderTypes";
+import bidderModel from "@/models/usersModels/bidderModel";
+import { sellerSignupSchema } from "@/zodTypes/seller/signup";
+
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
@@ -43,25 +32,33 @@ export async function POST(request: NextRequest) {
         email: email.toUpperCase(),
       });
       if (seller) {
-        return userInputCausedErrors("userExists");
+        return userInputCausedErrors("accountExists");
       } else {
-        const newSeller: ISeller = await sellerModel.create({
+        const bidder: IBidder | null = await bidderModel.findOne({
+          email: email.toUpperCase(),
+        });
+        if (bidder) {
+          return userInputCausedErrors("accountExists");
+        }
+        const socketId = crypto.randomUUID();
+        await sellerModel.create({
           name,
-          email,
+          email: email.toUpperCase(),
           password: bcrypt.hashSync(password),
           description,
           registrationLicense,
-          city,
-          municipality,
-          street,
+          location: {
+            city,
+            municipality,
+            street,
+          },
+          socketId,
         });
-        await sendSellerAccountReviewMail(name)!;
-        const sellerFrontData: ISellerFrontData =
-          returnSellerFrontData(newSeller);
-        return NextResponse.json({ success: true, sellerFrontData });
+        await sendSellerAccountReviewMail(name);
+        return NextResponse.json({ success: true });
       }
     } else {
-      return userInputCausedErrors("invalidSchema");
+      return userInputCausedErrors("missingInputs");
     }
   } catch (err) {
     return serverErrorHandler(err);
