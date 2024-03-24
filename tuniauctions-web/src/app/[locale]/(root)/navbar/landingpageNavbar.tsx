@@ -8,8 +8,7 @@ import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 
 import { ChangeEvent } from "react";
-import { useBidderNavbarState } from "@/helpers/store/bidder/bidderNavbarState";
-import GoogleGenderSignupModal from "./components/googleSignupModal";
+import { useNavbarState } from "@/helpers/store/general/navbarState";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,7 +30,7 @@ function Navbar() {
     changeLanguage(e.target.value);
   };
 
-  const { setSignupModalState, setLoginModalState } = useBidderNavbarState();
+  const { setSignupModalState, setLoginModalState } = useNavbarState();
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 px-4 py-4  flex justify-between items-center bg-neutral-900 z-50">

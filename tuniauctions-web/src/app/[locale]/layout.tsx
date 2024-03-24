@@ -22,11 +22,9 @@ export default function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
-        </NextIntlClientProvider>
-      </body>
+      <NextIntlClientProvider locale={locale} messages={messages}>
+        <body>{children}</body>
+      </NextIntlClientProvider>
     </html>
   );
 }

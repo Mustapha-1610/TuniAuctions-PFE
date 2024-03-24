@@ -1,23 +1,30 @@
 import { create } from "zustand";
 
-interface BidderNavbarState {
+interface navbarState {
   isLoginModalOpen: boolean;
   isSignupModalOpen: boolean;
+  isForgotPasswordModalOpen: boolean;
   isGenderSignupFormModalOpen: boolean;
   setLoginModalState: () => void;
   setSignupModalState: () => void;
   setGenderSignupFormModalState: () => void;
+  setIsForgotPasswordModalState: () => void;
 }
-export const useBidderNavbarState = create<BidderNavbarState>((set) => ({
+export const useNavbarState = create<navbarState>((set) => ({
   isLoginModalOpen: false,
   isSignupModalOpen: false,
   isGenderSignupFormModalOpen: false,
+  isForgotPasswordModalOpen: false,
   setLoginModalState: () =>
-    set((state: any) => ({ isLoginModalOpen: !state.isLoginModalOpen })),
+    set((state) => ({ isLoginModalOpen: !state.isLoginModalOpen })),
   setSignupModalState: () =>
-    set((state: any) => ({ isSignupModalOpen: !state.isSignupModalOpen })),
+    set((state) => ({ isSignupModalOpen: !state.isSignupModalOpen })),
   setGenderSignupFormModalState: () =>
-    set((state: any) => ({
+    set((state) => ({
       isGenderSignupFormModalOpen: !state.isGenderSignupFormModalOpen,
+    })),
+  setIsForgotPasswordModalState: () =>
+    set((state) => ({
+      isForgotPasswordModalOpen: !state.isForgotPasswordModalOpen,
     })),
 }));

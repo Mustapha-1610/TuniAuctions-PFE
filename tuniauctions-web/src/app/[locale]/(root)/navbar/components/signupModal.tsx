@@ -3,16 +3,15 @@
 import { Modal } from "antd";
 import { useState } from "react";
 
-import { useBidderNavbarState } from "@/helpers/store/bidder/bidderNavbarState";
-
 import SellerSignupForm from "./components/sellerSignupModal";
 import BidderSignupForm from "./components/bidderSignupModal";
 import { useTranslations } from "next-intl";
+import { useNavbarState } from "@/helpers/store/general/navbarState";
 export default function SignupModal() {
   const [formType, setFormType] = useState("bidder");
 
   const { isSignupModalOpen, setSignupModalState, setLoginModalState } =
-    useBidderNavbarState();
+    useNavbarState();
   const signupText = useTranslations("signupModal");
 
   return (

@@ -8,11 +8,12 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { resDataType } from "@/serverHelpers/types";
 import { IoIosWarning } from "react-icons/io";
-import { useBidderNavbarState } from "@/helpers/store/bidder/bidderNavbarState";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import GoogleGenderSignupModal from "./googleSignupModal";
 import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
+import { useNavbarState } from "@/helpers/store/general/navbarState";
+import ForgotPassword from "./components/forgotPassword";
 
 export default function LoginModal() {
   //
@@ -31,7 +32,8 @@ export default function LoginModal() {
     setGenderSignupFormModalState,
     setLoginModalState,
     isLoginModalOpen,
-  } = useBidderNavbarState();
+    setIsForgotPasswordModalState,
+  } = useNavbarState();
   const loginSchema = z.object({
     email: z.string().email(textTranslations("zodErrors.email")),
     password: z.string().min(6, textTranslations("zodErrors.password")),
@@ -84,7 +86,7 @@ export default function LoginModal() {
       console.log(resData);
       if (resData.success) {
         setBidderLocalStorageData(resData.bidderFrontData!);
-        setGenderSignupFormModalState();
+        setLoginModalState();
         router.push("/" + locale + "/bidder");
       }
       if (resData.errorMessage === "redirectSignup") {
@@ -184,12 +186,20 @@ export default function LoginModal() {
               </span>
             </div>
             <div className="text-sm  text-neutral-600 cursor-pointer">
-              <u>{textTranslations("forgotPassword")}</u>
+              <u
+                onClick={() => {
+                  setLoginModalState();
+                  setIsForgotPasswordModalState();
+                }}
+              >
+                {textTranslations("forgotPassword")}
+              </u>
             </div>
           </div>
         </div>
       </Modal>
       <GoogleGenderSignupModal credentialsToken={googleCredentialsToken} />
+      <ForgotPassword />
     </>
   );
 }

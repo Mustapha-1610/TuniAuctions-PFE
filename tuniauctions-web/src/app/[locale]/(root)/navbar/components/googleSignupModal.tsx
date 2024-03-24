@@ -4,11 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Modal } from "antd";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { resDataType } from "@/serverHelpers/types";
-import { useBidderNavbarState } from "@/helpers/store/bidder/bidderNavbarState";
 import { z } from "zod";
 import { useLocale } from "next-intl";
 import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
 import { useRouter } from "next/navigation";
+import { useNavbarState } from "@/helpers/store/general/navbarState";
 type Props = {
   credentialsToken: string;
 };
@@ -19,7 +19,7 @@ export default function GoogleGenderSignupModal({ credentialsToken }: Props) {
   const router = useRouter();
   //
   const { isGenderSignupFormModalOpen, setGenderSignupFormModalState } =
-    useBidderNavbarState();
+    useNavbarState();
   //
   const { setBidderLocalStorageData } = useBidderProfileStore();
   //
