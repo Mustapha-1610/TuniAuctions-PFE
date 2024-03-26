@@ -42,6 +42,16 @@
       "gmailAccount": "Compte uniquement accessible via la connexion Gmail !",
       "wrongInputs": "Adresse e-mail ou mot de passe incorrect !",
       "sellerGmailLogin": "Compte vendeur uniquement accessible via la connexion régulière !"
+    },
+    "passwordResetErrors": {
+      "success": "Code de réinitialisation envoyé à la boîte de réception",
+      "mismatch": "Code incorrect !",
+      "gmailAccount": "Les comptes Gmail ne sont pas valides pour la réinitialisation du mot de passe",
+      "userNonExistant": "Si l'e-mail existe, le code de réinitialisation a été envoyé à votre boîte de réception",
+      "invalidAccount": "Compte supprimé ou n'existe plus",
+      "unactive": "Code plus disponible, envoyez-en un nouveau dès que possible",
+      "oldPasswordMatch": "Impossible de changer vers l'ancien mot de passe !",
+      "passwordMismatch": "Incompatibilité du mot de passe"
     }
   },
   "loginModal": {
@@ -104,6 +114,23 @@
         "city": "Les informations sur la ville sont requises !",
         "municipality": "Les informations sur la municipalité sont requises !"
       }
+    }
+  },
+  "resetPasswordModal": {
+    "email": "Email",
+    "resetPassword": "Réinitialiser le mot de passe",
+    "confirm": "Confirmer",
+    "loading": "Chargement ...",
+    "success": "Réinitialisation du mot de passe réussie",
+    "login": "Se connecter",
+    "newPassword": "Nouveau mot de passe",
+    "confirmNewPassword": "Confirmer le nouveau mot de passe",
+    "resendCode": "Renvoyer le code dans : 5 minutes",
+    "resend": "Renvoyer le code",
+    "codePlaceholder": "Code de réinitialisation",
+    "reset": "Réinitialiser",
+    "zodErrors": {
+      "email": "E-mail invalide !"
     }
   }
 }

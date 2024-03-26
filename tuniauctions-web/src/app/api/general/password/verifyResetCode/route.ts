@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
         return await handleVerifyCode(user, secretCode);
       }
     }
-    return userInputCausedErrors("Account non existant or deleted!");
+    return userInputCausedErrors("invalidAccount");
   } catch (err) {
     return serverErrorHandler(err);
   }
@@ -41,10 +41,8 @@ async function handleVerifyCode(user: IBidder | ISeller, secretCode: string) {
     await user.save();
     return NextResponse.json({ success: true });
   } else if (user.passResetCode.secretCode !== secretCode) {
-    return userInputCausedErrors("Mismatch");
+    return userInputCausedErrors("mismatch");
   } else if (!user.passResetCode.active) {
-    return userInputCausedErrors("Unactive");
-  } else {
-    return userInputCausedErrors("Wrong code!");
+    return userInputCausedErrors("unactive");
   }
 }

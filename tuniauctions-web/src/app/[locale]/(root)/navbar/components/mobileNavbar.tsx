@@ -1,110 +1,105 @@
+import { useNavbarState } from "@/helpers/store/general/navbarState";
 import Link from "next/link";
-import { ChangeEvent } from "react";
-interface ChildProps {
-  toggleMenu: () => void;
-  setOpenLogin: (open: boolean) => void;
-  setOpenSignup: (open: boolean) => void;
-  handleLanguageChange: (e: ChangeEvent<HTMLSelectElement>) => void;
-  locales: string[];
-  currentLocale: string;
-}
-export default function MobileNavbar({
-  toggleMenu,
-  setOpenLogin,
-  setOpenSignup,
-  locales,
-  currentLocale,
-  handleLanguageChange,
-}: ChildProps) {
+import { BsPatchQuestionFill } from "react-icons/bs";
+import { FaHome } from "react-icons/fa";
+import { FaBuildingCircleExclamation } from "react-icons/fa6";
+import { RiAuctionFill } from "react-icons/ri";
+export default function MobileNavbar() {
+  const { setMobileMenuState, setLoginModalState, setSignupModalState } =
+    useNavbarState();
   return (
     <>
-      <div className="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
-      <nav className="sticky top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto">
-        <div className="flex items-center mb-8">
-          <a className="mr-auto text-3xl font-bold leading-none" href="#">
-            <svg className="h-12" viewBox="0 0 10240 10240"></svg>
-          </a>
-          <button className="navbar-close" onClick={toggleMenu}>
-            <svg
-              className="h-6 w-6 text-gray-400 cursor-pointer hover:text-gray-500"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              ></path>
-            </svg>
-          </button>
-        </div>
-        <div>
-          <ul>
-            <li className="mb-1" onClick={toggleMenu}>
-              <Link
-                className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                href="/"
+      <div className="navbar-backdrop fixed inset-0">
+        <nav className="sticky h-full left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-neutral-900  overflow-y-auto">
+          <div className="flex items-center mb-8">
+            <a className="mr-auto text-gl font-bold  text-white" href="#">
+              Tuni Auctions
+              <svg className="h-12 ml-4" viewBox="0 0 10240 10240"></svg>
+            </a>
+
+            <button className="navbar-close" onClick={setMobileMenuState}>
+              <svg
+                className="h-6 w-6 text-gray-100 cursor-pointer hover:text-gray-500"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
-                Home
-              </Link>
-            </li>
-            <li className="mb-1" onClick={toggleMenu}>
-              <Link
-                className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                href="/auctions"
-              >
-                Auctions
-              </Link>
-            </li>
-            <li className="mb-1" onClick={toggleMenu}>
-              <Link
-                className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                href="/aboutus"
-              >
-                About us
-              </Link>
-            </li>
-            <li className="mb-1" onClick={toggleMenu}>
-              <Link
-                className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                href="/howitworks"
-              >
-                How It Works
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <div className="mt-auto">
-          <div className="pt-6">
-            <button
-              onClick={() => (toggleMenu(), setOpenLogin(true))}
-              className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl"
-            >
-              Sign in
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
             </button>
-            <button
-              onClick={() => (toggleMenu(), setOpenSignup(true))}
-              className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
-            >
-              Sign Up
-            </button>
-            <select
-              onChange={handleLanguageChange}
-              defaultValue={currentLocale}
-              className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
-            >
-              {locales.map((locale) => (
-                <option key={locale} value={locale}>
-                  {locale}
-                </option>
-              ))}
-            </select>
           </div>
-        </div>
-      </nav>
+          <div>
+            <ul>
+              <li className="mb-1" onClick={setMobileMenuState}>
+                <Link
+                  className="block p-4 text-sm font-semibold text-gray-100 hover:bg-blue-50 hover:text-blue-600 rounded flex flex-rows"
+                  href="/"
+                >
+                  <FaHome size={20} color="white" className="mr-2" />
+                  Home
+                </Link>
+              </li>
+              <li className="mb-1" onClick={setMobileMenuState}>
+                <Link
+                  className="block p-4 text-sm font-semibold text-gray-100 hover:bg-blue-50 hover:text-blue-600 rounded flex flex-rows"
+                  href="/auctions"
+                >
+                  <RiAuctionFill size={20} color="white" className="mr-2" />
+                  Auctions
+                </Link>
+              </li>
+              <li className="mb-1" onClick={setMobileMenuState}>
+                <Link
+                  className="block p-4 text-sm font-semibold text-gray-100 hover:bg-blue-50 hover:text-blue-600 rounded flex flex-rows"
+                  href="/aboutus"
+                >
+                  <FaBuildingCircleExclamation
+                    size={20}
+                    color="white"
+                    className="mr-2"
+                  />
+                  About us
+                </Link>
+              </li>
+              <li className="mb-1" onClick={setMobileMenuState}>
+                <Link
+                  className="block p-4 text-sm font-semibold text-gray-100 hover:bg-blue-50 hover:text-blue-600 rounded flex flex-rows"
+                  href="/howitworks"
+                >
+                  <BsPatchQuestionFill
+                    size={20}
+                    color="white"
+                    className="mr-2"
+                  />
+                  How It Works
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div className="mt-auto">
+            <div className="pt-1">
+              <button
+                onClick={() => (setMobileMenuState(), setLoginModalState())}
+                className="lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-300 hover:bg-gray-100 text-sm text-black font-bold  rounded-xl transition duration-200 mb-2"
+              >
+                Sign in
+              </button>
+              <button
+                onClick={() => (setMobileMenuState(), setSignupModalState())}
+                className="block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-300 hover:bg-gray-100 text-sm text-black font-bold  rounded-xl transition duration-200 mb-2"
+              >
+                Sign Up
+              </button>
+            </div>
+          </div>
+        </nav>
+      </div>
     </>
   );
 }

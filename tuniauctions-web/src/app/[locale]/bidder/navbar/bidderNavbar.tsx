@@ -1,112 +1,74 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import NavigationItems from "./components/navigationItems";
 import MobileNavbar from "./components/mobileNavbar";
-import LoginModal from "./components/loginModal";
-import SignupModal from "./components/signupModal";
-import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
 import { FaRegUser } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
 
-import { ChangeEvent } from "react";
-import { MdNotifications } from "react-icons/md";
+import { MdDashboardCustomize, MdNotifications } from "react-icons/md";
 import Link from "next/link";
 import Image from "next/image";
-import { CgProfile } from "react-icons/cg";
 import { LuUser2 } from "react-icons/lu";
 import { useLocale } from "next-intl";
+import { GiWallet } from "react-icons/gi";
+import LanguageChanger from "../../(root)/navbar/components/languageChanger";
+import { useBidderNavbarState } from "@/helpers/store/bidder/bidderNavbarStore";
 
 function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [SignupOpen, setSignupOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
   const locale = useLocale();
 
-  const [open, setOpen] = useState(false);
-  const pathname = usePathname();
-  const currentLocale = pathname.split("/")[1];
-  const locales = ["en", "fr", "ar"]; // replace with your actual locales
-  const router = useRouter();
-  const changeLanguage = (lang: string) => {
-    const parts = pathname.split("/");
-    const restOfPath = parts.slice(2).join("/");
-    router.replace(`/${lang}/${restOfPath}`);
-  };
-
-  const handleLanguageChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    changeLanguage(e.target.value);
-  };
-  const [isNotificationMenuOpen, setIsnotificationMenuOpen] =
-    useState<boolean>(false);
-  const [isBidderProfileOptionsOpen, setIsBidderProfileOptionsOpen] =
-    useState<Boolean>(false);
+  const {
+    isMobileMenuOpen,
+    isProfileMenuOpen,
+    isNotificationsMenuOpen,
+    setMobileMenuState,
+    setProfileMenuState,
+    setNotificationsMenuState,
+  } = useBidderNavbarState();
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 px-4 py-4  flex justify-between items-center bg-neutral-900 z-50">
-        <div className="flex items-center">
-          <a className={"text-lg text-white font-bold leading-none "} href="#">
-            Tuni-Auctions
-          </a>
-        </div>
-        <div className="lg:hidden">
+      <nav className="fixed top-0 left-0 right-0 px-4 py-4 flex justify-between items-center bg-neutral-900 z-50">
+        <div className="flex items-center lg:hidden">
           <button
             className="navbar-burger flex items-center text-blue-600 p-3"
-            onClick={toggleMenu}
+            onClick={setMobileMenuState}
           >
             <svg
-              className="block h-4 w-4 fill-current"
+              className="block h-4 w-4 fill-current text-white"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <title>Mobile menu</title>
+              <title className="text-white">Mobile menu</title>
               <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
             </svg>
           </button>
         </div>
+        <div className="hidden lg:flex items-center">
+          <a className={"text-lg text-white font-bold leading-none "} href="#">
+            Tuni-Auctions
+          </a>
+        </div>
         <ul
           className={`hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6 ${
-            isOpen ? "" : "hidden"
+            isMobileMenuOpen ? "" : "hidden"
           }`}
         >
           <NavigationItems />
         </ul>
         <div className="flex items-center space-x-4">
-          {/* Language Select Dropdown */}
-          <select
-            onChange={handleLanguageChange}
-            defaultValue={currentLocale}
-            className="ml-2 lg:inline-block py-2 px-2 bg-slate-500 text-sm text-white font-bold rounded-xl transition duration-200"
-          >
-            {locales.map((locale) => (
-              <option key={locale} value={locale}>
-                {locale}
-              </option>
-            ))}
-          </select>
-          {/* Notifications Bell */}
+          <LanguageChanger className="ml-1 lg:inline-block py-2  bg-neutral-900 text-sm text-white font-bold  transition duration-200" />
           <div className="relative">
-            <div
-              className="cursor-pointer"
-              onClick={() => console.log("Notifications clicked")} // Replace with actual click handler
-            >
-              {/* Unread Notifications Count */}
+            <div className="cursor-pointer">
               <div className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center">
                 <span className="text-sm font-bold">3</span>
-                {/* Example unread count */}
               </div>
               <MdNotifications
-                onClick={() =>
-                  setIsnotificationMenuOpen(!isNotificationMenuOpen)
-                }
+                onClick={setNotificationsMenuState}
                 color="white"
                 size={25}
               />
             </div>
-            {isNotificationMenuOpen && (
+            {isNotificationsMenuOpen && (
               <div className="absolute mt-4 left-3/3 transform -translate-x-2/3 bg-white text-black border border-netral-200 rounded-md shadow-lg max-w-xl z-10">
                 <div className="py-2 px-3 border-b border-gray-300 font-bold">
                   Notifications
@@ -132,20 +94,29 @@ function Navbar() {
               </div>
             )}
           </div>
-          {/* Profile Picture */}
-          <div
-            onClick={() =>
-              setIsBidderProfileOptionsOpen(!isBidderProfileOptionsOpen)
-            }
+
+          <Link
+            className="text-sm  flex flex-rows items-center text-white font-bold  py-1 border border-white rounded-lg p-2 border-2"
+            href={"/" + locale + "/bidder/balance"}
           >
-            <LuUser2 size={35} className="  cursor-pointer" color="white" />
-            {isBidderProfileOptionsOpen && (
+            <GiWallet size={28} className="cursor-pointer" color="white" />
+            <span className="text-white text-gl ml-1">$5</span>
+          </Link>
+          <div onClick={setProfileMenuState}>
+            <LuUser2 size={30} className="cursor-pointer" color="white" />
+            {isProfileMenuOpen && (
               <div className="absolute mt-2 left-3/3 transform -translate-x-2/3 bg-white text-black border border-netral-200 rounded-lg shadow-lg max-w-xl z-10">
                 <Link
                   href={"/" + locale + "/bidder/profile"}
                   className="py-4 px-5 flex flex-rows  font-bold"
                 >
                   Profile <FaRegUser size={19} className="ml-3" />
+                </Link>
+                <Link
+                  className="py-2 px-2 flex flex-rows  font-bold"
+                  href={"/" + locale + "/bidder/dashboard"}
+                >
+                  Dashboard <MdDashboardCustomize size={19} className="ml-3" />
                 </Link>
                 <div className="py-4 px-5 flex flex-rows  font-bold">
                   Logout <CiLogout size={20} className="ml-2" />
@@ -157,17 +128,10 @@ function Navbar() {
       </nav>
       <div
         className={`navbar-menu fixed top-0 left-0 right-0 overflow-y-auto z-50 ${
-          isOpen ? "" : "hidden"
+          isMobileMenuOpen ? "" : "hidden"
         }`}
       >
-        <MobileNavbar
-          toggleMenu={toggleMenu}
-          setOpenLogin={setOpen}
-          setOpenSignup={setSignupOpen}
-          locales={locales}
-          currentLocale={currentLocale}
-          handleLanguageChange={handleLanguageChange}
-        />
+        <MobileNavbar />
       </div>
     </>
   );

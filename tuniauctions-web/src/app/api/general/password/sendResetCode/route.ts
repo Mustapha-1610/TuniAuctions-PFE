@@ -1,8 +1,5 @@
 import { connect } from "@/db/dbConfig";
-import {
-  sendBidderEmailChangeRequestCode,
-  sendBidderPasswordChangeRequestCode,
-} from "@/emails/bidder/bidderMailLogic";
+import { sendBidderPasswordChangeRequestCode } from "@/emails/bidder/bidderMailLogic";
 import bidderModel from "@/models/usersModels/bidderModel";
 import sellerModel from "@/models/usersModels/sellerModel";
 import { IBidder } from "@/models/usersModels/types/bidderTypes";
@@ -16,23 +13,20 @@ import { ISeller } from "@/models/usersModels/types/sellerTypes";
 export async function POST(request: NextRequest) {
   try {
     const { email } = await request.json();
+    console.log(email);
     await connect();
     let user: IBidder | null = await bidderModel.findOne({
       email: email.toUpperCase(),
     });
     if (user) {
-      if (user.gmailAccount) {
-        return userInputCausedErrors("gmailAccount");
-      } else {
-        return await handleSendResetCode(user);
-      }
+      if (user.gmailAccount) return userInputCausedErrors("gmailAccount");
+      else return await handleSendResetCode(user);
     } else {
       let user: ISeller | null = await sellerModel.findOne({
         email: email.toUpperCase(),
       });
-      if (user) {
-        return await handleSendResetCode(user);
-      }
+      if (user) return await handleSendResetCode(user);
+      else return userInputCausedErrors("userNonExistant");
     }
   } catch (err) {
     return serverErrorHandler(err);
@@ -49,7 +43,6 @@ async function handleSendResetCode(user: IBidder | ISeller) {
       Math.floor(Math.random() * characters.length)
     );
   }
-  console.log(secretCode);
   user.passResetCode.secretCode = secretCode;
   user.passResetCode.active = true;
   await user.save();

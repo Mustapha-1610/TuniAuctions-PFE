@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import NavigationItems from "./components/navigationItems";
 import MobileNavbar from "./components/mobileNavbar";
 import LoginModal from "./components/loginModal";
@@ -9,13 +9,9 @@ import { usePathname } from "next/navigation";
 
 import { ChangeEvent } from "react";
 import { useNavbarState } from "@/helpers/store/general/navbarState";
+import LanguageChanger from "./components/languageChanger";
 
 function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
   const pathname = usePathname();
   const currentLocale = pathname.split("/")[1];
   const locales = ["en", "fr", "ar"];
@@ -30,33 +26,38 @@ function Navbar() {
     changeLanguage(e.target.value);
   };
 
-  const { setSignupModalState, setLoginModalState } = useNavbarState();
+  const {
+    setSignupModalState,
+    setLoginModalState,
+    setMobileMenuState,
+    isMobileMenuOpen,
+  } = useNavbarState();
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 px-4 py-4  flex justify-between items-center bg-neutral-900 z-50">
-        <div className="flex items-center">
-          <a className={"text-lg text-white font-bold leading-none "} href="#">
-            Tuni-Auctions
-          </a>
-        </div>
-        <div className="lg:hidden">
+      <nav className="fixed top-0 left-0 right-0 px-4 py-4 flex justify-between items-center bg-neutral-900 z-50">
+        <div className="flex items-center lg:hidden">
           <button
             className="navbar-burger flex items-center text-blue-600 p-3"
-            onClick={toggleMenu}
+            onClick={setMobileMenuState}
           >
             <svg
-              className="block h-4 w-4 fill-current"
+              className="block h-4 w-4 fill-current text-white"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <title>Mobile menu</title>
+              <title className="text-white">Mobile menu</title>
               <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
             </svg>
           </button>
         </div>
+        <div className="hidden lg:flex items-center">
+          <a className={"text-lg text-white font-bold leading-none "} href="#">
+            Tuni-Auctions
+          </a>
+        </div>
         <ul
           className={`hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6 ${
-            isOpen ? "" : "hidden"
+            isMobileMenuOpen ? "" : "hidden"
           }`}
         >
           <NavigationItems />
@@ -76,31 +77,14 @@ function Navbar() {
         >
           Sign up
         </button>
-        <select
-          onChange={handleLanguageChange}
-          defaultValue={currentLocale}
-          className="hidden ml-2 lg:inline-block py-2 px-2 bg-slate-500  text-sm text-white font-bold rounded-xl transition duration-200"
-        >
-          {locales.map((locale) => (
-            <option key={locale} value={locale}>
-              {locale}
-            </option>
-          ))}
-        </select>
+        <LanguageChanger className="block ml-1 lg:inline-block py-2  bg-neutral-900 text-sm text-white font-bold transition duration-200" />
       </nav>
       <div
         className={`navbar-menu fixed top-0 left-0 right-0 overflow-y-auto z-50 ${
-          isOpen ? "" : "hidden"
+          isMobileMenuOpen ? "" : "hidden"
         }`}
       >
-        <MobileNavbar
-          toggleMenu={toggleMenu}
-          setOpenLogin={setLoginModalState}
-          setOpenSignup={setSignupModalState}
-          locales={locales}
-          currentLocale={currentLocale}
-          handleLanguageChange={handleLanguageChange}
-        />
+        <MobileNavbar />
       </div>
     </>
   );

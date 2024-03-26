@@ -15,7 +15,7 @@ export default function TopSection() {
         </div>
         <img
           loading="lazy"
-          srcSet="https://as2.ftcdn.net/v2/jpg/04/84/39/57/1000_F_484395747_AVqmqsGnH42LCviLB6G4RaYkgsiDPZHD.jpg"
+          srcSet="https://lh3.googleusercontent.com/a/ACg8ocJ8EXru4QG7QZmYXU6p-vFacZUU40DWmmEFGGW24qA9Iw=s96-c"
           className="shrink-0 mt-11 object-cover max-w-full aspect-[1] w-[200px] max-md:mt-10 rounded-full"
         />
 

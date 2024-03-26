@@ -54,7 +54,7 @@ export function useSellerSignupModalTranslations() {
       apply: signupText("apply"),
       terms: signupText("terms"),
       loading: signupText("loading"),
-      success: signupText("bidder.success"),
+      success: signupText("success"),
     },
     apiErrors: {
       missingInputs: errorsText("missingInputs"),

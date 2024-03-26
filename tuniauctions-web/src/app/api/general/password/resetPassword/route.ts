@@ -30,8 +30,7 @@ export async function POST(request: NextRequest) {
           user.password = bcrypt.hashSync(newPassword);
 
           await user.save();
-          const bidderFrontData: IBidderFrontData = returnBidderFrontData(user);
-          return NextResponse.json({ success: true, bidderFrontData });
+          return NextResponse.json({ success: true });
         }
       }
     } else {
@@ -45,14 +44,12 @@ export async function POST(request: NextRequest) {
           if (newPassword !== confirmNewPassword) {
             return userInputCausedErrors("passwordMismatch");
           } else {
-            user.password = bcrypt.hashSync(newPassword);
-
             await user.save();
-            return NextResponse.json({ success: true, user });
+            return NextResponse.json({ success: true });
           }
         }
       } else {
-        return userInputCausedErrors("AccountNonExistant");
+        return userInputCausedErrors("invalidAccount");
       }
     }
   } catch (err) {

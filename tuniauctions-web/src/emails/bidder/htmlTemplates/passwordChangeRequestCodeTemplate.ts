@@ -12,7 +12,7 @@ export function passwordChangeRequestTemplate(secretCode: string) {
   <td style="background-color: #e5e5e1; padding: 0 24px 20px; text-align: center;">
 <img src="https://firebasestorage.googleapis.com/v0/b/tunisianauctionwebapp.appspot.com/o/TuniAuctionsReducedSizeLogoCropped.png?alt=media&token=b6ad1a8c-e634-452a-9509-178139cac428" alt="Hero image" style="width: 35%; max-height: 300px; object-fit: cover; object-position: center center; margin: 0 auto;" />
 
-    <h1 style="text-align: center; margin-top: 32px; font: 42px Arial, sans-serif;">Account Verification</h1>
+    <h1 style="text-align: center; margin-top: 32px; font: 42px Arial, sans-serif;">Password Reset</h1>
     <div style="background-color: #000; margin-top: 32px; height: 1px;"></div>
 <p style="font-family: Inter, sans-serif; line-height: 26px; margin-top: 32px; font-size: 18px;">
 We ve received a request to reset the password for your Tuni-Auctions account. To proceed with this change, please use the security code provided below. This code is designed to verify your identity and protect your account from unauthorized access. If you did not initiate this request, please ignore this email or contact us immediately for support.

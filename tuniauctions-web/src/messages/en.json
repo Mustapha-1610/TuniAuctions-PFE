@@ -42,6 +42,16 @@
       "gmailAccount": "Account only accessible through gmail login!",
       "wrongInputs": "Wrong mail or password!",
       "sellerGmailLogin": "Seller account only accessible through regular login!"
+    },
+    "passwordResetErrors": {
+      "success": "Reset code sent to inbox",
+      "mismatch": "Wrong code!",
+      "gmailAccount": "Gmail accounts are not valid for password reset",
+      "userNonExistant": "If email exists reset code has been sent to your inbox",
+      "invalidAccount": "Account deleted or non existant anymore",
+      "Unactive": "Code no longer available send new one when possible",
+      "oldPasswordMatch": "Cant change to old password!",
+      "passwordMismatch": "Password Mismatch"
     }
   },
   "loginModal": {
@@ -105,6 +115,23 @@
         "city": "City information is required!",
         "municipality": "Municipality information is required!"
       }
+    }
+  },
+  "resetPasswordModal": {
+    "email": "Email",
+    "resetPassword": "Reset Password",
+    "confirm": "Confirm",
+    "loading": "Loading ...",
+    "success": "Password resetted successfully",
+    "login": "Login",
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm new password",
+    "resendCode": "Resend code in : 5 minutes",
+    "resend": "Resend Code",
+    "codePlaceholder": "Reset code",
+    "reset": "Reset",
+    "zodErrors": {
+      "email": "Invalid Email!"
     }
   }
 }
