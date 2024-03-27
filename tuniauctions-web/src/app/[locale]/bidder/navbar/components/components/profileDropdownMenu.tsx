@@ -13,7 +13,7 @@ export default function PorfileDropdownMenu({ locale }: Props) {
   const router = useRouter();
   async function signout() {
     const res = await fetch("/api/bidder/signout", {
-      method: "GET",
+      method: "POST",
     });
     const resData: resDataType = await res.json();
     if (resData.success) {
