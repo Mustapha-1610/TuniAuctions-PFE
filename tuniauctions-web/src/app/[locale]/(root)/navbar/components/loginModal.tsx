@@ -86,8 +86,8 @@ export default function LoginModal() {
       console.log(resData);
       if (resData.success) {
         setBidderLocalStorageData(resData.bidderFrontData!);
+        router.push("/" + locale + "/bidder/profile");
         setLoginModalState();
-        router.push("/" + locale + "/bidder");
       }
       if (resData.errorMessage === "redirectSignup") {
         setLoginModalState();

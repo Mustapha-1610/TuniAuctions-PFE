@@ -18,7 +18,8 @@ const bidderSchema = new Schema({
   },
   profilePicture: {
     type: String,
-    default: "",
+    default:
+      "https://firebasestorage.googleapis.com/v0/b/tunisianauctionwebapp.appspot.com/o/free-user-icon-3296-thumb.png?alt=media&token=61327e03-00bd-4dae-98d7-e56e8bfccba6",
   },
   verificationCode: {
     type: String,

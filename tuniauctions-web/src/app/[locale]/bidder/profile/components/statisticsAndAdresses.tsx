@@ -1,9 +1,11 @@
+"use client";
+import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
 import { BsThreeDots } from "react-icons/bs";
-import { GrDeliver } from "react-icons/gr";
 import { MdPendingActions } from "react-icons/md";
-import { RiAuctionLine } from "react-icons/ri";
 
 export default function StatisticsAndAdresses() {
+  const { bidderLocalStorageData } = useBidderProfileStore();
+
   return (
     <>
       <div className=" mr-12 pt-12 max-w-full w-[960px] max-md:mr-2.5">
@@ -21,18 +23,7 @@ export default function StatisticsAndAdresses() {
                     Upcoming Auctions <BsThreeDots size={30} />
                   </div>
                   <div className="self-center mt-4 text-5xl text-red-600 max-md:text-4xl">
-                    5
-                  </div>
-                </div>
-              </div>
-              <div className="flex justify-center items-center px-16 py-10 mt-9 rounded-3xl bg-slate-200 max-md:px-5">
-                <div className="flex flex-col">
-                  <div className="flex gap-3 flex-rows text-base text-black">
-                    Deliveries Pending Location Data{" "}
-                    <MdPendingActions size={30} />
-                  </div>
-                  <div className="self-center mt-4 text-5xl text-red-600 max-md:text-4xl">
-                    5
+                    {bidderLocalStorageData?.auctionReferences.upcoming.length}
                   </div>
                 </div>
               </div>
@@ -43,20 +34,10 @@ export default function StatisticsAndAdresses() {
               <div className="flex justify-center items-center px-16 py-10 rounded-3xl bg-slate-200 max-md:px-5">
                 <div className="flex flex-col">
                   <div className="flex gap-3 flex-rows text-base text-black">
-                    Total Participated Auctions <RiAuctionLine size={30} />
+                    Pending Deliveries <MdPendingActions size={30} />
                   </div>
                   <div className="self-center mt-4 text-5xl text-red-600 max-md:text-4xl">
-                    5
-                  </div>
-                </div>
-              </div>
-              <div className="flex justify-center items-center px-16 py-10 mt-9 rounded-3xl bg-slate-200 max-md:px-5">
-                <div className="flex flex-col">
-                  <div className="flex gap-3 flex-rows text-base text-black">
-                    Deliveries Pending Arrival <GrDeliver size={30} />
-                  </div>
-                  <div className="self-center mt-4 text-5xl text-red-600 max-md:text-4xl">
-                    5
+                    {bidderLocalStorageData?.deliveries.pending.length}
                   </div>
                 </div>
               </div>

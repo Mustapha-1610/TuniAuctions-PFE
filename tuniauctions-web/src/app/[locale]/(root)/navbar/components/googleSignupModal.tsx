@@ -53,8 +53,8 @@ export default function GoogleGenderSignupModal({ credentialsToken }: Props) {
       const resData = await res.json();
       if (resData.success) {
         setBidderLocalStorageData(resData.bidderFrontData);
+        router.push("/" + locale + "/bidder/profile");
         setGenderSignupFormModalState();
-        router.push("/" + locale + "/bidder");
       }
     } catch (err) {
       console.log(err);

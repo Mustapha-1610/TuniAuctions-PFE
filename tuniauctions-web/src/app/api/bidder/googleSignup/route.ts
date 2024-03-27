@@ -47,7 +47,6 @@ export async function POST(request: NextRequest) {
         gender,
         email: bidderCredentials.email.toUpperCase(),
         socketId,
-        profilePicture: bidderCredentials.picture,
         verified: true,
         gmailAccount: true,
       });

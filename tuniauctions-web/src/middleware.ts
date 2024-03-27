@@ -10,7 +10,8 @@ export default async function middleware(request: NextRequest) {
     let token: string = "";
     if (publicRoutes.includes(path)) {
       token = request.cookies.get("refreshBidderToken")?.value || "";
-      if (token) return handleRouteProtection(locale, request, "bidder");
+      if (token)
+        return handleRouteProtection(locale, request, "bidder/profile");
       token = request.cookies.get("refreshSellerToken")?.value || "";
       if (token) return handleRouteProtection(locale, request, "seller");
     }

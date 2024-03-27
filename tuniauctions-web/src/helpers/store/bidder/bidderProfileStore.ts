@@ -4,6 +4,7 @@ import { persist, devtools } from "zustand/middleware";
 interface BidderProfileStoreType {
   bidderLocalStorageData: IBidderFrontData | null;
   setBidderLocalStorageData: (data: IBidderFrontData) => void;
+  signoutBidder: () => void;
 }
 
 export const useBidderProfileStore = create<BidderProfileStoreType>()(
@@ -12,6 +13,10 @@ export const useBidderProfileStore = create<BidderProfileStoreType>()(
       bidderLocalStorageData: null,
       setBidderLocalStorageData: (data) =>
         set({ bidderLocalStorageData: data }),
+      signoutBidder: () =>
+        set((state) => ({
+          bidderLocalStorageData: null,
+        })),
     }),
     { name: "bidder" }
   )

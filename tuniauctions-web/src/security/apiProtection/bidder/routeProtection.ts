@@ -1,10 +1,25 @@
 import { connect } from "@/db/dbConfig";
 import bidderModel from "@/models/usersModels/bidderModel";
+import { IBidder } from "@/models/usersModels/types/bidderTypes";
 import { unautherizedError } from "@/serverHelpers/errorHandler";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { NextRequest } from "next/server";
+interface ValidResponse {
+  isValid: true;
+  newAccessToken?: string;
+  bidderAccount: IBidder;
+}
 
-export async function verifyBidderTokens(request: NextRequest) {
+interface ErrorResponse {
+  isValid: false;
+  errorStage: string;
+}
+
+export type VerifyBidderTokensResponse = ValidResponse | ErrorResponse;
+
+export async function verifyBidderTokens(
+  request: NextRequest
+): Promise<VerifyBidderTokensResponse> {
   try {
     await connect();
     const accessToken = request.cookies.get("accessBidderToken")?.value || "";
@@ -13,19 +28,15 @@ export async function verifyBidderTokens(request: NextRequest) {
         accessToken,
         process.env.ACCESS_TOKEN_SECRET!
       ) as JwtPayload;
-      const bidderAccount = await bidderModel.findById(
+      const bidderAccount: IBidder | null = await bidderModel.findById(
         decodedAccessToken.bidder_id
       );
       const refreshToken =
         request.cookies.get("refreshBidderToken")?.value || "";
-      if (bidderAccount && bidderAccount.refreshToken === refreshToken) {
-        return { isValid: true, newAccessToken: null, bidderAccount };
-      } else {
-        return unautherizedError("error Stage 1");
-      }
-    } else {
-      return unautherizedError("error Stage 2");
-    }
+      if (bidderAccount && bidderAccount.refreshToken === refreshToken)
+        return { isValid: true, bidderAccount };
+      else return { isValid: false, errorStage: "error Stage 2" };
+    } else return { isValid: false, errorStage: "error Stage 2" };
   } catch (err) {
     try {
       const refreshToken =
@@ -35,7 +46,7 @@ export async function verifyBidderTokens(request: NextRequest) {
           refreshToken,
           process.env.REFRESH_TOKEN_SECRET!
         ) as JwtPayload;
-        const bidderAccount = await bidderModel.findById(
+        const bidderAccount: IBidder | null = await bidderModel.findById(
           decodedRefreshToken.bidder_id
         );
         if (bidderAccount && bidderAccount.refreshToken === refreshToken) {
@@ -45,14 +56,10 @@ export async function verifyBidderTokens(request: NextRequest) {
             { expiresIn: "10m" }
           );
           return { isValid: true, newAccessToken, bidderAccount };
-        } else {
-          return unautherizedError("error Stage 3");
-        }
-      } else {
-        return unautherizedError("error Stage 4");
-      }
+        } else return { isValid: false, errorStage: "error Stage 2" };
+      } else return { isValid: false, errorStage: "error Stage 2" };
     } catch (refreshErr) {
-      return unautherizedError("error Stage 5", refreshErr);
+      return { isValid: false, errorStage: "error Stage 2" };
     }
   }
 }

@@ -1,9 +1,4 @@
 import * as React from "react";
-import { BsThreeDots } from "react-icons/bs";
-import { RiAuctionLine } from "react-icons/ri";
-import { MdPendingActions } from "react-icons/md";
-import { GrDeliver } from "react-icons/gr";
-import StatisticsAndAdresses from "./components/statisticsAndAdresses";
 import Notifications from "./components/notifications";
 import TopSection from "./components/topSection";
 import Transactions from "./components/transactions";

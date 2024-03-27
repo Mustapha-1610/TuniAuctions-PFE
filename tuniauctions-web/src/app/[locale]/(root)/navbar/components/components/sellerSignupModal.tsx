@@ -165,7 +165,6 @@ export default function SellerSignupForm() {
               type="file"
               {...register("registrationLicense")}
               className="hidden"
-              multiple
             />
           </label>
           {errors.registrationLicense && (
