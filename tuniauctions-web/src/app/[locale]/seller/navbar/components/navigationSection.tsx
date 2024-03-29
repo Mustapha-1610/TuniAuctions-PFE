@@ -21,6 +21,8 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { CgLogOut } from "react-icons/cg";
 import { Props } from "../sellerNavbar";
+import { resDataType } from "@/serverHelpers/types";
+import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
 
 export default function NavigationSection({ navigationTranslation }: Props) {
   const [isEarningsDropdownOpen, setIsEarningsDropdownOpen] = useState(false);
@@ -52,7 +54,6 @@ export default function NavigationSection({ navigationTranslation }: Props) {
     setIsDeliveriesDropdown(!isDeliveriesDropdown);
   };
   const pathname = usePathname();
-  const currentLocale = pathname.split("/")[1];
   const router = useRouter();
   const changeLanguage = (lang: string) => {
     const parts = pathname.split("/");
@@ -63,6 +64,21 @@ export default function NavigationSection({ navigationTranslation }: Props) {
   const handleLanguageChange = (e: string) => {
     changeLanguage(e);
   };
+  const { signoutSeller } = useSellerProfileStore();
+  async function handleLogout() {
+    try {
+      const res = await fetch("/api/seller/signout", {
+        method: "POST",
+      });
+      const resData: resDataType = await res.json();
+      if (resData.success) {
+        router.push("/" + locale);
+        signoutSeller();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <>
       <ul className="space-y-2 pb-2">
@@ -284,15 +300,14 @@ export default function NavigationSection({ navigationTranslation }: Props) {
             </li>
           </ul>
         )}
-        <a
-          href="#"
-          target="_blank"
-          className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
+        <div
+          className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2 cursor-pointer"
+          onClick={handleLogout}
         >
           <CgLogOut size={31} />
 
           <span className="ml-3"> {navigationTranslation.Logout}</span>
-        </a>
+        </div>
       </div>
     </>
   );

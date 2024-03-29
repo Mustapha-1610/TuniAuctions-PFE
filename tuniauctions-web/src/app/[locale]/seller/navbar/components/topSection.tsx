@@ -2,6 +2,7 @@
 import { useSellerNavbarStore } from "@/helpers/store/sellerNavbarState";
 import { MdNotifications } from "react-icons/md";
 import Link from "next/link";
+import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
 export default function TopSellerNavbarSection() {
   const isSideBarOpenTest = useSellerNavbarStore(
     (state: any) => state.isSideBarOpen
@@ -9,6 +10,7 @@ export default function TopSellerNavbarSection() {
   const setIsSideBarOpenTest = useSellerNavbarStore(
     (state: any) => state.changeSideBarState
   );
+  const { sellerLocaleStorageData } = useSellerProfileStore();
   return (
     <>
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -79,11 +81,13 @@ export default function TopSellerNavbarSection() {
                   className="cursor-pointer"
                   onClick={() => console.log("Notifications clicked")} // Replace with actual click handler
                 >
-                  {/* Unread Notifications Count */}
-                  <div className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center">
-                    <span className="text-sm font-bold">3</span>{" "}
-                    {/* Example unread count */}
-                  </div>
+                  {sellerLocaleStorageData?.notifications.length! > 0 && (
+                    <div className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center">
+                      <span className="text-sm font-bold">
+                        {sellerLocaleStorageData?.notifications.length}
+                      </span>
+                    </div>
+                  )}
                   <MdNotifications color="white" size={25} />
                 </div>
                 {/* Notification Menu - example content */}
@@ -91,11 +95,10 @@ export default function TopSellerNavbarSection() {
               {/* Profile Picture */}
               <Link href={"/en/seller/profile"} className="relative">
                 <img
-                  onClick={() => console.log("Profile clicked")} // Replace with actual click handler
                   height="40"
                   width="40"
                   className="h-10 w-10 rounded-full cursor-pointer"
-                  src="https://cdn1.vectorstock.com/i/1000x1000/44/70/skyscraper-logo-design-template-vector-21424470.jpg" // Replace with actual profile picture source
+                  src={sellerLocaleStorageData?.businessPicture} // Replace with actual profile picture source
                   alt="User avatar"
                 />
               </Link>

@@ -4,6 +4,7 @@ import { persist } from "zustand/middleware";
 interface sellerProfileStoreType {
   sellerLocaleStorageData: ISellerFrontData | null;
   setSellerLocalStorageData: (data: ISellerFrontData) => void;
+  signoutSeller: () => void;
 }
 
 export const useSellerProfileStore = create<sellerProfileStoreType>()(
@@ -12,6 +13,7 @@ export const useSellerProfileStore = create<sellerProfileStoreType>()(
       sellerLocaleStorageData: null,
       setSellerLocalStorageData: (data) =>
         set({ sellerLocaleStorageData: data }),
+      signoutSeller: () => set({ sellerLocaleStorageData: null }),
     }),
     { name: "Seller" }
   )
