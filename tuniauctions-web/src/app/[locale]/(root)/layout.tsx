@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/app/[locale]/globals.css";
-import LandingPageNavbarComponent from "@/app/[locale]/(root)/navbar/landingpageNavbar";
-import { NextIntlClientProvider } from "next-intl";
 import NavbarComponent from "./navbar/_page";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -14,10 +12,8 @@ export const metadata: Metadata = {
 
 export default function LocaleLayout({
   children,
-  params: { locale },
 }: {
   children: React.ReactNode;
-  params: { locale: string };
 }) {
   return (
     <>

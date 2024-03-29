@@ -1,7 +1,6 @@
 import { connect } from "@/db/dbConfig";
 import bidderModel from "@/models/usersModels/bidderModel";
 import { IBidder } from "@/models/usersModels/types/bidderTypes";
-import { unautherizedError } from "@/serverHelpers/errorHandler";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { NextRequest } from "next/server";
 interface ValidResponse {
@@ -35,8 +34,8 @@ export async function verifyBidderTokens(
         request.cookies.get("refreshBidderToken")?.value || "";
       if (bidderAccount && bidderAccount.refreshToken === refreshToken)
         return { isValid: true, bidderAccount };
-      else return { isValid: false, errorStage: "error Stage 2" };
-    } else return { isValid: false, errorStage: "error Stage 2" };
+      else return { isValid: false, errorStage: "error Stage 1" };
+    } else return { isValid: false, errorStage: "error Stage 77" };
   } catch (err) {
     try {
       const refreshToken =
@@ -56,10 +55,10 @@ export async function verifyBidderTokens(
             { expiresIn: "10m" }
           );
           return { isValid: true, newAccessToken, bidderAccount };
-        } else return { isValid: false, errorStage: "error Stage 2" };
-      } else return { isValid: false, errorStage: "error Stage 2" };
+        } else return { isValid: false, errorStage: "error Stage 3" };
+      } else return { isValid: false, errorStage: "error Stage 4" };
     } catch (refreshErr) {
-      return { isValid: false, errorStage: "error Stage 2" };
+      return { isValid: false, errorStage: "error Stage 5" };
     }
   }
 }

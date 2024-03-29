@@ -14,7 +14,7 @@ export const useBidderProfileStore = create<BidderProfileStoreType>()(
       setBidderLocalStorageData: (data) =>
         set({ bidderLocalStorageData: data }),
       signoutBidder: () =>
-        set((state) => ({
+        set(() => ({
           bidderLocalStorageData: null,
         })),
     }),

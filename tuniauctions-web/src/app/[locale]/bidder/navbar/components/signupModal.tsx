@@ -9,7 +9,6 @@ interface Props {
 }
 export default function SignupModal({ open, setOpen, setLoginOpen }: Props) {
   const [formType, setFormType] = useState("bidder"); // 'bidder' or 'seller'
-
   return (
     <>
       <Modal

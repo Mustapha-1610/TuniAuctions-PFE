@@ -9,7 +9,7 @@ import { BsChatSquareTextFill } from "react-icons/bs";
 import Link from "next/link";
 import { useLocale } from "next-intl";
 
-export default function MyComponent() {
+export default function ListingDetails() {
   const [isChatOpen, setIsChatOpen] = React.useState(false);
   const handleChatClose = () => {
     setIsChatOpen(false);

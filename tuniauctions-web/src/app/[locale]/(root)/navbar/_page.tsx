@@ -1,6 +1,6 @@
-import { useTranslations } from "next-intl";
+"use server";
 import Navbar from "./landingpageNavbar";
 
-export default function NavbarComponent() {
+export default async function NavbarComponent() {
   return <Navbar />;
 }

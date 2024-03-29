@@ -12,10 +12,10 @@ import LanguageChanger from "../../(root)/navbar/components/languageChanger";
 import { useBidderNavbarState } from "@/helpers/store/bidder/bidderNavbarStore";
 import Notifications from "./components/components/notifications";
 import PorfileDropdownMenu from "./components/components/profileDropdownMenu";
+import { resDataType } from "@/serverHelpers/types";
+import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
 
-function Navbar() {
-  const locale = useLocale();
-
+export default function BidderNavbar() {
   const {
     isMobileMenuOpen,
     isProfileMenuOpen,
@@ -24,6 +24,20 @@ function Navbar() {
     setProfileMenuState,
     setNotificationsMenuState,
   } = useBidderNavbarState();
+  const { bidderLocalStorageData, setBidderLocalStorageData } =
+    useBidderProfileStore();
+  const locale = useLocale();
+  async function getData() {
+    const res = await fetch("/api/bidder/getData", {
+      method: "GET",
+    });
+    const resData: resDataType = await res.json();
+    if (resData.bidderFrontData) {
+      console.log("resettingData");
+      setBidderLocalStorageData(resData.bidderFrontData);
+    }
+  }
+
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 px-4 py-4 flex justify-between items-center bg-neutral-900 z-50">
@@ -93,5 +107,3 @@ function Navbar() {
     </>
   );
 }
-
-export default Navbar;

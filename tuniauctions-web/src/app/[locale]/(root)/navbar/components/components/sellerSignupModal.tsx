@@ -1,3 +1,4 @@
+"use client";
 import {
   sellerSignupSchema,
   sellerSignupSchemaType,
@@ -6,15 +7,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IoIosWarning } from "react-icons/io";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
-import { app } from "@/frontHelpers/firebase/firebaseApp";
 import { resDataType } from "@/serverHelpers/types";
 import { useSellerSignupModalTranslations } from "@/app/[locale]/nextIntlTranslations/seller/signupModalTranslations";
+import handleSellerRegistrationLicenseUpload from "@/app/[locale]/bidder/profile/components/handleUploadImage";
 export default function SellerSignupForm() {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
@@ -35,55 +30,24 @@ export default function SellerSignupForm() {
     try {
       setErrorMessage("");
       setSuccessMessage("");
-      const storage = getStorage(app);
-      const folder = "images/sellerRegistrationLicense";
-      const fileName =
-        new Date().getTime() + formData.registrationLicense[0].name;
-      const storageRef = ref(storage, folder + fileName);
-      const uploadTask = uploadBytesResumable(
-        storageRef,
-        formData.registrationLicense[0]
-      );
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-            default:
-              break;
-          }
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            formData.registrationLicense = downloadURL;
-            try {
-              const res = await fetch("/api/seller/signup", {
-                method: "POST",
-                body: JSON.stringify(formData),
-              });
-              const resData: resDataType = await res.json();
-              console.log(resData);
-              if (resData.success) {
-                setSuccessMessage(selTrans.modalText.success);
-              } else {
-                setErrorMessage(selTrans.apiErrors[resData.errorMessage]);
-              }
-            } catch (err) {
-              setErrorMessage("serverErr");
-            }
-          });
-        }
-      );
-    } catch (err) {
-      console.log(err);
-    }
+      formData.registrationLicense =
+        await handleSellerRegistrationLicenseUpload(
+          formData.registrationLicense,
+          "/seller/RegistrationLicense"
+        );
+      console.log("running");
+      const res = await fetch("/api/seller/signup", {
+        method: "POST",
+        body: JSON.stringify(formData),
+      });
+      const resData: resDataType = await res.json();
+      console.log(resData);
+      if (resData.success) {
+        setSuccessMessage(selTrans.modalText.success);
+      } else {
+        setErrorMessage(selTrans.apiErrors[resData.errorMessage]);
+      }
+    } catch (err) {}
   };
   return (
     <>

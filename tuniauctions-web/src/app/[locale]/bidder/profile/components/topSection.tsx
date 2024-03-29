@@ -1,7 +1,7 @@
 "use client";
 import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
 import { TbCameraUp } from "react-icons/tb";
-import handleFirebaseImageUpload from "./handleUploadImage";
+import { handleFirebaseImageUpload } from "./handleUploadImage";
 import { resDataType } from "@/serverHelpers/types";
 
 export default function TopSection() {
@@ -45,10 +45,7 @@ export default function TopSection() {
             src={bidderLocalStorageData?.profilePicture}
             className="shrink-0 object-cover max-w-full aspect-[1] w-[200px] rounded-full"
           />
-          <label
-            className="absolute bottom-0 right-0 bg-white rounded-full p-1 cursor-pointer"
-            onClick={() => {}}
-          >
+          <label className="absolute bottom-0 right-0 bg-white rounded-full p-1 cursor-pointer">
             <TbCameraUp size={26} />
             <input type="file" className="hidden" onChange={handleFileChange} />
           </label>
