@@ -9,7 +9,7 @@ export default function MyComponent() {
             <div className="flex flex-col w-7/12 max-md:ml-0 max-md:w-full">
               <img
                 loading="lazy"
-                srcSet="https://products.shureweb.eu/shure_product_db/product_main_images/files/c25/16a/40-/original/ce632827adec4e1842caa762f10e643d.webp"
+                srcSet="https://www.bell.ca/Styles/wireless/all_languages/all_regions/catalog_images/large/iPhone_15_Pro_Max_Natural_Titanium_lrg2.png"
                 className="grow w-fit object-cover aspect-[1] max-md:mt-10 max-md:max-w-full"
               />
             </div>

@@ -57,9 +57,12 @@ export default function BidderNavbar() {
           </button>
         </div>
         <div className="hidden lg:flex items-center">
-          <a className={"text-lg text-white font-bold leading-none "} href="#">
+          <Link
+            className={"text-lg text-white font-bold leading-none "}
+            href={"/" + locale + "/bidder"}
+          >
             Tuni-Auctions
-          </a>
+          </Link>
         </div>
         <ul
           className={`hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6 ${

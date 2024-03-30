@@ -93,7 +93,7 @@ export default function NavigationItems() {
       <li>
         <Link
           className={"text-sm  flex items-center text-white font-bold"}
-          href={"/" + locale + "/bidder/howitworks"}
+          href={"/" + locale + "/bidder/aboutus"}
         >
           <FaBuildingCircleExclamation size={25} className="mr-2" />
           About us

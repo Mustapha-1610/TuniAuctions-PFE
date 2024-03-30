@@ -1,30 +1,28 @@
-import { useNavbarState } from "@/helpers/store/general/navbarState";
 import Link from "next/link";
 import { FaHome } from "react-icons/fa";
 import { RiAuctionFill } from "react-icons/ri";
-import LanguageChanger from "@/app/[locale]/(root)/navbar/components/languageChanger";
 import { useBidderNavbarState } from "@/helpers/store/bidder/bidderNavbarStore";
 import { FaBuildingCircleExclamation } from "react-icons/fa6";
 import { BsPatchQuestionFill } from "react-icons/bs";
+import { useLocale } from "next-intl";
 
 export default function MobileNavbar() {
-  const {
-    isMobileMenuOpen,
-    isProfileMenuOpen,
-    isNotificationsMenuOpen,
-    setMobileMenuState,
-    setProfileMenuState,
-    setNotificationsMenuState,
-  } = useBidderNavbarState();
+  const { setMobileMenuState } = useBidderNavbarState();
+  const locale = useLocale();
+
   return (
     <>
       <div className="navbar-backdrop fixed inset-0">
         <nav className="sticky h-full left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-neutral-900  overflow-y-auto">
           <div className="flex items-center mb-8">
-            <a className="mr-auto text-gl font-bold  text-white" href="#">
+            <Link
+              className="mr-auto text-gl font-bold  text-white"
+              href={"/" + locale + "/bidder"}
+              onClick={setMobileMenuState}
+            >
               Tuni Auctions
               <svg className="h-12 ml-4" viewBox="0 0 10240 10240"></svg>
-            </a>
+            </Link>
 
             <button className="navbar-close" onClick={setMobileMenuState}>
               <svg
@@ -47,8 +45,8 @@ export default function MobileNavbar() {
             <ul>
               <li className="mb-1" onClick={setMobileMenuState}>
                 <Link
-                  className="block p-4 text-sm font-semibold text-gray-100 hover:bg-blue-50 hover:text-blue-600 rounded flex flex-rows"
-                  href="/"
+                  className="block p-4 text-sm font-semibold text-gray-100 hover:bg-gray-600 hover:text-white rounded flex flex-rows"
+                  href={"/" + locale + "/bidder"}
                 >
                   <FaHome size={20} color="white" className="mr-2" />
                   Home
@@ -56,8 +54,8 @@ export default function MobileNavbar() {
               </li>
               <li className="mb-1" onClick={setMobileMenuState}>
                 <Link
-                  className="block p-4 text-sm font-semibold text-gray-100 hover:bg-blue-50 hover:text-blue-600 rounded flex flex-rows"
-                  href="/auctions"
+                  className="block p-4 text-sm font-semibold text-gray-100 hover:bg-gray-600 hover:text-white rounded flex flex-rows"
+                  href={"/" + locale + "/bidder/auctions"}
                 >
                   <RiAuctionFill size={20} color="white" className="mr-2" />
                   Auctions
@@ -65,8 +63,8 @@ export default function MobileNavbar() {
               </li>
               <li className="mb-1" onClick={setMobileMenuState}>
                 <Link
-                  className="block p-4 text-sm font-semibold text-gray-100 hover:bg-blue-50 hover:text-blue-600 rounded flex flex-rows"
-                  href="/aboutus"
+                  className="block p-4 text-sm font-semibold text-gray-100 hover:bg-gray-600 hover:text-white rounded flex flex-rows"
+                  href={"/" + locale + "/bidder/aboutus"}
                 >
                   <FaBuildingCircleExclamation
                     size={20}
@@ -78,8 +76,8 @@ export default function MobileNavbar() {
               </li>
               <li className="mb-1" onClick={setMobileMenuState}>
                 <Link
-                  className="block p-4 text-sm font-semibold text-gray-100 hover:bg-blue-50 hover:text-blue-600 rounded flex flex-rows"
-                  href="/howitworks"
+                  className="block p-4 text-sm font-semibold text-gray-100 hover:bg-gray-600 hover:text-white rounded flex flex-rows"
+                  href={"/" + locale + "/bidder/howitworks"}
                 >
                   <BsPatchQuestionFill
                     size={20}
