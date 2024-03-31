@@ -1,4 +1,5 @@
 export type Pricing = {
+  _id: string;
   name: string;
   price: number;
   listingsCount: number;

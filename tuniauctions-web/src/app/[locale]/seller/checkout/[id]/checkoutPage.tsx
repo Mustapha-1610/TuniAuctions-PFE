@@ -1,6 +1,10 @@
+import { Pricing } from "@/models/types/pricing";
 import * as React from "react";
 import { FaLock } from "react-icons/fa";
-export default function MyComponent() {
+interface Props {
+  pricing: Pricing;
+}
+export default function CheckoutPage({ pricing }: Props) {
   return (
     <div className="flex ml-2 overflow-hidden bg-white ">
       <div
@@ -23,12 +27,12 @@ export default function MyComponent() {
                   <div className="max-w-full h-px bg-black bg-opacity-50 w-[360px]" />
 
                   <div className="mt-5 text-black font-bold text-2xl">
-                    Package Name
+                    {pricing.name} Package
                   </div>
-                  <div className="mt-4 underline">Total $160.00</div>
+                  <div className="mt-4 underline">Total ${pricing.price}</div>
                   <div className="mt-2 underline">Tax $25.00</div>
                   <div className="mt-4 text-4xl font-bold text-gray-900 text-opacity-80">
-                    Bill Total : $185.00
+                    Bill Total : ${pricing.price + 25}
                   </div>
                 </div>
               </div>
@@ -116,7 +120,7 @@ export default function MyComponent() {
                     read-only
                     className="flex cursor-pointer read-only justify-center items-center px-16 py-3 mt-14 text-base font-semibold text-white bg-black rounded-lg max-md:px-5 max-md:mt-10 max-md:max-w-full"
                   >
-                    Pay $185.00
+                    Pay ${pricing.price + 25}
                   </button>
 
                   <div className="flex self-start mt-4 text-base font-medium text-black underline whitespace-nowrap max-md:ml-2.5 items-center">

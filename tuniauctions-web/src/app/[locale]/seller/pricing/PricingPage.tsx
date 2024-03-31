@@ -22,24 +22,17 @@ export default function Pricing({ pricing }: Props) {
             </div>
 
             <div className="self-center mt-10 w-full max-w-[1340px] max-md:max-w-full">
-              <Link
-                href={"/" + locale + "/seller/checkout"}
-                className="flex gap-5 max-lg:flex-col max-md:gap-0 max-lg:"
-              >
-                {pricing.map((value, index) => {
+              <div className="flex gap-5 max-lg:flex-col max-md:gap-0 max-lg:">
+                {pricing.map((value) => {
                   return (
                     <>
-                      <React.Fragment key={index}>
-                        <PricingBanner
-                          name={value.name}
-                          price={value.price}
-                          key={index}
-                        />
+                      <React.Fragment key={value._id}>
+                        <PricingBanner pricing={value} key={value._id} />
                       </React.Fragment>
                     </>
                   );
                 })}
-              </Link>
+              </div>
             </div>
           </div>
         </div>
