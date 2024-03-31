@@ -5,132 +5,141 @@
   "HomePage": {
     "HeroTitle": "Enchérir avec Joie, Gagner avec Équité",
     "BrowseButton": "Parcourir",
-    "FeaturedAuctions": "Enchères en vedette",
-    "DealsOfThisWeek": "Offres de la semaine",
-    "OpeningBid": "Offre de départ",
-    "UpComingAuctions": "Prochaines enchères",
-    "ViewProductButton": "Voir le produit",
-    "ViewAllButton": "Voir tout",
+    "FeaturedAuctions": "Enchères à la Une",
+    "DealsOfThisWeek": "Offres de la Semaine",
+    "OpeningBid": "Offre Actuelle",
+    "UpComingAuctions": "Prochaines Enchères",
+    "ViewProductButton": "Voir le Produit",
+    "ViewAllButton": "Voir Tout",
     "Categories": "Catégories",
     "Winners": "Gagnants",
-    "LatestAuctionWinners": "Derniers gagnants des enchères"
+    "LatestAuctionWinners": "Derniers Gagnants d'Enchères"
   },
   "Seller": {
     "NavigationSection": {
-      "dashboard": "Tableau de bord",
+      "dashboard": "Tableau de Bord",
       "earnings": "Gains",
-      "auctionListings": "Liste des enchères",
-      "auction'sList": "Liste des enchères",
+      "auctionListings": "Liste des Enchères",
+      "auction'sList": "Liste des Enchères",
       "create": "Créer",
       "deliveries": "Livraisons",
       "delivered": "Livré",
-      "pending": "En attente",
+      "pending": "En Attente",
       "transactions": "Transactions",
       "pricing": "Tarification",
       "documentation": "Documentation",
       "help": "Aide",
       "profile": "Profil",
-      "logout": "Déconnexion"
+      "logout": "Se Déconnecter"
+    },
+    "PricingPage": {
+      "promotionalVideo": "Durée de la Vidéo Promotionnelle",
+      "buyItNowSection": "Section Achetez-le Maintenant",
+      "listingsCount": "Nombre de Listes",
+      "platformFees": "Frais de Plateforme",
+      "genderViews": "Statistiques des Vues par Genre",
+      "socialsSection": "Section Promotion sur les Réseaux Sociaux",
+      "featured": "En Vedette"
     }
   },
   "errors": {
     "authErros": {
-      "accountExists": "Le compte existe déjà !",
-      "missingInputs": "Entrées manquantes !",
+      "accountExists": "Compte déjà existant!",
+      "missingInputs": "Entrées Manquantes!",
       "disabledAccount": "Compte désactivé par les administrateurs",
-      "unverifiedAccount": "Compte en attente de vérification !",
-      "gmailAccount": "Compte uniquement accessible via la connexion Gmail !",
-      "wrongInputs": "Adresse e-mail ou mot de passe incorrect !",
-      "sellerGmailLogin": "Compte vendeur uniquement accessible via la connexion régulière !"
+      "unverifiedAccount": "Compte en attente de vérification!",
+      "gmailAccount": "Compte accessible uniquement via la connexion Gmail!",
+      "wrongInputs": "Adresse e-mail ou mot de passe incorrect!",
+      "sellerGmailLogin": "Compte vendeur accessible uniquement via la connexion régulière!"
     },
     "passwordResetErrors": {
       "success": "Code de réinitialisation envoyé à la boîte de réception",
-      "mismatch": "Code incorrect !",
+      "mismatch": "Code incorrect!",
       "gmailAccount": "Les comptes Gmail ne sont pas valides pour la réinitialisation du mot de passe",
       "userNonExistant": "Si l'e-mail existe, le code de réinitialisation a été envoyé à votre boîte de réception",
       "invalidAccount": "Compte supprimé ou n'existe plus",
-      "unactive": "Code plus disponible, envoyez-en un nouveau dès que possible",
-      "oldPasswordMatch": "Impossible de changer vers l'ancien mot de passe !",
-      "passwordMismatch": "Incompatibilité du mot de passe"
+      "Unactive": "Code plus disponible, veuillez en envoyer un nouveau dès que possible",
+      "oldPasswordMatch": "Impossible de revenir à l'ancien mot de passe!",
+      "passwordMismatch": "Incohérence de Mot de Passe"
     }
   },
   "loginModal": {
-    "signin": "Se connecter",
+    "signin": "Se Connecter",
     "signup": "S'inscrire",
     "submit": "Soumettre",
     "loading": "Chargement ...",
     "or": "OU",
-    "dontHaveAnAccount": "Vous n'avez pas de compte ?",
-    "forgotPassword": "Mot de passe oublié ?",
-    "email": "Adresse e-mail",
-    "password": "Mot de passe",
+    "dontHaveAnAccount": "Vous n'avez pas de compte?",
+    "forgotPassword": "Mot de passe oublié?",
+    "email": "Adresse E-mail",
+    "password": "Mot de Passe",
     "zodErrors": {
-      "email": "E-mail invalide !",
-      "password": "Le mot de passe doit contenir entre 6 et 40 caractères !"
+      "email": "E-mail invalide!",
+      "password": "Le mot de passe doit comporter entre 6 et 40 caractères!"
     }
   },
   "signupModal": {
     "bidderText": "Enchérisseur",
     "sellerText": "Vendeur",
     "signupText": "S'inscrire",
-    "signinText": "Se connecter",
-    "haveAnAccount": "Vous avez déjà un compte ?",
+    "signinText": "Se Connecter",
+    "haveAnAccount": "Vous avez un compte?",
     "bidder": {
-      "success": "Nous avons bien reçu votre demande de création de compte. Veuillez noter que votre compte est actuellement en cours de vérification par nos administrateurs pour garantir l'exactitude des informations fournies. Vous recevrez un e-mail avec plus de détails une fois la vérification terminée. Merci pour votre patience et votre compréhension.",
+      "success": "Nous avons bien reçu votre demande de création d'un nouveau compte. Veuillez noter que votre compte est actuellement en cours de vérification par nos administrateurs pour garantir l'exactitude des informations fournies. Vous recevrez un e-mail avec plus de détails une fois que le processus de vérification sera terminé. Merci pour votre patience et votre compréhension.",
       "fullName": "Prénom",
       "email": "E-mail",
-      "password": "Mot de passe",
+      "password": "Mot de Passe",
       "gender": "Genre",
       "male": "Homme",
       "female": "Femme",
-      "terms": "J'accepte les conditions d'utilisation et la politique de confidentialité.",
+      "terms": "J'accepte les Conditions Générales et la Politique de Confidentialité.",
       "submit": "Soumettre",
       "loading": "Chargement ...",
       "zodErrors": {
-        "fullName": "Le prénom doit contenir entre 6 et 35 caractères !",
-        "email": "E-mail invalide !",
-        "password": "Le mot de passe doit contenir entre 6 et 40 caractères !",
-        "gender": "Vous devez choisir entre masculin ou féminin !"
+        "fullName": "Le Nom Complet doit comporter entre 6 et 35 caractères!",
+        "email": "E-mail invalide!",
+        "password": "Le mot de passe doit comporter entre 6 et 40 caractères!",
+        "gender": "Vous devez choisir homme ou femme!"
       }
     },
     "seller": {
-      "success": "Nous avons bien reçu votre demande de création de compte. Veuillez noter que votre compte est actuellement en cours de vérification par nos administrateurs pour garantir l'exactitude des informations fournies. Vous recevrez un e-mail avec plus de détails une fois la vérification terminée. Merci pour votre patience et votre compréhension.",
-      "name": "Nom de l'entreprise",
+      "success": "Nous avons bien reçu votre demande de création d'un nouveau compte. Veuillez noter que votre compte est actuellement en cours de vérification par nos administrateurs pour garantir l'exactitude des informations fournies. Vous recevrez un e-mail avec plus de détails une fois que le processus de vérification sera terminé. Merci pour votre patience et votre compréhension.",
+      "name": "Nom de l'Entreprise",
       "email": "E-mail",
-      "password": "Mot de passe",
+      "password": "Mot de Passe",
       "description": "Description",
-      "registrationLicense": "Télécharger la licence d'enregistrement",
+      "registrationLicense": "Télécharger la Licence d'Enregistrement",
       "street": "Rue",
       "apply": "Appliquer",
-      "terms": "J'accepte les conditions d'utilisation et la politique de confidentialité.",
+      "terms": "J'accepte les Conditions Générales et la Politique de Confidentialité.",
       "loading": "Chargement ...",
       "zodErrors": {
-        "name": "Le nom de l'entreprise doit contenir entre 3 et 30 caractères !",
-        "email": "E-mail invalide !",
-        "password": "Le mot de passe doit contenir entre 6 et 40 caractères !",
-        "description": "La description de l'entreprise doit comporter plus de 20 caractères !",
-        "registrationLicense": "La licence d'enregistrement est requise pour la demande de compte vendeur !",
-        "street": "Vous devez fournir le nom de la rue !",
-        "city": "Les informations sur la ville sont requises !",
-        "municipality": "Les informations sur la municipalité sont requises !"
+        "name": "Le Nom de l'Entreprise doit comporter entre 3 et 30 caractères!",
+        "email": "E-mail invalide!",
+        "password": "Le mot de passe doit comporter entre 6 et 40 caractères!",
+        "description": "La description de l'entreprise doit comporter plus de 20 caractères!",
+        "registrationLicense": "La licence d'enregistrement est requise pour la demande de compte vendeur!",
+        "street": "Vous devez fournir le nom de la rue!",
+        "city": "Les informations sur la ville sont requises!",
+        "municipality": "Les informations sur la municipalité sont requises!"
       }
     }
   },
   "resetPasswordModal": {
-    "email": "Email",
-    "resetPassword": "Réinitialiser le mot de passe",
+    "email": "E-mail",
+    "resetPassword": "Réinitialiser le Mot de Passe",
     "confirm": "Confirmer",
     "loading": "Chargement ...",
-    "success": "Réinitialisation du mot de passe réussie",
-    "login": "Se connecter",
-    "newPassword": "Nouveau mot de passe",
+    "success": "Mot de passe réinitialisé avec succès",
+    "login": "Se Connecter",
+    "newPassword": "Nouveau Mot de Passe",
     "confirmNewPassword": "Confirmer le nouveau mot de passe",
     "resendCode": "Renvoyer le code dans : 5 minutes",
-    "resend": "Renvoyer le code",
-    "codePlaceholder": "Code de réinitialisation",
+    "resend": "Renvoyer",
+    "codePlaceholder": "Code de Réinitialisation",
     "reset": "Réinitialiser",
     "zodErrors": {
-      "email": "E-mail invalide !"
+      "email": "E-mail invalide!"
     }
   }
 }

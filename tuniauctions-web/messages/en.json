@@ -31,6 +31,15 @@
       "help": "Help",
       "profile": "Profile",
       "logout": "Sign Out"
+    },
+    "PricingPage": {
+      "promotionalVideo": "Promotional video length",
+      "buyItNowSection": "Buy it now section",
+      "listingsCount": "Listings count",
+      "platformFees": "Platform fees",
+      "genderViews": "Gender views statistics",
+      "socialsSection": "Socials promotion section",
+      "featured": "Featured"
     }
   },
   "errors": {
