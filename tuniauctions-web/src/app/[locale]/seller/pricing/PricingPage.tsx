@@ -7,8 +7,6 @@ interface Props {
   pricing: Pricing[];
 }
 export default function Pricing({ pricing }: Props) {
-  const locale = useLocale();
-
   return (
     <>
       <div className="flex ml-2 overflow-hidden bg-white pt-16">
@@ -25,11 +23,9 @@ export default function Pricing({ pricing }: Props) {
               <div className="flex gap-5 max-lg:flex-col max-md:gap-0 max-lg:">
                 {pricing.map((value) => {
                   return (
-                    <>
-                      <React.Fragment key={value._id}>
-                        <PricingBanner pricing={value} key={value._id} />
-                      </React.Fragment>
-                    </>
+                    <React.Fragment key={value._id}>
+                      <PricingBanner pricing={value} key={value._id} />
+                    </React.Fragment>
                   );
                 })}
               </div>

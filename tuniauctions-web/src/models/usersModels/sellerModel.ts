@@ -55,11 +55,11 @@ const sellerSchema = new Schema({
     default: 0,
   },
   packageCount: {
-    standard: {
+    Standard: {
       type: Number,
       default: 0,
     },
-    premium: {
+    Premium: {
       type: Number,
       default: 0,
     },

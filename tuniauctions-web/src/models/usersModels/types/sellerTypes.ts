@@ -12,8 +12,9 @@ interface CreatedAuctions {
 }
 
 interface PackageCount {
-  standard: number;
-  premium: number;
+  Standard: number;
+  Premium: number;
+  [key: string]: number;
 }
 
 interface Deliveries {

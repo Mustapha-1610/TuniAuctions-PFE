@@ -2,7 +2,7 @@ import { PricingResponse } from "@/app/api/utils/getPricings/route";
 import Pricing from "./PricingPage";
 async function fetchPricingData() {
   const data = await fetch(
-    `https://tuniauctions.vercel.app/api/utils/getPricings`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL!}/api/utils/getPricings`,
     {
       method: "GET",
       cache: "no-cache",
