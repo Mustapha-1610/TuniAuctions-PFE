@@ -9,7 +9,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { IoIosWarning } from "react-icons/io";
 import { resDataType } from "@/serverHelpers/types";
 import { useSellerSignupModalTranslations } from "@/app/[locale]/nextIntlTranslations/seller/signupModalTranslations";
-import handleSellerRegistrationLicenseUpload from "@/app/[locale]/bidder/profile/components/handleUploadImage";
+import handleSellerRegistrationLicenseUpload from "@/app/[locale]/firebaseFunctions/handleUploadImage";
 export default function SellerSignupForm() {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");

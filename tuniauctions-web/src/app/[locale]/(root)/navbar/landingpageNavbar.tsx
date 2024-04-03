@@ -4,33 +4,17 @@ import NavigationItems from "./components/navigationItems";
 import MobileNavbar from "./components/mobileNavbar";
 import LoginModal from "./components/loginModal";
 import SignupModal from "./components/signupModal";
-import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
-
-import { ChangeEvent } from "react";
 import { useNavbarState } from "@/helpers/store/general/navbarState";
 import LanguageChanger from "./components/languageChanger";
 
 function Navbar() {
-  const pathname = usePathname();
-  const currentLocale = pathname.split("/")[1];
-  const locales = ["en", "fr", "ar"];
-  const router = useRouter();
-  const changeLanguage = (lang: string) => {
-    const parts = pathname.split("/");
-    const restOfPath = parts.slice(2).join("/");
-    router.replace(`/${lang}/${restOfPath}`);
-  };
-
-  const handleLanguageChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    changeLanguage(e.target.value);
-  };
-
   const {
     setSignupModalState,
     setLoginModalState,
     setMobileMenuState,
     isMobileMenuOpen,
+    isLoginModalOpen,
+    isSignupModalOpen,
   } = useNavbarState();
   return (
     <>
@@ -61,8 +45,8 @@ function Navbar() {
           }`}
         >
           <NavigationItems />
-          <LoginModal />
-          <SignupModal />
+          {isLoginModalOpen && <LoginModal />}
+          {isSignupModalOpen && <SignupModal />}
         </ul>
         <button
           className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-300 hover:bg-gray-100 text-sm text-black font-bold  rounded-xl transition duration-200"
@@ -84,7 +68,7 @@ function Navbar() {
           isMobileMenuOpen ? "" : "hidden"
         }`}
       >
-        <MobileNavbar />
+        {isMobileMenuOpen && <MobileNavbar />}
       </div>
     </>
   );

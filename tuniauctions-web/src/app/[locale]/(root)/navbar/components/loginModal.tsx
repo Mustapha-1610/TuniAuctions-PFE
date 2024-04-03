@@ -33,6 +33,8 @@ export default function LoginModal() {
     setLoginModalState,
     isLoginModalOpen,
     setIsForgotPasswordModalState,
+    isGenderSignupFormModalOpen,
+    isForgotPasswordModalOpen,
   } = useNavbarState();
   const loginSchema = z.object({
     email: z.string().email(textTranslations("zodErrors.email")),
@@ -198,8 +200,10 @@ export default function LoginModal() {
           </div>
         </div>
       </Modal>
-      <GoogleGenderSignupModal credentialsToken={googleCredentialsToken} />
-      <ForgotPassword />
+      {isGenderSignupFormModalOpen && (
+        <GoogleGenderSignupModal credentialsToken={googleCredentialsToken} />
+      )}
+      {isForgotPasswordModalOpen && <ForgotPassword />}
     </>
   );
 }
