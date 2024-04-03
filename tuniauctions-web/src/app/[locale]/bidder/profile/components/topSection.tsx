@@ -1,7 +1,7 @@
 "use client";
 import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
 import { TbCameraUp } from "react-icons/tb";
-import { handleFirebaseImageUpload } from "./handleUploadImage";
+import { handleFirebaseImageUpload } from "@/app/[locale]/firebaseFunctions/handleUploadImage";
 import { resDataType } from "@/serverHelpers/types";
 
 export default function TopSection() {

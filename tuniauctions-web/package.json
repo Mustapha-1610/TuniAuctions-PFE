@@ -18,6 +18,7 @@
     "@types/nodemailer": "^6.4.14",
     "antd": "^5.14.2",
     "bcryptjs": "^2.4.3",
+    "crypto-js": "^4.2.0",
     "firebase": "^10.9.0",
     "jsonwebtoken": "^9.0.2",
     "mongob": "^1.0.0",
@@ -27,6 +28,7 @@
     "next-intl": "^3.9.1",
     "nodemailer": "^6.9.12",
     "react": "^18",
+    "react-datepicker": "^6.6.0",
     "react-dom": "^18",
     "react-highlight-words": "^0.20.0",
     "react-icons": "^5.0.1",
@@ -37,8 +39,10 @@
     "zustand": "^4.5.1"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
     "@types/node": "^20",
     "@types/react": "^18",
+    "@types/react-datepicker": "^6.2.0",
     "@types/react-dom": "^18",
     "@types/react-highlight-words": "^0.16.7",
     "autoprefixer": "^10.0.1",

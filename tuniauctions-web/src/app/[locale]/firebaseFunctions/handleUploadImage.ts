@@ -95,3 +95,49 @@ export default function handleSellerRegistrationLicenseUpload(
     );
   });
 }
+
+export async function handleMultipleFirebaseImageUpload(
+  files: FileList | null,
+  storageName: string
+): Promise<string[]> {
+  if (!files || files.length === 0) {
+    throw new Error("No files provided for upload.");
+  }
+
+  const storage = getStorage(app);
+  const folder = storageName;
+
+  const uploadPromises: Promise<string>[] = [];
+
+  Array.from(files).forEach((file) => {
+    const fileName = new Date().getTime() + file.name;
+    const storageRef = ref(storage, folder + fileName);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    const uploadPromise = new Promise<string>((resolve, reject) => {
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // Handle upload progress if needed
+        },
+        (error) => {
+          console.log(error);
+          reject(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref)
+            .then((downloadURL) => {
+              resolve(downloadURL);
+            })
+            .catch((error) => {
+              reject(error);
+            });
+        }
+      );
+    });
+
+    uploadPromises.push(uploadPromise);
+  });
+
+  return Promise.all(uploadPromises);
+}

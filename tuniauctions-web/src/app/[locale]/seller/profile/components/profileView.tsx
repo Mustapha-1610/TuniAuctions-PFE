@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import IsEditingProfile from "./editProfile";
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
-import { handleFirebaseImageUpload } from "@/app/[locale]/bidder/profile/components/handleUploadImage";
+import { handleFirebaseImageUpload } from "@/app/[locale]/firebaseFunctions/handleUploadImage";
 import { resDataType } from "@/serverHelpers/types";
 
 export default function SellerProfile() {
