@@ -15,6 +15,8 @@ function Navbar() {
     isMobileMenuOpen,
     isLoginModalOpen,
     isSignupModalOpen,
+    isForgotPasswordModalOpen,
+    isGenderSignupFormModalOpen,
   } = useNavbarState();
   return (
     <>

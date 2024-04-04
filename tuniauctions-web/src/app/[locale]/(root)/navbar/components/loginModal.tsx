@@ -88,11 +88,10 @@ export default function LoginModal() {
       console.log(resData);
       if (resData.success) {
         setBidderLocalStorageData(resData.bidderFrontData!);
-        router.push("/" + locale + "/bidder/profile");
         setLoginModalState();
+        router.push("/" + locale + "/bidder/profile");
       }
       if (resData.errorMessage === "redirectSignup") {
-        setLoginModalState();
         setGoogleCredentialsToken(credentialToken);
         setGenderSignupFormModalState();
       } else {
@@ -181,7 +180,7 @@ export default function LoginModal() {
               <span className="text-blue-500">
                 <u
                   className="cursor-pointer ml-1"
-                  onClick={() => (setLoginModalState(), setSignupModalState())}
+                  onClick={() => setSignupModalState()}
                 >
                   {textTranslations("signup")}
                 </u>
@@ -190,7 +189,6 @@ export default function LoginModal() {
             <div className="text-sm  text-neutral-600 cursor-pointer">
               <u
                 onClick={() => {
-                  setLoginModalState();
                   setIsForgotPasswordModalState();
                 }}
               >
@@ -203,7 +201,7 @@ export default function LoginModal() {
       {isGenderSignupFormModalOpen && (
         <GoogleGenderSignupModal credentialsToken={googleCredentialsToken} />
       )}
-      {isForgotPasswordModalOpen && <ForgotPassword />}
+      <ForgotPassword />
     </>
   );
 }

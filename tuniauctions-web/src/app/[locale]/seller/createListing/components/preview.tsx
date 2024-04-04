@@ -2,6 +2,13 @@
 import { Modal } from "antd";
 import { auctionListingFormType, pictureFiles } from "./types";
 import { useEffect, useState } from "react";
+import { FaMoneyBillWave } from "react-icons/fa";
+import { GiTakeMyMoney } from "react-icons/gi";
+import { LuCalendarDays } from "react-icons/lu";
+import { MdOutlineGroups } from "react-icons/md";
+import { FaRegCircleCheck } from "react-icons/fa6";
+import moment from "moment";
+
 interface Props {
   isPreviewModalOpen: boolean;
   setPreviewModalOpen: (isPreviewModalOpen: boolean) => void;
@@ -10,6 +17,7 @@ interface Props {
 }
 interface images {
   promotionalImage: string;
+  productImages: string[];
 }
 export default function PreviewModal({
   isPreviewModalOpen,
@@ -19,15 +27,17 @@ export default function PreviewModal({
 }: Props) {
   const [images, setImages] = useState<images>({
     promotionalImage: "",
+    productImages: [],
   });
   useEffect(() => {
-    const handleFileInputChange = () => {
-      console.log("working");
-      const file = picture.promotionalPicture;
-      if (file) {
+    const hanleLoadingImages = () => {
+      console.log(picture);
+      const promotionalImageFile = picture.promotionalPicture;
+      const productPictures = picture.productPictures;
+      if (promotionalImageFile) {
         const reader = new FileReader();
 
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(promotionalImageFile);
         reader.onload = (e) => {
           setImages((prev) => ({
             ...prev,
@@ -35,10 +45,29 @@ export default function PreviewModal({
           }));
         };
       }
-      console.log(images);
+      if (productPictures) {
+        const readerPromises: Promise<string>[] = [];
+        for (let i = 0; i < productPictures.length; i++) {
+          const reader = new FileReader();
+          readerPromises.push(
+            new Promise<string>((resolve) => {
+              reader.onload = (e) => {
+                resolve(e.target?.result as string);
+              };
+              reader.readAsDataURL(productPictures[i]);
+            })
+          );
+        }
+        Promise.all(readerPromises).then((dataUrls) => {
+          setImages((prev) => ({
+            ...prev,
+            productImages: dataUrls,
+          }));
+        });
+      }
     };
 
-    handleFileInputChange();
+    hanleLoadingImages();
   }, []);
   return (
     <>
@@ -55,77 +84,96 @@ export default function PreviewModal({
             <div className="px-14 py-5 w-full bg-white border border-white border-solid max-w-[1540px] max-md:px-5 max-md:max-w-full">
               <div className="flex gap-5 max-md:flex-col max-md:gap-0">
                 <div className="flex flex-col w-7/12 max-md:ml-0 max-md:w-full">
-                  <img
-                    loading="lazy"
-                    srcSet={images.promotionalImage}
-                    className="grow w-fit object-cover aspect-[1] max-md:mt-10 max-md:max-w-full"
-                  />
+                  {images.productImages && (
+                    <img
+                      loading="lazy"
+                      srcSet={images.productImages[2]}
+                      className="grow w-fit object-cover aspect-[1] max-md:mt-10 max-md:max-w-full"
+                    />
+                  )}
                 </div>
                 <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
                   <div className="flex flex-col items-center self-stretch pt-9 pr-6 pb-6 pl-1.5 my-auto w-full font-bold text-black bg-white border border-white border-solid max-md:pr-5 max-md:mt-10 max-md:max-w-full">
                     <div className="text-3xl text-center whitespace-nowrap">
-                      Iphone 15 Example{" "}
+                      {auctionListing.title}
                     </div>
                     <div className="self-stretch mt-8 text-sm max-md:max-w-full">
-                      Unveiled in September 2023, the iPhone 15 boasts a
-                      familiar design with a powerful A16 Bionic chip at its
-                      core. Its beautiful Super Retina XDR OLED display,
-                      available in 6.1-inch and 6.7-inch versions,{" "}
+                      {auctionListing.description}
                     </div>
-                    <div className="flex flex-col mt-6 max-w-full text-xl bg-white rounded-2xl w-[620px]">
-                      <div className="flex items-center justify-center px-14 text-5xl font-bold text-center text-black whitespace-nowrap bg-white rounded-full border border-black border-solid h-[156px] stroke-[1px] w-[156px] max-md:px-5 max-md:text-4xl mx-auto">
-                        4:49
-                      </div>
-
-                      <div className="flex gap-1 px-2 py-3 mt-6 text-base font-bold text-center text-black bg-white  border-solid max-md:w-full">
-                        <div>Balance:</div>
-                        <div>$300</div>
-                      </div>
-
-                      <div className="flex flex-col gap-3 self-stretch  text-base font-bold text-center text-black max-md:flex-wrap max-md:mt-6 max-md:max-w-full">
-                        <input
-                          type="text"
-                          placeholder="Place Bid"
-                          className=" justify-center items-center px-2 py-6 bg-zinc-300 rounded-[41px] max-md:px-5 text-center"
-                        />
-
-                        <div className="grow justify-center items-center px-16 py-6 whitespace-nowrap bg-slate-900 w-fit max-md:px-5 text-white">
-                          Submit
+                    <div className="flex flex-col mt-6 max-w-full text-xl bg-white rounded-2xl  w-[620px]">
+                      <div className="flex gap-5 justify-between px-4 py-5  w-full whitespace-nowrap bg-white border border-black border-solid max-md:flex-wrap max-md:max-w-full">
+                        <div className="flex gap-2.5">
+                          <FaMoneyBillWave
+                            className="shrink-0  h-[54px] w-[42px]"
+                            size={20}
+                            color="black"
+                          />
+                          <div className="flex-auto my-auto">Orignal price</div>
+                        </div>
+                        <div className="my-auto text-right">
+                          {auctionListing.originalPrice}$
                         </div>
                       </div>
-
-                      <div className="mt-4 text-base font-bold text-center text-black whitespace-nowrap">
-                        Bidding History
-                      </div>
-                      <div className="flex overflow-hidden relative flex-col justify-center self-stretch py-1 border border-black border-solid leading-[150%] min-h-[141px] stroke-[1px] stroke-black max-md:max-w-full">
-                        <div className="flex relative flex-col px-1.5 py-1  max-md:max-w-full">
-                          <div className="flex gap-5 justify-between py-1.5 w-full border border-white border-solid max-md:flex-wrap max-md:max-w-full">
-                            <div className="flex gap-4 text-base font-medium whitespace-nowrap text-neutral-900">
-                              <img
-                                loading="lazy"
-                                srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&"
-                                className="shrink-0 w-14 aspect-square"
-                              />
-                              <div className="my-auto">$1,300</div>
-                            </div>
-                            <div className="flex-auto my-auto text-sm text-slate-500">
-                              12/19/2023, 6:45 PM
-                            </div>
-                          </div>
-                          <div className="flex gap-5 justify-between py-1.5 w-full border border-white border-solid max-md:flex-wrap max-md:max-w-full">
-                            <div className="flex gap-4 text-base font-medium whitespace-nowrap text-neutral-900">
-                              <img
-                                loading="lazy"
-                                srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&"
-                                className="shrink-0 w-14 aspect-square"
-                              />
-                              <div className="my-auto">$1,300</div>
-                            </div>
-                            <div className="flex-auto my-auto text-sm text-slate-500">
-                              12/19/2023, 6:45 PM
-                            </div>
-                          </div>
+                      {/* table item */}
+                      <div className="flex gap-5 justify-between px-4 py-5  w-full whitespace-nowrap bg-white border border-black border-solid max-md:flex-wrap max-md:max-w-full">
+                        <div className="flex gap-2.5">
+                          <GiTakeMyMoney
+                            className="shrink-0  h-[54px] w-[42px]"
+                            size={40}
+                            color="black"
+                          />
+                          <div className="flex-auto my-auto">Opening Bid</div>
                         </div>
+                        <div className="my-auto text-right">
+                          {auctionListing.openingBid}$
+                        </div>
+                      </div>
+                      {/* table item */}
+                      <div className="flex gap-5 justify-between px-4 py-5  w-full whitespace-nowrap bg-white border border-black border-solid max-md:flex-wrap max-md:max-w-full">
+                        <div className="flex gap-2.5">
+                          <LuCalendarDays
+                            className="shrink-0  h-[54px] w-[42px]"
+                            size={20}
+                            color="black"
+                          />
+                          <div className="flex-auto my-auto">Starting Date</div>
+                        </div>
+                        <div className="my-auto text-right">
+                          <p>
+                            {moment(auctionListing.startingDate).format(
+                              "MMMM DD, YYYY HH:mm"
+                            )}
+                          </p>
+                        </div>
+                      </div>
+                      {/* table item */}
+                      <div className="flex gap-5 justify-between px-4 py-5  w-full whitespace-nowrap bg-white border border-black border-solid max-md:flex-wrap max-md:max-w-full">
+                        <div className="flex gap-2.5">
+                          <MdOutlineGroups
+                            className="shrink-0  h-[54px] w-[42px]"
+                            size={20}
+                            color="black"
+                          />
+                          <div className="flex-auto my-auto">Participants</div>
+                        </div>
+                        <div className="my-auto text-right">
+                          0/{auctionListing.minParticipatingBidders}
+                        </div>
+                      </div>
+                      {/* table item */}
+                      <div className="flex gap-5 justify-between px-4 py-5  w-full whitespace-nowrap bg-white border border-black border-solid max-md:flex-wrap max-md:max-w-full">
+                        <div className="flex gap-2.5">
+                          <FaRegCircleCheck
+                            className="shrink-0  h-[54px] w-[42px]"
+                            size={20}
+                            color="black"
+                          />
+                          <div className="flex-auto my-auto">Guarantee</div>
+                        </div>
+                        <div className="my-auto text-right">1 Year</div>
+                      </div>
+                      <div className="z-10 justify-center items-center px-16 py-9 -mb-1 text-center text-white whitespace-nowrap rounded-none border border-black border-solid bg-gray-700 max-md:px-5 max-md:max-w-full">
+                        Participate
                       </div>
                     </div>
                   </div>
@@ -153,9 +201,7 @@ export default function PreviewModal({
                       className="mt-1 max-w-full aspect-[1.59] w-[253px]"
                     />
                     <div className="self-stretch px-14 pt-2 pb-3.5 mt-6 text-xl bg-white rounded-lg border border-white border-solid max-md:pr-6 max-md:pl-5 max-md:max-w-full">
-                      Save big! Get 20% off everything. Shop now and treat
-                      yourself to the things you love at amazing prices. This
-                      offer wont last long, so dont miss out!
+                      {auctionListing.buyItNowSection.promotionalDescription}
                     </div>
                   </div>
                 </div>

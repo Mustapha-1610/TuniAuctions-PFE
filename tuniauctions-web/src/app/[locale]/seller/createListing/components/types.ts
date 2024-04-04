@@ -20,8 +20,9 @@ export interface auctionListingFormType {
   productPictures: string[];
   productCategory: string;
   originalPrice: number;
-  startingDate: string;
+  startingDate: Date;
   guarentee: string;
+  minParticipatingBidders: number;
 }
 export interface pictureFiles {
   promotionalPicture: File | undefined;

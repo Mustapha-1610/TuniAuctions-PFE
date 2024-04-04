@@ -18,8 +18,11 @@ export default function GoogleGenderSignupModal({ credentialsToken }: Props) {
   //
   const router = useRouter();
   //
-  const { isGenderSignupFormModalOpen, setGenderSignupFormModalState } =
-    useNavbarState();
+  const {
+    isGenderSignupFormModalOpen,
+    setGenderSignupFormModalState,
+    setLoginModalState,
+  } = useNavbarState();
   //
   const { setBidderLocalStorageData } = useBidderProfileStore();
   //
@@ -53,8 +56,9 @@ export default function GoogleGenderSignupModal({ credentialsToken }: Props) {
       const resData = await res.json();
       if (resData.success) {
         setBidderLocalStorageData(resData.bidderFrontData);
-        router.push("/" + locale + "/bidder/profile");
         setGenderSignupFormModalState();
+        setLoginModalState();
+        router.push("/" + locale + "/bidder/profile");
       }
     } catch (err) {
       console.log(err);
