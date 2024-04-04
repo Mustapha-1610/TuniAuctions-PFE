@@ -13,6 +13,8 @@ import BuyItNowSection from "./components/buyItNowSection";
 import ProductCategorySection from "./components/productCategorySection";
 import DatePickingSection from "./components/datePicker";
 import ProductPicturesSection from "./components/productPicturesSection";
+import TitleAndDescriptionSection from "./components/titleAndDescriptionSection";
+import GuarenteeSection from "./components/guarenteeSection";
 
 export default function PremiumListing() {
   const [socialsSectionForm, setSocialsSectionForm] =
@@ -65,38 +67,10 @@ export default function PremiumListing() {
     <>
       <div className="mb-6">
         <ProductCategorySection setAuctionListingForm={setAuctionListingForm} />
-        <label
-          htmlFor="name"
-          className="block text-sm font-medium text-gray-700 mt-4"
-        >
-          Title
-        </label>
-        <input
-          type="text"
-          onChange={handleAuctionListingFormChange}
-          name="title"
-          className="mt-1 p-2 w-full border border-gray-300 rounded-md "
+        <TitleAndDescriptionSection
+          handleAuctionListingFormChange={handleAuctionListingFormChange}
+          setAuctionListingForm={setAuctionListingForm}
         />
-        <div className="mb-6">
-          <label
-            htmlFor="description"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Description
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            onChange={(e) => {
-              setAuctionListingForm((prev) => ({
-                ...prev,
-                description: e.target.value,
-              }));
-            }}
-            rows={3}
-            className="mt-1 p-2 w-full border border-gray-300 rounded-md "
-          ></textarea>
-        </div>
       </div>
 
       <div className="flex flex-col mb-6 sm:flex-row gap-4">
@@ -160,46 +134,7 @@ export default function PremiumListing() {
         />
       </div>
       <DatePickingSection setAuctionListingForm={setAuctionListingForm} />
-      <div className="w-full sm:w-1/2 mb-2 sm:mb-0">
-        <label
-          htmlFor="guarantee"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Guarantee
-        </label>
-        <div className="flex mt-1">
-          <input
-            type="number"
-            placeholder="Guanretee Length"
-            min="0"
-            onBlur={(e) => {
-              setAuctionListingForm((previous) => ({
-                ...previous,
-                guarentee: {
-                  ...previous.guarentee,
-                  length: parseInt(e.target.value),
-                },
-              }));
-            }}
-            className="p-2 w-22 border border-gray-300 rounded-md mr-1"
-          />
-          <select
-            className="p-2 border border-gray-300 rounded-md"
-            onBlur={(e) => {
-              setAuctionListingForm((previous) => ({
-                ...previous,
-                guarentee: {
-                  ...previous.guarentee,
-                  period: e.target.value,
-                },
-              }));
-            }}
-          >
-            <option value="Years">Years</option>
-            <option value="Months">Months</option>
-          </select>
-        </div>
-      </div>
+      <GuarenteeSection setAuctionListingForm={setAuctionListingForm} />
       <SocialsSection
         setSocialsSectionForm={setSocialsSectionForm}
         socialsSectionForm={socialsSectionForm}

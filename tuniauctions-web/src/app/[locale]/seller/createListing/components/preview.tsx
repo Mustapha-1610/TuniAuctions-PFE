@@ -38,6 +38,7 @@ export default function PreviewModal({
     promotionalImage: "",
     productImages: [],
   });
+  const [selectedImage, setSelectedImage] = useState("");
   const getYouTubeVideoId = (url: string) => {
     const match = url.match(
       /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^/]+\/[^/]+\/|(?:v|e(?:mbed)?)\/|[^#]*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
@@ -75,13 +76,13 @@ export default function PreviewModal({
           );
         }
         Promise.all(readerPromises).then((dataUrls) => {
+          dataUrls.reverse();
           setImages((prev) => ({
             ...prev,
             productImages: dataUrls,
           }));
         });
       }
-      console.log(auctionListing);
     };
 
     hanleLoadingImages();
@@ -105,10 +106,26 @@ export default function PreviewModal({
                   {images.productImages && (
                     <img
                       loading="lazy"
-                      srcSet={images.productImages[2]}
-                      className="grow w-fit object-cover aspect-[1] max-md:mt-10 max-md:max-w-full"
+                      src={selectedImage || images.productImages[0]}
+                      className="grow w-fit object-contain aspect-[1] max-md:mt-10 max-md:max-w-full"
+                      alt="Product"
                     />
                   )}
+                  <div className="flex justify-center mt-4">
+                    {images.productImages.map((image, index) => (
+                      <div
+                        key={index}
+                        className="w-12 h-12 mx-1 cursor-pointer rounded-full bg-gray-300"
+                        onClick={() => {
+                          setSelectedImage(images.productImages[index]);
+                        }}
+                        style={{
+                          backgroundImage: `url(${image})`,
+                          backgroundSize: "cover",
+                        }}
+                      ></div>
+                    ))}
+                  </div>
                 </div>
                 <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
                   <div className="flex flex-col items-center self-stretch pt-9 pr-6 pb-6 pl-1.5 my-auto w-full font-bold text-black bg-white border border-white border-solid max-md:pr-5 max-md:mt-10 max-md:max-w-full">
@@ -126,7 +143,9 @@ export default function PreviewModal({
                             size={20}
                             color="black"
                           />
-                          <div className="flex-auto my-auto">Orignal price</div>
+                          <div className="flex-auto my-auto">
+                            Original price
+                          </div>
                         </div>
                         <div className="my-auto text-right">
                           {auctionListing.originalPrice}$
@@ -202,9 +221,8 @@ export default function PreviewModal({
                         </div>
                         {auctionListing.guarentee.length > 0 && (
                           <div className="my-auto text-right">
-                            {auctionListing.guarentee.length +
-                              " " +
-                              auctionListing.guarentee.period}
+                            {auctionListing.guarentee.length}{" "}
+                            {auctionListing.guarentee.period}
                           </div>
                         )}
                       </div>
@@ -237,7 +255,7 @@ export default function PreviewModal({
                   </div>
                 </div>
 
-                <div className="flex flex-col ml-5 w-[44%] max-md:ml-0 max-md:w-full">
+                <div className="flex flex-col ml-5 w-[44%] max-md:ml-0 max-md:w-full mt-12">
                   <div className="flex flex-col items-center self-stretch px-1.5 pt-7 pb-5 my-auto w-full text-center text-black bg-white border border-black border-solid max-md:mt-10 max-md:max-w-full">
                     <div className="text-3xl">Buy It Now</div>
                     <img
