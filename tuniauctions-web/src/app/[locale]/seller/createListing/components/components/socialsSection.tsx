@@ -12,11 +12,13 @@ import { useState } from "react";
 interface Props {
   setSocialsSectionForm: (value: any) => void;
   socialsSectionForm: SocialSelectionForm;
+  setAuctionListingForm: (value: any) => void;
 }
 
 export default function SocialsSection({
   setSocialsSectionForm,
   socialsSectionForm,
+  setAuctionListingForm,
 }: Props) {
   const [show, setShow] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<string>();
@@ -26,6 +28,7 @@ export default function SocialsSection({
       ...prevState,
       [name]: value,
     }));
+    console.log(socialsSectionForm);
   };
   const handleItemClick = (platform: string) => {
     setSelectedItem(platform);
@@ -82,7 +85,11 @@ export default function SocialsSection({
               <div className="flex flex-rows mt-4">
                 <button
                   onClick={() => {
-                    setShow(false);
+                    setAuctionListingForm((prev: any) => ({
+                      ...prev,
+                      socialsSection: socialsSectionForm,
+                    })),
+                      setShow(false);
                   }}
                   className="px-4 py-2 bg-blue-500 text-white rounded-md mr-4 hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
                 >

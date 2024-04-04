@@ -30,7 +30,10 @@ export default function PremiumListing() {
         promotionalDescription: "",
         promotionalPicture: "",
       },
-      guarentee: "",
+      guarentee: {
+        length: 0,
+        period: "",
+      },
       description: "",
       openingBid: 0,
       originalPrice: 0,
@@ -157,37 +160,50 @@ export default function PremiumListing() {
         />
       </div>
       <DatePickingSection setAuctionListingForm={setAuctionListingForm} />
-      <div className="mb-6">
+      <div className="w-full sm:w-1/2 mb-2 sm:mb-0">
         <label
-          htmlFor="regularPrice"
+          htmlFor="guarantee"
           className="block text-sm font-medium text-gray-700"
         >
-          Regular Price
+          Guarantee
         </label>
-        <input
-          type="text"
-          id="regularPrice"
-          name="regularPrice"
-          className="mt-1 p-2 w-full border border-gray-300 rounded-md "
-        />
-      </div>
-      <div className="mb-6">
-        <label
-          htmlFor="salePrice"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Sale Price
-        </label>
-        <input
-          type="text"
-          id="salePrice"
-          name="salePrice"
-          className="mt-1 p-2 w-full border border-gray-300 rounded-md "
-        />
+        <div className="flex mt-1">
+          <input
+            type="number"
+            placeholder="Guanretee Length"
+            min="0"
+            onBlur={(e) => {
+              setAuctionListingForm((previous) => ({
+                ...previous,
+                guarentee: {
+                  ...previous.guarentee,
+                  length: parseInt(e.target.value),
+                },
+              }));
+            }}
+            className="p-2 w-22 border border-gray-300 rounded-md mr-1"
+          />
+          <select
+            className="p-2 border border-gray-300 rounded-md"
+            onBlur={(e) => {
+              setAuctionListingForm((previous) => ({
+                ...previous,
+                guarentee: {
+                  ...previous.guarentee,
+                  period: e.target.value,
+                },
+              }));
+            }}
+          >
+            <option value="Years">Years</option>
+            <option value="Months">Months</option>
+          </select>
+        </div>
       </div>
       <SocialsSection
         setSocialsSectionForm={setSocialsSectionForm}
         socialsSectionForm={socialsSectionForm}
+        setAuctionListingForm={setAuctionListingForm}
       />
 
       <div className="mb-6">

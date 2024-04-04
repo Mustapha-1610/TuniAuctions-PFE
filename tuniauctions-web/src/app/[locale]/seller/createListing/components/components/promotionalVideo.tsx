@@ -49,6 +49,10 @@ export default function PromotionalVideoSection({
       const youtubeVideoDuration = hours * 3600 + minutes * 60 + seconds;
       if (youtubeVideoDuration > videoLength) {
         setErrMessage("Video longer than required");
+        setAuctionListingForm((prev: any) => ({
+          ...prev,
+          promotionalVideo: "",
+        }));
       } else {
         setSuccessMessage("Video added successfully");
         setAuctionListingForm((prev: any) => ({

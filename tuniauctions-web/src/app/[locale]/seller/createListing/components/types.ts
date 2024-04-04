@@ -21,7 +21,10 @@ export interface auctionListingFormType {
   productCategory: string;
   originalPrice: number;
   startingDate: Date;
-  guarentee: string;
+  guarentee: {
+    length: number;
+    period: string;
+  };
   minParticipatingBidders: number;
 }
 export interface pictureFiles {
