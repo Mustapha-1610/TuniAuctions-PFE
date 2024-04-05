@@ -31,7 +31,7 @@ export default function ProductPicturesSection({ setPictureFiles }: Props) {
         successMessage && setSuccessMessage("");
       } else if (files.length < 1) {
         setErrorMessage("Please select at least 1 image.");
-        setSelectedImages(files);
+        setSelectedImages(null);
         setPictureFiles((prevState: any) => ({
           ...prevState,
           productPictures: null,
@@ -41,7 +41,7 @@ export default function ProductPicturesSection({ setPictureFiles }: Props) {
         setSelectedImages(files);
         setPictureFiles((prevState: any) => ({
           ...prevState,
-          productPictures: null,
+          productPictures: files,
         }));
         setErrorMessage(null);
         setSuccessMessage("Images selected successfully.");

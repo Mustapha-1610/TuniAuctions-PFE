@@ -10,11 +10,11 @@ export interface premiumAuctionListingPreviewType {
   title: string;
   description: string;
   openingBid: number;
-  participatingBidders: number;
   socialsSection: SocialSelectionForm;
   buyItNowSection: {
     promotionalPicture: string;
     promotionalDescription: string;
+    storeLink: string;
   };
   promotionalVideo: string;
   productPictures: string[];
@@ -57,10 +57,10 @@ export interface standardAuctionListingPreviewType {
   title: string;
   description: string;
   openingBid: number;
-  participatingBidders: number;
   buyItNowSection: {
     promotionalPicture: string;
     promotionalDescription: string;
+    storeLink: string;
   };
   promotionalVideo: string;
   productPictures: string[];

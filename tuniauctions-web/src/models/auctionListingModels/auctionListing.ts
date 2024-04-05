@@ -20,7 +20,7 @@ const auctionListingSchema = new Schema({
     type: String,
     required: true,
   },
-  pictures: {
+  productPictures: {
     type: [String],
   },
   platformFees: {
@@ -31,7 +31,7 @@ const auctionListingSchema = new Schema({
     type: Number,
     required: true,
   },
-  startDate: {
+  startingDate: {
     type: Date,
     required: true,
   },
@@ -42,11 +42,11 @@ const auctionListingSchema = new Schema({
     type: Number,
     default: 0,
   },
-  warranty: {
+  guarantee: {
     type: String,
   },
-  buyItNow: {
-    promotionalImage: {
+  buyItNowSection: {
+    promotionalPicture: {
       type: String,
       required: true,
     },
@@ -60,11 +60,30 @@ const auctionListingSchema = new Schema({
     },
   },
   socialsSection: {
-    type: [String],
+    facebook: {
+      type: String,
+    },
+    instagram: {
+      type: String,
+    },
+    youtube: {
+      type: String,
+    },
+    twitter: {
+      type: String,
+    },
+    tiktok: {
+      type: String,
+    },
   },
   featured: {
     type: Boolean,
     default: false,
+  },
+  minParticipatingBidders: {
+    type: Number,
+    required: true,
+    default: 0,
   },
   totalViews: {
     type: [String],
@@ -87,6 +106,10 @@ const auctionListingSchema = new Schema({
   },
   biddingRoomId: {
     type: String,
+  },
+  sellerId: {
+    type: Schema.Types.ObjectId,
+    required: true,
   },
 });
 

@@ -11,7 +11,7 @@ export default function DatePickingSection({ setAuctionListingForm }: Props) {
     setSelectedDate(date);
     setAuctionListingForm((prev: any) => ({
       ...prev,
-      startingDate: date,
+      startingDate: new Date(date),
     }));
   };
   return (

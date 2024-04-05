@@ -74,7 +74,12 @@ export default function PromotionalVideoAndButItNowSection({
           </div>
 
           {"buyItNowSection" in auctionListing && (
-            <div className="flex flex-col ml-5 w-[44%] max-md:ml-0 max-md:w-full mt-12">
+            <a
+              className="flex flex-col ml-5 w-[44%] max-md:ml-0 max-md:w-full mt-12"
+              href={auctionListing.buyItNowSection.storeLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <div className="flex flex-col items-center self-stretch px-1.5 pt-7 pb-5 my-auto w-full text-center text-black bg-white border border-black border-solid max-md:mt-10 max-md:max-w-full">
                 <div className="text-3xl font-bold">Buy It Now</div>
                 <img
@@ -86,7 +91,7 @@ export default function PromotionalVideoAndButItNowSection({
                   {auctionListing.buyItNowSection.promotionalDescription}
                 </div>
               </div>
-            </div>
+            </a>
           )}
         </div>
       </div>

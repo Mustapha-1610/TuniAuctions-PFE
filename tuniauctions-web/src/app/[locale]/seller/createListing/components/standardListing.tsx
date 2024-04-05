@@ -24,6 +24,7 @@ export default function StandardListing() {
       buyItNowSection: {
         promotionalDescription: "",
         promotionalPicture: "",
+        storeLink: "",
       },
       guarentee: {
         length: 0,
@@ -32,7 +33,6 @@ export default function StandardListing() {
       description: "",
       openingBid: 0,
       originalPrice: 0,
-      participatingBidders: 0,
       productCategory: "",
       productPictures: [""],
       promotionalVideo: "",
@@ -92,7 +92,12 @@ export default function StandardListing() {
             type="text"
             id="stock1"
             name="originalPrice"
-            onChange={handleAuctionListingFormChange}
+            onChange={(e) => {
+              setAuctionListingForm((prev) => ({
+                ...prev,
+                originalPrice: parseInt(e.target.value),
+              }));
+            }}
             className="mt-1 p-2 w-full border border-gray-300 rounded-md "
           />
         </div>
@@ -107,7 +112,12 @@ export default function StandardListing() {
             type="text"
             id="stock2"
             name="openingBid"
-            onChange={handleAuctionListingFormChange}
+            onChange={(e) => {
+              setAuctionListingForm((prev) => ({
+                ...prev,
+                openingBid: parseInt(e.target.value),
+              }));
+            }}
             className="mt-1 p-2 w-full border border-gray-300 rounded-md "
           />
         </div>
@@ -125,7 +135,12 @@ export default function StandardListing() {
           name="minParticipatingBidders"
           value={auctionListingForm.minParticipatingBidders}
           className="mt-1 p-2 w-52 border border-gray-300 rounded-md "
-          onChange={handleAuctionListingFormChange}
+          onChange={(e) => {
+            setAuctionListingForm((prev) => ({
+              ...prev,
+              minParticipatingBidders: parseInt(e.target.value),
+            }));
+          }}
         />
       </div>
       <DatePickingSection setAuctionListingForm={setAuctionListingForm} />

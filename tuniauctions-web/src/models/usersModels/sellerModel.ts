@@ -40,10 +40,10 @@ const sellerSchema = new Schema({
   },
   createdAuctions: {
     upcoming: {
-      type: [String],
+      type: [Schema.Types.ObjectId],
     },
     finished: {
-      type: [String],
+      type: [Schema.Types.ObjectId],
     },
   },
   earnnings: {
@@ -65,8 +65,8 @@ const sellerSchema = new Schema({
     },
   },
   deliveries: {
-    pending: [String],
-    delivered: [String],
+    pending: [Schema.Types.ObjectId],
+    delivered: [Schema.Types.ObjectId],
   },
   strikes: {
     type: Number,

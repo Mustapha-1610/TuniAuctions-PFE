@@ -1,10 +1,4 @@
 import React, { useState } from "react";
-import {
-  basicAuctionListingPreviewType,
-  premiumAuctionListingPreviewType,
-  standardAuctionListingPreviewType,
-} from "@/app/[locale]/seller/createListing/components/types";
-
 interface Props {
   setPictureFiles: (value: any) => void;
   setAuctionListingForm: (value: any) => void;
@@ -43,7 +37,7 @@ const BuyItNowSection: React.FC<Props> = ({
   return (
     <div className="mb-6 flex justify-center items-center">
       <div className="w-full sm:w-1/2 mb-2 sm:mb-0">
-        <div className="flex flex-col items-center justify-center h-60 border border-2 border-gray-300 rounded-md">
+        <div className="flex flex-col items-center justify-center h-68 border border-2 border-gray-300 rounded-md">
           <p>Buy it now section</p>
           <label
             htmlFor="fileInput"
@@ -64,7 +58,19 @@ const BuyItNowSection: React.FC<Props> = ({
               Image selected : {selectedFile.name}
             </p>
           )}
-
+          <input
+            className="text-xs text-gray-500 mt-1 border border-black rounded-lg w-96 resize-none h-10"
+            placeholder="Store Link"
+            onChange={(e) => {
+              setAuctionListingForm((prev: any) => ({
+                ...prev,
+                buyItNowSection: {
+                  ...prev.buyItNowSection,
+                  storeLink: e.target.value,
+                },
+              }));
+            }}
+          ></input>
           <textarea
             className="text-xs text-gray-500 mt-1 border border-black rounded-lg w-96 resize-none"
             rows={6}
