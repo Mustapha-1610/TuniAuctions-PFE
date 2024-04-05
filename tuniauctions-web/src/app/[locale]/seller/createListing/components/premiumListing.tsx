@@ -3,10 +3,9 @@ import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import {
   SocialSelectionForm,
-  auctionListingFormType,
+  premiumAuctionListingPreviewType,
   pictureFiles,
 } from "./types";
-import PreviewModal from "./preview";
 import PromotionalVideoSection from "./components/promotionalVideo";
 import SocialsSection from "./components/socialsSection";
 import BuyItNowSection from "./components/buyItNowSection";
@@ -15,6 +14,7 @@ import DatePickingSection from "./components/datePicker";
 import ProductPicturesSection from "./components/productPicturesSection";
 import TitleAndDescriptionSection from "./components/titleAndDescriptionSection";
 import GuarenteeSection from "./components/guarenteeSection";
+import PremiumPreviewModal from "./previewModals/premiumPreviewModal";
 
 export default function PremiumListing() {
   const [socialsSectionForm, setSocialsSectionForm] =
@@ -26,7 +26,7 @@ export default function PremiumListing() {
       tiktok: "",
     });
   const [auctionListingForm, setAuctionListingForm] =
-    useState<auctionListingFormType>({
+    useState<premiumAuctionListingPreviewType>({
       title: "",
       buyItNowSection: {
         promotionalDescription: "",
@@ -153,7 +153,7 @@ export default function PremiumListing() {
         </button>
       </div>
       {isPreviewModalOpen && (
-        <PreviewModal
+        <PremiumPreviewModal
           isPreviewModalOpen={isPreviewModalOpen}
           setPreviewModalOpen={setPreviewModalOpen}
           auctionListing={auctionListingForm}
