@@ -4,8 +4,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { Server } from "socket.io";
 import cookieParser from "cookie-parser";
-import bidderNameSpaceLogic from "bidder/bidderSocketLogic";
-import sellerNameSpaceLogic from "seller/sellerSocketLogic";
+import bidderNameSpaceLogic from "./bidder/bidderSocketLogic";
+import sellerNameSpaceLogic from "./seller/sellerSocketLogic";
 
 dotenv.config();
 const app = express();

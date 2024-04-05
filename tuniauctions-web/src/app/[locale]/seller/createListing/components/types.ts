@@ -36,7 +36,6 @@ export interface basicAuctionListingPreviewType {
   title: string;
   description: string;
   openingBid: number;
-  participatingBidders: number;
   promotionalVideo: string;
   productPictures: string[];
   productCategory: string;

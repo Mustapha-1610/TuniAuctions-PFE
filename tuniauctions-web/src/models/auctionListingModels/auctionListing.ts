@@ -48,15 +48,12 @@ const auctionListingSchema = new Schema({
   buyItNowSection: {
     promotionalPicture: {
       type: String,
-      required: true,
     },
     promotionalDescription: {
       type: String,
-      required: true,
     },
     storeLink: {
       type: String,
-      required: true,
     },
   },
   socialsSection: {

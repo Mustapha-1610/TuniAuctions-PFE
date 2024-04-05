@@ -1,22 +1,47 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BasicListing from "./components/basicListing";
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
 import StandardListing from "./components/standardListing";
 import PremiumListing from "./components/premiumListing";
 
 export default function CreateForm() {
+  const { sellerLocaleStorageData } = useSellerProfileStore();
+  const [selectedPackage, setSelectedPackage] = useState("Basic");
   const [displayedComponents, setDisplayedComponents] = useState(
     <BasicListing />
   );
+
+  useEffect(() => {
+    if (
+      selectedPackage !== "Basic" &&
+      sellerLocaleStorageData?.packageCount[selectedPackage]! <= 0
+    ) {
+      setSelectedPackage("Basic");
+      setDisplayedComponents(<BasicListing />);
+    }
+  }, [sellerLocaleStorageData, selectedPackage]);
+
   function handleComponentChange(e: any) {
-    e.target.value === "Basic"
-      ? setDisplayedComponents(<BasicListing />)
-      : e.target.value === "Standard"
-      ? setDisplayedComponents(<StandardListing />)
-      : setDisplayedComponents(<PremiumListing />);
+    const selectedValue = e.target.value;
+    setSelectedPackage(selectedValue);
+    if (sellerLocaleStorageData?.packageCount[selectedValue]! > 0) {
+      switch (selectedValue) {
+        case "Standard":
+          setDisplayedComponents(<StandardListing />);
+          break;
+        case "Premium":
+          setDisplayedComponents(<PremiumListing />);
+          break;
+        default:
+          setDisplayedComponents(<BasicListing />);
+      }
+    } else {
+      setSelectedPackage("Basic");
+      setDisplayedComponents(<BasicListing />);
+    }
   }
-  const { sellerLocaleStorageData } = useSellerProfileStore();
+
   return (
     <div className="flex ml-2 overflow-hidden bg-white pt-16">
       <div
@@ -37,6 +62,7 @@ export default function CreateForm() {
             <select
               className="mt-1 p-2 w-full border border-gray-300 rounded-md"
               onChange={handleComponentChange}
+              value={selectedPackage}
             >
               <option value="Basic">Basic</option>
               <option

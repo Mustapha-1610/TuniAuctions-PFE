@@ -9,7 +9,7 @@ import {
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
-const premiumListingSchema = z.object({
+const standardSchemaListing = z.object({
   title: z.string(),
   buyItNowSection: z.object({
     promotionalDescription: z.string(),
@@ -26,28 +26,22 @@ const premiumListingSchema = z.object({
   productCategory: z.string(),
   productPictures: z.array(z.string()).min(1).max(3),
   promotionalVideo: z.string(),
-  socialsSection: z.object({
-    facebook: z.string().optional(),
-    instagram: z.string().optional(),
-    youtube: z.string().optional(),
-    twitter: z.string().optional(),
-    tiktok: z.string().optional(),
-  }),
   startingDate: z.string(),
   minParticipatingBidders: z.number().nonnegative(),
 });
-type premiumListingType = z.infer<typeof premiumListingSchema>;
+type premiumListingType = z.infer<typeof standardSchemaListing>;
 export async function POST(request: NextRequest) {
   try {
     await connect();
 
     const reqBody = await request.json();
-    const isSchemaValid = premiumListingSchema.safeParse(reqBody);
+    const isSchemaValid = standardSchemaListing.safeParse(reqBody);
     if (isSchemaValid.success) {
       const res = await verifySellerTokens(request);
       if (res.isValid) {
         const seller = res.sellerAccount;
-        if (seller.packageCount.Premium > 0) {
+        console.log(seller.packageCount.Standard < 0);
+        if (seller.packageCount.Standard > 0) {
           const {
             title,
             buyItNowSection,
@@ -58,12 +52,11 @@ export async function POST(request: NextRequest) {
             productCategory,
             productPictures,
             promotionalVideo,
-            socialsSection,
             startingDate,
             minParticipatingBidders,
           }: premiumListingType = reqBody;
           const newAuction = await auctionListingModel.create({
-            listingType: "Premium",
+            listingType: "Standard",
             title,
             description,
             category: productCategory,
@@ -75,13 +68,12 @@ export async function POST(request: NextRequest) {
             openingBid,
             guarantee: guarentee.length + " " + guarentee.period,
             buyItNowSection,
-            socialsSection,
             featured: true,
             minParticipatingBidders,
             sellerId: seller._id,
           });
           seller.createdAuctions.upcoming.push(newAuction._id);
-          seller.packageCount.Premium -= 1;
+          seller.packageCount.Standard -= 1;
           await seller.save();
           const sellerFrontData = returnSellerFrontData(seller);
           return NextResponse.json({ success: true, sellerFrontData });

@@ -23,6 +23,7 @@ import {
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
+import OriginalAndStartingBiddingPriceWithMinParticipatingBiddersSection from "./components/originalAndStartingBidPricesAndMinParticipatingBidders";
 
 export default function PremiumListing() {
   const [socialsSectionForm, setSocialsSectionForm] =
@@ -43,7 +44,7 @@ export default function PremiumListing() {
       },
       guarentee: {
         length: 0,
-        period: "",
+        period: "Year(s)",
       },
       description: "",
       openingBid: 0,
@@ -146,69 +147,10 @@ export default function PremiumListing() {
             setPictureFiles={setPictureFiles}
           />
 
-          <div className="mb-6 flex flex-col sm:flex-row gap-4">
-            <div className="w-full sm:w-1/2 mb-2 sm:mb-0">
-              <label
-                htmlFor="stock1"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Original Price
-              </label>
-              <input
-                type="text"
-                id="stock1"
-                name="originalPrice"
-                onChange={(e) => {
-                  setAuctionListingForm((prev) => ({
-                    ...prev,
-                    originalPrice: parseInt(e.target.value),
-                  }));
-                }}
-                className="mt-1 p-2 w-full border border-gray-300 rounded-md "
-              />
-            </div>
-            <div className="w-full sm:w-1/2">
-              <label
-                htmlFor="stock2"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Opening Bid
-              </label>
-              <input
-                type="text"
-                id="stock2"
-                name="openingBid"
-                onChange={(e) => {
-                  setAuctionListingForm((prev) => ({
-                    ...prev,
-                    openingBid: parseInt(e.target.value),
-                  }));
-                }}
-                className="mt-1 p-2 w-full border border-gray-300 rounded-md "
-              />
-            </div>
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="regularPrice"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Minimum Participating Bidders
-            </label>
-            <input
-              type="text"
-              id="regularPrice"
-              name="minParticipatingBidders"
-              value={auctionListingForm.minParticipatingBidders}
-              className="mt-1 p-2 w-52 border border-gray-300 rounded-md "
-              onChange={(e) => {
-                setAuctionListingForm((prev) => ({
-                  ...prev,
-                  minParticipatingBidders: parseInt(e.target.value),
-                }));
-              }}
-            />
-          </div>
+          <OriginalAndStartingBiddingPriceWithMinParticipatingBiddersSection
+            auctionListingForm={auctionListingForm}
+            setAuctionListingForm={setAuctionListingForm}
+          />
           <DatePickingSection setAuctionListingForm={setAuctionListingForm} />
           <GuarenteeSection setAuctionListingForm={setAuctionListingForm} />
           <SocialsSection

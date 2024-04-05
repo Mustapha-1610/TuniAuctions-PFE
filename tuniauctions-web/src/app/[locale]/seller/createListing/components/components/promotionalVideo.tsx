@@ -74,7 +74,7 @@ export default function PromotionalVideoSection({
           onBlur={handleVideoLengthCheck}
         />
 
-        <p className="text-xs text-gray-500 mt-1">Maximum 60s</p>
+        <p className="text-xs text-gray-500 mt-1">Maximum {videoLength}s</p>
         {errMessage && (
           <div className="flex items-center mt-1">
             <MdErrorOutline className="text-red-500 mr-1" />
