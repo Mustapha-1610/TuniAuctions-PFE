@@ -77,6 +77,8 @@ export async function POST(request: NextRequest) {
           sellerId: seller._id,
         });
         seller.createdAuctions.upcoming.push(newAuction._id);
+        seller.packageCount.Premium -= 1;
+        await seller.save();
         const sellerFrontData = returnSellerFrontData(seller);
         return NextResponse.json({ success: true, sellerFrontData });
       } else {
