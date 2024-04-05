@@ -1,7 +1,54 @@
+import {
+  basicAuctionListingPreviewType,
+  premiumAuctionListingPreviewType,
+  standardAuctionListingPreviewType,
+} from "@/app/[locale]/seller/createListing/components/types";
+import { useState } from "react";
+
 interface Props {
   setPictureFiles: (prev: any) => void;
+  auctionListing:
+    | basicAuctionListingPreviewType
+    | standardAuctionListingPreviewType
+    | premiumAuctionListingPreviewType;
 }
+
 export default function ProductPicturesSection({ setPictureFiles }: Props) {
+  const [selectedImages, setSelectedImages] = useState<FileList | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  const handleImageSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files) {
+      if (files.length > 3) {
+        setSelectedImages(null);
+        setPictureFiles((prevState: any) => ({
+          ...prevState,
+          productPictures: null,
+        }));
+        setErrorMessage("You can only select a maximum of 3 images.");
+        successMessage && setSuccessMessage("");
+      } else if (files.length < 1) {
+        setErrorMessage("Please select at least 1 image.");
+        setSelectedImages(files);
+        setPictureFiles((prevState: any) => ({
+          ...prevState,
+          productPictures: null,
+        }));
+        successMessage && setSuccessMessage("");
+      } else {
+        setSelectedImages(files);
+        setPictureFiles((prevState: any) => ({
+          ...prevState,
+          productPictures: null,
+        }));
+        setErrorMessage(null);
+        setSuccessMessage("Images selected successfully.");
+      }
+    }
+  };
+
   return (
     <>
       <div className="w-full sm:w-1/2 mb-2 sm:mb-0">
@@ -15,16 +62,24 @@ export default function ProductPicturesSection({ setPictureFiles }: Props) {
               className="hidden"
               type="file"
               multiple={true}
-              onChange={(e) => {
-                setPictureFiles((prevState: any) => ({
-                  ...prevState,
-                  productPictures: e.target.files,
-                }));
-              }}
+              accept="image/jpeg, image/png, image/gif , image/webp"
+              onChange={handleImageSelection}
             />
           </label>
 
-          <p className="text-xs text-gray-500 mt-1">Maximum 3</p>
+          {errorMessage && (
+            <p className="text-xs text-red-500 mt-1">{errorMessage}</p>
+          )}
+          {successMessage && (
+            <p className="text-gl text-green-500 mt-1">{successMessage}</p>
+          )}
+          {selectedImages && (
+            <ul className="mt-3 text-sm text-gray-700 font-serif italic">
+              {Array.from(selectedImages).map((file, index) => (
+                <li key={index}> {index + 1 + ". " + file.name}</li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </>

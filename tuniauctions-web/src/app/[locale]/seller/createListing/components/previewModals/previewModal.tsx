@@ -1,17 +1,25 @@
 "use client";
 import { Modal } from "antd";
-import { premiumAuctionListingPreviewType, pictureFiles } from "../types";
+import {
+  premiumAuctionListingPreviewType,
+  pictureFiles,
+  basicAuctionListingPreviewType,
+  standardAuctionListingPreviewType,
+} from "../types";
 import ProductInformationsSection from "./components/productInformationsSection";
 import PromotionalVideoAndButItNowSection from "./components/promotionalVideoAndBuyItNowSection";
 import SellerPromotionSection from "./components/sellerPromotionSection";
 interface Props {
   isPreviewModalOpen: boolean;
   setPreviewModalOpen: (isPreviewModalOpen: boolean) => void;
-  auctionListing: premiumAuctionListingPreviewType;
+  auctionListing:
+    | basicAuctionListingPreviewType
+    | standardAuctionListingPreviewType
+    | premiumAuctionListingPreviewType;
   picture: pictureFiles;
 }
 
-export default function PremiumPreviewModal({
+export default function PreviewModal({
   isPreviewModalOpen,
   setPreviewModalOpen,
   picture,

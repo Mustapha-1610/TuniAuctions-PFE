@@ -1,4 +1,9 @@
 import React, { useState } from "react";
+import {
+  basicAuctionListingPreviewType,
+  premiumAuctionListingPreviewType,
+  standardAuctionListingPreviewType,
+} from "@/app/[locale]/seller/createListing/components/types";
 
 interface Props {
   setPictureFiles: (value: any) => void;
@@ -10,6 +15,8 @@ const BuyItNowSection: React.FC<Props> = ({
   setPictureFiles,
 }) => {
   const [charCount, setCharCount] = useState(0);
+  const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
+
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputValue = e.target.value;
     setCharCount(inputValue.length);
@@ -22,6 +29,17 @@ const BuyItNowSection: React.FC<Props> = ({
       },
     }));
   };
+
+  const handleFileSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    setSelectedFile(file);
+
+    setPictureFiles((prevState: any) => ({
+      ...prevState,
+      promotionalPicture: file,
+    }));
+  };
+
   return (
     <div className="mb-6 flex justify-center items-center">
       <div className="w-full sm:w-1/2 mb-2 sm:mb-0">
@@ -36,14 +54,16 @@ const BuyItNowSection: React.FC<Props> = ({
               id="fileInput"
               className="hidden"
               type="file"
-              onChange={(e) => {
-                setPictureFiles((prevState: any) => ({
-                  ...prevState,
-                  promotionalPicture: e.target.files?.[0],
-                }));
-              }}
+              accept="image/jpeg, image/png, image/gif , image/webp"
+              onChange={handleFileSelection}
             />
           </label>
+
+          {selectedFile && (
+            <p className="text-sm text-gray-700 font-serif italic">
+              Image selected : {selectedFile.name}
+            </p>
+          )}
 
           <textarea
             className="text-xs text-gray-500 mt-1 border border-black rounded-lg w-96 resize-none"
@@ -56,7 +76,6 @@ const BuyItNowSection: React.FC<Props> = ({
             <span className="text-xs text-gray-500">
               {charCount}/250 characters
             </span>
-            {/* You can also add logic to change color or display warning when approaching the character limit */}
           </div>
         </div>
       </div>

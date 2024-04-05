@@ -14,7 +14,7 @@ import DatePickingSection from "./components/datePicker";
 import ProductPicturesSection from "./components/productPicturesSection";
 import TitleAndDescriptionSection from "./components/titleAndDescriptionSection";
 import GuarenteeSection from "./components/guarenteeSection";
-import PremiumPreviewModal from "./previewModals/premiumPreviewModal";
+import PreviewModal from "./previewModals/previewModal";
 
 export default function PremiumListing() {
   const [socialsSectionForm, setSocialsSectionForm] =
@@ -74,7 +74,10 @@ export default function PremiumListing() {
       </div>
 
       <div className="flex flex-col mb-6 sm:flex-row gap-4">
-        <ProductPicturesSection setPictureFiles={setPictureFiles} />
+        <ProductPicturesSection
+          setPictureFiles={setPictureFiles}
+          auctionListing={auctionListingForm}
+        />
         <PromotionalVideoSection
           videoLength={60}
           setAuctionListingForm={setAuctionListingForm}
@@ -153,7 +156,7 @@ export default function PremiumListing() {
         </button>
       </div>
       {isPreviewModalOpen && (
-        <PremiumPreviewModal
+        <PreviewModal
           isPreviewModalOpen={isPreviewModalOpen}
           setPreviewModalOpen={setPreviewModalOpen}
           auctionListing={auctionListingForm}

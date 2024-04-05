@@ -39,8 +39,8 @@ export default function GuarenteeSection({ setAuctionListingForm }: Props) {
               }));
             }}
           >
-            <option value="Years">Years</option>
-            <option value="Months">Months</option>
+            <option value="Year(s)">Year(s)</option>
+            <option value="Month(s)">Month(s)</option>
           </select>
         </div>
       </div>

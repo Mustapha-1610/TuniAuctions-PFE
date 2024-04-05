@@ -3,9 +3,8 @@ import { useEffect, useState } from "react";
 import {
   basicAuctionListingPreviewType,
   premiumAuctionListingPreviewType,
-  previewDisplayImages,
   standardAuctionListingPreviewType,
-} from "../../types";
+} from "@/app/[locale]/seller/createListing/components/types";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { GiCancel, GiTakeMyMoney } from "react-icons/gi";
 import { LuCalendarDays } from "react-icons/lu";

@@ -1,107 +1,99 @@
+"use client";
+import { useState } from "react";
+import "react-datepicker/dist/react-datepicker.css";
+import {
+  SocialSelectionForm,
+  premiumAuctionListingPreviewType,
+  pictureFiles,
+  standardAuctionListingPreviewType,
+} from "./types";
+import PromotionalVideoSection from "./components/promotionalVideo";
+import SocialsSection from "./components/socialsSection";
+import BuyItNowSection from "./components/buyItNowSection";
+import ProductCategorySection from "./components/productCategorySection";
+import DatePickingSection from "./components/datePicker";
+import ProductPicturesSection from "./components/productPicturesSection";
+import TitleAndDescriptionSection from "./components/titleAndDescriptionSection";
+import GuarenteeSection from "./components/guarenteeSection";
+import PreviewModal from "./previewModals/previewModal";
+
 export default function StandardListing() {
+  const [auctionListingForm, setAuctionListingForm] =
+    useState<standardAuctionListingPreviewType>({
+      title: "",
+      buyItNowSection: {
+        promotionalDescription: "",
+        promotionalPicture: "",
+      },
+      guarentee: {
+        length: 0,
+        period: "",
+      },
+      description: "",
+      openingBid: 0,
+      originalPrice: 0,
+      participatingBidders: 0,
+      productCategory: "",
+      productPictures: [""],
+      promotionalVideo: "",
+      startingDate: new Date(),
+      minParticipatingBidders: 0,
+    });
+
+  const [isPreviewModalOpen, setPreviewModalOpen] = useState<boolean>(false);
+  const [pictureFiles, setPictureFiles] = useState<pictureFiles>({
+    promotionalPicture: undefined,
+    productPictures: null,
+  });
+  function handleAuctionListingFormChange(
+    e: React.ChangeEvent<HTMLInputElement>
+  ) {
+    const { name, value } = e.target;
+    setAuctionListingForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
   return (
     <>
       <div className="mb-6">
-        <div className="w-full sm:w-1/2 sm:mr-2">
-          <label
-            htmlFor="category1"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            Select Category 1
-          </label>
-          <select
-            id="category1"
-            name="category1"
-            className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
-          >
-            <option value="">Category 1</option>
-            <option value="">Category 2</option>
-            <option value="">Category 3</option>
-          </select>
-        </div>
-        <label
-          htmlFor="name"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Name
-        </label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+        <ProductCategorySection setAuctionListingForm={setAuctionListingForm} />
+        <TitleAndDescriptionSection
+          handleAuctionListingFormChange={handleAuctionListingFormChange}
+          setAuctionListingForm={setAuctionListingForm}
         />
       </div>
 
       <div className="flex flex-col mb-6 sm:flex-row gap-4">
-        <div className="w-full sm:w-1/2 mb-2 sm:mb-0">
-          <div className="flex flex-col items-center justify-center h-52 border-dashed border-2 border-gray-300 rounded-md">
-            <p>Drag & drop product image here</p>
-            <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md">
-              Upload Image
-            </button>
-            <p className="text-xs text-gray-500 mt-1">Maximum 3</p>
-          </div>
-        </div>
-        <div className="w-full sm:w-1/2">
-          <div className="flex flex-col items-center justify-center h-52 border-dashed border-2 border-gray-300 rounded-md">
-            <p>Drag & drop product image here</p>
-            <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md">
-              Upload Image
-            </button>
-            <p className="text-xs text-gray-500 mt-1">Maximum 3</p>
-          </div>
-        </div>
+        <ProductPicturesSection
+          setPictureFiles={setPictureFiles}
+          auctionListing={auctionListingForm}
+        />
+        <PromotionalVideoSection
+          videoLength={60}
+          setAuctionListingForm={setAuctionListingForm}
+        />
       </div>
-      <div className="mb-6 flex justify-center items-center h-full">
-        {" "}
-        {/* Updated parent container */}
-        <div className="w-full sm:w-1/2 mb-2 sm:mb-0 item-center justify-center">
-          {" "}
-          {/* Item to be centered */}
-          <div className="flex flex-col items-center justify-center h-60 border-dashed border-2 border-gray-300 rounded-md">
-            <p>Buy it now section</p>
+      <BuyItNowSection
+        setAuctionListingForm={setAuctionListingForm}
+        setPictureFiles={setPictureFiles}
+      />
 
-            <button className="mt-2 mb-2 bg-blue-500 text-white px-4 py-2 rounded-md">
-              Upload Image
-            </button>
-            <textarea
-              className="text-xs text-gray-500 mt-1 border border-black rounded-gl"
-              rows={6}
-              cols={70}
-              placeholder="Buy It Now Description"
-            ></textarea>
-          </div>
-        </div>
-      </div>
-
-      <div className="mb-6">
-        <label
-          htmlFor="description"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Description
-        </label>
-        <textarea
-          id="description"
-          name="description"
-          rows={3}
-          className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
-        ></textarea>
-      </div>
       <div className="mb-6 flex flex-col sm:flex-row gap-4">
         <div className="w-full sm:w-1/2 mb-2 sm:mb-0">
           <label
             htmlFor="stock1"
             className="block text-sm font-medium text-gray-700"
           >
-            Stock
+            Original Price
           </label>
           <input
             type="text"
             id="stock1"
-            name="stock1"
-            className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+            name="originalPrice"
+            onChange={handleAuctionListingFormChange}
+            className="mt-1 p-2 w-full border border-gray-300 rounded-md "
           />
         </div>
         <div className="w-full sm:w-1/2">
@@ -109,64 +101,55 @@ export default function StandardListing() {
             htmlFor="stock2"
             className="block text-sm font-medium text-gray-700"
           >
-            Stock
+            Opening Bid
           </label>
           <input
             type="text"
             id="stock2"
-            name="stock2"
-            className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+            name="openingBid"
+            onChange={handleAuctionListingFormChange}
+            className="mt-1 p-2 w-full border border-gray-300 rounded-md "
           />
         </div>
-      </div>
-
-      <div className="mb-6">
-        <label
-          htmlFor="tags"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Tags
-        </label>
-        <input
-          type="text"
-          id="tags"
-          name="tags"
-          className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
-        />
       </div>
       <div className="mb-6">
         <label
           htmlFor="regularPrice"
           className="block text-sm font-medium text-gray-700"
         >
-          Regular Price
+          Minimum Participating Bidders
         </label>
         <input
           type="text"
           id="regularPrice"
-          name="regularPrice"
-          className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+          name="minParticipatingBidders"
+          value={auctionListingForm.minParticipatingBidders}
+          className="mt-1 p-2 w-52 border border-gray-300 rounded-md "
+          onChange={handleAuctionListingFormChange}
         />
       </div>
-      <div className="mb-6">
-        <label
-          htmlFor="salePrice"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Sale Price
-        </label>
-        <input
-          type="text"
-          id="salePrice"
-          name="salePrice"
-          className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
-        />
-      </div>
-      <div className="mb-6">
-        <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
+      <DatePickingSection setAuctionListingForm={setAuctionListingForm} />
+      <GuarenteeSection setAuctionListingForm={setAuctionListingForm} />
+
+      <div className="mb-6 mt-6">
+        <button className="bg-blue-500 mr-2 text-white px-4 py-2 rounded-md">
           Save product
         </button>
+        <button
+          className="bg-gray-500 text-white px-4 py-2 rounded-md"
+          onClick={() => setPreviewModalOpen(true)}
+        >
+          Preview listing
+        </button>
       </div>
+      {isPreviewModalOpen && (
+        <PreviewModal
+          isPreviewModalOpen={isPreviewModalOpen}
+          setPreviewModalOpen={setPreviewModalOpen}
+          auctionListing={auctionListingForm}
+          picture={pictureFiles}
+        />
+      )}
     </>
   );
 }
