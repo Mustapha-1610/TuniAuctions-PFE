@@ -1,8 +1,29 @@
 import { FaEye } from "react-icons/fa";
 import { GiTakeMyMoney } from "react-icons/gi";
 import { IoMdCreate } from "react-icons/io";
+import { auctionListingsChildrenProps } from "../page";
+import { useEffect, useState } from "react";
 
-export default function StatisticsSection() {
+export default function StatisticsSection({
+  auctionListings,
+}: auctionListingsChildrenProps) {
+  const [totalViews, setTotalViews] = useState<number>(0);
+  const [totalParticipatingBidders, setTotalParticipatingBidders] =
+    useState<number>(0);
+  useEffect(() => {
+    function calculateTotal() {
+      let views = 0;
+      let bidders = 0;
+      auctionListings &&
+        auctionListings.map((value, index) => {
+          views += value.totalViews;
+          bidders = +value.participatingBidders;
+        });
+      setTotalViews(views);
+      setTotalParticipatingBidders(bidders);
+    }
+    calculateTotal();
+  }, [auctionListings]);
   return (
     <>
       <div className="mb-4 px-2 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -10,7 +31,7 @@ export default function StatisticsSection() {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <span className="text-2xl sm:text-3xl leading-none font-bold text-white">
-                8
+                {String(auctionListings?.length)}
               </span>
               <h3 className="text-base text-white font-normal ">
                 Total Created Auctions
@@ -25,7 +46,7 @@ export default function StatisticsSection() {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <span className="text-2xl sm:text-3xl leading-none font-bold text-white">
-                2,340
+                {totalViews}
               </span>
               <h3 className="text-base text-white font-normal ">Total Views</h3>
             </div>
@@ -38,7 +59,7 @@ export default function StatisticsSection() {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <span className="text-2xl sm:text-3xl leading-none font-bold text-white">
-                3900
+                {totalParticipatingBidders}
               </span>
               <h3 className="text-base text-white font-normal ">
                 Total Participating Bidders

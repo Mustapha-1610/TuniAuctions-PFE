@@ -35,8 +35,12 @@ export default function AuctionListingsPage() {
             <h1 className="text-2xl font-bold mb-2 mr-2">Auction Listings</h1>
           </div>
 
-          <StatisticsSection />
-          <StatisticsTable auctionListings={listings} />
+          {listings && (
+            <>
+              <StatisticsSection auctionListings={listings} />
+              <StatisticsTable auctionListings={listings} />
+            </>
+          )}
         </div>
       </div>
     </>

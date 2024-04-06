@@ -34,6 +34,8 @@ export function returnSellerCreatedListingsFrontData(
         totalViews: value.totalViews,
         uniqueViews: value.uniqueViews,
         _id: value._id,
+        participatingBidders: value.participatingBidders,
+        winningBidder: value.winningBidder,
       });
     });
   }

@@ -1,4 +1,5 @@
 import { ObjectId } from "mongodb";
+import mongoose, { Document } from "mongoose";
 
 type BuyItNowSection = {
   promotionalPicture?: string;
@@ -14,7 +15,7 @@ type SocialsSection = {
   tiktok?: string;
 };
 
-export type AuctionListingType = {
+export interface AuctionListingType extends Document {
   listingType?: string;
   title: string;
   description: string;
@@ -31,17 +32,24 @@ export type AuctionListingType = {
   socialsSection?: SocialsSection;
   featured?: boolean;
   minParticipatingBidders: number;
-  totalViews?: string[];
+  totalViews: number;
   uniqueViews?: string[];
-  genderViews?: {
-    male?: number;
-    female?: number;
+  genderViews: {
+    Male: number;
+    Female: number;
+    [key: string]: number | undefined;
   };
-  status: "awaiting" | "ongoing" | "finished";
+  status: "Pending Start" | "Ongoing" | "Finished";
   biddingRoomId?: ObjectId;
   sellerId: ObjectId;
   _id: ObjectId;
-};
+  participatingBidders: [ObjectId];
+  winningBidder: {
+    name: string;
+    _id: ObjectId;
+    winningPrice: Number;
+  };
+}
 
 export type sellerAuctionListingFrontData = {
   listingType?: string;
@@ -58,13 +66,20 @@ export type sellerAuctionListingFrontData = {
   guarantee?: string;
   featured?: boolean;
   minParticipatingBidders: number;
-  totalViews?: string[];
+  totalViews: number;
   uniqueViews?: string[];
-  genderViews?: {
-    male?: number;
-    female?: number;
+  genderViews: {
+    Male: number;
+    Female: number;
+    [key: number]: string;
   };
-  status: "awaiting" | "ongoing" | "finished";
+  status: "Pending Start" | "Ongoing" | "Finished";
   biddingRoomId?: ObjectId;
   _id: ObjectId;
+  participatingBidders: [ObjectId];
+  winningBidder: {
+    name: string;
+    _id: ObjectId;
+    winningPrice: Number;
+  };
 };

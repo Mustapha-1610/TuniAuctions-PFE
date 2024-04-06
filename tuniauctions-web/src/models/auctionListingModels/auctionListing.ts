@@ -83,23 +83,26 @@ const auctionListingSchema = new Schema({
     default: 0,
   },
   totalViews: {
-    type: [String],
+    type: Number,
+    default: 0,
   },
   uniqueViews: {
     type: [String],
   },
   genderViews: {
-    male: {
+    Male: {
       type: Number,
+      default: 0,
     },
-    female: {
+    Female: {
       type: Number,
+      default: 0,
     },
   },
   status: {
     type: String,
-    enum: ["awaiting", "ongoing", "finished"],
-    default: "awaiting",
+    enum: ["Pending Start", "Ongoing", "Finished"],
+    default: "Pending Start",
   },
   biddingRoomId: {
     type: Schema.Types.ObjectId,
@@ -107,6 +110,18 @@ const auctionListingSchema = new Schema({
   sellerId: {
     type: Schema.Types.ObjectId,
     required: true,
+  },
+  participatingBidders: {
+    type: [Schema.Types.ObjectId],
+  },
+  winningBidder: {
+    name: {
+      type: String,
+    },
+    winningPrice: {
+      type: Number,
+    },
+    _id: { type: Schema.Types.ObjectId },
   },
 });
 

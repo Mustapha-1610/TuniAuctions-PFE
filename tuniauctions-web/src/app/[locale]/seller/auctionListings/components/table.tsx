@@ -17,7 +17,7 @@ export default function StatisticsTable({
           position: ["bottomCenter"],
           pageSize: 8,
         }}
-        bordered
+        className="mr-2 border-gray-400 border border-xl"
       />
     </>
   );
