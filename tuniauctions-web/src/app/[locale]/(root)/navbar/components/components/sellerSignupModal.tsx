@@ -33,7 +33,7 @@ export default function SellerSignupForm() {
       formData.registrationLicense =
         await handleSellerRegistrationLicenseUpload(
           formData.registrationLicense,
-          "/seller/RegistrationLicense"
+          "seller/RegistrationLicense/"
         );
       console.log("running");
       const res = await fetch("/api/seller/signup", {

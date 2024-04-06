@@ -18,7 +18,7 @@ export default function SellerProfile() {
     if (file) {
       const picture = await handleFirebaseImageUpload(
         file,
-        "sellerCoverAndProfilePictures"
+        "seller/sellerCoverAndProfilePictures/"
       );
       const res = await fetch("/api/seller/changePictures", {
         method: "POST",

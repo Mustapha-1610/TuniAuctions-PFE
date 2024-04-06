@@ -69,7 +69,7 @@ export default function BasicListing() {
       setTip("Uploading Product Pictures");
       productPictures = await handleMultipleFirebaseImageUpload(
         pictureFiles.productPictures,
-        "seller/AuctionListingsProductImages"
+        "seller/AuctionListingsProductImages/"
       );
     }
 

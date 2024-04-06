@@ -102,7 +102,7 @@ const auctionListingSchema = new Schema({
     default: "awaiting",
   },
   biddingRoomId: {
-    type: String,
+    type: Schema.Types.ObjectId,
   },
   sellerId: {
     type: Schema.Types.ObjectId,

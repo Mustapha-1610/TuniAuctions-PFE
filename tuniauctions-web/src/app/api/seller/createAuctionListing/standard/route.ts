@@ -40,7 +40,6 @@ export async function POST(request: NextRequest) {
       const res = await verifySellerTokens(request);
       if (res.isValid) {
         const seller = res.sellerAccount;
-        console.log(seller.packageCount.Standard < 0);
         if (seller.packageCount.Standard > 0) {
           const {
             title,

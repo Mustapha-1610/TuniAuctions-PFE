@@ -12,7 +12,7 @@ export default function TopSection() {
     if (file) {
       const newPicture = await handleFirebaseImageUpload(
         file,
-        "bidder/ProfilePictures"
+        "bidder/ProfilePictures/"
       );
       const res = await fetch("/api/bidder/changePicture", {
         method: "POST",

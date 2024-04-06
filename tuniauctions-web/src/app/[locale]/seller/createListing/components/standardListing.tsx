@@ -76,14 +76,14 @@ export default function StandardListing() {
       setTip("Uploading Product Pictures");
       productPictures = await handleMultipleFirebaseImageUpload(
         pictureFiles.productPictures,
-        "seller/AuctionListingsProductImages"
+        "seller/AuctionListingsProductImages/"
       );
     }
     if (pictureFiles.promotionalPicture) {
       setTip("Uploading Promotional Picture");
       promotionalPicture = await handleFirebaseImageUpload(
         pictureFiles.promotionalPicture,
-        "seller/BuyItNowPromotionalPictures"
+        "seller/BuyItNowPromotionalPictures/"
       );
     }
     const updatedAuctionListingForm = {
