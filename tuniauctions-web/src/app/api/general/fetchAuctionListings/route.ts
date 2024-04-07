@@ -4,7 +4,7 @@ import { AuctionListingType } from "@/models/types/auctionListing";
 import { serverErrorHandler } from "@/serverHelpers/errorHandler";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function POST() {
   try {
     await connect();
     const upcomingAuctions: AuctionListingType[] | null =

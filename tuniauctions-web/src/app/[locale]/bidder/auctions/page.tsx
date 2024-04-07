@@ -11,7 +11,7 @@ export default async function Auctions() {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/general/fetchAuctionListings`,
     {
-      method: "GET",
+      method: "POST",
       cache: "no-cache",
     }
   );
