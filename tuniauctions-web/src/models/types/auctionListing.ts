@@ -71,7 +71,7 @@ export type sellerAuctionListingFrontData = {
   genderViews: {
     Male: number;
     Female: number;
-    [key: number]: string;
+    [key: string]: number | undefined;
   };
   status: "Pending Start" | "Ongoing" | "Finished";
   biddingRoomId?: ObjectId;

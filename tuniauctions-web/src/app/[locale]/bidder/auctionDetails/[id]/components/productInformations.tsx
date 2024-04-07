@@ -7,6 +7,7 @@ import { MdOutlineGroups } from "react-icons/md";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import moment from "moment";
 import { AuctionListingType } from "@/models/types/auctionListing";
+import Image from "next/image";
 
 interface Props {
   auctionListing: AuctionListingType;
@@ -21,11 +22,14 @@ export default function ProductInformations({ auctionListing }: Props) {
             <div className="flex gap-5 max-md:flex-col max-md:gap-0">
               <div className="flex flex-col w-7/12 max-md:ml-0 max-md:w-full">
                 {auctionListing.productPictures && (
-                  <img
+                  <Image
                     loading="lazy"
                     src={selectedImage || auctionListing.productPictures[0]}
                     className="grow w-fit object-contain aspect-[1] max-md:mt-10 max-md:max-w-full"
                     alt="Product"
+                    width={400}
+                    height={200}
+                    quality={85}
                   />
                 )}
                 <div className="flex justify-center mt-4">
