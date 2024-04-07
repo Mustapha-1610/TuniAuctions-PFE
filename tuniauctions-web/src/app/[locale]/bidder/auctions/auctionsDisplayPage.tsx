@@ -20,9 +20,13 @@ export default function AuctionsDisplayPage({
   const [finishedAuctionsDisplay, setFinishedAuctionsDisplay] = useState<
     AuctionListingType[] | null
   >([]);
+  const [selectedDisplay, setSelectedDisplay] = useState<
+    AuctionListingType[] | null
+  >();
   function setDisplayAuctions() {
     setUpcomingAuctionsDisplay(upcomingAuctions);
     setFinishedAuctionsDisplay(finishedAuctions);
+    setSelectedDisplay(upcomingAuctions);
   }
   useEffect(() => {
     setDisplayAuctions();
@@ -41,7 +45,22 @@ export default function AuctionsDisplayPage({
                 <div className="flex flex-col ml-5 w-[77%] max-md:ml-0 max-md:w-full">
                   <div className="flex flex-col grow self-stretch px-4 pb-12 max-w-[1056px] max-md:mt-4 max-md:max-w-full">
                     <AuctionListingsTopSection />
-                    <AuctionListingItems />
+                    {selectedDisplay && (
+                      <>
+                        <div className="mt-8 max-md:max-w-full">
+                          <div className="flex flex-wrap gap-5 max-md:flex-col max-md:gap-0 max-md:">
+                            {selectedDisplay.map((value, index) => {
+                              return (
+                                <AuctionListingItems
+                                  auctionItem={value}
+                                  key={index}
+                                />
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>

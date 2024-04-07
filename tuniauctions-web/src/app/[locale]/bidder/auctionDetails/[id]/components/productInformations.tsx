@@ -69,7 +69,7 @@ export default function ProductInformations({ auctionListing }: Props) {
                         <div className="flex-auto my-auto">Original price</div>
                       </div>
                       <div className="my-auto text-right">
-                        {auctionListing.originalPrice}$
+                        {auctionListing.originalPrice}
                       </div>
                     </div>
                     {/* table item */}
@@ -83,7 +83,11 @@ export default function ProductInformations({ auctionListing }: Props) {
                         <div className="flex-auto my-auto">Opening Bid</div>
                       </div>
                       <div className="my-auto text-right">
-                        {auctionListing.openingBid}$
+                        {auctionListing.openingBid > 0 ? (
+                          <>{auctionListing.openingBid}$</>
+                        ) : (
+                          <>Free !</>
+                        )}
                       </div>
                     </div>
                     {/* table item */}
@@ -121,9 +125,9 @@ export default function ProductInformations({ auctionListing }: Props) {
                     {/* table item */}
                     <div className="flex gap-5 justify-between px-4 py-5  w-full whitespace-nowrap bg-white border border-black border-solid max-md:flex-wrap max-md:max-w-full">
                       <div className="flex gap-2.5">
-                        {auctionListing.guarantee!.length > 0 ? (
+                        {auctionListing.guarantee!.startsWith("0") ? (
                           <>
-                            <FaRegCircleCheck
+                            <GiCancel
                               className="shrink-0  h-[54px] w-[42px]"
                               size={20}
                               color="black"
@@ -131,7 +135,7 @@ export default function ProductInformations({ auctionListing }: Props) {
                           </>
                         ) : (
                           <>
-                            <GiCancel
+                            <FaRegCircleCheck
                               className="shrink-0  h-[54px] w-[42px]"
                               size={20}
                               color="black"
@@ -140,10 +144,16 @@ export default function ProductInformations({ auctionListing }: Props) {
                         )}
                         <div className="flex-auto my-auto">Guarantee</div>
                       </div>
-                      {auctionListing.guarantee && (
-                        <div className="my-auto text-right">
-                          {auctionListing?.guarantee}
-                        </div>
+                      {auctionListing.guarantee?.startsWith("0") ? (
+                        <>
+                          <div className="my-auto text-right">No Gurantee</div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="my-auto text-right">
+                            {auctionListing?.guarantee}
+                          </div>
+                        </>
                       )}
                     </div>
                     <div className="z-10 justify-center items-center px-16 py-9 -mb-1 text-center text-white whitespace-nowrap rounded-none border border-black border-solid bg-gray-700 max-md:px-5 max-md:max-w-full">

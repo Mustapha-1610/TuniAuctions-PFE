@@ -16,21 +16,21 @@ type SocialsSection = {
 };
 
 export interface AuctionListingType extends Document {
-  listingType?: string;
+  listingType: string;
   title: string;
   description: string;
   category: string;
   promotionalVideo: string;
-  productPictures?: string[];
+  productPictures: string[];
   platformFees: number;
   originalPrice: number;
   startingDate: Date;
   endDate?: Date;
-  openingBid?: number;
+  openingBid: number;
   guarantee?: string;
   buyItNowSection?: BuyItNowSection;
   socialsSection?: SocialsSection;
-  featured?: boolean;
+  featured: boolean;
   minParticipatingBidders: number;
   totalViews: number;
   uniqueViews?: string[];
@@ -52,19 +52,19 @@ export interface AuctionListingType extends Document {
 }
 
 export type sellerAuctionListingFrontData = {
-  listingType?: string;
+  listingType: string;
   title: string;
   description: string;
   category: string;
   promotionalVideo: string;
-  productPictures?: string[];
+  productPictures: string[];
   platformFees: number;
   originalPrice: number;
   startingDate: Date;
   endDate?: Date;
-  openingBid?: number;
+  openingBid: number;
   guarantee?: string;
-  featured?: boolean;
+  featured: boolean;
   minParticipatingBidders: number;
   totalViews: number;
   uniqueViews?: string[];
