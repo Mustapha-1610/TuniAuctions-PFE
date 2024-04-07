@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
             description,
             category: productCategory,
             promotionalVideo,
-            productPictures,
+            productPictures: productPictures.reverse(),
             originalPrice,
             startingDate,
             platformFees: 4,
