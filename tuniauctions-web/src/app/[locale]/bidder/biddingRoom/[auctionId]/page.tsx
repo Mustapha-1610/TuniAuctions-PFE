@@ -16,33 +16,37 @@ export default function MyComponent() {
             <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
               <div className="flex flex-col items-center self-stretch pt-9 pr-6 pb-6 pl-1.5 my-auto w-full font-bold text-black bg-white border border-white border-solid max-md:pr-5 max-md:mt-10 max-md:max-w-full">
                 <div className="text-3xl text-center whitespace-nowrap">
-                  Iphone 15 Example{" "}
+                  Iphone 15 Example
                 </div>
                 <div className="self-stretch mt-8 text-sm max-md:max-w-full">
                   Unveiled in September 2023, the iPhone 15 boasts a familiar
                   design with a powerful A16 Bionic chip at its core. Its
                   beautiful Super Retina XDR OLED display, available in 6.1-inch
-                  and 6.7-inch versions,{" "}
+                  and 6.7-inch versions,
                 </div>
                 <div className="flex flex-col mt-6 max-w-full text-xl bg-white rounded-2xl w-[620px]">
                   <div className="flex items-center justify-center px-14 text-5xl font-bold text-center text-black whitespace-nowrap bg-white rounded-full border border-black border-solid h-[156px] stroke-[1px] w-[156px] max-md:px-5 max-md:text-4xl mx-auto">
                     4:49
                   </div>
 
-                  <div className="flex gap-1 px-2 py-3 mt-6 text-base font-bold text-center text-black bg-white  border-solid max-md:w-full">
+                  <div className="flex gap-1 px-2 py-3 mt-6 text-base font-bold text-center text-black bg-white border-solid max-md:w-full">
                     <div>Balance:</div>
                     <div>$300</div>
                   </div>
 
-                  <div className="flex flex-col gap-3 self-stretch  text-base font-bold text-center text-black max-md:flex-wrap max-md:mt-6 max-md:max-w-full">
-                    <input
-                      type="text"
-                      placeholder="Place Bid"
-                      className=" justify-center items-center px-2 py-6 bg-zinc-300 rounded-[41px] max-md:px-5 text-center"
-                    />
+                  <div className="flex flex-col gap-3 self-stretch text-base font-bold text-center text-black max-md:flex-wrap max-md:mt-6 max-md:max-w-full">
+                    <div className="flex justify-center">
+                      <input
+                        type="number"
+                        placeholder="Place Bid"
+                        className="px-4 py-2 w-full bg-zinc-300 rounded-md max-md:px-3 text-center"
+                      />
+                    </div>
 
-                    <div className="grow justify-center items-center px-16 py-6 whitespace-nowrap bg-slate-900 w-fit max-md:px-5 text-white">
-                      Submit
+                    <div className="flex justify-center">
+                      <div className="px-6 py-4 whitespace-nowrap bg-slate-900 w-fit max-md:px-5 text-white rounded-md">
+                        Submit
+                      </div>
                     </div>
                   </div>
 
@@ -84,6 +88,7 @@ export default function MyComponent() {
             </div>
           </div>
         </div>
+
         <div className="mt-7 w-full max-w-[1396px] max-md:max-w-full">
           <div className="flex gap-5 max-md:flex-col max-md:gap-0">
             <div className="flex flex-col  w-[56%] max-md:ml-0 max-md:w-full">
