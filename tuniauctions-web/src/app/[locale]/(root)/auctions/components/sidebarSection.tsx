@@ -1,3 +1,5 @@
+import { FaSearch } from "react-icons/fa";
+
 interface Props {
   selectedCategory: string;
   setSelectedCategory: (value: string) => void;
@@ -41,10 +43,10 @@ export default function SidebarSection({
                   filterBySearch(e.target.value);
                 }}
               />
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/150f0651ab2da8ce1366829f7682303bbcecd0b467d4c0a9cc230c8b1f5a3e79?apiKey=452d394c7c1e42459c0e2415b6f84ad2&"
-                className="aspect-square w-5 h-5 ml-2"
+              <FaSearch
+                className="aspect-square w-5 h-5 ml-2 cursor-pointer"
+                size={15}
+                color="black"
               />
             </div>
           </div>

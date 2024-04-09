@@ -36,9 +36,9 @@ export default function HeroSection({ Title, BrowseButtonText }: Props) {
 
           <div
             onClick={() => router.push("/" + locale + "/seller")}
-            className="flex cursor-pointer gap-2 items-center justify-center  rounded-xl  px-14 py-6 mt-12 text-base font-medium tracking-wide leading-4 text-white bg-neutral-400  max-md:mt-10"
+            className="flex cursor-pointer gap-2 items-center justify-center  rounded-xl  px-14 py-6 mt-12 text-base font-medium tracking-wide leading-4 text-white bg-slate-600  max-md:mt-10"
           >
-            <div>{BrowseButtonText}</div>
+            <div className="text-gl">{BrowseButtonText}</div>
           </div>
         </div>
       </div>
