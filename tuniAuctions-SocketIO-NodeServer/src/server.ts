@@ -12,7 +12,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://dar-seranity.vercel.app"],
+    origin: ["http://localhost:3000", "https://tuniauctions.vercel.app"],
     methods: ["GET", "POST", "DELETE", "PUT"],
     credentials: true,
   })
@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 const serverApp = http.createServer(app);
 const io = new Server(serverApp, {
   cors: {
-    origin: ["http://localhost:3000", "https://dar-seranity.vercel.app"],
+    origin: ["http://localhost:3000", "https://tuniauctions.vercel.app"],
     methods: ["GET", "POST", "DELETE", "PUT"],
   },
 });
