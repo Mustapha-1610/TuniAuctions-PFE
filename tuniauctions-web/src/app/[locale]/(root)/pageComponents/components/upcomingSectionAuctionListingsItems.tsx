@@ -28,13 +28,13 @@ export default function UpcomingSectionAuctionListingsItems({
           </div>
           <div className="flex flex-col ml-5 w-[68%] max-md:ml-0 max-md:w-full">
             <div className="flex flex-col grow py-1 pr-14 pl-6 max-md:px-5 max-md:mt-8">
-              <div className="text-lg font-medium leading-7 capitalize text-slate-950">
+              <div className="text-xl font-bold leading-7 capitalize text-slate-950">
                 {listing.title}
               </div>
               <div className="mt-2.5 text-base font-semibold tracking-wider leading-6 text-zinc-600">
                 {listing.category}
               </div>
-              <div className="flex gap-0 justify-between px-5 py-3 mt-3.5 rounded-md border border-solid border-zinc-200 w-96">
+              <div className="flex gap-0 justify-between px-5 py-3 mt-3.5 rounded-md border border-solid border-zinc-200 max-w-xs sm:max-w-sm ">
                 <div className="flex gap-px justify-between whitespace-nowrap">
                   <RiAuctionFill
                     className="my-auto aspect-[0.96] w-[25px]"
@@ -59,9 +59,7 @@ export default function UpcomingSectionAuctionListingsItems({
                     )}
                   </div>
                   <div className="text-sm font-semibold tracking-wider leading-5 whitespace-nowrap text-zinc-600">
-                    {moment(listing.startingDate).format(
-                      "ddd, MMM D, YYYY [at] h:mm A"
-                    )}
+                    {moment(listing.startingDate).format("ddd, MMM D, YYYY")}
                   </div>
                 </div>
               </div>

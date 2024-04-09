@@ -1,6 +1,8 @@
+"use client";
 import { AuctionListingType } from "@/models/types/auctionListing";
 import UpcomingSectionAuctionListingsItems from "./components/upcomingSectionAuctionListingsItems";
 import Link from "next/link";
+import { useRootFilterStore } from "@/helpers/store/general/rootAuctionsNavigationStore";
 interface Props {
   premiumListings: AuctionListingType[];
   locale: string;
@@ -9,6 +11,7 @@ export default function UpcomingAuctionsSection({
   premiumListings,
   locale,
 }: Props) {
+  const { setSelectedCategory } = useRootFilterStore();
   return (
     <>
       <div className="flex overflow-hidden relative flex-col items-center self-stretch px-20 py-12 mt-28 w-full min-h-[600px] max-md:px-5 max-md:mt-10 max-md:max-w-full">
@@ -46,6 +49,9 @@ export default function UpcomingAuctionsSection({
 
         <Link
           href={`/${locale}/auctions`}
+          onClick={() => {
+            setSelectedCategory("");
+          }}
           className="relative justify-center px-10 py-3.5 mt-12 mb-10 text-base font-bold tracking-wide leading-6 text-center capitalize whitespace-nowrap bg-white rounded-md text-slate-950 max-md:px-5 max-md:mt-10"
         >
           View All

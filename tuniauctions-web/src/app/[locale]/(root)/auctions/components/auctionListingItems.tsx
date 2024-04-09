@@ -1,83 +1,57 @@
-export default function AuctionListingItems() {
+import { AuctionListingType } from "@/models/types/auctionListing";
+import { useLocale } from "next-intl";
+import Image from "next/image";
+import Link from "next/link";
+import moment from "moment";
+
+interface Props {
+  auctionItem: AuctionListingType;
+}
+
+export default function AuctionListingItems({ auctionItem }: Props) {
+  const locale = useLocale();
+
   return (
     <>
-      <div className="mt-8 max-md:max-w-full">
-        <div className="flex flex-wrap gap-5 max-md:flex-col max-md:gap-0 max-md:">
-          {/* item 1 */}
-
-          <div className="flex flex-col w-[calc(33%-1.25rem)] max-md:ml-0 max-md:w-full">
-            <img
-              loading="lazy"
-              srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&"
-              className="w-full aspect-[1.45]"
-            />
-            <div className="flex flex-col px-4 py-4 bg-violet-50">
-              <div className="text-sm leading-4">Electronics</div>
-              <div className="text-2xl font-bold tracking-tighter leading-7 text-slate-900">
-                Logitech keyboard
+      {auctionItem && (
+        <Link
+          href={"/" + locale + "/bidder/auctionDetails/" + auctionItem._id}
+          className="flex flex-col w-[290px] max-md:ml-0 max-md:w-full mb-4"
+        >
+          <Image
+            loading="lazy"
+            src={auctionItem.productPictures[0]}
+            alt="Product Image"
+            className="w-full aspect-[1.45] object-contain border border-gray-300 rounded rounded-gl"
+            width={300}
+            height={100}
+          />
+          <div className="flex flex-col px-4 py-4 bg-violet-50">
+            <div className="text-sm leading-4">{auctionItem.category}</div>
+            <div className="text-2xl font-bold tracking-tighter leading-7 text-slate-900">
+              {auctionItem.title}
+            </div>
+            <div className="flex items-center mt-3 text-xs leading-3 whitespace-nowrap">
+              <span className="mr-1">Opening bid:</span>
+              <span className="text-xl font-bold leading-8">
+                {auctionItem.openingBid > 0 ? (
+                  <>{auctionItem.openingBid}$</>
+                ) : (
+                  <>Free!</>
+                )}
+              </span>
+            </div>
+            <div className="mt-3 p-2 bg-purple-200 text-purple-800 rounded-lg shadow-md">
+              <div className="text-xs leading-3 font-medium">Starts on:</div>
+              <div className="text-gl font-bold">
+                {moment(auctionItem.startingDate).format(
+                  "ddd, MMM D, YYYY [at] h:mm A"
+                )}
               </div>
-              <div className="self-end mt-3 text-xs leading-3 whitespace-nowrap">
-                Starting bid:
-              </div>
-              <div className="self-end text-xl font-bold leading-8">$10.00</div>
             </div>
           </div>
-          {/* item 2 */}
-          <div className="flex flex-col w-[calc(33%-1.25rem)] max-md:ml-0 max-md:w-full">
-            <img
-              loading="lazy"
-              srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&"
-              className="w-full aspect-[1.45]"
-            />
-            <div className="flex flex-col px-4 py-4 bg-violet-50">
-              <div className="text-sm leading-4">Electronics</div>
-              <div className="text-2xl font-bold tracking-tighter leading-7 text-slate-900">
-                Logitech keyboard
-              </div>
-              <div className="self-end mt-3 text-xs leading-3 whitespace-nowrap">
-                Starting bid:
-              </div>
-              <div className="self-end text-xl font-bold leading-8">$10.00</div>
-            </div>
-          </div>
-          {/* item 3 */}
-          <div className="flex flex-col w-[calc(33%-1.25rem)] max-md:ml-0 max-md:w-full">
-            <img
-              loading="lazy"
-              srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&"
-              className="w-full aspect-[1.45]"
-            />
-            <div className="flex flex-col px-4 py-4 bg-violet-50">
-              <div className="text-sm leading-4">Electronics</div>
-              <div className="text-2xl font-bold tracking-tighter leading-7 text-slate-900">
-                Logitech keyboard
-              </div>
-              <div className="self-end mt-3 text-xs leading-3 whitespace-nowrap">
-                Starting bid:
-              </div>
-              <div className="self-end text-xl font-bold leading-8">$10.00</div>
-            </div>
-          </div>
-          {/* item 4 */}
-          <div className="flex flex-col w-[calc(33%-1.25rem)] max-md:ml-0 max-md:w-full">
-            <img
-              loading="lazy"
-              srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/b5fbac2d5969d8bba78c4c98222133be1f961ee605adfb4a9f3f1499814e99ed?apiKey=452d394c7c1e42459c0e2415b6f84ad2&"
-              className="w-full aspect-[1.45]"
-            />
-            <div className="flex flex-col px-4 py-4 bg-violet-50">
-              <div className="text-sm leading-4">Electronics</div>
-              <div className="text-2xl font-bold tracking-tighter leading-7 text-slate-900">
-                Logitech keyboard
-              </div>
-              <div className="self-end mt-3 text-xs leading-3 whitespace-nowrap">
-                Starting bid:
-              </div>
-              <div className="self-end text-xl font-bold leading-8">$10.00</div>
-            </div>
-          </div>
-        </div>
-      </div>
+        </Link>
+      )}
     </>
   );
 }

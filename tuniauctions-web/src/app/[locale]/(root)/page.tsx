@@ -34,7 +34,7 @@ export default async function Home() {
           premiumListings={resData.closestStartingDateListings}
           locale={locale}
         />
-        <CategorySection />
+        <CategorySection locale={locale} />
         <WinnersSections />
       </div>
     </>
