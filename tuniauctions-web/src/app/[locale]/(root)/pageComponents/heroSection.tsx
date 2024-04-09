@@ -1,4 +1,5 @@
 "use client";
+import { useRootFilterStore } from "@/helpers/store/general/rootAuctionsNavigationStore";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -10,6 +11,7 @@ interface Props {
 export default function HeroSection({ Title, BrowseButtonText }: Props) {
   const router = useRouter();
   const locale = useLocale();
+  const { setSelectedCategory } = useRootFilterStore();
   return (
     <>
       <div className="flex overflow-hidden relative flex-col justify-center items-center self-stretch w-full min-h-[800px] max-md:max-w-full">
@@ -35,7 +37,9 @@ export default function HeroSection({ Title, BrowseButtonText }: Props) {
           </div>
 
           <div
-            onClick={() => router.push("/" + locale + "/seller")}
+            onClick={() => (
+              router.push("/" + locale + "/auctions"), setSelectedCategory("")
+            )}
             className="flex cursor-pointer gap-2 items-center justify-center  rounded-xl  px-14 py-6 mt-12 text-base font-medium tracking-wide leading-4 text-white bg-slate-600  max-md:mt-10"
           >
             <div className="text-gl">{BrowseButtonText}</div>

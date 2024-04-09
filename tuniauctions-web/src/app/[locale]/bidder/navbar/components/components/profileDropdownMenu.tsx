@@ -1,3 +1,4 @@
+"use client";
 import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
 import { resDataType } from "@/serverHelpers/types";
 import Link from "next/link";
@@ -9,18 +10,7 @@ interface Props {
   locale: string;
 }
 export default function PorfileDropdownMenu({ locale }: Props) {
-  const { signoutBidder } = useBidderProfileStore();
-  const router = useRouter();
-  async function signout() {
-    const res = await fetch("/api/bidder/signout", {
-      method: "POST",
-    });
-    const resData: resDataType = await res.json();
-    if (resData.success) {
-      signoutBidder();
-      router.push("/");
-    }
-  }
+  const signout = useSignoutBidder();
   return (
     <>
       <div className="absolute mt-2 left-3/3 transform -translate-x-2/3 bg-white text-black border border-netral-200 rounded-lg shadow-lg max-w-xl z-10">
@@ -46,3 +36,21 @@ export default function PorfileDropdownMenu({ locale }: Props) {
     </>
   );
 }
+
+export const useSignoutBidder = () => {
+  const { signoutBidder } = useBidderProfileStore();
+  const router = useRouter();
+
+  const signoutBidderApiCall = async () => {
+    const res = await fetch("/api/bidder/signout", {
+      method: "POST",
+    });
+    const resData: resDataType = await res.json();
+    if (resData.success) {
+      signoutBidder();
+      router.push("/");
+    }
+  };
+
+  return signoutBidderApiCall;
+};

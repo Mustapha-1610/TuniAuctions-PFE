@@ -14,6 +14,7 @@ import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
 import { useNavbarState } from "@/helpers/store/general/navbarState";
 import ForgotPassword from "./components/forgotPassword";
+import bidderSocket from "@/frontHelpers/bidder/bidderSocketLogic";
 
 export default function LoginModal() {
   //
@@ -34,7 +35,6 @@ export default function LoginModal() {
     isLoginModalOpen,
     setIsForgotPasswordModalState,
     isGenderSignupFormModalOpen,
-    isForgotPasswordModalOpen,
   } = useNavbarState();
   const loginSchema = z.object({
     email: z.string().email(textTranslations("zodErrors.email")),
@@ -63,6 +63,10 @@ export default function LoginModal() {
         if (resData.bidderFrontData) {
           setBidderLocalStorageData(resData.bidderFrontData);
           setLoginModalState();
+          bidderSocket.connect();
+          bidderSocket.emit("bidderConnection", {
+            bidderSocketId: resData.bidderFrontData.socketId,
+          });
           router.push("/" + locale + "/bidder");
         } else if (resData.sellerFrontData) {
           setSellerLocalStorageData(resData.sellerFrontData);

@@ -99,4 +99,5 @@ export interface IBidderFrontData {
     reciever: string;
     context: string;
   }[];
+  socketId: string;
 }

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import NavigationItems from "./components/navigationItems";
 import MobileNavbar from "./components/mobileNavbar";
 
@@ -11,9 +11,13 @@ import { GiWallet } from "react-icons/gi";
 import LanguageChanger from "../../(root)/navbar/components/languageChanger";
 import { useBidderNavbarState } from "@/helpers/store/bidder/bidderNavbarStore";
 import Notifications from "./components/components/notifications";
-import PorfileDropdownMenu from "./components/components/profileDropdownMenu";
+import PorfileDropdownMenu, {
+  useSignoutBidder,
+} from "./components/components/profileDropdownMenu";
 import { resDataType } from "@/serverHelpers/types";
 import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
+import { useRouter } from "next/navigation";
+import bidderSocket from "@/frontHelpers/bidder/bidderSocketLogic";
 
 export default function BidderNavbar() {
   const {
@@ -24,19 +28,35 @@ export default function BidderNavbar() {
     setProfileMenuState,
     setNotificationsMenuState,
   } = useBidderNavbarState();
-  const { bidderLocalStorageData, setBidderLocalStorageData } =
+  const { bidderLocalStorageData, setBidderLocalStorageData, signoutBidder } =
     useBidderProfileStore();
   const locale = useLocale();
+  const router = useRouter();
+  const bidder = bidderLocalStorageData;
+  const signout = useSignoutBidder();
   async function getData() {
     const res = await fetch("/api/bidder/getData", {
-      method: "GET",
+      method: "POST",
     });
     const resData: resDataType = await res.json();
     if (resData.bidderFrontData) {
-      console.log("resettingData");
       setBidderLocalStorageData(resData.bidderFrontData);
+    } else if (resData.authError) {
+      signoutBidder();
+      router.push(`/${locale}`);
     }
   }
+  function handleLogout() {
+    signout();
+  }
+  useEffect(() => {
+    getData();
+    bidderSocket.on("confirmAuth", (bidderSocketId: string) => {
+      if (bidder?.socketId !== bidderSocketId) {
+        handleLogout();
+      }
+    });
+  }, [signout]); // Add 'signout' to the dependency array
 
   return (
     <>

@@ -15,6 +15,7 @@ export function returnBidderFrontData(bidder: IBidder) {
     transactions: bidder.transactions,
     notifications: bidder.notifications,
     gender: bidder.gender,
+    socketId: bidder.socketId,
   };
   return bidderData;
 }
