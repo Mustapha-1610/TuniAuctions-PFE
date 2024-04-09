@@ -11,9 +11,7 @@ import { GiWallet } from "react-icons/gi";
 import LanguageChanger from "../../(root)/navbar/components/languageChanger";
 import { useBidderNavbarState } from "@/helpers/store/bidder/bidderNavbarStore";
 import Notifications from "./components/components/notifications";
-import PorfileDropdownMenu, {
-  useSignoutBidder,
-} from "./components/components/profileDropdownMenu";
+import PorfileDropdownMenu from "./components/components/profileDropdownMenu";
 import { resDataType } from "@/serverHelpers/types";
 import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
 import { useRouter } from "next/navigation";
@@ -33,7 +31,7 @@ export default function BidderNavbar() {
   const locale = useLocale();
   const router = useRouter();
   const bidder = bidderLocalStorageData;
-  const signout = useSignoutBidder();
+
   async function getData() {
     const res = await fetch("/api/bidder/getData", {
       method: "POST",
@@ -43,20 +41,28 @@ export default function BidderNavbar() {
       setBidderLocalStorageData(resData.bidderFrontData);
     } else if (resData.authError) {
       signoutBidder();
+
       router.push(`/${locale}`);
     }
   }
   function handleLogout() {
-    signout();
+    signoutBidder();
+    router.push(`/${locale}`);
   }
-  useEffect(() => {
-    getData();
-    bidderSocket.on("confirmAuth", (bidderSocketId: string) => {
-      if (bidder?.socketId !== bidderSocketId) {
+  bidderSocket.on("confirmAuth", async (bidderSocketId: string) => {
+    if (bidder?.socketId !== bidderSocketId) {
+      const res = await fetch("/api/bidder/signout", {
+        method: "POST",
+      });
+      const resData: resDataType = await res.json();
+      if (resData.success) {
         handleLogout();
       }
-    });
-  }, [signout]); // Add 'signout' to the dependency array
+    }
+  });
+  useEffect(() => {
+    getData();
+  }, []); // Add 'signout' to the dependency array
 
   return (
     <>

@@ -1,5 +1,6 @@
 import { AuctionListingType } from "@/models/types/auctionListing";
 import FeaturedSectionAuctionListingsContainer from "./components/featuredSectionAuctionListingsContainer";
+import React from "react";
 interface Porps {
   FeaturedAuctions: string;
   DealsOfThisWeel: string;
@@ -26,13 +27,13 @@ export default async function FeaturedAuctionsSections({
         {premiumListings &&
           premiumListings.map((value, index) => {
             return (
-              <>
+              <React.Fragment key={index}>
                 <FeaturedSectionAuctionListingsContainer
                   listing={value}
                   OpeningBid={OpeningBid}
                   key={index}
                 />
-              </>
+              </React.Fragment>
             );
           })}
       </div>

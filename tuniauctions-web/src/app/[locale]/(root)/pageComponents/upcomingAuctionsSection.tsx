@@ -4,6 +4,7 @@ import UpcomingSectionAuctionListingsItems from "./components/upcomingSectionAuc
 import Link from "next/link";
 import { useRootFilterStore } from "@/helpers/store/general/rootAuctionsNavigationStore";
 import Image from "next/image";
+import React from "react";
 interface Props {
   premiumListings: AuctionListingType[];
   locale: string;
@@ -38,13 +39,13 @@ export default function UpcomingAuctionsSection({
                 {premiumListings &&
                   premiumListings.map((value, index) => {
                     return (
-                      <>
+                      <React.Fragment key={index}>
                         <UpcomingSectionAuctionListingsItems
                           listing={value}
                           key={index}
                           locale={locale}
                         />
-                      </>
+                      </React.Fragment>
                     );
                   })}
               </div>

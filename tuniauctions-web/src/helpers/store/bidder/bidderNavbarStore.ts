@@ -7,11 +7,14 @@ interface navbarState {
   setMobileMenuState: () => void;
   setProfileMenuState: () => void;
   setNotificationsMenuState: () => void;
+  isAnautherizedModalOpen: boolean;
+  setAnautherizedModalState: () => void;
 }
 export const useBidderNavbarState = create<navbarState>((set) => ({
   isMobileMenuOpen: false,
   isProfileMenuOpen: false,
   isNotificationsMenuOpen: false,
+  isAnautherizedModalOpen: false,
   setMobileMenuState: () =>
     set((state) => ({ isMobileMenuOpen: !state.isMobileMenuOpen })),
   setProfileMenuState: () =>
@@ -19,5 +22,9 @@ export const useBidderNavbarState = create<navbarState>((set) => ({
   setNotificationsMenuState: () =>
     set((state) => ({
       isNotificationsMenuOpen: !state.isNotificationsMenuOpen,
+    })),
+  setAnautherizedModalState: () =>
+    set((state) => ({
+      isAnautherizedModalOpen: !state.isAnautherizedModalOpen,
     })),
 }));
