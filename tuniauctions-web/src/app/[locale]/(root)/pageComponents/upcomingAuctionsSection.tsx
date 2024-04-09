@@ -1,9 +1,14 @@
 import { AuctionListingType } from "@/models/types/auctionListing";
 import UpcomingSectionAuctionListingsItems from "./components/upcomingSectionAuctionListingsItems";
+import Link from "next/link";
 interface Props {
   premiumListings: AuctionListingType[];
+  locale: string;
 }
-export default function UpcomingAuctionsSection({ premiumListings }: Props) {
+export default function UpcomingAuctionsSection({
+  premiumListings,
+  locale,
+}: Props) {
   return (
     <>
       <div className="flex overflow-hidden relative flex-col items-center self-stretch px-20 py-12 mt-28 w-full min-h-[600px] max-md:px-5 max-md:mt-10 max-md:max-w-full">
@@ -22,16 +27,29 @@ export default function UpcomingAuctionsSection({ premiumListings }: Props) {
             <div className="flex flex-col w-full max-md:ml-0 max-md:w-full">
               {/* Adjusted flex properties for horizontal display */}
               <div className="flex justify-center md:flex-row md:gap-5 md:justify-start flex-col items-center">
-                <UpcomingSectionAuctionListingsItems />
-                <UpcomingSectionAuctionListingsItems />
+                {premiumListings &&
+                  premiumListings.map((value, index) => {
+                    return (
+                      <>
+                        <UpcomingSectionAuctionListingsItems
+                          listing={value}
+                          key={index}
+                          locale={locale}
+                        />
+                      </>
+                    );
+                  })}
               </div>
             </div>
           </div>
         </div>
 
-        <div className="relative justify-center px-10 py-3.5 mt-12 mb-10 text-base font-bold tracking-wide leading-6 text-center capitalize whitespace-nowrap bg-white rounded-md text-slate-950 max-md:px-5 max-md:mt-10">
+        <Link
+          href={`/${locale}/auctions`}
+          className="relative justify-center px-10 py-3.5 mt-12 mb-10 text-base font-bold tracking-wide leading-6 text-center capitalize whitespace-nowrap bg-white rounded-md text-slate-950 max-md:px-5 max-md:mt-10"
+        >
           View All
-        </div>
+        </Link>
       </div>
     </>
   );

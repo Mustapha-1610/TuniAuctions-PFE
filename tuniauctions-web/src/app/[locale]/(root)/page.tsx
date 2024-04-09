@@ -3,7 +3,7 @@ import FeaturedAuctionsSections from "./pageComponents/featuredAuctionsSection";
 import UpcomingAuctionsSection from "./pageComponents/upcomingAuctionsSection";
 import CategorySection from "./pageComponents/categorySection";
 import WinnersSections from "./pageComponents/WinnersSection";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { HomePageFetchListingsResponse } from "@/app/api/general/fetchHomePageListings/route";
 
 export default async function Home() {
@@ -16,7 +16,7 @@ export default async function Home() {
     }
   );
   const resData: HomePageFetchListingsResponse = await res.json();
-
+  const locale = await getLocale();
   return (
     <>
       <div className="flex flex-col items-center bg-white">
@@ -31,7 +31,8 @@ export default async function Home() {
           premiumListings={resData.randomizedAuctionListings}
         />
         <UpcomingAuctionsSection
-          premiumListings={resData.randomizedAuctionListings}
+          premiumListings={resData.closestStartingDateListings}
+          locale={locale}
         />
         <CategorySection />
         <WinnersSections />

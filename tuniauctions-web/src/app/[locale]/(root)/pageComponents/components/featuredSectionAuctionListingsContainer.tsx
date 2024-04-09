@@ -1,5 +1,6 @@
 import { AuctionListingType } from "@/models/types/auctionListing";
 import moment from "moment";
+import Image from "next/image";
 
 interface Props {
   OpeningBid: string;
@@ -16,11 +17,13 @@ export default function FeaturedSectionAuctionListingsContainer({
         <div className="flex flex-col w-1/4 w-full  p-4 bg-white rounded-md border border-solid border-zinc-300 md:w-full md:mb-2">
           {/* Item content */}
           <div className="flex justify-center">
-            <img
+            <Image
               loading="lazy"
-              srcSet={listing.productPictures[0]}
+              src={listing.productPictures[0]}
               className="mt-5 max-w-full aspect-square w-[158px] object-contain rounded-md"
-              alt="Product Image"
+              alt="Listing Image"
+              width={140}
+              height={80}
             />
           </div>
           <div className="mt-7 text-center capitalize text-slate-950">
