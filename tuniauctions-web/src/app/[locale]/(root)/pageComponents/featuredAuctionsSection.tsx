@@ -1,13 +1,16 @@
+import { AuctionListingType } from "@/models/types/auctionListing";
 import FeaturedSectionAuctionListingsContainer from "./components/featuredSectionAuctionListingsContainer";
 interface Porps {
   FeaturedAuctions: string;
   DealsOfThisWeel: string;
   OpeningBid: string;
+  premiumListings: AuctionListingType[];
 }
-export default function FeaturedAuctionsSections({
+export default async function FeaturedAuctionsSections({
   FeaturedAuctions,
   DealsOfThisWeel,
   OpeningBid,
+  premiumListings,
 }: Porps) {
   return (
     <>
@@ -20,11 +23,18 @@ export default function FeaturedAuctionsSections({
         </div>
       </div>
       <div className="flex flex-wrap justify-center w-full max-w-[1320px] md:max-w-full">
-        <FeaturedSectionAuctionListingsContainer OpeningBid={OpeningBid} />
-        <FeaturedSectionAuctionListingsContainer OpeningBid={OpeningBid} />
-        <FeaturedSectionAuctionListingsContainer OpeningBid={OpeningBid} />
-        <FeaturedSectionAuctionListingsContainer OpeningBid={OpeningBid} />
-        <FeaturedSectionAuctionListingsContainer OpeningBid={OpeningBid} />
+        {premiumListings &&
+          premiumListings.map((value, index) => {
+            return (
+              <>
+                <FeaturedSectionAuctionListingsContainer
+                  listing={value}
+                  OpeningBid={OpeningBid}
+                  key={index}
+                />
+              </>
+            );
+          })}
       </div>
     </>
   );
