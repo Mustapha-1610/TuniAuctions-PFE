@@ -3,6 +3,7 @@ import { AuctionListingType } from "@/models/types/auctionListing";
 import UpcomingSectionAuctionListingsItems from "./components/upcomingSectionAuctionListingsItems";
 import Link from "next/link";
 import { useRootFilterStore } from "@/helpers/store/general/rootAuctionsNavigationStore";
+import Image from "next/image";
 interface Props {
   premiumListings: AuctionListingType[];
   locale: string;
@@ -15,10 +16,14 @@ export default function UpcomingAuctionsSection({
   return (
     <>
       <div className="flex overflow-hidden relative flex-col items-center self-stretch px-20 py-12 mt-28 w-full min-h-[600px] max-md:px-5 max-md:mt-10 max-md:max-w-full">
-        <img
+        <Image
           loading="lazy"
-          srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/bab5a580e3acd56a8f602750964d910aca7c8519cdf181dd19639ed8356e5661?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/bab5a580e3acd56a8f602750964d910aca7c8519cdf181dd19639ed8356e5661?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/bab5a580e3acd56a8f602750964d910aca7c8519cdf181dd19639ed8356e5661?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/bab5a580e3acd56a8f602750964d910aca7c8519cdf181dd19639ed8356e5661?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/bab5a580e3acd56a8f602750964d910aca7c8519cdf181dd19639ed8356e5661?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/bab5a580e3acd56a8f602750964d910aca7c8519cdf181dd19639ed8356e5661?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/bab5a580e3acd56a8f602750964d910aca7c8519cdf181dd19639ed8356e5661?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/bab5a580e3acd56a8f602750964d910aca7c8519cdf181dd19639ed8356e5661?apiKey=452d394c7c1e42459c0e2415b6f84ad2&"
+          src="https://firebasestorage.googleapis.com/v0/b/tunisianauctionwebapp.appspot.com/o/DisplayImages%2FRootPageUpcomingAuctions.webp?alt=media&token=a951930a-4ea4-4432-8ea8-8bee87a1b70a "
           className="object-cover absolute inset-0 size-full"
+          alt="Upcoming Auction Image"
+          width={1500}
+          height={500}
+          quality={100}
         />
         <div className="flex relative flex-col items-center px-16 pb-6  w-full text-center text-white whitespace-nowrap max-w-[1320px] max-md:px-5 max-md:max-w-full">
           <div className="flex flex-col">
