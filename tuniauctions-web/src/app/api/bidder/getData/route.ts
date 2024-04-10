@@ -12,7 +12,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
-    console.log("recieved");
     await connect();
     const res: VerifyBidderTokensResponse = await verifyBidderTokens(request);
 

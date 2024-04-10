@@ -11,8 +11,6 @@ const bidderNameSpaceLogic = (renterNameSpace: any) => {
       const bidder = connectedBidders[bidderSocketId];
 
       if (bidder && bidder.socketId) {
-        console.log("investigating");
-        console.log(bidder.socketId, bidderSocketId);
         const socketId = bidder.socketId;
         connectedBidders[bidderSocketId] = {
           socketId: socket.id,
