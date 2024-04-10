@@ -1,20 +1,33 @@
+"use client";
 import { AuctionListingType } from "@/models/types/auctionListing";
 import moment from "moment";
+import { useLocale } from "next-intl";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Props {
   OpeningBid: string;
   listing: AuctionListingType;
+  specificRoute?: string;
 }
 export default function FeaturedSectionAuctionListingsContainer({
   OpeningBid,
   listing,
+  specificRoute,
 }: Props) {
+  const locale = useLocale();
   return (
     <>
       <div className="flex flex-wrap gap-5 justify-center md:flex-col md:gap-0 md:px-3">
         {/* updated width to fit 4 items per row */}
-        <div className="flex flex-col w-1/4 w-full  p-4 bg-white rounded-md border border-solid border-zinc-300 md:w-full md:mb-2">
+        <Link
+          href={
+            specificRoute
+              ? "/" + locale + specificRoute + "/auctionDetails/" + listing._id
+              : "/" + locale + "/auctionListing/" + listing._id
+          }
+          className="flex flex-col w-1/4 w-full  p-4 bg-white rounded-md border border-solid border-zinc-300 md:w-full md:mb-2"
+        >
           {/* Item content */}
           <div className="flex justify-center">
             <Image
@@ -48,7 +61,7 @@ export default function FeaturedSectionAuctionListingsContainer({
               </div>
             </div>
           </div>
-        </div>
+        </Link>
       </div>
     </>
   );

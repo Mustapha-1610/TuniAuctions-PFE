@@ -6,12 +6,14 @@ interface Porps {
   DealsOfThisWeel: string;
   OpeningBid: string;
   premiumListings: AuctionListingType[];
+  specificRoute?: string;
 }
 export default async function FeaturedAuctionsSections({
   FeaturedAuctions,
   DealsOfThisWeel,
   OpeningBid,
   premiumListings,
+  specificRoute,
 }: Porps) {
   return (
     <>
@@ -32,6 +34,7 @@ export default async function FeaturedAuctionsSections({
                   listing={value}
                   OpeningBid={OpeningBid}
                   key={index}
+                  specificRoute={specificRoute}
                 />
               </React.Fragment>
             );

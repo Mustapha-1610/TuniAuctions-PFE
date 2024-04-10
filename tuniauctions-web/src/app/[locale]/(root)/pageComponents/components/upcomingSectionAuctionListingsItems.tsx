@@ -7,10 +7,12 @@ import Link from "next/link";
 interface Props {
   listing: AuctionListingType;
   locale: string;
+  specificRoute?: string;
 }
 export default function UpcomingSectionAuctionListingsItems({
   listing,
   locale,
+  specificRoute,
 }: Props) {
   return (
     <>
@@ -66,7 +68,11 @@ export default function UpcomingSectionAuctionListingsItems({
               <div className="mt-7 text-base font-medium tracking-wider leading-6 text-center">
                 <Link
                   className="px-6 py-3 bg-slate-800 text-white rounded-md hover:bg-slate-700 transition-colors duration-300"
-                  href={`/${locale}/auctionListing/${listing._id}`}
+                  href={
+                    !specificRoute
+                      ? `/${locale}/auctionListing/${listing._id}`
+                      : `/${locale}/${specificRoute}/auctionDetails/${listing._id}`
+                  }
                 >
                   View Product
                 </Link>

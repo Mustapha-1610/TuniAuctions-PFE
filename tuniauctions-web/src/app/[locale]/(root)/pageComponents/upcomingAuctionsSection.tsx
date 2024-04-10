@@ -8,10 +8,12 @@ import React from "react";
 interface Props {
   premiumListings: AuctionListingType[];
   locale: string;
+  specificRoute?: string;
 }
 export default function UpcomingAuctionsSection({
   premiumListings,
   locale,
+  specificRoute,
 }: Props) {
   const { setSelectedCategory } = useRootFilterStore();
   return (
@@ -44,6 +46,7 @@ export default function UpcomingAuctionsSection({
                           listing={value}
                           key={index}
                           locale={locale}
+                          specificRoute={specificRoute}
                         />
                       </React.Fragment>
                     );
@@ -54,7 +57,11 @@ export default function UpcomingAuctionsSection({
         </div>
 
         <Link
-          href={`/${locale}/auctions`}
+          href={
+            specificRoute
+              ? `/${locale}/${specificRoute}/auctions`
+              : `/${locale}/auctions`
+          }
           onClick={() => {
             setSelectedCategory("");
           }}

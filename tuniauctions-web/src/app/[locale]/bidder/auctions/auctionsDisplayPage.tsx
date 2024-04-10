@@ -5,9 +5,8 @@ import AuctionListingsTopSection from "./components/auctionListingsTopSection";
 import SidebarSection from "./components/sidebarSection";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { useBidderFilterStore } from "@/helpers/store/bidder/bidderFilterStore";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Pagination from "./components/pagination";
+import { useRootFilterStore } from "@/helpers/store/general/rootAuctionsNavigationStore";
 
 interface Props {
   upcomingAuctions: AuctionListingType[] | null;
@@ -19,8 +18,13 @@ export default function AuctionsDisplayPage({
 }: Props) {
   const t = useTranslations("AuctionPage");
   const [currentPage, setCurrentPage] = useState(1);
-  const { selectedCategory, setSelectedCategory } = useBidderFilterStore();
-  const { setSelectedType, selectedType } = useBidderFilterStore();
+
+  const {
+    selectedCategory,
+    selectedType,
+    setSelectedCategory,
+    setSelectedType,
+  } = useRootFilterStore();
   const [selectedDisplay, setSelectedDisplay] = useState<
     AuctionListingType[] | null
   >(upcomingAuctions!.slice(0, 6));

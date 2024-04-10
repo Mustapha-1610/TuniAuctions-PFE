@@ -15,7 +15,7 @@ export default function AuctionListingItems({ auctionItem }: Props) {
     <>
       {auctionItem && (
         <Link
-          href={"/" + locale + "/bidder/auctionDetails/" + auctionItem._id}
+          href={"/" + locale + "/auctionListing/" + auctionItem._id}
           className="flex flex-col w-[290px] max-md:ml-0 max-md:w-full mb-4"
         >
           <Image
