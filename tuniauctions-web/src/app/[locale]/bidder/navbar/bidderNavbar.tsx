@@ -16,6 +16,7 @@ import { resDataType } from "@/serverHelpers/types";
 import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
 import { useRouter } from "next/navigation";
 import bidderSocket from "@/frontHelpers/bidder/bidderSocketLogic";
+import UnautherizedModal from "./components/components/unautherizedModal";
 
 export default function BidderNavbar() {
   const {
@@ -25,6 +26,8 @@ export default function BidderNavbar() {
     setMobileMenuState,
     setProfileMenuState,
     setNotificationsMenuState,
+    setAnautherizedModalState,
+    isAnautherizedModalOpen,
   } = useBidderNavbarState();
   const { bidderLocalStorageData, setBidderLocalStorageData, signoutBidder } =
     useBidderProfileStore();
@@ -41,23 +44,15 @@ export default function BidderNavbar() {
       setBidderLocalStorageData(resData.bidderFrontData);
     } else if (resData.authError) {
       signoutBidder();
-
       router.push(`/${locale}`);
     }
   }
   function handleLogout() {
-    signoutBidder();
-    router.push(`/${locale}`);
+    setAnautherizedModalState();
   }
   bidderSocket.on("confirmAuth", async (bidderSocketId: string) => {
     if (bidder?.socketId !== bidderSocketId) {
-      const res = await fetch("/api/bidder/signout", {
-        method: "POST",
-      });
-      const resData: resDataType = await res.json();
-      if (resData.success) {
-        handleLogout();
-      }
+      handleLogout();
     }
   });
   useEffect(() => {
@@ -132,6 +127,7 @@ export default function BidderNavbar() {
         }`}
       >
         <MobileNavbar />
+        {isAnautherizedModalOpen && <UnautherizedModal />}
       </div>
     </>
   );

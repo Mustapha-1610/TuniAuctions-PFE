@@ -7,7 +7,6 @@ import SignupModal from "./components/signupModal";
 import { useNavbarState } from "@/helpers/store/general/navbarState";
 import LanguageChanger from "./components/languageChanger";
 import { useBidderNavbarState } from "@/helpers/store/bidder/bidderNavbarStore";
-import { useLocale } from "next-intl";
 import UnautherizedModal from "../../bidder/navbar/components/components/unautherizedModal";
 
 function Navbar() {
@@ -18,10 +17,7 @@ function Navbar() {
     isMobileMenuOpen,
     isLoginModalOpen,
     isSignupModalOpen,
-    isForgotPasswordModalOpen,
-    isGenderSignupFormModalOpen,
   } = useNavbarState();
-  const locale = useLocale();
   const { isAnautherizedModalOpen, setAnautherizedModalState } =
     useBidderNavbarState();
   return (
