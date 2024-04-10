@@ -113,7 +113,9 @@ export default function BidderNavbar() {
             href={"/" + locale + "/bidder/balance"}
           >
             <GiWallet size={25} className="cursor-pointer" color="white" />
-            <span className="text-white  ml-1">$500</span>
+            <span className="text-white  ml-1">
+              ${bidderLocalStorageData?.balance.activeBalance}
+            </span>
           </Link>
           <div onClick={setProfileMenuState}>
             <LuUser2 size={30} className="cursor-pointer" color="white" />

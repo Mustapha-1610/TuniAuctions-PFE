@@ -2,8 +2,10 @@
 import * as React from "react";
 import AddBalance from "./components/addBalance";
 import LockedHistory from "./components/lockedHistory";
+import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
 
 export default function MyComponent() {
+  const { bidderLocalStorageData } = useBidderProfileStore();
   const [displayedComponent, setDisplayedComponent] = React.useState<any>(
     <AddBalance />
   );
@@ -18,7 +20,7 @@ export default function MyComponent() {
             <div className="flex flex-1 grow shrink-0 justify-center items-center px-16 py-3.5 rounded-lg border border-black border-solid basis-0 bg-zinc-200 max-md:px-5 max-md:max-w-full">
               <div className="flex flex-col">
                 <div className="self-center text-2xl font-bold tracking-tight text-red-600">
-                  $1000
+                  ${bidderLocalStorageData?.balance.activeBalance}
                 </div>
                 <div className="mt-2 text-sm font-bold leading-5 text-black">
                   Current balance

@@ -1,4 +1,30 @@
+"use client";
+
+import { resDataType } from "@/serverHelpers/types";
+import { useState } from "react";
+import { useSignoutBidder } from "../../navbar/components/components/profileDropdownMenu";
+import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
+
 export default function AddBalance() {
+  const [amount, setAmount] = useState<number>(0);
+  const { setBidderLocalStorageData } = useBidderProfileStore();
+  const signout = useSignoutBidder();
+  async function handleIncreaseBalance(e: any) {
+    e.preventDefault();
+    if (amount > 0) {
+      const res = await fetch("/api/bidder/increaseBalance", {
+        method: "POST",
+        body: JSON.stringify({ amount }),
+      });
+      const resData: resDataType = await res.json();
+
+      if (resData.bidderFrontData) {
+        setBidderLocalStorageData(resData.bidderFrontData);
+      } else {
+        signout;
+      }
+    }
+  }
   return (
     <>
       <div className="mt-6 max-md:mt-10 max-md:max-w-full">
@@ -8,9 +34,13 @@ export default function AddBalance() {
               <div className="self-start ml-2.5">Amount</div>
               <div className="relative mt-3 max-md:max-w-full">
                 <input
-                  type="text"
+                  type="number"
                   className="shrink-0 px-4 bg-white rounded-md border-2 border-solid border-neutral-500 h-[54px] w-full"
-                  placeholder="Type here..."
+                  min={0}
+                  onChange={(e) => {
+                    setAmount(parseInt(e.target.value));
+                  }}
+                  placeholder="0"
                 />
                 <span className="absolute inset-y-0 right-4 flex items-center">
                   $
@@ -57,9 +87,19 @@ export default function AddBalance() {
         </div>
         <div className="flex gap-5 justify-between mt-2 max-w-full text-xl leading-10 whitespace-nowrap w-[460px] max-md:flex-wrap">
           <div className="flex-1 grow flex justify-center items-center px-16 py-2 text-black rounded-lg border-2 border-solid bg-zinc-400 border-neutral-600 max-md:px-5">
-            <span className="inline-block align-middle">Cancel</span>
+            <span
+              className="inline-block align-middle"
+              onClick={() => {
+                setAmount(0);
+              }}
+            >
+              Cancel
+            </span>
           </div>
-          <div className="flex-1 grow flex justify-center items-center px-16 py-2 text-white bg-blue-700 ml-2 rounded-md border-2 border-solid border-neutral-500 max-md:px-5">
+          <div
+            className="flex-1 grow flex justify-center items-center px-16 py-2 text-white bg-blue-700 ml-2 rounded-md border-2 border-solid border-neutral-500 max-md:px-5 cursor-pointer"
+            onClick={handleIncreaseBalance}
+          >
             <span className="inline-block align-middle">Submit</span>
           </div>
         </div>
