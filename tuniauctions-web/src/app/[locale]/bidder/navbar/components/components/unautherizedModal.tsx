@@ -9,18 +9,6 @@ import { useRouter } from "next/navigation";
 export default function UnautherizedModal() {
   const { isAnautherizedModalOpen, setAnautherizedModalState } =
     useBidderNavbarState();
-  const locale = useLocale();
-  const router = useRouter();
-  async function handleLogout() {
-    const res = await fetch("/api/bidder/signout", {
-      method: "POST",
-    });
-    const resData: resDataType = await res.json();
-    if (resData.success) {
-      setAnautherizedModalState();
-      router.push(`/${locale}`);
-    }
-  }
 
   return (
     <>
@@ -30,7 +18,7 @@ export default function UnautherizedModal() {
         open={isAnautherizedModalOpen}
         width={600}
         footer={null}
-        onCancel={handleLogout}
+        onCancel={setAnautherizedModalState}
         maskClosable={false}
       >
         <p>

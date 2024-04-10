@@ -54,6 +54,8 @@ async function handeLogin(email: string, password: string) {
           } else if (existingUser.disabled) {
             return userInputCausedErrors("disabledAccount");
           } else {
+            existingUser.socketId = crypto.randomUUID();
+            await existingUser.save();
             const bidderFrontData = returnBidderFrontData(existingUser);
 
             const response = NextResponse.json({

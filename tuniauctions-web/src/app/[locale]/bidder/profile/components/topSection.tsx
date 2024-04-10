@@ -3,8 +3,15 @@ import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore
 import { TbCameraUp } from "react-icons/tb";
 import { handleFirebaseImageUpload } from "@/app/[locale]/firebaseFunctions/handleUploadImage";
 import { resDataType } from "@/serverHelpers/types";
+import React from "react";
+import BidderStatisticsAndAdresses from "./statisticsAndAdresses";
+import Notifications from "./notifications";
+import Transactions from "./transactions";
 
-export default function TopSection() {
+interface Props {
+  setDisplayedComponent: (value: any) => void;
+}
+export default function TopSection({ setDisplayedComponent }: Props) {
   const { bidderLocalStorageData, setBidderLocalStorageData } =
     useBidderProfileStore();
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,17 +32,43 @@ export default function TopSection() {
       console.log(resData);
     }
   };
+  const [selectedItem, setSelectedItem] = React.useState("personalInfo");
+
   return (
     <>
       <div className="flex z-10 gap-10 justify-between items-start self-start pr-20 max-md:flex-wrap max-md:pr-5 max-md:max-w-full">
         <div className="flex flex-col mt-12 text-sm font-medium leading-5 whitespace-nowrap basis-0 text-neutral-900 max-md:mt-10">
-          <div className="justify-center items-start py-2 pr-16 pl-3 rounded-xl bg-slate-200 max-md:pr-5">
+          <div
+            onClick={() => (
+              setSelectedItem("personalInfo"),
+              setDisplayedComponent(<BidderStatisticsAndAdresses />)
+            )}
+            className={`justify-center items-start py-2 pr-16 pl-3 rounded-xl max-md:pr-5 cursor-pointer ${
+              selectedItem === "personalInfo" ? "bg-slate-200" : "bg-white"
+            }`}
+          >
             Personal Information
           </div>
-          <div className="justify-center items-start py-2 pr-16 pl-3 mt-2 bg-white max-md:pr-5">
+          <div
+            onClick={() => (
+              setSelectedItem("notifications"),
+              setDisplayedComponent(<Notifications />)
+            )}
+            className={`justify-center items-start py-2 pr-16 pl-3 rounded-xl max-md:pr-5 cursor-pointer ${
+              selectedItem === "notifications" ? "bg-slate-200" : "bg-white"
+            }`}
+          >
             Notifications
           </div>
-          <div className="justify-center items-start py-2 pr-16 pl-3 mt-2 bg-white max-md:pr-5">
+          <div
+            onClick={() => (
+              setSelectedItem("transactions"),
+              setDisplayedComponent(<Transactions />)
+            )}
+            className={`justify-center items-start py-2 pr-16 pl-3 rounded-xl max-md:pr-5 cursor-pointer ${
+              selectedItem === "transactions" ? "bg-slate-200" : "bg-white"
+            }`}
+          >
             Transactions
           </div>
         </div>
@@ -59,7 +92,7 @@ export default function TopSection() {
             <div className="flex-auto my-auto text-base leading-5">
               {bidderLocalStorageData?.email.toLowerCase()}
             </div>
-            <div className="justify-center  px-6 py-4 text-sm tracking-wide leading-5 rounded-3xl bg-slate-200 max-md:px-5">
+            <div className="justify-center  px-4 py-2 text-sm tracking-wide leading-5 rounded-lg bg-slate-200 max-md:px-5 ml-24 cursor-pointer">
               Edit
             </div>
           </div>

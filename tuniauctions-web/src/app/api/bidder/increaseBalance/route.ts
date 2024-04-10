@@ -16,6 +16,12 @@ export async function POST(request: NextRequest) {
       const { amount } = await request.json();
       if (amount > 0) {
         res.bidderAccount.balance.activeBalance += amount;
+        res.bidderAccount.transactions.push({
+          amount,
+          date: new Date(),
+          context: "Balance Increase",
+          reciever: "Tuni-Auctions",
+        });
         await res.bidderAccount.save();
         const bidderFrontData = returnBidderFrontData(res.bidderAccount);
         return NextResponse.json({ bidderFrontData });

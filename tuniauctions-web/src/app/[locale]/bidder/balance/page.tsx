@@ -9,6 +9,8 @@ export default function MyComponent() {
   const [displayedComponent, setDisplayedComponent] = React.useState<any>(
     <AddBalance />
   );
+
+  const [selectedButton, setSelectedButton] = React.useState("addBalance");
   return (
     <div className="flex justify-center items-center mt-8 px-16  max-md:px-5">
       <div className="flex flex-col py-16 w-full max-w-[1150px] max-md:max-w-full">
@@ -40,14 +42,28 @@ export default function MyComponent() {
           </div>
           <div className="flex gap-5 justify-between mt-12 text-2xl font-bold tracking-tight text-center whitespace-nowrap text-neutral-900 max-md:flex-wrap max-md:mt-10 max-md:max-w-full">
             <div
-              onClick={() => setDisplayedComponent(<AddBalance />)}
-              className="grow cursor-pointer justify-center items-center px-16 py-4 bg-slate-900 text-white rounded-lg border border-black border-solid w-fit max-md:px-5 max-md:max-w-full"
+              onClick={() => {
+                setDisplayedComponent(<AddBalance />);
+                setSelectedButton("addBalance");
+              }}
+              className={`grow cursor-pointer justify-center items-center px-16 py-4 rounded-lg border border-black border-solid w-fit max-md:px-5 max-md:max-w-full ${
+                selectedButton === "addBalance"
+                  ? "bg-slate-900 text-white"
+                  : "bg-white text-neutral-900"
+              }`}
             >
               Add Balance
             </div>
             <div
-              onClick={() => setDisplayedComponent(<LockedHistory />)}
-              className="grow cursor-pointer justify-center items-center px-16 py-4 bg-white rounded-lg border border-black border-solid w-fit max-md:px-5 max-md:max-w-full"
+              onClick={() => {
+                setDisplayedComponent(<LockedHistory />);
+                setSelectedButton("history");
+              }}
+              className={`grow cursor-pointer justify-center items-center px-16 py-4 rounded-lg border border-black border-solid w-fit max-md:px-5 max-md:max-w-full ${
+                selectedButton === "history"
+                  ? "bg-slate-900 text-white"
+                  : "bg-white text-neutral-900"
+              }`}
             >
               View History
             </div>

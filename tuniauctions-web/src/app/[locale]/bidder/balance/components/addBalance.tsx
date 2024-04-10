@@ -17,11 +17,12 @@ export default function AddBalance() {
         body: JSON.stringify({ amount }),
       });
       const resData: resDataType = await res.json();
-
-      if (resData.bidderFrontData) {
-        setBidderLocalStorageData(resData.bidderFrontData);
+      if (resData.success) {
+        if (resData.bidderFrontData) {
+          setBidderLocalStorageData(resData.bidderFrontData);
+        }
       } else {
-        signout;
+        signout();
       }
     }
   }

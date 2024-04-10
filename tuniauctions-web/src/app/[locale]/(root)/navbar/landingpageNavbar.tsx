@@ -18,8 +18,7 @@ function Navbar() {
     isLoginModalOpen,
     isSignupModalOpen,
   } = useNavbarState();
-  const { isAnautherizedModalOpen, setAnautherizedModalState } =
-    useBidderNavbarState();
+  const { isAnautherizedModalOpen } = useBidderNavbarState();
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 px-4 py-4 flex justify-between items-center bg-neutral-900 z-50">
@@ -66,6 +65,7 @@ function Navbar() {
           Sign up
         </button>
         <LanguageChanger className="block ml-1 lg:inline-block py-2  bg-neutral-900 text-sm text-white font-bold transition duration-200" />
+        {isAnautherizedModalOpen && <UnautherizedModal />}
       </nav>
       <div
         className={`navbar-menu fixed top-0 left-0 right-0 overflow-y-auto z-50 ${

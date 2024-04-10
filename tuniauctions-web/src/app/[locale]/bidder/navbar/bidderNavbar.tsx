@@ -35,29 +35,25 @@ export default function BidderNavbar() {
   const router = useRouter();
   const bidder = bidderLocalStorageData;
 
-  async function getData() {
-    const res = await fetch("/api/bidder/getData", {
-      method: "POST",
-    });
-    const resData: resDataType = await res.json();
-    if (resData.bidderFrontData) {
-      setBidderLocalStorageData(resData.bidderFrontData);
-    } else if (resData.authError) {
-      signoutBidder();
-      router.push(`/${locale}`);
-    }
-  }
-  function handleLogout() {
-    setAnautherizedModalState();
-  }
-  bidderSocket.on("confirmAuth", async (bidderSocketId: string) => {
-    if (bidder?.socketId !== bidderSocketId) {
-      handleLogout();
-    }
-  });
   useEffect(() => {
+    async function getData() {
+      const res = await fetch("/api/bidder/getData", {
+        method: "POST",
+      });
+      const resData: resDataType = await res.json();
+      if (resData.bidderFrontData) {
+        setBidderLocalStorageData(resData.bidderFrontData);
+      } else if (resData.authError) {
+        signoutBidder();
+        setAnautherizedModalState();
+        router.push(`/${locale}`);
+      }
+    }
     getData();
-  }, []); // Add 'signout' to the dependency array
+    bidderSocket.on("confirmAuth", async (bidderSocketId: string) => {
+      getData();
+    });
+  }, [bidderSocket]);
 
   return (
     <>
