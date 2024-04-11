@@ -4,18 +4,18 @@ import AddBalance from "./components/addBalance";
 import LockedHistory from "./components/lockedHistory";
 import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
 import TransactionHistory from "./components/lockedHistory";
+import { useBidderNavigationStore } from "@/helpers/store/bidder/bidderNavigationStore";
 
 export default function MyComponent() {
   const { bidderLocalStorageData } = useBidderProfileStore();
-  function redirectToHistory() {
-    setSelectedButton("history");
-    setDisplayedComponent(<TransactionHistory />);
-  }
-  const [displayedComponent, setDisplayedComponent] = React.useState<any>(
-    <AddBalance changeDisplayedComponent={redirectToHistory} />
-  );
 
-  const [selectedButton, setSelectedButton] = React.useState("addBalance");
+  const { setSelectedBalanceComponent, selectedBalanceComponent } =
+    useBidderNavigationStore();
+  React.useEffect(() => {
+    return () => {
+      setSelectedBalanceComponent("balance");
+    };
+  }, []);
   return (
     <div className="flex justify-center items-center mt-8 px-16  max-md:px-5">
       <div className="flex flex-col py-16 w-full max-w-[1150px] max-md:max-w-full">
@@ -48,13 +48,10 @@ export default function MyComponent() {
           <div className="flex gap-5 justify-between mt-12 text-2xl font-bold tracking-tight text-center whitespace-nowrap text-neutral-900 max-md:flex-wrap max-md:mt-10 max-md:max-w-full">
             <div
               onClick={() => {
-                setDisplayedComponent(
-                  <AddBalance changeDisplayedComponent={redirectToHistory} />
-                );
-                setSelectedButton("addBalance");
+                setSelectedBalanceComponent("balance");
               }}
               className={`grow cursor-pointer justify-center items-center px-16 py-4 rounded-lg border border-black border-solid w-fit max-md:px-5 max-md:max-w-full ${
-                selectedButton === "addBalance"
+                selectedBalanceComponent === "balance"
                   ? "bg-slate-900 text-white"
                   : "bg-white text-neutral-900"
               }`}
@@ -63,11 +60,10 @@ export default function MyComponent() {
             </div>
             <div
               onClick={() => {
-                setDisplayedComponent(<TransactionHistory />);
-                setSelectedButton("history");
+                setSelectedBalanceComponent("transactions");
               }}
               className={`grow cursor-pointer justify-center items-center px-16 py-4 rounded-lg border border-black border-solid w-fit max-md:px-5 max-md:max-w-full ${
-                selectedButton === "history"
+                selectedBalanceComponent === "transactions"
                   ? "bg-slate-900 text-white"
                   : "bg-white text-neutral-900"
               }`}
@@ -75,7 +71,15 @@ export default function MyComponent() {
               View History
             </div>
           </div>
-          {displayedComponent}
+          {selectedBalanceComponent === "balance" ? (
+            <AddBalance
+              setSelectedBalanceComponent={setSelectedBalanceComponent}
+            />
+          ) : (
+            selectedBalanceComponent === "transactions" && (
+              <TransactionHistory />
+            )
+          )}
         </div>
       </div>
     </div>

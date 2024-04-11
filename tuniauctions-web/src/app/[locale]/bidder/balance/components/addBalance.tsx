@@ -4,12 +4,11 @@ import { resDataType } from "@/serverHelpers/types";
 import { useState } from "react";
 import { useSignoutBidder } from "../../navbar/components/components/profileDropdownMenu";
 import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
-import TransactionHistory from "./lockedHistory";
 
 interface Props {
-  changeDisplayedComponent: () => void;
+  setSelectedBalanceComponent: (value: "balance" | "transactions") => void;
 }
-export default function AddBalance({ changeDisplayedComponent }: Props) {
+export default function AddBalance({ setSelectedBalanceComponent }: Props) {
   const [amount, setAmount] = useState<number>(0);
   const { setBidderLocalStorageData } = useBidderProfileStore();
   const signout = useSignoutBidder();
@@ -24,7 +23,7 @@ export default function AddBalance({ changeDisplayedComponent }: Props) {
       console.log(resData);
       if (resData.bidderFrontData) {
         setBidderLocalStorageData(resData.bidderFrontData);
-        changeDisplayedComponent();
+        setSelectedBalanceComponent("transactions");
       } else {
         signout();
       }

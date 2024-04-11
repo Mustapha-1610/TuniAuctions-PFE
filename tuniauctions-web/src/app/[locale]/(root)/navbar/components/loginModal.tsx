@@ -58,7 +58,7 @@ export default function LoginModal() {
         method: "POST",
       });
       const resData: resDataType = await res.json();
-      console.log(resData);
+
       if (resData.success) {
         if (resData.bidderFrontData) {
           setBidderLocalStorageData(resData.bidderFrontData);
@@ -89,7 +89,7 @@ export default function LoginModal() {
         }),
       });
       const resData: resDataType = await res.json();
-      console.log(resData);
+
       if (resData.success) {
         setBidderLocalStorageData(resData.bidderFrontData!);
         setLoginModalState();

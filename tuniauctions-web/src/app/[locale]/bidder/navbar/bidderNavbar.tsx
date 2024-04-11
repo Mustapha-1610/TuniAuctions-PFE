@@ -133,7 +133,10 @@ export default function BidderNavbar() {
               <MdNotifications color="white" size={25} />
             </div>
             {isNotificationsMenuOpen && (
-              <Notifications bidderData={bidderLocalStorageData} />
+              <Notifications
+                bidderData={bidderLocalStorageData}
+                setNotificationsMenuState={setNotificationsMenuState}
+              />
             )}
           </div>
 

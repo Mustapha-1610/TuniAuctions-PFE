@@ -4,14 +4,17 @@ import { TbCameraUp } from "react-icons/tb";
 import { handleFirebaseImageUpload } from "@/app/[locale]/firebaseFunctions/handleUploadImage";
 import { resDataType } from "@/serverHelpers/types";
 import React from "react";
-import BidderStatisticsAndAdresses from "./statisticsAndAdresses";
-import Notifications from "./notifications";
-import Transactions from "./transactions";
 
 interface Props {
-  setDisplayedComponent: (value: any) => void;
+  setSelectedProfileComponent: (
+    value: "statsAndAdresses" | "notifications"
+  ) => void;
+  selectedProfileComponent: string;
 }
-export default function TopSection({ setDisplayedComponent }: Props) {
+export default function TopSection({
+  setSelectedProfileComponent,
+  selectedProfileComponent,
+}: Props) {
   const { bidderLocalStorageData, setBidderLocalStorageData } =
     useBidderProfileStore();
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,44 +35,30 @@ export default function TopSection({ setDisplayedComponent }: Props) {
       console.log(resData);
     }
   };
-  const [selectedItem, setSelectedItem] = React.useState("personalInfo");
 
   return (
     <>
       <div className="flex z-10 gap-10 justify-between items-start self-start pr-20 max-md:flex-wrap max-md:pr-5 max-md:max-w-full">
         <div className="flex flex-col mt-12 text-sm font-medium leading-5 whitespace-nowrap basis-0 text-neutral-900 max-md:mt-10">
           <div
-            onClick={() => (
-              setSelectedItem("personalInfo"),
-              setDisplayedComponent(<BidderStatisticsAndAdresses />)
-            )}
+            onClick={() => setSelectedProfileComponent("statsAndAdresses")}
             className={`justify-center items-start py-2 pr-16 pl-3 rounded-xl max-md:pr-5 cursor-pointer ${
-              selectedItem === "personalInfo" ? "bg-slate-200" : "bg-white"
+              selectedProfileComponent === "statsAndAdresses"
+                ? "bg-slate-200"
+                : "bg-white"
             }`}
           >
             Personal Information
           </div>
           <div
-            onClick={() => (
-              setSelectedItem("notifications"),
-              setDisplayedComponent(<Notifications />)
-            )}
+            onClick={() => setSelectedProfileComponent("notifications")}
             className={`justify-center items-start py-2 pr-16 pl-3 rounded-xl max-md:pr-5 cursor-pointer ${
-              selectedItem === "notifications" ? "bg-slate-200" : "bg-white"
+              selectedProfileComponent === "notifications"
+                ? "bg-slate-200"
+                : "bg-white"
             }`}
           >
             Notifications
-          </div>
-          <div
-            onClick={() => (
-              setSelectedItem("transactions"),
-              setDisplayedComponent(<Transactions />)
-            )}
-            className={`justify-center items-start py-2 pr-16 pl-3 rounded-xl max-md:pr-5 cursor-pointer ${
-              selectedItem === "transactions" ? "bg-slate-200" : "bg-white"
-            }`}
-          >
-            Transactions
           </div>
         </div>
         <div className="relative mt-11 max-md:mt-10">
