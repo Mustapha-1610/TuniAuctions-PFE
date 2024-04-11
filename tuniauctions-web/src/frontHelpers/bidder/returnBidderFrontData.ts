@@ -12,8 +12,8 @@ export function returnBidderFrontData(bidder: IBidder) {
     auctionReferences: bidder.auctionReferences,
     deliveries: bidder.deliveries,
     adressPresets: bidder.adressPresets,
-    transactions: bidder.transactions,
-    notifications: bidder.notifications,
+    transactions: bidder.transactions.reverse(),
+    notifications: bidder.notifications.reverse(),
     gender: bidder.gender,
     socketId: bidder.socketId,
   };

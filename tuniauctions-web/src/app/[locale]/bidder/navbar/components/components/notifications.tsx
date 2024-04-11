@@ -46,7 +46,7 @@ export default function Notifications({
         </div>
         <div className="h-72 w-80 overflow-y-auto">
           {bidderData?.notifications &&
-            bidderData.notifications.reverse().map((value, index) => {
+            bidderData.notifications.map((value, index) => {
               return (
                 <div
                   className="p-3 hover:bg-gray-100 cursor-pointer flex items-center"

@@ -15,7 +15,7 @@ export default function TransactionHistory() {
       <Table
         className="custom-transaction-table mt-4 py-6"
         columns={transactionTableColumns}
-        dataSource={bidderLocalStorageData?.transactions.reverse()}
+        dataSource={bidderLocalStorageData?.transactions}
         pagination={{ pageSize: 5 }}
       />
     </div>
