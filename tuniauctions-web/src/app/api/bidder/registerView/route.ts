@@ -2,6 +2,7 @@ import { connect } from "@/db/dbConfig";
 import auctionListingModel from "@/models/auctionListingModels/auctionListing";
 import { AuctionListingType } from "@/models/types/auctionListing";
 import { verifyBidderTokens } from "@/security/apiProtection/bidder/routeProtection";
+import refreshBidderAccessToken from "@/security/apiProtection/bidder/tokenHandelingFunctions/confirmAccess";
 import {
   serverErrorHandler,
   unautherizedError,
@@ -20,7 +21,8 @@ export async function POST(request: NextRequest) {
         auction.genderViews[res.bidderAccount.gender] += 1;
         await auction.save();
       }
-      return NextResponse.json({ success: true });
+      const response = NextResponse.json({ success: true });
+      return refreshBidderAccessToken(response, res.newAccessToken);
     } else {
       return unautherizedError("err");
     }

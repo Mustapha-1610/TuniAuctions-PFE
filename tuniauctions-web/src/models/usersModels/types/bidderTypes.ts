@@ -44,9 +44,11 @@ export interface IBidder extends Document {
     context: {
       receptionDate: Date;
       frontContext: string;
-      contextId: mongoose.Types.ObjectId;
-    }[];
-  };
+      contextId?: mongoose.Types.ObjectId;
+      notificationIcon: string;
+    };
+    readStatus?: boolean;
+  }[];
   transactions: {
     amount: number;
     date: Date;
@@ -90,9 +92,11 @@ export interface IBidderFrontData {
     context: {
       receptionDate: Date;
       frontContext: string;
-      contextId: mongoose.Types.ObjectId;
-    }[];
-  };
+      contextId?: mongoose.Types.ObjectId;
+      notificationIcon: string;
+    };
+    readStatus?: boolean;
+  }[];
   transactions: {
     amount: number;
     date: Date;

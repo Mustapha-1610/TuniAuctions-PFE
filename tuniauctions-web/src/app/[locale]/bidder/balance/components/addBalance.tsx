@@ -4,8 +4,12 @@ import { resDataType } from "@/serverHelpers/types";
 import { useState } from "react";
 import { useSignoutBidder } from "../../navbar/components/components/profileDropdownMenu";
 import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
+import TransactionHistory from "./lockedHistory";
 
-export default function AddBalance() {
+interface Props {
+  changeDisplayedComponent: () => void;
+}
+export default function AddBalance({ changeDisplayedComponent }: Props) {
   const [amount, setAmount] = useState<number>(0);
   const { setBidderLocalStorageData } = useBidderProfileStore();
   const signout = useSignoutBidder();
@@ -17,10 +21,10 @@ export default function AddBalance() {
         body: JSON.stringify({ amount }),
       });
       const resData: resDataType = await res.json();
-      if (resData.success) {
-        if (resData.bidderFrontData) {
-          setBidderLocalStorageData(resData.bidderFrontData);
-        }
+      console.log(resData);
+      if (resData.bidderFrontData) {
+        setBidderLocalStorageData(resData.bidderFrontData);
+        changeDisplayedComponent();
       } else {
         signout();
       }

@@ -31,12 +31,12 @@ export function userInputCausedErrors(error: string) {
   });
 }
 
-export function unautherizedError(error: string, errorCode?: unknown) {
+export function unautherizedError(error?: string, errorCode?: unknown) {
   const response = NextResponse.json({
     success: false,
     serverError: false,
     errorCode: errorCode || null,
-    errorMessage: error,
+    errorMessage: error || null,
     authError: true,
   });
   response.cookies.set("refreshBidderToken", "", {

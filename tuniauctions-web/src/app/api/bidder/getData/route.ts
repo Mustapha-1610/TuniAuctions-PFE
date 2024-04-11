@@ -4,6 +4,7 @@ import {
   VerifyBidderTokensResponse,
   verifyBidderTokens,
 } from "@/security/apiProtection/bidder/routeProtection";
+import refreshBidderAccessToken from "@/security/apiProtection/bidder/tokenHandelingFunctions/confirmAccess";
 import {
   serverErrorHandler,
   unautherizedError,
@@ -17,12 +18,16 @@ export async function POST(request: NextRequest) {
 
     if (res.isValid) {
       const bidderFrontData = returnBidderFrontData(res.bidderAccount);
-
-      return NextResponse.json({ success: true, bidderFrontData });
-    } else {
-      return unautherizedError("err");
-    }
+      console.log("valid");
+      const response = NextResponse.json({ success: true, bidderFrontData });
+      if (res.newAccessToken)
+        return refreshBidderAccessToken(response, res.newAccessToken);
+      return response;
+    } else console.log("unvalid 1", res);
+    return unautherizedError("err");
   } catch (err) {
+    console.log("unvalid 2", err);
+
     return serverErrorHandler(err);
   }
 }

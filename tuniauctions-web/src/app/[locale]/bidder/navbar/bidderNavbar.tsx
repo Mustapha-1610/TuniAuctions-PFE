@@ -33,7 +33,6 @@ export default function BidderNavbar() {
     useBidderProfileStore();
   const locale = useLocale();
   const router = useRouter();
-  const bidder = bidderLocalStorageData;
 
   useEffect(() => {
     async function getData() {
@@ -50,11 +49,29 @@ export default function BidderNavbar() {
       }
     }
     getData();
-    bidderSocket.on("confirmAuth", async (bidderSocketId: string) => {
+    bidderSocket.on("confirmAuth", async () => {
       getData();
     });
   }, [bidderSocket]);
-
+  async function clearNotifications() {
+    if (
+      bidderLocalStorageData!.notifications.filter(
+        (notification: any) => !notification.readStatus
+      ).length
+    ) {
+      const res = await fetch("/api/bidder/clearNotifications", {
+        method: "POST",
+      });
+      const resData: resDataType = await res.json();
+      if (resData.bidderFrontData) {
+        setBidderLocalStorageData(resData.bidderFrontData!);
+      } else if (resData.authError) {
+        signoutBidder();
+        setAnautherizedModalState();
+        router.push(`/${locale}`);
+      }
+    }
+  }
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 px-4 py-4 flex justify-between items-center bg-neutral-900 z-50">
@@ -90,18 +107,34 @@ export default function BidderNavbar() {
         </ul>
         <div className="flex items-center space-x-4">
           <LanguageChanger className="ml-1 lg:inline-block py-2  bg-neutral-900 text-sm text-white font-bold  transition duration-200" />
-          <div className="relative">
-            <div className="cursor-pointer">
-              <div className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center">
-                <span className="text-sm font-bold">3</span>
-              </div>
-              <MdNotifications
-                onClick={setNotificationsMenuState}
-                color="white"
-                size={25}
-              />
+          <div className="relative ">
+            <div
+              className="cursor-pointer"
+              onClick={() => {
+                setNotificationsMenuState(), clearNotifications();
+              }}
+            >
+              {bidderLocalStorageData &&
+                bidderLocalStorageData.notifications.filter(
+                  (notification: any) => !notification.readStatus
+                ).length > 0 && (
+                  <>
+                    <div className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center">
+                      <span className="text-sm font-bold">
+                        {
+                          bidderLocalStorageData.notifications.filter(
+                            (notification: any) => !notification.readStatus
+                          ).length
+                        }
+                      </span>
+                    </div>
+                  </>
+                )}
+              <MdNotifications color="white" size={25} />
             </div>
-            {isNotificationsMenuOpen && <Notifications />}
+            {isNotificationsMenuOpen && (
+              <Notifications bidderData={bidderLocalStorageData} />
+            )}
           </div>
 
           <Link

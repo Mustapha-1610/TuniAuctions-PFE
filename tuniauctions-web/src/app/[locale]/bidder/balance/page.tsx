@@ -3,11 +3,16 @@ import * as React from "react";
 import AddBalance from "./components/addBalance";
 import LockedHistory from "./components/lockedHistory";
 import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
+import TransactionHistory from "./components/lockedHistory";
 
 export default function MyComponent() {
   const { bidderLocalStorageData } = useBidderProfileStore();
+  function redirectToHistory() {
+    setSelectedButton("history");
+    setDisplayedComponent(<TransactionHistory />);
+  }
   const [displayedComponent, setDisplayedComponent] = React.useState<any>(
-    <AddBalance />
+    <AddBalance changeDisplayedComponent={redirectToHistory} />
   );
 
   const [selectedButton, setSelectedButton] = React.useState("addBalance");
@@ -43,7 +48,9 @@ export default function MyComponent() {
           <div className="flex gap-5 justify-between mt-12 text-2xl font-bold tracking-tight text-center whitespace-nowrap text-neutral-900 max-md:flex-wrap max-md:mt-10 max-md:max-w-full">
             <div
               onClick={() => {
-                setDisplayedComponent(<AddBalance />);
+                setDisplayedComponent(
+                  <AddBalance changeDisplayedComponent={redirectToHistory} />
+                );
                 setSelectedButton("addBalance");
               }}
               className={`grow cursor-pointer justify-center items-center px-16 py-4 rounded-lg border border-black border-solid w-fit max-md:px-5 max-md:max-w-full ${
@@ -56,7 +63,7 @@ export default function MyComponent() {
             </div>
             <div
               onClick={() => {
-                setDisplayedComponent(<LockedHistory />);
+                setDisplayedComponent(<TransactionHistory />);
                 setSelectedButton("history");
               }}
               className={`grow cursor-pointer justify-center items-center px-16 py-4 rounded-lg border border-black border-solid w-fit max-md:px-5 max-md:max-w-full ${

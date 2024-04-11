@@ -1,6 +1,7 @@
 import { connect } from "@/db/dbConfig";
 import { returnBidderFrontData } from "@/frontHelpers/bidder/returnBidderFrontData";
 import { verifyBidderTokens } from "@/security/apiProtection/bidder/routeProtection";
+import refreshBidderAccessToken from "@/security/apiProtection/bidder/tokenHandelingFunctions/confirmAccess";
 import {
   serverErrorHandler,
   unautherizedError,
@@ -22,16 +23,31 @@ export async function POST(request: NextRequest) {
           context: "Balance Increase",
           reciever: "Tuni-Auctions",
         });
+        res.bidderAccount.notifications.push({
+          notificationMessage: "Transaction Successfull For " + amount + " $",
+          context: {
+            frontContext: "Transaction",
+            receptionDate: new Date(),
+            notificationIcon:
+              "https://firebasestorage.googleapis.com/v0/b/tunisianauctionwebapp.appspot.com/o/CircularReducedSizeTuniAuctionsLogo.png?alt=media&token=e5c93487-fd34-4e62-9602-964b3d0392fe",
+          },
+        });
         await res.bidderAccount.save();
         const bidderFrontData = returnBidderFrontData(res.bidderAccount);
-        return NextResponse.json({ bidderFrontData });
+        const response = NextResponse.json({ bidderFrontData, success: true });
+
+        return refreshBidderAccessToken(response, res.newAccessToken);
       } else {
+        console.log("idk");
         return userInputCausedErrors("noAmount");
       }
     } else {
+      console.log("not valid balance 1", res);
       return unautherizedError(res.errorStage);
     }
   } catch (err) {
+    console.log("not valid balance 2", err);
+
     return serverErrorHandler(err);
   }
 }

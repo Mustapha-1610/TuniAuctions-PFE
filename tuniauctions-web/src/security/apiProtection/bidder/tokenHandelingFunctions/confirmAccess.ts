@@ -1,13 +1,16 @@
 import { NextResponse } from "next/server";
+import { VerifyBidderTokensResponse } from "../routeProtection";
 
 export default function refreshBidderAccessToken(
-  newAccessToken: string,
-  response: NextResponse
+  response: NextResponse,
+  newAccessToken?: string
 ) {
-  response.cookies.set("accessBidderToken", newAccessToken, {
-    httpOnly: true,
-    sameSite: "none",
-    secure: true,
-  });
+  newAccessToken &&
+    response.cookies.set("accessBidderToken", newAccessToken, {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+    });
+
   return response;
 }

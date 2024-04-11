@@ -24,9 +24,7 @@ export async function POST(request: NextRequest) {
       const bidderFrontData = returnBidderFrontData(verRes.bidderAccount);
 
       const res = NextResponse.json({ success: true, bidderFrontData });
-      if (verRes.newAccessToken)
-        return refreshBidderAccessToken(verRes.newAccessToken, res);
-      return res;
+      return refreshBidderAccessToken(res, verRes.newAccessToken);
     } else {
       console.log(verRes.errorStage);
       return unautherizedError("err");

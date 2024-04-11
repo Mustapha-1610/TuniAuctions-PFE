@@ -22,43 +22,36 @@ export async function verifyBidderTokens(
   try {
     await connect();
     const accessToken = request.cookies.get("accessBidderToken")?.value || "";
+    const refreshToken = request.cookies.get("refreshBidderToken")?.value || "";
+    let bidderAccount: IBidder | null = null;
+
     if (accessToken) {
       const decodedAccessToken = jwt.verify(
         accessToken,
         process.env.ACCESS_TOKEN_SECRET!
       ) as JwtPayload;
-      const bidderAccount: IBidder | null = await bidderModel.findById(
-        decodedAccessToken.bidder_id
-      );
-      const refreshToken =
-        request.cookies.get("refreshBidderToken")?.value || "";
-      if (bidderAccount && bidderAccount.refreshToken === refreshToken)
-        return { isValid: true, bidderAccount };
-      else return { isValid: false, errorStage: "error Stage 1" };
-    } else return { isValid: false, errorStage: "error Stage 77" };
-  } catch (err) {
-    try {
-      const refreshToken =
-        request.cookies.get("refreshBidderToken")?.value || "";
-      if (refreshToken) {
-        const decodedRefreshToken = jwt.verify(
-          refreshToken,
-          process.env.REFRESH_TOKEN_SECRET!
-        ) as JwtPayload;
-        const bidderAccount: IBidder | null = await bidderModel.findById(
-          decodedRefreshToken.bidder_id
-        );
-        if (bidderAccount && bidderAccount.refreshToken === refreshToken) {
-          const newAccessToken = jwt.sign(
-            { bidder_id: bidderAccount._id },
-            process.env.ACCESS_TOKEN_SECRET!,
-            { expiresIn: "10m" }
-          );
-          return { isValid: true, newAccessToken, bidderAccount };
-        } else return { isValid: false, errorStage: "error Stage 3" };
-      } else return { isValid: false, errorStage: "error Stage 4" };
-    } catch (refreshErr) {
-      return { isValid: false, errorStage: "error Stage 5" };
+      bidderAccount = await bidderModel.findById(decodedAccessToken.bidder_id);
     }
+
+    if (!bidderAccount && refreshToken) {
+      const decodedRefreshToken = jwt.verify(
+        refreshToken,
+        process.env.REFRESH_TOKEN_SECRET!
+      ) as JwtPayload;
+      bidderAccount = await bidderModel.findById(decodedRefreshToken.bidder_id);
+    }
+
+    if (bidderAccount && bidderAccount.refreshToken === refreshToken) {
+      const newAccessToken = jwt.sign(
+        { bidder_id: bidderAccount._id },
+        process.env.ACCESS_TOKEN_SECRET!,
+        { expiresIn: "10m" }
+      );
+      return { isValid: true, newAccessToken, bidderAccount };
+    } else {
+      return { isValid: false, errorStage: "error Stage 1" };
+    }
+  } catch (err) {
+    return { isValid: false, errorStage: "error Stage 2" };
   }
 }
