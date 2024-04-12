@@ -10,6 +10,7 @@ import { AuctionListingType } from "@/models/types/auctionListing";
 import Image from "next/image";
 import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
 import ConfirmParticipartionModal from "./confirmParticipationModal";
+import ConfirmUnparticipationModal from "./confirmUnparticipationModal";
 
 interface Props {
   auctionListing: AuctionListingType;
@@ -23,6 +24,9 @@ export default function ProductInformations({
   const [selectedImage, setSelectedImage] = useState("");
   const [isConfirmParticipationModalOpen, setIsComfirmParticipationModal] =
     useState<boolean>(false);
+  const [isConfirmUnparticipationModalOpen, setIsConfirmUnparticipationModal] =
+    useState<boolean>(false);
+
   useEffect(() => {}, [bidderLocalStorageData]);
   return (
     <>
@@ -177,7 +181,12 @@ export default function ProductInformations({
                     auctionListing.participatingBidders.find(
                       (value) => value.bidderId === bidderLocalStorageData._id
                     ) ? (
-                      <div className="z-10 justify-center items-center px-16 py-9 -mb-1 text-center text-white whitespace-nowrap rounded-none border border-black border-solid bg-red-700 cursor-pointer max-md:px-5 max-md:max-w-full">
+                      <div
+                        className="z-10 justify-center items-center px-16 py-9 -mb-1 text-center text-white whitespace-nowrap rounded-none border border-black border-solid bg-red-700 cursor-pointer max-md:px-5 max-md:max-w-full"
+                        onClick={() => {
+                          setIsConfirmUnparticipationModal(true);
+                        }}
+                      >
                         Cancel Participation
                       </div>
                     ) : (
@@ -195,12 +204,26 @@ export default function ProductInformations({
               </div>
             </div>
           </div>
-          <ConfirmParticipartionModal
-            setAuctionListing={setAuctionListing}
-            auctionListing={auctionListing}
-            isConfirmParticipationModalOpen={isConfirmParticipationModalOpen}
-            setIsComfirmParticipationModal={setIsComfirmParticipationModal}
-          />
+          {isConfirmParticipationModalOpen && (
+            <ConfirmParticipartionModal
+              setAuctionListing={setAuctionListing}
+              auctionListing={auctionListing}
+              isConfirmParticipationModalOpen={isConfirmParticipationModalOpen}
+              setIsComfirmParticipationModal={setIsComfirmParticipationModal}
+            />
+          )}
+          {isConfirmUnparticipationModalOpen && (
+            <ConfirmUnparticipationModal
+              setAuctionListing={setAuctionListing}
+              auctionListing={auctionListing}
+              isConfirmUnarticipationModalOpen={
+                isConfirmUnparticipationModalOpen
+              }
+              setIsComfirmUnparticipationModal={
+                setIsConfirmUnparticipationModal
+              }
+            />
+          )}
         </>
       ) : (
         <>

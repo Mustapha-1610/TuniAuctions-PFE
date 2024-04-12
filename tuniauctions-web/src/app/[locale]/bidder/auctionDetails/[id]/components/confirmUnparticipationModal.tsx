@@ -8,14 +8,14 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
 interface Props {
-  isConfirmParticipationModalOpen: boolean;
-  setIsComfirmParticipationModal: (value: boolean) => void;
+  isConfirmUnarticipationModalOpen: boolean;
+  setIsComfirmUnparticipationModal: (value: boolean) => void;
   auctionListing: AuctionListingType;
   setAuctionListing: (item: AuctionListingType) => void;
 }
-export default function ConfirmParticipartionModal({
-  isConfirmParticipationModalOpen,
-  setIsComfirmParticipationModal,
+export default function ConfirmUnparticipationModal({
+  isConfirmUnarticipationModalOpen,
+  setIsComfirmUnparticipationModal,
   auctionListing,
   setAuctionListing,
 }: Props) {
@@ -25,9 +25,9 @@ export default function ConfirmParticipartionModal({
   const [errorMessage, setErrorMessage] = useState<string>("");
   async function handleConfirmParticipation() {
     setIsLoading(true);
-    const res = await fetch("/api/bidder/participate", {
+    const res = await fetch("/api/bidder/unparticipate", {
       method: "POST",
-      body: JSON.stringify({ auctionListingId: auctionListing._id }),
+      body: JSON.stringify({ auctionId: auctionListing._id }),
     });
     const resData: any = await res.json();
 
@@ -37,7 +37,7 @@ export default function ConfirmParticipartionModal({
     }
     if (resData.bidderFrontData) {
       setBidderLocalStorageData(resData.bidderFrontData);
-      setIsComfirmParticipationModal(false);
+      setIsComfirmUnparticipationModal(false);
       setAuctionListing(resData.auctionListing);
     } else if (resData.authError) {
       await signout();
@@ -48,10 +48,10 @@ export default function ConfirmParticipartionModal({
       <Modal
         title=""
         centered
-        open={isConfirmParticipationModalOpen}
+        open={isConfirmUnarticipationModalOpen}
         width={600}
         onCancel={() => {
-          setIsComfirmParticipationModal(false);
+          setIsComfirmUnparticipationModal(false);
         }}
         onOk={handleConfirmParticipation}
         okButtonProps={{
@@ -74,15 +74,7 @@ export default function ConfirmParticipartionModal({
               <span className="text-red-700 text-lg">{errorMessage}</span>
             )}
           </p>
-          {auctionListing.openingBid > 0 ? (
-            <>
-              By confirming your participation for {auctionListing.title}{" "}
-              auction, {auctionListing.openingBid}$ will be locked out of your
-              active balance till this auction is over !{" "}
-            </>
-          ) : (
-            <>Confirm participation for {auctionListing.title} auction ?</>
-          )}
+          Confirm Unparticipation For {auctionListing.title} auction ?
         </Spin>
       </Modal>
     </>

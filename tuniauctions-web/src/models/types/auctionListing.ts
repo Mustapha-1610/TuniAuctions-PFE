@@ -45,16 +45,14 @@ export interface AuctionListingType extends Document {
   biddingRoomId?: ObjectId;
   sellerId: ObjectId;
   _id: ObjectId;
-  participatingBidders: [
-    {
-      bidderId: mongoose.Types.ObjectId;
-      lockedBalance: Number;
-    }
-  ];
+  participatingBidders: {
+    bidderId: mongoose.Types.ObjectId;
+    lockedBalance: number;
+  }[];
   winningBidder: {
     name: string;
     _id: ObjectId;
-    winningPrice: Number;
+    winningPrice: number;
   };
 }
 
@@ -83,15 +81,13 @@ export type sellerAuctionListingFrontData = {
   status: "Pending Start" | "Ongoing" | "Finished";
   biddingRoomId?: ObjectId;
   _id: ObjectId;
-  participatingBidders: [
-    {
-      bidderId: mongoose.Types.ObjectId;
-      lockedBalance: Number;
-    }
-  ];
+  participatingBidders: {
+    bidderId: mongoose.Types.ObjectId;
+    lockedBalance: number;
+  }[];
   winningBidder: {
     name: string;
     _id: ObjectId;
-    winningPrice: Number;
+    winningPrice: number;
   };
 };
