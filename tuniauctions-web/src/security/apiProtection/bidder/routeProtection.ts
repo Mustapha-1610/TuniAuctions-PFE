@@ -52,6 +52,7 @@ export async function verifyBidderTokens(
       return { isValid: false, errorStage: "error Stage 1" };
     }
   } catch (err) {
+    console.log(err);
     return { isValid: false, errorStage: "error Stage 2" };
   }
 }
