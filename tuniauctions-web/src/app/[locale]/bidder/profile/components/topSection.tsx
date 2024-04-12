@@ -4,7 +4,6 @@ import { TbCameraUp } from "react-icons/tb";
 import { handleFirebaseImageUpload } from "@/app/[locale]/firebaseFunctions/handleUploadImage";
 import { resDataType } from "@/serverHelpers/types";
 import React from "react";
-import { IoMdSettings } from "react-icons/io";
 
 interface Props {
   setSelectedProfileComponent: (
@@ -78,9 +77,16 @@ export default function TopSection({
           <div className="text-2xl leading-5 max-md:max-w-full">
             {bidderLocalStorageData?.fullName}
           </div>
-
-          <div className="justify-center flex flex-rows  px-4 py-2 text-sm mt-12 tracking-wide  rounded-lg bg-slate-200 max-md:px-5 text-center cursor-pointer">
-            Edit <IoMdSettings className="ml-2" size={19} />
+          <div className="flex gap-5 justify-between mt-3 whitespace-nowrap max-md:flex-wrap max-md:max-w-full">
+            <div className="flex-auto my-auto text-base leading-5">
+              {bidderLocalStorageData?.email.toLowerCase()}
+            </div>
+            <div className="justify-center  px-4 py-2 text-sm tracking-wide leading-5 rounded-lg bg-slate-200 max-md:px-5 ml-24 cursor-pointer">
+              Edit
+            </div>
+          </div>
+          <div className="flex-auto my-auto text-base leading-5">
+            Balance : {bidderLocalStorageData?.balance.activeBalance}$
           </div>
         </div>
       </div>
