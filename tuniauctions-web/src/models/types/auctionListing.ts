@@ -14,7 +14,9 @@ type SocialsSection = {
   twitter?: string;
   tiktok?: string;
 };
-
+type LockedBalance = {
+  lockedAmount: number;
+};
 export interface AuctionListingType extends Document {
   listingType: string;
   title: string;
@@ -43,7 +45,12 @@ export interface AuctionListingType extends Document {
   biddingRoomId?: ObjectId;
   sellerId: ObjectId;
   _id: ObjectId;
-  participatingBidders: [ObjectId];
+  participatingBidders: [
+    {
+      bidderId: mongoose.Types.ObjectId;
+      lockedBalance: Number;
+    }
+  ];
   winningBidder: {
     name: string;
     _id: ObjectId;
@@ -76,7 +83,12 @@ export type sellerAuctionListingFrontData = {
   status: "Pending Start" | "Ongoing" | "Finished";
   biddingRoomId?: ObjectId;
   _id: ObjectId;
-  participatingBidders: [ObjectId];
+  participatingBidders: [
+    {
+      bidderId: mongoose.Types.ObjectId;
+      lockedBalance: Number;
+    }
+  ];
   winningBidder: {
     name: string;
     _id: ObjectId;

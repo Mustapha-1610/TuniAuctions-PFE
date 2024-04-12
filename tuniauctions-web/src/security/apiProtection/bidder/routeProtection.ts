@@ -1,7 +1,11 @@
 import { connect } from "@/db/dbConfig";
 import bidderModel from "@/models/usersModels/bidderModel";
 import { IBidder } from "@/models/usersModels/types/bidderTypes";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt, {
+  JwtPayload,
+  JsonWebTokenError,
+  TokenExpiredError,
+} from "jsonwebtoken";
 import { NextRequest } from "next/server";
 interface ValidResponse {
   isValid: true;
@@ -15,7 +19,6 @@ interface ErrorResponse {
 }
 
 export type VerifyBidderTokensResponse = ValidResponse | ErrorResponse;
-
 export async function verifyBidderTokens(
   request: NextRequest
 ): Promise<VerifyBidderTokensResponse> {
@@ -25,20 +28,28 @@ export async function verifyBidderTokens(
     const refreshToken = request.cookies.get("refreshBidderToken")?.value || "";
     let bidderAccount: IBidder | null = null;
 
-    if (accessToken) {
-      const decodedAccessToken = jwt.verify(
-        accessToken,
-        process.env.ACCESS_TOKEN_SECRET!
-      ) as JwtPayload;
-      bidderAccount = await bidderModel.findById(decodedAccessToken.bidder_id);
-    }
-
-    if (!bidderAccount && refreshToken) {
-      const decodedRefreshToken = jwt.verify(
-        refreshToken,
-        process.env.REFRESH_TOKEN_SECRET!
-      ) as JwtPayload;
-      bidderAccount = await bidderModel.findById(decodedRefreshToken.bidder_id);
+    try {
+      if (accessToken) {
+        const decodedAccessToken = jwt.verify(
+          accessToken,
+          process.env.ACCESS_TOKEN_SECRET!
+        ) as JwtPayload;
+        bidderAccount = await bidderModel.findById(
+          decodedAccessToken.bidder_id
+        );
+      }
+    } catch (err) {
+      if (err instanceof TokenExpiredError && refreshToken) {
+        const decodedRefreshToken = jwt.verify(
+          refreshToken,
+          process.env.REFRESH_TOKEN_SECRET!
+        ) as JwtPayload;
+        bidderAccount = await bidderModel.findById(
+          decodedRefreshToken.bidder_id
+        );
+      } else {
+        throw err;
+      }
     }
 
     if (bidderAccount && bidderAccount.refreshToken === refreshToken) {
@@ -52,7 +63,11 @@ export async function verifyBidderTokens(
       return { isValid: false, errorStage: "error Stage 1" };
     }
   } catch (err) {
-    console.log(err);
+    if (err instanceof JsonWebTokenError) {
+      console.log("JWT error:", err.message);
+    } else {
+      console.log(err);
+    }
     return { isValid: false, errorStage: "error Stage 2" };
   }
 }

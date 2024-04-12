@@ -8,21 +8,15 @@ export interface IBidder extends Document {
   verificationCode: string;
   balance: {
     activeBalance: number;
-    lockedBalance: {
-      totalLockedBalance: number;
-      lockedBalanceHistory: {
-        auctionId: mongoose.Types.ObjectId;
-        lockedAmount: number;
-      }[];
-    };
+    lockedBalance: number;
   };
   auctionReferences: {
-    upcoming: string[];
-    saved: string[];
+    upcoming: mongoose.Types.ObjectId[];
+    saved: mongoose.Types.ObjectId[];
   };
   deliveries: {
-    pending: string[];
-    delivered: string[];
+    pending: mongoose.Types.ObjectId[];
+    delivered: mongoose.Types.ObjectId[];
   };
   adressPresets: {
     phoneNumber: number;
@@ -56,29 +50,25 @@ export interface IBidder extends Document {
     context: string;
   }[];
   socketId: string;
+  _id: mongoose.Types.ObjectId;
 }
 
 export interface IBidderFrontData {
+  _id: mongoose.Types.ObjectId;
   fullName: string;
   gender: "Male" | "Female";
   profilePicture: string;
   balance: {
     activeBalance: number;
-    lockedBalance: {
-      totalLockedBalance: number;
-      lockedBalanceHistory: {
-        auctionId: mongoose.Types.ObjectId;
-        lockedAmount: number;
-      }[];
-    };
+    lockedBalance: number;
   };
   auctionReferences: {
-    upcoming: string[];
-    saved: string[];
+    upcoming: mongoose.Types.ObjectId[];
+    saved: mongoose.Types.ObjectId[];
   };
   deliveries: {
-    pending: string[];
-    delivered: string[];
+    pending: mongoose.Types.ObjectId[];
+    delivered: mongoose.Types.ObjectId[];
   };
   adressPresets: {
     phoneNumber: number;

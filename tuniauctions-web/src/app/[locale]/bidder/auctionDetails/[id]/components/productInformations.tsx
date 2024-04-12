@@ -8,12 +8,22 @@ import { FaRegCircleCheck } from "react-icons/fa6";
 import moment from "moment";
 import { AuctionListingType } from "@/models/types/auctionListing";
 import Image from "next/image";
+import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
+import ConfirmParticipartionModal from "./confirmParticipationModal";
 
 interface Props {
   auctionListing: AuctionListingType;
+  setAuctionListing: (item: AuctionListingType) => void;
 }
-export default function ProductInformations({ auctionListing }: Props) {
+export default function ProductInformations({
+  auctionListing,
+  setAuctionListing,
+}: Props) {
+  const { bidderLocalStorageData } = useBidderProfileStore();
   const [selectedImage, setSelectedImage] = useState("");
+  const [isConfirmParticipationModalOpen, setIsComfirmParticipationModal] =
+    useState<boolean>(false);
+  useEffect(() => {}, [bidderLocalStorageData]);
   return (
     <>
       {auctionListing ? (
@@ -123,7 +133,9 @@ export default function ProductInformations({ auctionListing }: Props) {
                         <div className="flex-auto my-auto">Participants</div>
                       </div>
                       <div className="my-auto text-right">
-                        0/{auctionListing.minParticipatingBidders}
+                        {auctionListing.participatingBidders.length +
+                          " / " +
+                          auctionListing.minParticipatingBidders}
                       </div>
                     </div>
                     {/* table item */}
@@ -160,14 +172,35 @@ export default function ProductInformations({ auctionListing }: Props) {
                         </>
                       )}
                     </div>
-                    <div className="z-10 justify-center items-center px-16 py-9 -mb-1 text-center text-white whitespace-nowrap rounded-none border border-black border-solid bg-gray-700 max-md:px-5 max-md:max-w-full">
-                      Participate
-                    </div>
+
+                    {bidderLocalStorageData &&
+                    auctionListing.participatingBidders.find(
+                      (value) => value.bidderId === bidderLocalStorageData._id
+                    ) ? (
+                      <div className="z-10 justify-center items-center px-16 py-9 -mb-1 text-center text-white whitespace-nowrap rounded-none border border-black border-solid bg-red-700 cursor-pointer max-md:px-5 max-md:max-w-full">
+                        Cancel Participation
+                      </div>
+                    ) : (
+                      <div
+                        className="z-10 justify-center items-center px-16 py-9 -mb-1 text-center text-white whitespace-nowrap rounded-none border border-black border-solid bg-gray-700 cursor-pointer max-md:px-5 max-md:max-w-full"
+                        onClick={() => {
+                          setIsComfirmParticipationModal(true);
+                        }}
+                      >
+                        <span>Participate</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <ConfirmParticipartionModal
+            setAuctionListing={setAuctionListing}
+            auctionListing={auctionListing}
+            isConfirmParticipationModalOpen={isConfirmParticipationModalOpen}
+            setIsComfirmParticipationModal={setIsComfirmParticipationModal}
+          />
         </>
       ) : (
         <>

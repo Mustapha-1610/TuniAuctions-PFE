@@ -31,29 +31,17 @@ const bidderSchema = new Schema({
       default: 5,
     },
     lockedBalance: {
-      totalLockedBalance: {
-        type: Number,
-        default: 0,
-      },
-      lockedBalanceHistory: [
-        {
-          auctionId: {
-            type: Schema.Types.ObjectId,
-          },
-          lockedAmount: {
-            type: Number,
-          },
-        },
-      ],
+      type: Number,
+      default: 0,
     },
   },
   auctionReferences: {
-    upcoming: [String],
-    saved: [String],
+    upcoming: [Schema.Types.ObjectId],
+    saved: [Schema.Types.ObjectId],
   },
   deliveries: {
-    pending: [String],
-    delivered: [String],
+    pending: [Schema.Types.ObjectId],
+    delivered: [Schema.Types.ObjectId],
   },
   adressPresets: [
     {

@@ -111,9 +111,16 @@ const auctionListingSchema = new Schema({
     type: Schema.Types.ObjectId,
     required: true,
   },
-  participatingBidders: {
-    type: [Schema.Types.ObjectId],
-  },
+  participatingBidders: [
+    {
+      bidderId: {
+        type: Schema.Types.ObjectId,
+      },
+      lockedBalance: {
+        type: Number,
+      },
+    },
+  ],
   winningBidder: {
     name: {
       type: String,
