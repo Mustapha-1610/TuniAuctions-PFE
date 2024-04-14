@@ -21,6 +21,12 @@ const bidderNameSpaceLogic = (renterNameSpace: any) => {
         socketId: socket.id,
       };
     });
+    renterNameSpace.on("refreshData", (bidderSocketId: string) => {
+      const bidder = connectedBidders[bidderSocketId];
+      if (bidder && bidder.socketId) {
+        socket.to(bidder.socketId).emit("refreshData");
+      }
+    });
   });
 
   renterNameSpace.on("disconnect", (socket: any) => {});

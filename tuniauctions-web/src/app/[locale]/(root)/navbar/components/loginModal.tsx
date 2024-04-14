@@ -184,7 +184,7 @@ export default function LoginModal() {
               <span className="text-blue-500">
                 <u
                   className="cursor-pointer ml-1"
-                  onClick={() => setSignupModalState()}
+                  onClick={() => (setSignupModalState(), setLoginModalState())}
                 >
                   {textTranslations("signup")}
                 </u>

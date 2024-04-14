@@ -4,10 +4,16 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { Server } from "socket.io";
 import cookieParser from "cookie-parser";
-import bidderNameSpaceLogic from "./bidder/bidderSocketLogic";
-import sellerNameSpaceLogic from "./seller/sellerSocketLogic";
+import bidderNameSpaceLogic from "./sockets/bidder/bidderSocketLogic";
+import sellerNameSpaceLogic from "./sockets/seller/sellerSocketLogic";
+import { connect } from "../../tuniauctions-web/src/db/dbConfig";
+import auctionRouter from "./routers/auctionRoomRouter";
+import auctionRoomSocketLogic from "./sockets/auction/auctionRoomSocketLogic";
 
 dotenv.config();
+
+connect();
+
 const app = express();
 
 app.use(
@@ -34,6 +40,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+app.use("/api/auctionRoom", auctionRouter);
+
 const PORT = process.env.PORT || 80;
 serverApp.listen(PORT, () => {
   console.log(`Server Running on port ${PORT}!`);
@@ -41,8 +49,8 @@ serverApp.listen(PORT, () => {
 
 const bidderNameSpace = io.of("/bidder");
 const sellerNameSapce = io.of("/seller");
-
+const auctionRoomNameSpace = io.of("/auctionRoom");
 bidderNameSpaceLogic(bidderNameSpace);
 sellerNameSpaceLogic(sellerNameSapce);
-
-export { bidderNameSpace, sellerNameSapce };
+auctionRoomSocketLogic(auctionRoomNameSpace);
+export { bidderNameSpace, sellerNameSapce, auctionRoomNameSpace };

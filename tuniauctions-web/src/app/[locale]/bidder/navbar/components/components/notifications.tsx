@@ -21,11 +21,13 @@ export default function Notifications({
   const router = useRouter();
   const { setSelectedProfileComponent, setSelectedBalanceComponent } =
     useBidderNavigationStore();
-  function handleNotificationRouting(context: string) {
+  function handleNotificationRouting(context: string, contextId?: string) {
     if (context === "Transaction") {
       setSelectedBalanceComponent("transactions");
       setNotificationsMenuState();
       router.push(`/${locale}/bidder/balance`);
+    } else if (context === "auctionRoomStart" && contextId) {
+      router.push(`/${locale}/bidder/auctionRoom/${contextId}`);
     }
   }
   return (
@@ -52,7 +54,10 @@ export default function Notifications({
                   className="p-3 hover:bg-gray-100 cursor-pointer flex items-center"
                   key={index}
                   onClick={() => {
-                    handleNotificationRouting(value.context.frontContext);
+                    handleNotificationRouting(
+                      value.context.frontContext,
+                      String(value.context.contextId)
+                    );
                   }}
                 >
                   <Image

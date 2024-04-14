@@ -52,6 +52,9 @@ export default function BidderNavbar() {
     bidderSocket.on("confirmAuth", async () => {
       getData();
     });
+    bidderSocket.on("refreshData", async () => {
+      getData();
+    });
   }, [bidderSocket]);
   async function clearNotifications() {
     if (

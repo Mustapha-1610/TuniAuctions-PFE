@@ -10,42 +10,56 @@ import { SellerSocialSectionDetailsType } from "@/app/api/general/fetchAuctionLi
 import BiddingAndInformationsSection from "./components/biddingAndInformationsSection";
 import PromotionalSection from "./components/promotionalSection";
 import SellerSection from "./components/sellerSection";
-
+import auctionRoomSocket from "@/frontHelpers/auctionRoom/auctionRoomLogic";
+import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
 export interface AuctionListingDetails {
   auctionListing: AuctionListingType;
   sellerData: SellerSocialSectionDetailsType;
 }
+
 export default function BiddingRoomPage({
   auctionListing,
   sellerData,
 }: AuctionListingDetails) {
   const [isChatOpen, setIsChatOpen] = React.useState(false);
+  const { bidderLocalStorageData } = useBidderProfileStore();
   const handleChatClose = () => {
     setIsChatOpen(false);
   };
-  const locale = useLocale();
   return (
     <>
-      <div className="flex flex-col items-center px-20 mt-12 pt-7 pb-16 bg-white border border-black border-solid max-md:px-5">
-        <div className="px-14 py-5 w-full bg-white border border-white border-solid max-w-[1540px] max-md:px-5 max-md:max-w-full">
-          <BiddingAndInformationsSection auctionListing={auctionListing} />
-        </div>
-        <PromotionalSection auctionListing={auctionListing} />
-        <SellerSection
-          auctionListing={auctionListing}
-          sellerData={sellerData}
-        />
-      </div>
-      <div>
-        {/* Your other components... */}
-        <button
-          onClick={() => setIsChatOpen(true)}
-          className="fixed bottom-4 right-4 lg:bottom-6 lg:right-6  font-bold py-2  rounded-full transition duration-200"
-        >
-          <BsChatSquareTextFill size={45} className="text-xl" />
-        </button>
-        {isChatOpen && <ChatBox onClose={handleChatClose} />}
-      </div>
+      {auctionListing.participatingBidders.find(
+        (b) => b.bidderId === bidderLocalStorageData?._id
+      ) ? (
+        <>
+          <div className="flex flex-col items-center px-20 mt-12 pt-7 pb-16 bg-white border border-black border-solid max-md:px-5">
+            <div className="px-14 py-5 w-full bg-white border border-white border-solid max-w-[1540px] max-md:px-5 max-md:max-w-full">
+              {bidderLocalStorageData && (
+                <BiddingAndInformationsSection
+                  bidderLocalStorageData={bidderLocalStorageData}
+                  auctionListing={auctionListing}
+                />
+              )}
+            </div>
+            <PromotionalSection auctionListing={auctionListing} />
+            <SellerSection
+              auctionListing={auctionListing}
+              sellerData={sellerData}
+            />
+          </div>
+          <div>
+            <button
+              onClick={() => setIsChatOpen(true)}
+              className="fixed bottom-4 right-4 lg:bottom-6 lg:right-6  font-bold py-2  rounded-full transition duration-200"
+            >
+              <BsChatSquareTextFill size={45} className="text-xl" />
+            </button>
+            {isChatOpen && <ChatBox onClose={handleChatClose} />}
+          </div>
+        </>
+      ) : (
+        <>Access Denied</>
+      )}
     </>
   );
 }

@@ -17,12 +17,18 @@ export default async function ServerBiddingRoomPage({
   );
   const resData: FetchAuctionFrontResponse = await res.json();
 
-  if (resData.auction)
-    return (
-      <BiddingRoomPage
-        auctionListing={resData.auction}
-        sellerData={resData.sellerAuctionListingData}
-      />
-    );
-  else return <p>Non Existant anymore</p>;
+  if (resData.auction) {
+    if (resData.auction.status === "Ongoing") {
+      return (
+        <BiddingRoomPage
+          auctionListing={resData.auction}
+          sellerData={resData.sellerAuctionListingData}
+        />
+      );
+    } else if (resData.auction.status === "Finished") {
+      return <p>Auction Finished</p>;
+    } else {
+      return <p>Auction Pending Start</p>;
+    }
+  } else return <p>Non Existant anymore</p>;
 }
