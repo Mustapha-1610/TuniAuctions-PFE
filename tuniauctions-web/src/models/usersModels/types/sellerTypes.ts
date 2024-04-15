@@ -1,4 +1,4 @@
-import { Document, Schema } from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 
 interface Location {
   city: string;
@@ -7,8 +7,8 @@ interface Location {
 }
 
 interface CreatedAuctions {
-  upcoming: string[];
-  finished: string[];
+  upcoming: mongoose.Types.ObjectId[];
+  finished: mongoose.Types.ObjectId[];
 }
 
 interface PackageCount {
@@ -18,8 +18,8 @@ interface PackageCount {
 }
 
 interface Deliveries {
-  pending: string[];
-  delivered: string[];
+  pending: mongoose.Types.ObjectId[];
+  delivered: mongoose.Types.ObjectId[];
 }
 
 interface PassResetCode {

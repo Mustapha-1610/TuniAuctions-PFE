@@ -27,18 +27,43 @@ const auctionRoomSocketLogic = (auctionRoomNameSpace: any) => {
 
           const updatedTimerValue = roomTimers.get(auctionId);
           if (updatedTimerValue.roomTimer <= 0) {
-            auctionRoomNameSpace.to(auctionId).emit("endAuctionRoom");
+            const res = await axios
+              .post("http://localhost:80/api/auctionRoom/end", {
+                auctionId: auctionId,
+                winningBidder: {
+                  _id: auctionRoom.heighestBidder.bidderId,
+                  name: auctionRoom.heighestBidder.bidderName,
+                  winningPrice: auctionRoom.heighestBidder.bid,
+                },
+              })
+              .then((res) => {
+                console.log(res.data + "RESPONSE");
+                console.log(res.data.success);
+                if (res.data.success) {
+                  const bidderSocket = io("http://localhost:80/bidder");
+                  bidderSocket.on("connect", () => {
+                    const data: DisplayCongrats = {
+                      bidderSocketId: res.data.bidderSocketId,
+                      auctionTitle: res.data.auctionTitle,
+                    };
+                    bidderSocket.emit("displayCongrats", data);
+                  });
+                }
+              });
             clearInterval(countdown);
-          } else {
-            const minutes = Math.floor(updatedTimerValue.roomTimer / 60);
-            const seconds = updatedTimerValue.roomTimer % 60;
-            const timeFormat = `${minutes}:${
-              seconds < 10 ? "0" : ""
-            }${seconds}`;
-            auctionRoomNameSpace.to(auctionId).emit("updateTimer", timeFormat);
           }
         }
       }, 1000);
+      const fixTimer = setInterval(() => {
+        const roomData = roomTimers.get(auctionId);
+        if (roomData.roomTimer > 0) {
+          auctionRoomNameSpace
+            .to(auctionId)
+            .emit("adjustTimer", roomData.roomTimer);
+        } else {
+          clearInterval(fixTimer);
+        }
+      }, 15000);
     });
     socket.on("bidderJoinedRoom", (data: BidderJoinedRoomDataType) => {
       console.log("bidderJoinedRoom " + data);
@@ -74,6 +99,7 @@ const auctionRoomSocketLogic = (auctionRoomNameSpace: any) => {
             bidderPicture: data.bidderPicture,
             submitTime: data.submitTime,
             bidderSocketId: data.bidderSocketId,
+            bidderId: data.bidderId,
           },
         });
         const frontData = {
@@ -106,6 +132,7 @@ interface roomData {
     submitTime: Date;
     bidderPicture: string;
     bidderSocketId: ObjectId;
+    bidderId: ObjectId;
   };
 }
 
@@ -116,4 +143,10 @@ interface submitNewBid {
   bidderPicture: string;
   auctionId: ObjectId;
   bidderSocketId: ObjectId;
+  bidderId: ObjectId;
+}
+
+interface DisplayCongrats {
+  bidderSocketId: string;
+  auctionTitle: string;
 }

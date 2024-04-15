@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import NavigationItems from "./components/navigationItems";
 import MobileNavbar from "./components/mobileNavbar";
 
@@ -17,6 +17,7 @@ import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore
 import { useRouter } from "next/navigation";
 import bidderSocket from "@/frontHelpers/bidder/bidderSocketLogic";
 import UnautherizedModal from "./components/components/unautherizedModal";
+import AuctionCongratsModal from "./components/components/congratsModal";
 
 export default function BidderNavbar() {
   const {
@@ -33,7 +34,8 @@ export default function BidderNavbar() {
     useBidderProfileStore();
   const locale = useLocale();
   const router = useRouter();
-
+  const [isCongratsModalOpen, setCongratsModal] = useState<boolean>(false);
+  const [congratsAuctionTitle, setCongratsAuctionTitle] = useState<string>("");
   useEffect(() => {
     async function getData() {
       const res = await fetch("/api/bidder/getData", {
@@ -42,6 +44,7 @@ export default function BidderNavbar() {
       const resData: resDataType = await res.json();
       if (resData.bidderFrontData) {
         setBidderLocalStorageData(resData.bidderFrontData);
+        bidderSocket.emit("bidderConnection", resData.bidderFrontData.socketId);
       } else if (resData.authError) {
         signoutBidder();
         setAnautherizedModalState();
@@ -54,6 +57,11 @@ export default function BidderNavbar() {
     });
     bidderSocket.on("refreshData", async () => {
       getData();
+    });
+    bidderSocket.on("showCongratsModal", (data: string) => {
+      setCongratsAuctionTitle(data);
+      getData();
+      setCongratsModal(true);
     });
   }, [bidderSocket]);
   async function clearNotifications() {
@@ -165,6 +173,13 @@ export default function BidderNavbar() {
       >
         <MobileNavbar />
         {isAnautherizedModalOpen && <UnautherizedModal />}
+        {isCongratsModalOpen && (
+          <AuctionCongratsModal
+            auctionTitle={congratsAuctionTitle}
+            isCongratsModalOpen={isCongratsModalOpen}
+            setCongratsModal={setCongratsModal}
+          />
+        )}
       </div>
     </>
   );

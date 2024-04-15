@@ -23,45 +23,70 @@ export default function BiddingRoomPage({
 }: AuctionListingDetails) {
   const [isChatOpen, setIsChatOpen] = React.useState(false);
   const { bidderLocalStorageData } = useBidderProfileStore();
+  const [auctionItem, setAuctionItem] =
+    React.useState<AuctionListingType>(auctionListing);
   const handleChatClose = () => {
     setIsChatOpen(false);
   };
-  return (
-    <>
-      {auctionListing.participatingBidders.find(
-        (b) => b.bidderId === bidderLocalStorageData?._id
-      ) ? (
-        <>
-          <div className="flex flex-col items-center px-20 mt-12 pt-7 pb-16 bg-white border border-black border-solid max-md:px-5">
-            <div className="px-14 py-5 w-full bg-white border border-white border-solid max-w-[1540px] max-md:px-5 max-md:max-w-full">
-              {bidderLocalStorageData && (
-                <BiddingAndInformationsSection
-                  bidderLocalStorageData={bidderLocalStorageData}
-                  auctionListing={auctionListing}
-                />
-              )}
+  if (auctionItem.status === "Ongoing") {
+    return (
+      <>
+        {auctionItem.participatingBidders.find(
+          (b) => b.bidderId === bidderLocalStorageData?._id
+        ) ? (
+          <>
+            <div className="flex flex-col items-center px-20 mt-12 pt-7 pb-16 bg-white border border-black border-solid max-md:px-5">
+              <div className="px-14 py-5 w-full bg-white border border-white border-solid max-w-[1540px] max-md:px-5 max-md:max-w-full">
+                {bidderLocalStorageData && (
+                  <BiddingAndInformationsSection
+                    bidderLocalStorageData={bidderLocalStorageData}
+                    auctionListing={auctionListing}
+                    setAuctionListing={setAuctionItem}
+                  />
+                )}
+              </div>
+              <PromotionalSection auctionListing={auctionListing} />
+              <SellerSection
+                auctionListing={auctionListing}
+                sellerData={sellerData}
+              />
             </div>
-            <PromotionalSection auctionListing={auctionListing} />
-            <SellerSection
-              auctionListing={auctionListing}
-              sellerData={sellerData}
-            />
+            <div>
+              <button
+                onClick={() => setIsChatOpen(true)}
+                className="fixed bottom-4 right-4 lg:bottom-6 lg:right-6  font-bold py-2  rounded-full transition duration-200"
+              >
+                <BsChatSquareTextFill size={45} className="text-xl" />
+              </button>
+              {isChatOpen && <ChatBox onClose={handleChatClose} />}
+            </div>
+          </>
+        ) : (
+          <>Access Denied</>
+        )}
+      </>
+    );
+  } else if (auctionItem.status === "Finished") {
+    return (
+      <>
+        <div className="flex flex-col items-center px-20 mt-12 pt-7 pb-16 bg-white border border-black border-solid max-md:px-5">
+          <div className="px-14 py-5 w-full bg-white border border-white border-solid max-w-[1540px] max-md:px-5 max-md:max-w-full">
+            <p>Auction Finished</p>;
           </div>
-          <div>
-            <button
-              onClick={() => setIsChatOpen(true)}
-              className="fixed bottom-4 right-4 lg:bottom-6 lg:right-6  font-bold py-2  rounded-full transition duration-200"
-            >
-              <BsChatSquareTextFill size={45} className="text-xl" />
-            </button>
-            {isChatOpen && <ChatBox onClose={handleChatClose} />}
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div className="flex flex-col items-center px-20 mt-12 pt-7 pb-16 bg-white border border-black border-solid max-md:px-5">
+          <div className="px-14 py-5 w-full bg-white border border-white border-solid max-w-[1540px] max-md:px-5 max-md:max-w-full">
+            <p>Pending Start</p>;
           </div>
-        </>
-      ) : (
-        <>Access Denied</>
-      )}
-    </>
-  );
+        </div>
+      </>
+    );
+  }
 }
 
 interface messageProps {

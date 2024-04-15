@@ -33,8 +33,8 @@ const deliverySchema = new Schema({
   deliveryDate: {
     type: Date,
   },
-  warrantyEndDate: {
-    type: Date,
+  guaranteeEndDate: {
+    type: String,
   },
   biddderDeliveryInformations: {
     phoneNumber: {
@@ -49,9 +49,6 @@ const deliverySchema = new Schema({
     adress: {
       type: String,
     },
-  },
-  sellerPhoneNumber: {
-    type: Number,
   },
 });
 

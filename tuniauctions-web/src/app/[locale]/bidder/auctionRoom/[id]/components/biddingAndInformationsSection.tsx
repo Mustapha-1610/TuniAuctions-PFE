@@ -7,6 +7,7 @@ import auctionRoomSocket from "@/frontHelpers/auctionRoom/auctionRoomLogic";
 import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
 import { IBidderFrontData } from "@/models/usersModels/types/bidderTypes";
 import moment from "moment";
+
 interface auctionRoomData {
   remainingTime: number;
   onlineBidders: number;
@@ -16,6 +17,7 @@ interface auctionRoomData {
 interface Props {
   auctionListing: AuctionListingType;
   bidderLocalStorageData: IBidderFrontData;
+  setAuctionListing: (value: AuctionListingType) => void;
 }
 interface newHighestBidType {
   highestBidder: string;
@@ -24,6 +26,7 @@ interface newHighestBidType {
 export default function BiddingAndInformationsSection({
   auctionListing,
   bidderLocalStorageData,
+  setAuctionListing,
 }: Props) {
   const [selectedImage, setSelectedImage] = useState("");
   const [errMessage, setErrMessage] = useState("");
@@ -76,11 +79,17 @@ export default function BiddingAndInformationsSection({
       }));
     });
     auctionRoomSocket.on("adjustTimer", (data: number) => {
-      console.log("adjust timer");
+      console.log("adjusting");
       setBiddingRoomData((prev) => ({
         ...prev,
         remainingTime: data,
       }));
+    });
+    auctionRoomSocket.on("endAuction", (data: AuctionListingType) => {
+      setAuctionListing(data);
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
     });
     return () => {
       if (intervalId) {
@@ -150,10 +159,10 @@ export default function BiddingAndInformationsSection({
                       </div>
 
                       <div className="flex flex-col gap-3 self-stretch text-base font-bold text-center text-black max-md:flex-wrap max-md:mt-6 max-md:max-w-full">
+                        {errMessage && (
+                          <p className="text-red-700">{errMessage}</p>
+                        )}
                         <div className="flex justify-center">
-                          {errMessage && (
-                            <p className="text-red-700">{errMessage}</p>
-                          )}
                           <input
                             type="number"
                             min={0}
@@ -185,7 +194,9 @@ export default function BiddingAndInformationsSection({
                                       bidderLocalStorageData.profilePicture,
                                     bidderSocketId:
                                       bidderLocalStorageData.socketId,
+                                    bidderId: bidderLocalStorageData._id,
                                   });
+                                  setErrMessage("");
                                 } else {
                                   setErrMessage(
                                     "Cant bid lower then the minimum bid"
