@@ -53,16 +53,8 @@ export default function BiddingAndInformationsSection({
     }, 1000);
   }
   useEffect(() => {
-    if (bidderLocalStorageData) {
-      auctionRoomSocket.emit("bidderJoinedRoom", {
-        auctionId: auctionListing._id.toString(),
-        bidderSocketId: bidderLocalStorageData!._id,
-      });
-      decreaseTimer();
-    }
-
+    decreaseTimer();
     auctionRoomSocket.on("userJoined", (data: any) => {
-      console.log("userJoined");
       setBiddingRoomData((prev) => ({
         ...prev,
         remainingTime: data.roomTimer,

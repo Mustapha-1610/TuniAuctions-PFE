@@ -28,6 +28,20 @@ export default function BiddingRoomPage({
   const handleChatClose = () => {
     setIsChatOpen(false);
   };
+  React.useEffect(() => {
+    if (
+      bidderLocalStorageData &&
+      auctionItem.status === "Ongoing" &&
+      auctionItem.participatingBidders.find(
+        (b) => b.bidderId === bidderLocalStorageData?._id
+      )
+    ) {
+      auctionRoomSocket.emit("bidderJoinedRoom", {
+        auctionId: auctionListing._id.toString(),
+        bidderSocketId: bidderLocalStorageData!._id,
+      });
+    }
+  }, [bidderLocalStorageData && auctionItem]);
   if (auctionItem.status === "Ongoing") {
     return (
       <>

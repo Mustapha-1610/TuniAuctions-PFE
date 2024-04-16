@@ -46,18 +46,15 @@ const bidderSchema = new Schema({
   adressPresets: [
     {
       phoneNumber: {
-        type: Number,
-        required: true,
-      },
-      city: {
         type: String,
         required: true,
       },
-      municipality: {
-        type: String,
-        required: true,
-      },
+
       street: {
+        type: String,
+        required: true,
+      },
+      presetName: {
         type: String,
         required: true,
       },

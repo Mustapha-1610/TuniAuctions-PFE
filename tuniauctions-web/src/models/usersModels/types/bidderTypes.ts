@@ -19,10 +19,9 @@ export interface IBidder extends Document {
     delivered: mongoose.Types.ObjectId[];
   };
   adressPresets: {
-    phoneNumber: number;
-    city: string;
-    municipality: string;
+    phoneNumber: string;
     street: string;
+    presetName: string;
   }[];
   email: string;
   password: string;
@@ -71,10 +70,9 @@ export interface IBidderFrontData {
     delivered: mongoose.Types.ObjectId[];
   };
   adressPresets: {
-    phoneNumber: number;
-    city: string;
-    municipality: string;
+    phoneNumber: string;
     street: string;
+    presetName: string;
   }[];
   email: string;
   notifications: {

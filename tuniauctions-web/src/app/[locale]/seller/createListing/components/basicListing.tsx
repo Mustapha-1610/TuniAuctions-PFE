@@ -78,11 +78,12 @@ export default function BasicListing() {
       productPictures: productPictures,
     };
     setTip("Creating The Auction Listing");
-    const res = await fetch("/api/seller/createAuctionListing/basic", {
+    const res = await fetch(`/api/seller/createAuctionListing/basic`, {
       method: "POST",
       body: JSON.stringify(updatedAuctionListingForm),
     });
     const resBody: resDataType = await res.json();
+
     setLoading(false);
     setTip("");
     console.log(resBody);
