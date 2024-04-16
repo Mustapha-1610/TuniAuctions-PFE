@@ -1,4 +1,46 @@
+"use client";
+
+import { IBidderFrontData } from "@/models/usersModels/types/bidderTypes";
+import Image from "next/image";
+import React, { useState } from "react";
+import moment from "moment";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
+import { useBidderNavigationStore } from "@/helpers/store/bidder/bidderNavigationStore";
+import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
+
 export default function Notifications() {
+  const { bidderLocalStorageData } = useBidderProfileStore();
+  const locale = useLocale();
+  const router = useRouter();
+  const { setSelectedProfileComponent, setSelectedBalanceComponent } =
+    useBidderNavigationStore();
+  const itemsPerPage = 5;
+  const totalPages = Math.ceil(
+    bidderLocalStorageData!.notifications!.length / itemsPerPage
+  );
+  const [currentPage, setCurrentPage] = useState(1);
+  const handleClickNext = () => {
+    setCurrentPage((prev: any) => Math.min(prev + 1, totalPages));
+  };
+
+  const handleClickPrev = () => {
+    setCurrentPage((prev: any) => Math.max(prev - 1, 1));
+  };
+
+  let currentItems = bidderLocalStorageData!.notifications.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+  function handleNotificationRouting(context: string, contextId?: string) {
+    if (context === "Transaction") {
+      setSelectedBalanceComponent("transactions");
+      router.push(`/${locale}/bidder/balance`);
+    } else if (context === "auctionRoomStart" && contextId) {
+      router.push(`/${locale}/bidder/auctionRoom/${contextId}`);
+    }
+  }
   return (
     <>
       <div className=" mr-12 pt-12 max-w-full w-[960px] max-md:mr-2.5">
@@ -8,19 +50,58 @@ export default function Notifications() {
           </div>
         </div>
         <div className="flex flex-col justify-center py-6 pr-16 pl-4 mt-2  leading-[120%] max-md:pr-5 max-md:mt-10 max-md:max-w-full">
-          <div className="flex gap-4 pr-20 max-md:flex-wrap max-md:pr-5 max-md:mr-2.5">
-            <img
-              className="shrink-0 h-16 rounded-lg bg-slate-200 w-[66px]"
-              src="https://firebasestorage.googleapis.com/v0/b/tunibids.appspot.com/o/false1694805437902natural-iphone-15-pro-sku-header-120923.png?alt=media&token=1ac45808-bc8e-44f5-9a13-22d2b13e2583"
+          {currentItems &&
+            currentItems.map((value, index) => {
+              return (
+                <React.Fragment key={index}>
+                  <div
+                    className="flex gap-4 pr-20 max-md:flex-wrap max-md:pr-5 max-md:mr-2.5 mb-2 cursor-pointer"
+                    onClick={() => {
+                      handleNotificationRouting(
+                        value.context.frontContext,
+                        String(value.context.contextId)
+                      );
+                    }}
+                  >
+                    <Image
+                      className="shrink-0 h-16 rounded-lg bg-slate-200 w-[66px]"
+                      alt="Notification Image"
+                      src={value.context.notificationIcon}
+                      width={100}
+                      height={100}
+                    />
+                    <div className="flex flex-col justify-center my-auto">
+                      <div className="text-base font-medium text-neutral-900">
+                        {value.notificationMessage}
+                      </div>
+                      <div className="text-sm text-slate-600">
+                        Recieved{" "}
+                        {moment(value.context.receptionDate).format(
+                          "ddd, MMM D, YYYY [at] h:mm A"
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </React.Fragment>
+              );
+            })}
+        </div>
+        <div className="flex justify-center items-center mt-8">
+          <div className="flex items-center">
+            <FaArrowLeft
+              className="mr-2 cursor-pointer"
+              size={17}
+              onClick={handleClickPrev}
             />
-            <div className="flex flex-col justify-center my-auto">
-              <div className="text-base font-medium text-neutral-900">
-                Auction room will be starting today at 7:00 pm! enjoy.
-              </div>
-              <div className="text-sm text-slate-600">
-                Recieved From Mustapha Talbi, 16 Aug, 2002{" "}
-              </div>
+
+            <div className="bg-gray-300 rounded-full w-8 h-8 flex justify-center items-center">
+              {currentPage}
             </div>
+            <FaArrowRight
+              className="ml-2 cursor-pointer"
+              size={17}
+              onClick={handleClickNext}
+            />
           </div>
         </div>
       </div>

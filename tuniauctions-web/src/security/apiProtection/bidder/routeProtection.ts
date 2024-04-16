@@ -60,6 +60,14 @@ export async function verifyBidderTokens(
       );
       return { isValid: true, newAccessToken, bidderAccount };
     } else {
+      console.log(
+        bidderAccount +
+          "Bidder Account " +
+          refreshToken +
+          "Refresh " +
+          accessToken +
+          " Access"
+      );
       return { isValid: false, errorStage: "error Stage 1" };
     }
   } catch (err) {
