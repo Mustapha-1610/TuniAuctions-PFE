@@ -29,7 +29,7 @@ export const sendBidderAccountVerificationMail = async (
     tokenPayload,
     process.env.NODEMAILER_TOKEN_SECRET!,
     {
-      expiresIn: "2h",
+      expiresIn: "1m",
     }
   );
   await transporter

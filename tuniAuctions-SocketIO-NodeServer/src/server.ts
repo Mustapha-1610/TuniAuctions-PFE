@@ -9,6 +9,7 @@ import sellerNameSpaceLogic from "./sockets/seller/sellerSocketLogic";
 import { connect } from "../../tuniauctions-web/src/db/dbConfig";
 import auctionRouter from "./routers/auctionRoomRouter";
 import auctionRoomSocketLogic from "./sockets/auction/auctionRoomSocketLogic";
+import auctionListingRouter from "./routers/auctionListingRouter";
 
 dotenv.config();
 
@@ -41,7 +42,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/api/auctionRoom", auctionRouter);
-
+app.use("/api/auctionListing", auctionListingRouter);
 const PORT = process.env.PORT || 80;
 serverApp.listen(PORT, () => {
   console.log(`Server Running on port ${PORT}!`);

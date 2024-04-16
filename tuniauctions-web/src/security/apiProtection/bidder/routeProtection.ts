@@ -37,6 +37,14 @@ export async function verifyBidderTokens(
         bidderAccount = await bidderModel.findById(
           decodedAccessToken.bidder_id
         );
+      } else {
+        const decodedRefreshToken = jwt.verify(
+          refreshToken,
+          process.env.REFRESH_TOKEN_SECRET!
+        ) as JwtPayload;
+        bidderAccount = await bidderModel.findById(
+          decodedRefreshToken.bidder_id
+        );
       }
     } catch (err) {
       if (err instanceof TokenExpiredError && refreshToken) {

@@ -25,6 +25,17 @@ export default function AuctionPage({
   const handleChatClose = () => {
     setIsChatOpen(false);
   };
+  React.useEffect(() => {
+    async function registerView(auctionId: string) {
+      await fetch("/api/bidder/registerView", {
+        method: "POST",
+        body: JSON.stringify({ auctionId }),
+      });
+    }
+    if (auctionListing && auctionListing.listingType !== "Basic") {
+      registerView(String(auctionListing._id));
+    }
+  }, [auctionListing]);
   return (
     <>
       <div className="flex flex-col items-center px-20 mt-12 pt-7 pb-16 bg-white border border-black border-solid max-md:px-5">

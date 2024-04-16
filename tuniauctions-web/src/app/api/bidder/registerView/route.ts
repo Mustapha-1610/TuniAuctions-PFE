@@ -17,6 +17,7 @@ export async function POST(request: NextRequest) {
       const { auctionId } = await request.json();
       const auction: AuctionListingType | null =
         await auctionListingModel.findById(auctionId);
+
       if (auction && auction.listingType !== "Basic") {
         auction.genderViews[res.bidderAccount.gender] += 1;
         await auction.save();
