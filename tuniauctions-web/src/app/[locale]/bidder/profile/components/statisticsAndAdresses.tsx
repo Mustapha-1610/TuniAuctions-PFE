@@ -94,6 +94,7 @@ export default function StatisticsAndAdresses() {
           preset={locationPreset}
           setBidderLocalStorageData={setBidderLocalStorageData}
           locationPreset={locationPreset}
+          setLocationPreset={setLocationPreset}
         />
       )}
     </>

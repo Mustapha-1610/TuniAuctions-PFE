@@ -9,8 +9,8 @@ import auctionListingModel from "../../../tuniauctions-web/src/models/auctionLis
 import { bidderNameSpace } from "../server";
 import { auctionRoomNameSpace } from "../server";
 import { io as Client } from "socket.io-client";
-export const auctionRoomSocket = Client("http://localhost:80/auctionRoom");
-export const bidderRoomSocket = Client("http://localhost:80/bidder");
+const auctionRoomSocket = Client(`${process.env.SOCKET_SERVER}/auctionRoom`);
+const bidderRoomSocket = Client(`${process.env.SOCKET_SERVER}/bidder`);
 import sellerModel from "../../../tuniauctions-web/src/models/usersModels/sellerModel";
 import deliveryModel from "../../../tuniauctions-web/src/models/auctionListingModels/deliveryModel";
 import { verifySellerTokens } from "../security/seller/apiProtection";

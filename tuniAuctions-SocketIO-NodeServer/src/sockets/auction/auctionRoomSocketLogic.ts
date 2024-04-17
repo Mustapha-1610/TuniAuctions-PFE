@@ -28,7 +28,7 @@ const auctionRoomSocketLogic = (auctionRoomNameSpace: any) => {
           const updatedTimerValue = roomTimers.get(auctionId);
           if (updatedTimerValue.roomTimer <= 0) {
             const res = await axios
-              .post("http://localhost:80/api/auctionRoom/end", {
+              .post(`${process.env.SOCKET_SERVER}/api/auctionRoom/end`, {
                 auctionId: auctionId,
                 winningBidder: {
                   _id: auctionRoom.heighestBidder.bidderId,
@@ -40,7 +40,9 @@ const auctionRoomSocketLogic = (auctionRoomNameSpace: any) => {
                 console.log(res.data + "RESPONSE");
                 console.log(res.data.success);
                 if (res.data.success) {
-                  const bidderSocket = io("http://localhost:80/bidder");
+                  const bidderSocket = io(
+                    `${process.env.SOCKET_SERVER}/bidder`
+                  );
                   bidderSocket.on("connect", () => {
                     const data: DisplayCongrats = {
                       bidderSocketId: res.data.bidderSocketId,

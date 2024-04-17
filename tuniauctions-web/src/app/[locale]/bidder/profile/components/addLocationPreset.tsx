@@ -22,11 +22,13 @@ interface Props {
   };
   setBidderLocalStorageData: (value: IBidderFrontData) => void;
   locationPreset: locationPresetType;
+  setLocationPreset: (value: locationPresetType) => void;
 }
 export default function AddLocationPreset({
   preset,
   setBidderLocalStorageData,
   locationPreset,
+  setLocationPreset,
 }: Props) {
   const { isAddLocationPresetModalOpen, setIsAddLocationPresetModalState } =
     useBidderNavigationStore();
@@ -59,6 +61,12 @@ export default function AddLocationPreset({
       const resData: resDataType = await res.json();
       if (resData.bidderFrontData) {
         setBidderLocalStorageData(resData.bidderFrontData);
+        setLocationPreset({
+          presetName: "",
+          street: "",
+          phoneNumber: "",
+          index: null,
+        });
         setIsAddLocationPresetModalState();
       }
     } catch (err) {
