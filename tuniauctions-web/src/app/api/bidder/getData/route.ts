@@ -22,22 +22,9 @@ export async function POST(request: NextRequest) {
       const response = NextResponse.json({ success: true, bidderFrontData });
       if (res.newAccessToken)
         return refreshBidderAccessToken(response, res.newAccessToken);
-      return response;
     } else console.log("unvalid 1", res);
-    const response = NextResponse.json({ authError: true });
-    response.cookies.set("refreshBidderToken", "", {
-      expires: new Date(0),
-      sameSite: "none",
-      secure: true,
-      httpOnly: true,
-    });
-    response.cookies.set("accessBidderToken", "", {
-      expires: new Date(0),
-      sameSite: "none",
-      secure: true,
-      httpOnly: true,
-    });
-    return response;
+
+    return unautherizedError();
   } catch (err) {
     console.log("unvalid 2", err);
 

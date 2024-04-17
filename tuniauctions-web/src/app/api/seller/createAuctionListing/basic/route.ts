@@ -65,6 +65,7 @@ export async function POST(request: NextRequest) {
         seller.createdAuctions.upcoming.push(newAuction._id);
         await seller.save();
         const sellerFrontData = returnSellerFrontData(seller);
+
         return NextResponse.json({ success: true, sellerFrontData });
       } else {
         return serverErrorHandler("");

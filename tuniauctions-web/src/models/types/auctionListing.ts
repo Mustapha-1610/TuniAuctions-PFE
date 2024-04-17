@@ -35,11 +35,15 @@ export interface AuctionListingType extends Document {
   featured: boolean;
   minParticipatingBidders: number;
   totalViews: number;
-  uniqueViews?: string[];
-  genderViews: {
-    Male: number;
-    Female: number;
-    [key: string]: number | undefined;
+  uniqueViews: {
+    gender: {
+      Male: number;
+
+      Female: number;
+
+      [key: string]: number | undefined;
+    };
+    bidders: [mongoose.Types.ObjectId];
   };
   status: "Pending Start" | "Ongoing" | "Finished";
   biddingRoomId?: ObjectId;
@@ -72,11 +76,15 @@ export type sellerAuctionListingFrontData = {
   featured: boolean;
   minParticipatingBidders: number;
   totalViews: number;
-  uniqueViews?: string[];
-  genderViews: {
-    Male: number;
-    Female: number;
-    [key: string]: number | undefined;
+  uniqueViews: {
+    gender: {
+      Male: number;
+
+      Female: number;
+
+      [key: string]: number | undefined;
+    };
+    bidders: [mongoose.Types.ObjectId];
   };
   status: "Pending Start" | "Ongoing" | "Finished";
   biddingRoomId?: ObjectId;

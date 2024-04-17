@@ -18,8 +18,13 @@ export async function POST(request: NextRequest) {
       const auction: AuctionListingType | null =
         await auctionListingModel.findById(auctionId);
 
-      if (auction && auction.listingType !== "Basic") {
-        auction.genderViews[res.bidderAccount.gender] += 1;
+      if (
+        auction &&
+        auction.listingType !== "Basic" &&
+        !auction.uniqueViews.bidders.includes(res.bidderAccount._id)
+      ) {
+        auction.uniqueViews.bidders.push(res.bidderAccount._id);
+        auction.uniqueViews.gender[res.bidderAccount.gender] += 1;
         await auction.save();
       }
       const response = NextResponse.json({ success: true });

@@ -10,6 +10,7 @@ import ProductInformations from "./components/productInformations";
 import PromotionalVideoAndButItNowSection from "./components/promotionalVideoAndBuyItNowSection";
 import { SellerSocialSectionDetailsType } from "@/app/api/general/fetchAuctionListing/route";
 import SellerPromotionSection from "./components/sellerPromotionalSection";
+import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
 
 export interface AuctionListingDetails {
   auctionListing: AuctionListingType;
@@ -22,6 +23,7 @@ export default function AuctionPage({
   const [isChatOpen, setIsChatOpen] = React.useState(false);
   const [auctionListingItem, setAuctionListingItem] =
     React.useState<AuctionListingType>(auctionListing);
+  const { bidderLocalStorageData } = useBidderProfileStore();
   const handleChatClose = () => {
     setIsChatOpen(false);
   };
@@ -32,10 +34,14 @@ export default function AuctionPage({
         body: JSON.stringify({ auctionId }),
       });
     }
-    if (auctionListing && auctionListing.listingType !== "Basic") {
+    if (
+      bidderLocalStorageData &&
+      auctionListing.listingType !== "Basic" &&
+      !auctionListing.uniqueViews.bidders.includes(bidderLocalStorageData._id)
+    ) {
       registerView(String(auctionListing._id));
     }
-  }, [auctionListing]);
+  }, [auctionListing && bidderLocalStorageData]);
   return (
     <>
       <div className="flex flex-col items-center px-20 mt-12 pt-7 pb-16 bg-white border border-black border-solid max-md:px-5">

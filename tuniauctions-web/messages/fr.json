@@ -85,7 +85,7 @@
     "signinText": "Se Connecter",
     "haveAnAccount": "Vous avez un compte?",
     "bidder": {
-      "success": "Nous avons bien reçu votre demande de création d'un nouveau compte. Veuillez noter que votre compte est actuellement en cours de vérification par nos administrateurs pour garantir l'exactitude des informations fournies. Vous recevrez un e-mail avec plus de détails une fois que le processus de vérification sera terminé. Merci pour votre patience et votre compréhension.",
+      "success": "Mail de vérification envoyé. Vérifiez votre boîte de réception !",
       "fullName": "Prénom",
       "email": "E-mail",
       "password": "Mot de Passe",

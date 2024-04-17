@@ -85,8 +85,7 @@
     "signinText": "Sign in",
     "haveAnAccount": "Have an account?",
     "bidder": {
-      "success": "We have received your request to create a new account. Please note that your account is currently under verification by our administrators to ensure the accuracy of the information provided. You will receive an email with further details once the verification process is complete. Thank you for your patience and understanding.",
-
+      "success": "Verification mail sent. Check Inbox!",
       "fullName": "Firt name",
       "email": "Email",
       "password": "Password",

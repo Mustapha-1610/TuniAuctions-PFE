@@ -24,7 +24,6 @@ export async function verifySellerTokens(
   try {
     const accessToken = request.cookies.accessSellerToken || "";
     const refreshToken = request.cookies.refreshSellerToken || "";
-    console.log(request);
     let sellerAccount: ISeller | null = null;
     try {
       if (accessToken) {

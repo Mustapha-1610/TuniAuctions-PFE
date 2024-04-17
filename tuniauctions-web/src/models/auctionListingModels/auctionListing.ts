@@ -87,17 +87,17 @@ const auctionListingSchema = new Schema({
     default: 0,
   },
   uniqueViews: {
-    type: [String],
-  },
-  genderViews: {
-    Male: {
-      type: Number,
-      default: 0,
+    gender: {
+      Male: {
+        type: Number,
+        default: 0,
+      },
+      Female: {
+        type: Number,
+        default: 0,
+      },
     },
-    Female: {
-      type: Number,
-      default: 0,
-    },
+    bidders: [Schema.Types.ObjectId],
   },
   status: {
     type: String,

@@ -63,7 +63,7 @@ const auctionRoomSocketLogic = (auctionRoomNameSpace: any) => {
         } else {
           clearInterval(fixTimer);
         }
-      }, 5000);
+      }, 10000);
     });
     socket.on("bidderJoinedRoom", (data: BidderJoinedRoomDataType) => {
       console.log("bidderJoinedRoom " + data);

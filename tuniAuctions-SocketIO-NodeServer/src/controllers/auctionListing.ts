@@ -19,13 +19,15 @@ import {
   premiumListingType,
 } from "./zodSchema/auctionListingSchema";
 import { returnSellerFrontData } from "../helpers/returnSellerFrontData";
+import axios from "axios";
 
+import nodeSchedule from "node-schedule";
 export async function basic(req: express.Request, response: express.Response) {
   try {
+    console.log(req.body);
     const res = await verifySellerTokens(req);
-    console.log("something ig");
+
     if (res.isValid) {
-      console.log("works");
       const seller = res.sellerAccount;
       const {
         title,
@@ -39,6 +41,7 @@ export async function basic(req: express.Request, response: express.Response) {
         startingDate,
         minParticipatingBidders,
       }: basicListingType = req.body;
+
       const newAuction = await auctionListingModel.create({
         listingType: "Basic",
         title,
@@ -56,9 +59,15 @@ export async function basic(req: express.Request, response: express.Response) {
         sellerId: seller._id,
       });
       seller.createdAuctions.upcoming.push(newAuction._id);
-      await seller.save();
-      const sellerFrontData = returnSellerFrontData(seller);
-      return response.json({ success: true, sellerFrontData });
+      const scheduleResponse = await scheduleAuctionStart(newAuction);
+      if (scheduleResponse) {
+        await seller.save();
+        const sellerFrontData = returnSellerFrontData(seller);
+        return response.json({ success: true, sellerFrontData });
+      } else {
+        console.log(scheduleResponse + "Schedule response");
+        return response.json({ success: false });
+      }
     } else {
       return response.json({ authError: true });
     }
@@ -181,4 +190,134 @@ export async function premium(
     console.log(err);
     return response.json({ serverError: true });
   }
+}
+
+export async function scheduleAuctionStart(newAuction: AuctionListingType) {
+  try {
+    if (newAuction) {
+      nodeSchedule.scheduleJob(newAuction.startingDate, async () => {
+        const resfreshedAuction: AuctionListingType =
+          await auctionListingModel.findById(newAuction._id);
+        console.log(
+          resfreshedAuction.participatingBidders.length,
+          resfreshedAuction.minParticipatingBidders,
+          "Participating"
+        );
+        if (
+          resfreshedAuction.participatingBidders.length <
+          resfreshedAuction.minParticipatingBidders
+        ) {
+          console.log("made it here");
+
+          await handleReSchedule(resfreshedAuction);
+        } else {
+          await handleStart(resfreshedAuction);
+        }
+      });
+      return true;
+    } else {
+      console.log(newAuction + "ERROR");
+      return true;
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
+async function handleReSchedule(auctionlisting: AuctionListingType) {
+  {
+    if (
+      auctionlisting.participatingBidders.length >
+      auctionlisting.minParticipatingBidders * 0.7
+    ) {
+      const newStartingDate = new Date(
+        auctionlisting.startingDate.getTime() + 3 * 24 * 60 * 60 * 1000
+      );
+      auctionlisting.startingDate = newStartingDate;
+      await auctionlisting.save();
+      auctionlisting.participatingBidders.map(async (value) => {
+        console.log("so far so good");
+        const bidder = await bidderModel.findByIdAndUpdate(value.bidderId, {
+          $push: {
+            notifications: {
+              notificationMessage:
+                auctionlisting.title +
+                " auction has been delayed for 3 days due to minimum participating bidders treshhold not being met",
+              context: {
+                receptionDate: new Date(),
+                frontContext: "auctionDelay",
+                contextId: auctionlisting._id,
+                notificationIcon: auctionlisting.productPictures[0],
+              },
+            },
+          },
+        });
+        bidderNameSpace.emit("refreshData", {
+          bidderSocketId: bidder.socketId,
+        });
+      });
+      scheduleAuctionStart(auctionlisting);
+    } else {
+      const newStartingDate = new Date(
+        auctionlisting.startingDate.getTime() + 7 * 24 * 60 * 60 * 1000
+      );
+      auctionlisting.startingDate = newStartingDate;
+      await auctionlisting.save();
+      auctionlisting.participatingBidders.map(async (value) => {
+        console.log(auctionlisting.participatingBidders + "Participating");
+        const bidder = await bidderModel.findByIdAndUpdate(value.bidderId, {
+          $push: {
+            notifications: {
+              notificationMessage:
+                auctionlisting.title +
+                " auction has been delayed for a week due to minimum participating bidders treshhold not being met",
+              context: {
+                receptionDate: new Date(),
+                frontContext: "auctionDelay",
+                contextId: auctionlisting._id,
+                notificationIcon: auctionlisting.productPictures[0],
+              },
+            },
+          },
+        });
+        bidderNameSpace.emit("refreshData", {
+          bidderSocketId: bidder.socketId,
+        });
+      });
+      scheduleAuctionStart(auctionlisting);
+    }
+  }
+}
+
+async function handleStart(auctionlisting: AuctionListingType) {
+  auctionlisting.status = "Ongoing";
+  await auctionlisting.save();
+  auctionRoomSocket.emit("startRoom", auctionlisting._id);
+  auctionlisting.participatingBidders.map(async (value) => {
+    const bidder: IBidder = await bidderModel.findByIdAndUpdate(
+      value.bidderId,
+      {
+        $push: {
+          notifications: {
+            notificationMessage:
+              "Auction room started for " + auctionlisting.title + " auction",
+            context: {
+              receptionDate: new Date(),
+              frontContext: "auctionRoomStart",
+              contextId: auctionlisting._id,
+              notificationIcon: auctionlisting.productPictures[0],
+            },
+          },
+        },
+        $inc: {
+          "balance.activeBalance": value.lockedBalance,
+          "balance.lockedBalance": -value.lockedBalance,
+        },
+      }
+    );
+    bidderNameSpace.emit("refreshData", {
+      bidderSocketId: bidder.socketId,
+    });
+  });
 }

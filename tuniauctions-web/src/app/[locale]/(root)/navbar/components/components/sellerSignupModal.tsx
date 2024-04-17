@@ -63,7 +63,7 @@ export default function SellerSignupForm() {
         )}
         {successMessage && (
           <p className="mb-1 font-bold flex flex-rows text-green-500 text-gl">
-            <IoIosWarning size={21} className="mr-2" />
+            <IoIosWarning size={70} className="mr-2" />
             {successMessage}
           </p>
         )}

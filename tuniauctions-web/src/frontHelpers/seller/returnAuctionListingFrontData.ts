@@ -26,7 +26,6 @@ export function returnSellerCreatedListingsFrontData(
         biddingRoomId: value.biddingRoomId,
         endDate: value.endDate,
         featured: value.featured,
-        genderViews: value.genderViews,
         guarantee: value.guarantee,
         listingType: value.listingType,
         openingBid: value.openingBid,
