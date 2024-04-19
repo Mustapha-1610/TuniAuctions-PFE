@@ -1,5 +1,6 @@
 "use client";
 import { DeliveryType } from "@/models/types/delivery";
+import moment from "moment";
 import { useEffect } from "react";
 
 interface Props {
@@ -29,25 +30,37 @@ export default function DeliveryStatusDisplay({ deliveryData }: Props) {
                     />
                   </div>
                   <div className="flex flex-col ml-5 w-[67%] max-md:ml-0 max-md:w-full">
-                    <div className="flex flex-col self-stretch my-auto text-2xl leading-[57.6px] text-slate-700 max-md:mt-10 max-md:max-w-full">
+                    <div className="flex flex-col self-stretch my-auto text-2xl leading-[57.6px] text-black font-lg max-md:mt-10 max-md:max-w-full">
                       <div className="max-md:max-w-full">
-                        Title : {deliveryData.productInformations.productName}
+                        Product : {deliveryData.productInformations.productName}
                       </div>
-                      <div className="mt-8 max-md:mt-10 max-md:max-w-full">
+                      <div className="mt-2 max-md:mt-10 max-md:max-w-full">
                         Expected Delivery Date :{" "}
                         {deliveryData.expectedDeliveryDate ? (
-                          <p>{String(deliveryData.expectedDeliveryDate)}</p>
+                          <>
+                            {moment(
+                              deliveryData.expectedDeliveryDate.from
+                            ).format(" dddd, MMMM D, YYYY")}
+                            <span className="">, To </span>
+                            {moment(
+                              deliveryData.expectedDeliveryDate.to
+                            ).format(" dddd, MMMM D, YYYY")}
+                          </>
                         ) : (
                           <>Not known yet</>
                         )}
                       </div>
-                      <div className="mt-8 max-md:mt-10 max-md:max-w-full">
-                        Delivery Date : {String(deliveryData?.deliveryDate)}
+                      <div className="mt-2 max-md:mt-10 max-md:max-w-full">
+                        Delivery Date :{" "}
+                        {deliveryData.deliveryDate &&
+                          moment(deliveryData.deliveryDate).format(
+                            " dddd, MMMM D, YYYY"
+                          )}
                       </div>
-                      <div className="mt-8 max-md:mt-10 max-md:max-w-full">
+                      <div className="mt-2 max-md:mt-10 max-md:max-w-full">
                         Status : {deliveryData.status}
                       </div>
-                      <div className="mt-8 max-md:mt-10 max-md:max-w-full">
+                      <div className="mt-2 max-md:mt-10 max-md:max-w-full">
                         Seller Review : Give Review
                       </div>
                     </div>

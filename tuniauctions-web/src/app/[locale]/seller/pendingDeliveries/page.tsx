@@ -5,30 +5,22 @@ import type { TableColumnsType } from "antd";
 import { FaUserAlt } from "react-icons/fa";
 import { GrDeliver } from "react-icons/gr";
 import { TbCheckupList } from "react-icons/tb";
-import { IoMdCheckmarkCircle } from "react-icons/io";
 import { MdPending } from "react-icons/md";
-import { Modal } from "antd";
 import { sellerFetchDeliveriesType } from "@/app/api/seller/getDeliveries/route";
 import { DeliveryType } from "@/models/types/delivery";
-import ConfirmModal from "./modals/confirmModal";
+import ConfirmDeliveryShipmentModal from "./modals/confirmModal";
+import BidderLocationModal, {
+  BidderSellerDeliveryInformationsData,
+} from "./modals/bidderLocationModal";
+import moment from "moment";
 
 export default function PendingDeliveriesPage() {
   const [tableData, setTableData] = useState<DeliveryType[] | undefined>();
-  const [confirmShipment, setConfirmShipment] = useState(false);
   const [confirmDelivery, setConfirmDelivery] = useState(false);
   const [deliveryId, setDeliveryId] = useState("");
-  const [isModalVisible, setIsModalVisible] = React.useState(false);
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
+  const [isBidderDataModalOpen, setBidderDataModal] = useState(false);
+  const [bidderData, setBidderData] =
+    useState<BidderSellerDeliveryInformationsData>();
   useEffect(() => {
     async function getDeliveies() {
       const res = await fetch("/api/seller/getDeliveries", {
@@ -44,46 +36,110 @@ export default function PendingDeliveriesPage() {
   }, []);
   const columns: TableColumnsType<DeliveryType> = [
     {
-      title: "Full Name",
-      width: 300,
-      dataIndex: "auctionId",
+      title: "Product",
+      width: 200,
+      render: (_, record) => {
+        return record.productInformations.productName;
+      },
     },
     {
-      title: "Age",
-      width: 100,
-      dataIndex: "age",
-    },
-    {
-      title: "Address",
-      width: 100,
+      title: "Winning Bidder",
+      width: 200,
       render: (_, record) => {
         return (
           <>
-            {record.status === "Pending bidder informations" && (
-              <p
+            {record.biddderDeliveryInformations &&
+            record.biddderDeliveryInformations ? (
+              <button
+                type="button"
+                className="cursor-pointer"
                 onClick={() => {
-                  setDeliveryId(String(record._id));
-                  setConfirmDelivery(true);
+                  setBidderData({
+                    name: record.biddderDeliveryInformations?.name,
+                    phoneNumber:
+                      record.biddderDeliveryInformations?.phoneNumber,
+                    street: record.biddderDeliveryInformations?.sreet,
+                  });
+                  setBidderDataModal(true);
                 }}
               >
-                Show
-              </p>
+                View Location
+              </button>
+            ) : (
+              <>Not Submitted Yet</>
             )}
           </>
         );
       },
     },
-    { title: "Address", width: 150, dataIndex: "address" },
-    { title: "Address", width: 100, dataIndex: "address" },
-    { title: "Address", width: 100, dataIndex: "address" },
-    { title: "Address", width: 100, dataIndex: "address" },
-    { title: "Address", width: 100, dataIndex: "address" },
-    { title: "Address", width: 100, dataIndex: "address" },
+    {
+      title: "Expected Delivery Day",
+      width: 300,
+      render: (_, record) => {
+        return (
+          <>
+            {record.expectedDeliveryDate && (
+              <>
+                From :{" "}
+                {moment(record.expectedDeliveryDate.from).format(
+                  " dddd, MMMM D, YYYY"
+                )}
+                <span className="">, To : </span>
+                {moment(record.expectedDeliveryDate.to).format(
+                  " dddd, MMMM D, YYYY"
+                )}
+              </>
+            )}
+          </>
+        );
+      },
+    },
+    {
+      title: "Guarantee",
+      width: 200,
+      render: (_, record) => {
+        return (
+          <>
+            {record.guarantee?.startsWith("0") ? (
+              <>No guarantee</>
+            ) : (
+              record.guarantee
+            )}
+          </>
+        );
+      },
+    },
     {
       title: "Action",
-
-      width: 90,
-      render: () => <a>View</a>,
+      width: 200,
+      render: (_, record) => {
+        return (
+          <>
+            {record.status === "Pending delivery shipment" && (
+              <p
+                onClick={() => {
+                  setDeliveryId(String(record._id));
+                  setConfirmDelivery(true);
+                }}
+                className="cursor-pointer"
+              >
+                Confirm Delivery Shipment
+              </p>
+            )}
+            {record.status === "Pending delivery" && (
+              <p
+                onClick={() => {
+                  setDeliveryId(String(record._id));
+                  setConfirmDelivery(true);
+                }}
+                className="cursor-pointer"
+              >
+                Confirm Delivery
+              </p>
+            )}
+          </>
+        );
+      },
     },
   ];
   return (
@@ -98,53 +154,6 @@ export default function PendingDeliveriesPage() {
             <MdPending size={30} />
           </div>
 
-          <div className="mb-4 px-2 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-            <div className="bg-gray-600 shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <span className="text-2xl sm:text-3xl leading-none font-bold text-white">
-                    9,789
-                  </span>
-                  <h3 className="text-base text-white font-normal ">
-                    Pending Bidder Informations
-                  </h3>
-                </div>
-                <div className="ml-5 w-0 flex items-center justify-end flex-1 ">
-                  <FaUserAlt size={50} color="white" />
-                </div>
-              </div>
-            </div>
-            <div className="bg-gray-600 shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <span className="text-2xl sm:text-3xl leading-none font-bold text-white">
-                    2,340
-                  </span>
-                  <h3 className="text-base text-white font-normal ">
-                    Pending Shipment
-                  </h3>
-                </div>
-                <div className="ml-5 w-0 flex items-center justify-end flex-1 ">
-                  <GrDeliver size={50} color="white" />
-                </div>
-              </div>
-            </div>
-            <div className="bg-gray-600   shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <span className="text-2xl sm:text-3xl leading-none font-bold text-white">
-                    4.1
-                  </span>
-                  <h3 className="text-base text-white font-normal ">
-                    Pending Delivery Confirmation
-                  </h3>
-                </div>
-                <div className="ml-5 w-0 flex items-center justify-end flex-1">
-                  <TbCheckupList size={55} color="white" />
-                </div>
-              </div>
-            </div>
-          </div>
           {tableData && (
             <>
               <Table
@@ -163,10 +172,19 @@ export default function PendingDeliveriesPage() {
         </div>
       </div>
       {confirmDelivery && (
-        <ConfirmModal
+        <ConfirmDeliveryShipmentModal
           deliveryId={deliveryId}
           setShowModal={setConfirmDelivery}
           showModal={confirmDelivery}
+          setTableData={setTableData}
+        />
+      )}
+      {isBidderDataModalOpen && (
+        <BidderLocationModal
+          bidderData={bidderData}
+          isBidderLocationModalOpen={isBidderDataModalOpen}
+          setIsBidderLocationModalOpen={setBidderDataModal}
+          setBidderData={setBidderData}
         />
       )}
     </>

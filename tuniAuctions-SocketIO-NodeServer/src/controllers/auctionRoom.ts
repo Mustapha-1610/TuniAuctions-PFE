@@ -134,7 +134,8 @@ export async function end(req: express.Request, response: express.Response) {
           $inc: {
             earnnings: winningBidder.winningPrice - platformFees,
             platformFees: platformFees,
-            ["auctionEarnings." + auction.listingType]: 1,
+            ["auctionEarnings." + auction.listingType]:
+              winningBidder.winningPrice - platformFees,
           },
         }
       );
