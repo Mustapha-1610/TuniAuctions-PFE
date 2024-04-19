@@ -16,7 +16,6 @@ import { returnSellerFrontData } from "../helpers/returnSellerFrontData";
 import nodeSchedule from "node-schedule";
 export async function basic(req: express.Request, response: express.Response) {
   try {
-    console.log(req.body);
     const res = await verifySellerTokens(req);
 
     if (res.isValid) {

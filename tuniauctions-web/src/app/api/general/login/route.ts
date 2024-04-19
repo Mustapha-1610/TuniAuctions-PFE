@@ -132,11 +132,13 @@ async function handeLogin(email: string, password: string) {
               httpOnly: true,
               sameSite: "none",
               secure: true,
+              expires: new Date(Date.now() + 10 * 60 * 1000),
             });
             response.cookies.set("refreshSellerToken", refreshToken, {
               httpOnly: true,
               sameSite: "none",
               secure: true,
+              expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
             });
             return response;
           }

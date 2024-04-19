@@ -24,6 +24,7 @@ export async function verifySellerTokens(
   try {
     const accessToken = request.cookies.accessSellerToken || "";
     const refreshToken = request.cookies.refreshSellerToken || "";
+    console.log(accessToken, refreshToken);
     let sellerAccount: ISeller | null = null;
     try {
       if (accessToken) {
@@ -57,10 +58,12 @@ export async function verifySellerTokens(
       );
       return { isValid: true, newAccessToken, sellerAccount };
     } else {
+      console.log("error Stage 1");
       return { isValid: false, errorStage: "error Stage 1" };
     }
   } catch (err) {
     if (err instanceof JsonWebTokenError) {
+      console.log("error Stage 2", err.message);
       console.log("JWT error:", err.message);
     } else {
       console.log(err);
