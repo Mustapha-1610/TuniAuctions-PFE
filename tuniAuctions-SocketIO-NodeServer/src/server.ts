@@ -6,14 +6,14 @@ import { Server } from "socket.io";
 import cookieParser from "cookie-parser";
 import bidderNameSpaceLogic from "./sockets/bidder/bidderSocketLogic";
 import sellerNameSpaceLogic from "./sockets/seller/sellerSocketLogic";
-import { connect } from "../../tuniauctions-web/src/db/dbConfig";
+import connectDB from "../DB/dbConfig";
 import auctionRouter from "./routers/auctionRoomRouter";
 import auctionRoomSocketLogic from "./sockets/auction/auctionRoomSocketLogic";
 import auctionListingRouter from "./routers/auctionListingRouter";
 
 dotenv.config();
 
-connect();
+connectDB();
 
 const app = express();
 

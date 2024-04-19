@@ -1,7 +1,4 @@
-import {
-  ISeller,
-  ISellerFrontData,
-} from "../../../tuniauctions-web/src/models/usersModels/types/sellerTypes";
+import { ISeller, ISellerFrontData } from "../types/sellerTypes";
 
 export function returnSellerFrontData(seller: ISeller) {
   const sellerFrontData: ISellerFrontData = {

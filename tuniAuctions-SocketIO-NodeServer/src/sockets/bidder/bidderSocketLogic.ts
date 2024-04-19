@@ -1,10 +1,4 @@
-import axios from "axios";
-import nodeSchedule from "node-schedule";
-import { io } from "socket.io-client";
-
 let connectedBidders: Record<string, any> = {};
-const auctionStartReminder = new Map();
-const deliveryReminder = new Map();
 const bidderNameSpaceLogic = (bidderNameSpace: any) => {
   bidderNameSpace.on("connection", (socket: any) => {
     socket.on("bidderConnection", async (bidderSocketId: string) => {

@@ -1,18 +1,15 @@
-import bidderModel from "../../../tuniauctions-web/src/models/usersModels/bidderModel";
+import bidderModel from "../models/bidderModel";
 import express from "express";
-import { verifyBidderTokens } from "../security/bidder/apiProtection";
-import { AuctionListingType } from "../../../tuniauctions-web/src/models/types/auctionListing";
-import { IBidder } from "../../../tuniauctions-web/src/models/usersModels/types/bidderTypes";
-import { ISeller } from "../../../tuniauctions-web/src/models/usersModels/types/sellerTypes";
+import { AuctionListingType } from "../types/auctionListing";
+import { IBidder } from "../types/bidderTypes";
+import { ISeller } from "../types/sellerTypes";
 
-import auctionListingModel from "../../../tuniauctions-web/src/models/auctionListingModels/auctionListing";
+import auctionListingModel from "../models/auctionListingModel";
 import { bidderNameSpace } from "../server";
 import { auctionRoomNameSpace } from "../server";
 import { io } from "socket.io-client";
-const auctionRoomSocket = io(`${process.env.SOCKET_SERVER}/auctionRoom`);
-const bidderRoomSocket = io(`${process.env.SOCKET_SERVER}/bidder`);
-import sellerModel from "../../../tuniauctions-web/src/models/usersModels/sellerModel";
-import deliveryModel from "../../../tuniauctions-web/src/models/auctionListingModels/deliveryModel";
+import sellerModel from "../models/sellerModel";
+import deliveryModel from "../models/deliveryModel";
 export async function start(req: express.Request, response: express.Response) {
   try {
     const { auctionId } = req.body;

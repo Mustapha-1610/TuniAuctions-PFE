@@ -1,11 +1,9 @@
 import axios from "axios";
 import { ObjectId } from "mongoose";
-import nodeSchedule from "node-schedule";
 import { io } from "socket.io-client";
 
 let roomTimers = new Map<ObjectId, roomData>();
 
-let participatinBidders: [string] = [""];
 const auctionRoomSocketLogic = (auctionRoomNameSpace: any) => {
   auctionRoomNameSpace.on("connection", (socket: any) => {
     socket.on("startRoom", (auctionId: ObjectId) => {

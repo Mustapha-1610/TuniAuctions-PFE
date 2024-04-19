@@ -4,8 +4,8 @@ import jwt, {
   JsonWebTokenError,
   TokenExpiredError,
 } from "jsonwebtoken";
-import { ISeller } from "../../../../tuniauctions-web/src/models/usersModels/types/sellerTypes";
-import sellerModel from "../../../../tuniauctions-web/src/models/usersModels/sellerModel";
+import { ISeller } from "../../types/sellerTypes";
+import sellerModel from "../../models/sellerModel";
 interface ValidResponse {
   isValid: true;
   newAccessToken?: string;

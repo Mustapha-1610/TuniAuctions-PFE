@@ -1,25 +1,17 @@
-import bidderModel from "../../../tuniauctions-web/src/models/usersModels/bidderModel";
+import bidderModel from "../models/bidderModel";
 import express from "express";
-import { verifyBidderTokens } from "../security/bidder/apiProtection";
-import { AuctionListingType } from "../../../tuniauctions-web/src/models/types/auctionListing";
-import { IBidder } from "../../../tuniauctions-web/src/models/usersModels/types/bidderTypes";
-import { ISeller } from "../../../tuniauctions-web/src/models/usersModels/types/sellerTypes";
+import { AuctionListingType } from "../types/auctionListing";
+import { IBidder } from "../types/bidderTypes";
 
-import auctionListingModel from "../../../tuniauctions-web/src/models/auctionListingModels/auctionListing";
+import auctionListingModel from "../models/auctionListingModel";
 import { bidderNameSpace } from "../server";
-import { auctionRoomNameSpace } from "../server";
 import { io } from "socket.io-client";
-const auctionRoomSocket = io(`${process.env.SOCKET_SERVER}/auctionRoom`);
-const bidderRoomSocket = io(`${process.env.SOCKET_SERVER}/bidder`);
-import sellerModel from "../../../tuniauctions-web/src/models/usersModels/sellerModel";
-import deliveryModel from "../../../tuniauctions-web/src/models/auctionListingModels/deliveryModel";
 import { verifySellerTokens } from "../security/seller/apiProtection";
 import {
   basicListingType,
   premiumListingType,
 } from "./zodSchema/auctionListingSchema";
 import { returnSellerFrontData } from "../helpers/returnSellerFrontData";
-import axios from "axios";
 
 import nodeSchedule from "node-schedule";
 export async function basic(req: express.Request, response: express.Response) {
@@ -118,9 +110,15 @@ export async function standard(
         });
         seller.createdAuctions.upcoming.push(newAuction._id);
         seller.packageCount.Standard -= 1;
-        await seller.save();
-        const sellerFrontData = returnSellerFrontData(seller);
-        return response.json({ success: true, sellerFrontData });
+        const scheduleResponse = await scheduleAuctionStart(newAuction);
+        if (scheduleResponse) {
+          await seller.save();
+          const sellerFrontData = returnSellerFrontData(seller);
+          return response.json({ success: true, sellerFrontData });
+        } else {
+          console.log(scheduleResponse + "Schedule response");
+          return response.json({ success: false });
+        }
       } else {
         return response.json({ errMessage: "emptyPackage" });
       }
@@ -178,8 +176,15 @@ export async function premium(
         seller.createdAuctions.upcoming.push(newAuction._id);
         seller.packageCount.Premium -= 1;
         await seller.save();
-        const sellerFrontData = returnSellerFrontData(seller);
-        return response.json({ success: true, sellerFrontData });
+        const scheduleResponse = await scheduleAuctionStart(newAuction);
+        if (scheduleResponse) {
+          await seller.save();
+          const sellerFrontData = returnSellerFrontData(seller);
+          return response.json({ success: true, sellerFrontData });
+        } else {
+          console.log(scheduleResponse + "Schedule response");
+          return response.json({ success: false });
+        }
       } else {
         return response.json({ errMessage: "emptyPackage" });
       }

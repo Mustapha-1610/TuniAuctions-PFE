@@ -1,11 +1,11 @@
 import { Request } from "express";
-import { IBidder } from "../../../../tuniauctions-web/src/models/usersModels/types/bidderTypes";
+import { IBidder } from "../../types/bidderTypes";
 import jwt, {
   JwtPayload,
   JsonWebTokenError,
   TokenExpiredError,
 } from "jsonwebtoken";
-import bidderModel from "../../../../tuniauctions-web/src/models/usersModels/bidderModel";
+import bidderModel from "../../models/bidderModel";
 
 interface ValidResponse {
   isValid: true;

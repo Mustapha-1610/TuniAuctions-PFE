@@ -55,6 +55,7 @@ export default function BiddingAndInformationsSection({
   useEffect(() => {
     decreaseTimer();
     auctionRoomSocket.on("userJoined", (data: any) => {
+      console.log("test");
       setBiddingRoomData((prev) => ({
         ...prev,
         remainingTime: data.roomTimer,
