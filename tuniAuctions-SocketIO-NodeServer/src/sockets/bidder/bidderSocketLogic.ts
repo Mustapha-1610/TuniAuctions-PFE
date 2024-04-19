@@ -24,18 +24,13 @@ const bidderNameSpaceLogic = (bidderNameSpace: any) => {
     });
     bidderNameSpace.on("refreshData", (bidderSocketId: string) => {
       const bidder = connectedBidders[bidderSocketId];
-      console.log(connectedBidders + "Refresh Data");
       if (bidder && bidder.socketId) {
         socket.to(bidder.socketId).emit("refreshData");
       }
     });
     socket.on("displayCongrats", (data: any) => {
-      console.log(connectedBidders);
-      console.log(data.bidderSocketId);
       const bidder = connectedBidders[data.bidderSocketId];
-      console.log("displayCongrats");
-      console.log(data);
-      console.log(bidder);
+
       if (bidder && bidder.socketId) {
         socket.to(bidder.socketId).emit("showCongratsModal", data.auctionTitle);
       }

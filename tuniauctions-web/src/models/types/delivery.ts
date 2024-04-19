@@ -5,18 +5,26 @@ export interface DeliveryType extends Document {
   bidderId: Types.ObjectId;
   sellerId: Types.ObjectId;
   status:
-    | "pending bidder informations"
-    | "pending delivery shipment"
-    | "pending delivery"
-    | "delivered"
-    | "reported";
-  expectedDeliveryDate?: Date;
+    | "Pending bidder informations"
+    | "Pending delivery shipment"
+    | "Pending delivery"
+    | "Delivered"
+    | "Reported";
+  expectedDeliveryDate?: {
+    from: Date;
+    to: Date;
+  };
   deliveryDate?: Date;
-  guaranteeEndDate?: string;
+  guarantee?: string;
   biddderDeliveryInformations?: {
+    name?: string;
     phoneNumber?: number;
-    City?: string;
-    municipality?: string;
-    adress?: string;
+    sreet?: string;
+  };
+  sellerName: string;
+  productInformations: {
+    productName: string;
+    productId: Types.ObjectId;
+    productPicture: string;
   };
 }

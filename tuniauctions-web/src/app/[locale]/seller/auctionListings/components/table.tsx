@@ -15,9 +15,10 @@ export default function StatisticsTable({
         key="_"
         pagination={{
           position: ["bottomCenter"],
-          pageSize: 8,
+          pageSize: 5,
         }}
-        className="mr-2 border-gray-400 border border-xl"
+        className="mr-2 border-gray-400 border border-xl text-center"
+        bordered // Add bordered property to the Table component
       />
     </>
   );

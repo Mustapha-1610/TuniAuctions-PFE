@@ -8,9 +8,9 @@ import { ISeller } from "../../../tuniauctions-web/src/models/usersModels/types/
 import auctionListingModel from "../../../tuniauctions-web/src/models/auctionListingModels/auctionListing";
 import { bidderNameSpace } from "../server";
 import { auctionRoomNameSpace } from "../server";
-import { io as Client } from "socket.io-client";
-const auctionRoomSocket = Client(`${process.env.SOCKET_SERVER}/auctionRoom`);
-const bidderRoomSocket = Client(`${process.env.SOCKET_SERVER}/bidder`);
+import { io } from "socket.io-client";
+const auctionRoomSocket = io(`${process.env.SOCKET_SERVER}/auctionRoom`);
+const bidderRoomSocket = io(`${process.env.SOCKET_SERVER}/bidder`);
 import sellerModel from "../../../tuniauctions-web/src/models/usersModels/sellerModel";
 import deliveryModel from "../../../tuniauctions-web/src/models/auctionListingModels/deliveryModel";
 import { verifySellerTokens } from "../security/seller/apiProtection";
@@ -293,6 +293,8 @@ async function handleReSchedule(auctionlisting: AuctionListingType) {
 async function handleStart(auctionlisting: AuctionListingType) {
   auctionlisting.status = "Ongoing";
   await auctionlisting.save();
+  const auctionRoomSocket = io(`${process.env.SOCKET_SERVER}/auctionRoom`);
+
   auctionRoomSocket.emit("startRoom", auctionlisting._id);
   auctionlisting.participatingBidders.map(async (value) => {
     const bidder: IBidder = await bidderModel.findByIdAndUpdate(

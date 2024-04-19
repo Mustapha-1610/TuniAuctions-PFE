@@ -19,34 +19,50 @@ const deliverySchema = new Schema({
   status: {
     type: String,
     enum: [
-      "pending bidder informations",
-      "pending delivery shipment",
-      "pending delivery",
-      "delivered",
-      "reported",
+      "Pending bidder informations",
+      "Pending delivery shipment",
+      "Pending delivery",
+      "Delivered",
+      "Reported",
     ],
-    default: "pending bidder informations",
+    default: "Pending bidder informations",
   },
   expectedDeliveryDate: {
-    type: Date,
+    from: {
+      type: Date,
+    },
+    to: {
+      type: Date,
+    },
   },
   deliveryDate: {
     type: Date,
   },
-  guaranteeEndDate: {
+  guarantee: {
     type: String,
   },
   biddderDeliveryInformations: {
+    name: {
+      type: String,
+    },
     phoneNumber: {
       type: Number,
     },
-    City: {
+    sreet: {
       type: String,
     },
-    municipality: {
+  },
+  sellerName: {
+    type: String,
+  },
+  productInformations: {
+    productName: {
       type: String,
     },
-    adress: {
+    productId: {
+      type: Schema.Types.ObjectId,
+    },
+    productPicture: {
       type: String,
     },
   },

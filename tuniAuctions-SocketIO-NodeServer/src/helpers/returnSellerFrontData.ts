@@ -20,6 +20,9 @@ export function returnSellerFrontData(seller: ISeller) {
     refreshToken: seller.refreshToken,
     notifications: seller.notifications,
     transactions: seller.transactions,
+    _id: seller._id,
+    auctionEarnings: seller.auctionEarnings,
+    socketId: seller.socketId,
   };
   return sellerFrontData;
 }

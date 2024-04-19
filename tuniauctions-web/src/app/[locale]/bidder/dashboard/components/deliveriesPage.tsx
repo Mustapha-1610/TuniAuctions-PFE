@@ -4,21 +4,75 @@ import { Table } from "antd";
 import { useEffect, useState } from "react";
 import type { TableColumnsType, TableProps } from "antd";
 import { DeliveryType } from "@/models/types/delivery";
+import { useLocale } from "next-intl";
+import Link from "next/link";
 
 interface Props {
   tableData: getDashboardTableDataResponse;
 }
-const columns: TableColumnsType<DeliveryType> = [
-  {
-    title: "Status",
-    dataIndex: "status",
-  },
-];
+
 export default function DeliveriesDataTable({ tableData }: Props) {
   const [data, setDataTable] = useState<DeliveryType[] | undefined>(
     tableData.pendingDeliveries
   );
   const [selectedItem, setSelectedItem] = useState("pending");
+  const locale = useLocale();
+  const columns: TableColumnsType<DeliveryType> = [
+    {
+      title: "Product Name",
+      render: (_, record) => {
+        return (
+          <>
+            <p>{record.productInformations.productName}</p>
+          </>
+        );
+      },
+    },
+    {
+      title: "Expected Delivery Date",
+      render: (_, record) => {
+        return (
+          <>
+            <p>
+              {record.expectedDeliveryDate ? (
+                String(record.expectedDeliveryDate)
+              ) : (
+                <>Not decided yet</>
+              )}
+            </p>
+          </>
+        );
+      },
+    },
+    {
+      title: "Gurantee",
+      render: (_, record) => {
+        return (
+          <>
+            <p>
+              {record.guarantee?.startsWith("0")
+                ? "No guarantee"
+                : record.guarantee}
+            </p>
+          </>
+        );
+      },
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+    },
+    {
+      title: "Action",
+      render: (_, record) => {
+        return (
+          <>
+            <Link href={`/${locale}/bidder/checkout/${record._id}`}>View</Link>
+          </>
+        );
+      },
+    },
+  ];
   return (
     <>
       <div className="flex flex-col ml-5 w-11/12 max-md:ml-0 max-md:w-full">

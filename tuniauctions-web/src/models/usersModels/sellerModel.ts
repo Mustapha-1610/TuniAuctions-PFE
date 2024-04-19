@@ -71,6 +71,20 @@ const sellerSchema = new Schema({
   strikes: {
     type: Number,
   },
+  auctionEarnings: {
+    Premium: {
+      type: Number,
+      default: 0,
+    },
+    Basic: {
+      type: Number,
+      default: 0,
+    },
+    Standard: {
+      type: Number,
+      default: 0,
+    },
+  },
 });
 sellerSchema.add(generalSchema);
 

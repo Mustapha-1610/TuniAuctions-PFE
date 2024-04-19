@@ -17,7 +17,7 @@ export default function StatisticsSection({
       auctionListings &&
         auctionListings.map((value, index) => {
           views += value.totalViews;
-          bidders = +value.participatingBidders;
+          bidders = +value.participatingBidders.length;
         });
       setTotalViews(views);
       setTotalParticipatingBidders(bidders);

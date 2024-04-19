@@ -8,9 +8,9 @@ import { ISeller } from "../../../tuniauctions-web/src/models/usersModels/types/
 import auctionListingModel from "../../../tuniauctions-web/src/models/auctionListingModels/auctionListing";
 import { bidderNameSpace } from "../server";
 import { auctionRoomNameSpace } from "../server";
-import { io as Client } from "socket.io-client";
-const auctionRoomSocket = Client(`${process.env.SOCKET_SERVER}/auctionRoom`);
-const bidderRoomSocket = Client(`${process.env.SOCKET_SERVER}/bidder`);
+import { io } from "socket.io-client";
+const auctionRoomSocket = io(`${process.env.SOCKET_SERVER}/auctionRoom`);
+const bidderRoomSocket = io(`${process.env.SOCKET_SERVER}/bidder`);
 import sellerModel from "../../../tuniauctions-web/src/models/usersModels/sellerModel";
 import deliveryModel from "../../../tuniauctions-web/src/models/auctionListingModels/deliveryModel";
 export async function start(req: express.Request, response: express.Response) {
@@ -21,6 +21,7 @@ export async function start(req: express.Request, response: express.Response) {
     if (auction) {
       auction.status = "Ongoing";
       await auction.save();
+      const auctionRoomSocket = io(`${process.env.SOCKET_SERVER}/auctionRoom`);
       auctionRoomSocket.emit("startRoom", auction._id);
       auction.participatingBidders.map(async (value) => {
         const bidder: IBidder = await bidderModel.findByIdAndUpdate(
@@ -98,7 +99,12 @@ export async function end(req: express.Request, response: express.Response) {
         auctionId: auction._id,
         bidderId: winningBidder._id,
         sellerId: auction.sellerId,
-        guaranteeEndDate: auction.guarantee,
+        guarantee: auction.guarantee,
+        productInformations: {
+          productName: auction.title,
+          productId: auction._id,
+          productPicture: auction.productPictures[0],
+        },
       });
       const platformFees =
         winningBidder.winningPrice * (auction.platformFees / 100);
@@ -131,6 +137,7 @@ export async function end(req: express.Request, response: express.Response) {
           $inc: {
             earnnings: winningBidder.winningPrice - platformFees,
             platformFees: platformFees,
+            ["auctionEarnings." + auction.listingType]: 1,
           },
         }
       );

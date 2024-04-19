@@ -17,6 +17,13 @@ interface PackageCount {
   [key: string]: number;
 }
 
+interface AuctionEarnings {
+  Standard: number;
+  Premium: number;
+  Basic: number;
+  [key: string]: number;
+}
+
 interface Deliveries {
   pending: mongoose.Types.ObjectId[];
   delivered: mongoose.Types.ObjectId[];
@@ -46,6 +53,7 @@ interface Transaction {
 }
 
 export interface ISeller extends Document {
+  _id: Schema.Types.ObjectId;
   name: string;
   description: string;
   businessPicture: string;
@@ -67,9 +75,12 @@ export interface ISeller extends Document {
   notifications: Notification[];
   transactions: Transaction[];
   socketId: string;
+  auctionEarnings: AuctionEarnings;
 }
 
 export interface ISellerFrontData {
+  _id: Schema.Types.ObjectId;
+  socketId: string;
   name: string;
   description: string;
   businessPicture: string;
@@ -85,4 +96,5 @@ export interface ISellerFrontData {
   refreshToken: string;
   notifications: Notification[];
   transactions: Transaction[];
+  auctionEarnings: AuctionEarnings;
 }
