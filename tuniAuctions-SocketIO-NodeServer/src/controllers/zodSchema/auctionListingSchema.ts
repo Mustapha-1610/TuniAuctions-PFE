@@ -1,3 +1,4 @@
+import { ISeller } from "../../types/sellerTypes";
 import z from "zod";
 
 export const basicListingSchema = z.object({
@@ -66,3 +67,24 @@ const standardSchemaListing = z.object({
 export type basicListingType = z.infer<typeof basicListingSchema>;
 export type standardListingType = z.infer<typeof standardSchemaListing>;
 export type premiumListingType = z.infer<typeof premiumListingSchema>;
+
+export interface basicListingInfos {
+  updatedAuctionListingForm: IDKPLEASE;
+  sellerId: string;
+}
+
+interface IDKPLEASE {
+  title: string;
+  guarentee: {
+    length: number;
+    period: string;
+  };
+  description: string;
+  openingBid: number;
+  originalPrice: number;
+  productCategory: string;
+  productPictures: [string];
+  promotionalVideo: string;
+  startingDate: string;
+  minParticipatingBidders: number;
+}

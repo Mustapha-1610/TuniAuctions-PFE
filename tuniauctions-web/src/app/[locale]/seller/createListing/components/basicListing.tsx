@@ -60,7 +60,8 @@ export default function BasicListing() {
   }
   const [loading, setLoading] = useState(false);
   const [tip, setTip] = useState<string>();
-  const { setSellerLocalStorageData } = useSellerProfileStore();
+  const { setSellerLocalStorageData, sellerLocaleStorageData } =
+    useSellerProfileStore();
   async function handleFormSubmission(e: any) {
     setLoading(true);
     e.preventDefault();
@@ -88,7 +89,10 @@ export default function BasicListing() {
           "Content-Type": "application/json",
         },
 
-        body: JSON.stringify(updatedAuctionListingForm),
+        body: JSON.stringify({
+          updatedAuctionListingForm,
+          sellerId: sellerLocaleStorageData?._id,
+        }),
 
         credentials: "include",
       }

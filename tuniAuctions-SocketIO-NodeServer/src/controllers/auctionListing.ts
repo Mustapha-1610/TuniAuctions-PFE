@@ -8,59 +8,47 @@ import { bidderNameSpace } from "../server";
 import { io } from "socket.io-client";
 import { verifySellerTokens } from "../security/seller/apiProtection";
 import {
+  basicListingInfos,
   basicListingType,
   premiumListingType,
 } from "./zodSchema/auctionListingSchema";
 import { returnSellerFrontData } from "../helpers/returnSellerFrontData";
 
 import nodeSchedule from "node-schedule";
+import sellerModel from "../models/sellerModel";
 export async function basic(req: express.Request, response: express.Response) {
   try {
-    const res = await verifySellerTokens(req);
-
-    if (res.isValid) {
-      const seller = res.sellerAccount;
-      const {
-        title,
-        guarentee,
-        description,
-        openingBid,
-        originalPrice,
-        productCategory,
-        productPictures,
-        promotionalVideo,
-        startingDate,
-        minParticipatingBidders,
-      }: basicListingType = req.body;
-
-      const newAuction = await auctionListingModel.create({
-        listingType: "Basic",
-        title,
-        description,
-        category: productCategory,
-        promotionalVideo,
-        productPictures: productPictures.reverse(),
-        originalPrice,
-        startingDate,
-        platformFees: 8,
-        openingBid,
-        guarantee: guarentee.length + " " + guarentee.period,
-        featured: true,
-        minParticipatingBidders,
-        sellerId: seller._id,
-      });
-      seller.createdAuctions.upcoming.push(newAuction._id);
-      const scheduleResponse = await scheduleAuctionStart(newAuction);
-      if (scheduleResponse) {
-        await seller.save();
-        const sellerFrontData = returnSellerFrontData(seller);
-        return response.json({ success: true, sellerFrontData });
-      } else {
-        console.log(scheduleResponse + "Schedule response");
-        return response.json({ success: false });
-      }
+    const { updatedAuctionListingForm, sellerId }: basicListingInfos = req.body;
+    const seller = await sellerModel.findById(sellerId);
+    const newAuction = await auctionListingModel.create({
+      listingType: "Basic",
+      title: updatedAuctionListingForm.title,
+      description: updatedAuctionListingForm.description,
+      category: updatedAuctionListingForm.productCategory,
+      promotionalVideo: updatedAuctionListingForm.promotionalVideo,
+      productPictures: updatedAuctionListingForm.productPictures.reverse(),
+      originalPrice: updatedAuctionListingForm.originalPrice,
+      startingDate: updatedAuctionListingForm.startingDate,
+      platformFees: 8,
+      openingBid: updatedAuctionListingForm.openingBid,
+      guarantee:
+        updatedAuctionListingForm.guarentee.length +
+        " " +
+        updatedAuctionListingForm.guarentee.period,
+      featured: true,
+      minParticipatingBidders:
+        updatedAuctionListingForm.minParticipatingBidders,
+      sellerId: seller._id,
+    });
+    seller.createdAuctions.upcoming.push(newAuction._id);
+    const scheduleResponse = await scheduleAuctionStart(newAuction);
+    if (scheduleResponse) {
+      await seller.save();
+      const sellerFrontData = returnSellerFrontData(seller);
+      return response.json({ success: true, sellerFrontData });
     } else {
-      return response.json({ authError: true });
+      console.log(scheduleResponse + "Schedule response");
+      return response.json({ success: false });
     }
   } catch (err) {
     console.log(err);
