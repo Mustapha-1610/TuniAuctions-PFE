@@ -43,7 +43,6 @@ export default function BidderNavbar() {
       });
       const resData: resDataType = await res.json();
       if (resData.bidderFrontData) {
-        console.log("refetching");
         setBidderLocalStorageData(resData.bidderFrontData);
         bidderSocket.emit("bidderConnection", resData.bidderFrontData.socketId);
       } else if (resData.authError) {

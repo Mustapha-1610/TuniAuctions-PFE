@@ -6,6 +6,7 @@ import type { TableColumnsType, TableProps } from "antd";
 import { DeliveryType } from "@/models/types/delivery";
 import { useLocale } from "next-intl";
 import Link from "next/link";
+import moment from "moment";
 
 interface Props {
   tableData: getDashboardTableDataResponse;
@@ -33,14 +34,30 @@ export default function DeliveriesDataTable({ tableData }: Props) {
       render: (_, record) => {
         return (
           <>
-            <p>
-              {record.expectedDeliveryDate ? (
-                String(record.expectedDeliveryDate)
-              ) : (
-                <>Not decided yet</>
-              )}
-            </p>
+            {!record.deliveryDate && record.expectedDeliveryDate ? (
+              <>
+                from :{" "}
+                {moment(record.expectedDeliveryDate.to).format(
+                  "MMMM DD, YYYY "
+                )}
+                , to :{" "}
+                {moment(record.expectedDeliveryDate.from).format(
+                  "MMMM DD, YYYY "
+                )}
+              </>
+            ) : (
+              <>Not decided yet</>
+            )}
           </>
+        );
+      },
+    },
+    {
+      title: "Delivery Date",
+      render: (_, record) => {
+        return (
+          record.deliveryDate &&
+          moment(record.deliveryDate).format("MMMM DD, YYYY ")
         );
       },
     },

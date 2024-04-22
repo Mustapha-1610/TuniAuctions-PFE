@@ -4,15 +4,17 @@ import { useEffect, useState } from "react";
 import { AuctionListingType } from "@/models/types/auctionListing";
 import Image from "next/image";
 import auctionRoomSocket from "@/frontHelpers/auctionRoom/auctionRoomLogic";
-import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
 import { IBidderFrontData } from "@/models/usersModels/types/bidderTypes";
 import moment from "moment";
+import { ObjectId } from "mongoose";
 
 interface auctionRoomData {
   remainingTime: number;
   onlineBidders: number;
   heighestBid: number;
   heighestBidder: string;
+  bidderPicture: string;
+  bidderId: string;
 }
 interface Props {
   auctionListing: AuctionListingType;
@@ -20,8 +22,13 @@ interface Props {
   setAuctionListing: (value: AuctionListingType) => void;
 }
 interface newHighestBidType {
-  highestBidder: string;
-  highestBid: number;
+  bidderName: string;
+  bid: number;
+  submitTime: Date;
+  bidderPicture: string;
+  auctionId: ObjectId;
+  bidderSocketId: ObjectId;
+  bidderId: ObjectId;
 }
 export default function BiddingAndInformationsSection({
   auctionListing,
@@ -35,6 +42,8 @@ export default function BiddingAndInformationsSection({
     onlineBidders: 0,
     heighestBid: auctionListing.openingBid,
     heighestBidder: "",
+    bidderId: "",
+    bidderPicture: "",
   });
   const [bid, setBid] = useState<number>(0);
   let intervalId: NodeJS.Timeout | null = null;
@@ -60,6 +69,10 @@ export default function BiddingAndInformationsSection({
         ...prev,
         remainingTime: data.roomTimer,
         onlineBidders: data.participatingBidders,
+        heighestBid: data.bid,
+        heighestBidder: data.bidderName,
+        bidderPicture: data.bidderPicture,
+        bidderId: String(data.bidderId),
       }));
     });
     auctionRoomSocket.on("newHighestBidder", (data: newHighestBidType) => {
@@ -67,8 +80,10 @@ export default function BiddingAndInformationsSection({
       setBiddingRoomData((prev) => ({
         ...prev,
         remainingTime: 45,
-        heighestBid: data.highestBid,
-        heighestBidder: data.highestBidder,
+        heighestBid: data.bid,
+        heighestBidder: data.bidderName,
+        bidderPicture: data.bidderPicture,
+        bidderId: String(data.bidderId),
       }));
     });
     auctionRoomSocket.on("adjustTimer", (data: number) => {
@@ -132,8 +147,17 @@ export default function BiddingAndInformationsSection({
               </div>
               <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
                 <div className="flex flex-col items-center self-stretch pt-9 pr-6 pb-6 pl-1.5 my-auto w-full font-bold text-black bg-white border border-white border-solid max-md:pr-5 max-md:mt-10 max-md:max-w-full">
-                  <div className="text-3xl text-center whitespace-nowrap">
-                    Highest Bidder : {biddingRoomData.heighestBidder}
+                  <div className="flex items-center">
+                    <div className="text-3xl text-center whitespace-nowrap">
+                      Highest Bidder : {biddingRoomData.heighestBidder}
+                    </div>
+                    {biddingRoomData.bidderPicture && (
+                      <img
+                        src={biddingRoomData.bidderPicture}
+                        alt="Bidder's Profile"
+                        className="rounded-full w-10 h-10 mr-3"
+                      />
+                    )}
                   </div>
                   <div className="self-stretch mt-8 text-sm max-md:max-w-full">
                     Highest Bid : {biddingRoomData.heighestBid}
@@ -170,8 +194,17 @@ export default function BiddingAndInformationsSection({
 
                         <div className="flex justify-center">
                           <button
-                            className="px-6 py-4 whitespace-nowrap bg-slate-900 w-fit max-md:px-5 text-white rounded-md"
+                            className={`px-6 py-4 whitespace-nowrap ${
+                              biddingRoomData.bidderId ===
+                              String(bidderLocalStorageData._id)
+                                ? "bg-gray-400" // Disable button color
+                                : "bg-slate-900" // Original button color
+                            } w-fit max-md:px-5 text-white rounded-md`}
                             type="button"
+                            disabled={
+                              biddingRoomData.bidderId ===
+                              String(bidderLocalStorageData._id)
+                            }
                             onClick={() => {
                               if (
                                 bid <=
@@ -204,40 +237,6 @@ export default function BiddingAndInformationsSection({
                           </button>
                         </div>
                       </div>
-
-                      <div className="mt-4 text-base font-bold text-center text-black whitespace-nowrap">
-                        Bidding History
-                      </div>
-                      <div className="flex overflow-hidden relative flex-col justify-center self-stretch py-1 border border-black border-solid leading-[150%] min-h-[141px] stroke-[1px] stroke-black max-md:max-w-full">
-                        <div className="flex relative flex-col px-1.5 py-1  max-md:max-w-full">
-                          <div className="flex gap-5 justify-between py-1.5 w-full border border-white border-solid max-md:flex-wrap max-md:max-w-full">
-                            <div className="flex gap-4 text-base font-medium whitespace-nowrap text-neutral-900">
-                              <img
-                                loading="lazy"
-                                srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&"
-                                className="shrink-0 w-14 aspect-square"
-                              />
-                              <div className="my-auto">$1,300</div>
-                            </div>
-                            <div className="flex-auto my-auto text-sm text-slate-500">
-                              12/19/2023, 6:45 PM
-                            </div>
-                          </div>
-                          <div className="flex gap-5 justify-between py-1.5 w-full border border-white border-solid max-md:flex-wrap max-md:max-w-full">
-                            <div className="flex gap-4 text-base font-medium whitespace-nowrap text-neutral-900">
-                              <img
-                                loading="lazy"
-                                srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/59bbb7e267598cc3586408b1167e6f31f8ff5673e27b2720f95f85eae4813fe4?apiKey=452d394c7c1e42459c0e2415b6f84ad2&"
-                                className="shrink-0 w-14 aspect-square"
-                              />
-                              <div className="my-auto">$1,300</div>
-                            </div>
-                            <div className="flex-auto my-auto text-sm text-slate-500">
-                              12/19/2023, 6:45 PM
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -247,7 +246,7 @@ export default function BiddingAndInformationsSection({
         </>
       ) : (
         <>
-          <p>test</p>
+          <p>Loading</p>
         </>
       )}
     </>

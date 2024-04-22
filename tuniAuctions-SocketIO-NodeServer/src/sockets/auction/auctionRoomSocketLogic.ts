@@ -11,6 +11,13 @@ const auctionRoomSocketLogic = (auctionRoomNameSpace: any) => {
         roomTimers.set(auctionId, {
           roomTimer: 2000,
           participatingBidder: [],
+          heighestBidder: {
+            bid: 0,
+            bidderName: "",
+            bidderPicture: "",
+            bidderId: "",
+            bidderSocketId: "",
+          },
         });
       }
       const countdown = setInterval(async () => {
@@ -25,7 +32,7 @@ const auctionRoomSocketLogic = (auctionRoomNameSpace: any) => {
 
           const updatedTimerValue = roomTimers.get(auctionId);
           if (updatedTimerValue.roomTimer <= 0) {
-            const res = await axios
+            await axios
               .post(`${process.env.SOCKET_SERVER}/api/auctionRoom/end`, {
                 auctionId: auctionId,
                 winningBidder: {
@@ -35,8 +42,6 @@ const auctionRoomSocketLogic = (auctionRoomNameSpace: any) => {
                 },
               })
               .then((res) => {
-                console.log(res.data + "RESPONSE");
-                console.log(res.data.success);
                 if (res.data.success) {
                   const bidderSocket = io(
                     `${process.env.SOCKET_SERVER}/bidder`
@@ -82,12 +87,23 @@ const auctionRoomSocketLogic = (auctionRoomNameSpace: any) => {
         const frontData = {
           participatingBidders: currentRoom.participatingBidder.length,
           roomTimer: currentRoom.roomTimer,
+          bid: currentRoom.heighestBidder.bid
+            ? currentRoom.heighestBidder.bid
+            : 0,
+          bidderName: currentRoom.heighestBidder.bidderName
+            ? currentRoom.heighestBidder.bidderName
+            : "",
+          bidderPicture: currentRoom.heighestBidder.bidderPicture
+            ? currentRoom.heighestBidder.bidderPicture
+            : "",
+          bidderId: currentRoom.heighestBidder.bidderId
+            ? currentRoom.heighestBidder.bidderId
+            : "",
         };
         auctionRoomNameSpace.to(data.auctionId).emit("userJoined", frontData);
       }
     });
     socket.on("submitNewBid", (data: submitNewBid) => {
-      console.log("submit new Bid " + data);
       const auctionRoom = roomTimers.get(data.auctionId);
       if (auctionRoom) {
         roomTimers.set(data.auctionId, {
@@ -97,14 +113,16 @@ const auctionRoomSocketLogic = (auctionRoomNameSpace: any) => {
             bid: data.bid,
             bidderName: data.bidderName,
             bidderPicture: data.bidderPicture,
-            submitTime: data.submitTime,
             bidderSocketId: data.bidderSocketId,
             bidderId: data.bidderId,
           },
         });
+        console.log(roomTimers);
         const frontData = {
-          highestBidder: data.bidderName,
-          highestBid: data.bid,
+          bidderName: data.bidderName,
+          bid: data.bid,
+          bidderPicture: data.bidderPicture,
+          bidderId: data.bidderId,
         };
         auctionRoomNameSpace
           .to(data.auctionId)
@@ -129,17 +147,15 @@ interface roomData {
   heighestBidder?: {
     bidderName: string;
     bid: number;
-    submitTime: Date;
     bidderPicture: string;
-    bidderSocketId: ObjectId;
-    bidderId: ObjectId;
+    bidderSocketId: ObjectId | string;
+    bidderId: ObjectId | string;
   };
 }
 
 interface submitNewBid {
   bidderName: string;
   bid: number;
-  submitTime: Date;
   bidderPicture: string;
   auctionId: ObjectId;
   bidderSocketId: ObjectId;

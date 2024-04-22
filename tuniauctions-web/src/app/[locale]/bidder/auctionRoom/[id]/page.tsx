@@ -30,7 +30,7 @@ export default async function ServerBiddingRoomPage({
         <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden py-6 sm:py-12 bg-white">
           <div className="max-w-xl px-5 text-center">
             <h2 className="mb-2 text-[42px] font-bold text-zinc-800">
-              Access Room Finished!
+              Auction Room Finished!
             </h2>
             <div className="flex flex-col items-center justify-center mt-6">
               <FaRegFaceSmileBeam

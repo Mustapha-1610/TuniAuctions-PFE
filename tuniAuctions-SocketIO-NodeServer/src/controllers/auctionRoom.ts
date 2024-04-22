@@ -56,15 +56,17 @@ export async function start(req: express.Request, response: express.Response) {
 
 export async function end(req: express.Request, response: express.Response) {
   try {
-    console.log(req.body);
     const { auctionId, winningBidder } = req.body;
     const auction: AuctionListingType | null =
       await auctionListingModel.findById(auctionId);
     if (auction) {
       auction.status = "Finished";
+      auction.endDate = new Date();
+      console.log(winningBidder);
       auction.winningBidder = {
+        name: String(winningBidder.bidderName),
         _id: winningBidder._id,
-        name: winningBidder.bidderName,
+
         winningPrice: winningBidder.winningPrice,
       };
       await auction.save();

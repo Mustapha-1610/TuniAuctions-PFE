@@ -12,6 +12,8 @@ import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore
 import ConfirmParticipartionModal from "./confirmParticipationModal";
 import ConfirmUnparticipationModal from "./confirmUnparticipationModal";
 import { useNavbarState } from "@/helpers/store/general/navbarState";
+import Link from "next/link";
+import { useLocale } from "next-intl";
 
 interface Props {
   auctionListing: AuctionListingType;
@@ -28,7 +30,7 @@ export default function ProductInformations({
   const [isConfirmUnparticipationModalOpen, setIsConfirmUnparticipationModal] =
     useState<boolean>(false);
   const { setLoginModalState } = useNavbarState();
-
+  const locale = useLocale();
   useEffect(() => {
     console.log(bidderLocalStorageData);
   }, [bidderLocalStorageData]);
@@ -187,14 +189,31 @@ export default function ProductInformations({
                           (value) =>
                             value.bidderId === bidderLocalStorageData._id
                         ) ? (
-                          <div
-                            className="z-10 justify-center items-center px-16 py-9 -mb-1 text-center text-white whitespace-nowrap rounded-none border border-black border-solid bg-red-700 cursor-pointer max-md:px-5 max-md:max-w-full"
-                            onClick={() => {
-                              setIsConfirmUnparticipationModal(true);
-                            }}
-                          >
-                            Cancel Participation
-                          </div>
+                          <>
+                            {auctionListing.status === "Pending Start" ? (
+                              <>
+                                <div
+                                  className="z-10 justify-center items-center px-16 py-9 -mb-1 text-center text-white whitespace-nowrap rounded-none border border-black border-solid bg-red-700 cursor-pointer max-md:px-5 max-md:max-w-full"
+                                  onClick={() => {
+                                    setIsConfirmUnparticipationModal(true);
+                                  }}
+                                >
+                                  Cancel Participation
+                                </div>
+                              </>
+                            ) : (
+                              auctionListing.status == "Ongoing" && (
+                                <>
+                                  <Link
+                                    className="z-10 justify-center items-center px-16 py-9 -mb-1 text-center text-white whitespace-nowrap rounded-none border border-black border-solid bg-green-700 cursor-pointer max-md:px-5 max-md:max-w-full"
+                                    href={`/${locale}/bidder/auctionRoom/${auctionListing._id}`}
+                                  >
+                                    Join
+                                  </Link>
+                                </>
+                              )
+                            )}
+                          </>
                         ) : (
                           <div
                             className="z-10 justify-center items-center px-16 py-9 -mb-1 text-center text-white whitespace-nowrap rounded-none border border-black border-solid bg-gray-700 cursor-pointer max-md:px-5 max-md:max-w-full"

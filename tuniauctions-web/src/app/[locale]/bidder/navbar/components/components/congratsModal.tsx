@@ -22,7 +22,7 @@ export default function AuctionCongratsModal({
   return (
     <>
       <Modal
-        title="Anautherized Access"
+        title="Congratulations"
         centered
         open={isCongratsModalOpen}
         width={600}
@@ -33,12 +33,13 @@ export default function AuctionCongratsModal({
         maskClosable={false}
       >
         <p>
-          Congrats On Winning {auctionTitle} auction!{" "}
+          Congratulations On Winning {auctionTitle} auction!{" "}
           <Link
             onClick={() => {
               setCongratsModal(false);
             }}
             href={`/${locale}/bidder/dashboard`}
+            className="text-blue-600"
           >
             Check it out
           </Link>

@@ -11,6 +11,7 @@ import PromotionalVideoAndButItNowSection from "./components/promotionalVideoAnd
 import { SellerSocialSectionDetailsType } from "@/app/api/general/fetchAuctionListing/route";
 import SellerPromotionSection from "./components/sellerPromotionalSection";
 import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
+import FinishedAuctionDisplay from "./components/finishedAuction";
 
 export interface AuctionListingDetails {
   auctionListing: AuctionListingType;
@@ -46,10 +47,14 @@ export default function AuctionPage({
     <>
       <div className="flex flex-col items-center px-20 mt-12 pt-7 pb-16 bg-white border border-black border-solid max-md:px-5">
         <div className="px-14 py-5 w-full bg-white border border-white border-solid max-w-[1540px] max-md:px-5 max-md:max-w-full">
-          <ProductInformations
-            auctionListing={auctionListingItem}
-            setAuctionListing={setAuctionListingItem}
-          />
+          {auctionListing && auctionListing.status === "Finished" ? (
+            <FinishedAuctionDisplay auctionListing={auctionListing} />
+          ) : (
+            <ProductInformations
+              auctionListing={auctionListingItem}
+              setAuctionListing={setAuctionListingItem}
+            />
+          )}
         </div>
         <PromotionalVideoAndButItNowSection auctionListing={auctionListing} />
         <SellerPromotionSection

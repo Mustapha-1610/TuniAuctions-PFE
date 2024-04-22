@@ -3,32 +3,51 @@ import { AuctionListingType } from "@/models/types/auctionListing";
 import { Table } from "antd";
 import { useEffect, useState } from "react";
 import type { TableColumnsType, TableProps } from "antd";
+import Link from "next/link";
+import { useLocale } from "next-intl";
+import moment from "moment";
 
 interface Props {
   tableData: getDashboardTableDataResponse;
 }
-const columns: TableColumnsType<AuctionListingType> = [
-  {
-    title: "Title",
-    dataIndex: "title",
-    width: 200,
-  },
-  {
-    title: "Opening Bid",
-    dataIndex: "openingBid",
 
-    sorter: (a, b) => a.openingBid - b.openingBid,
-  },
-  {
-    title: "Starting Date",
-    dataIndex: "startingDate",
-  },
-];
 export default function AuctionDataTable({ tableData }: Props) {
   const [data, setDataTable] = useState<AuctionListingType[] | undefined>(
     tableData.upcomingAuctions
   );
   const [selectedItem, setSelectedItem] = useState("upcoming");
+  const locale = useLocale();
+  const columns: TableColumnsType<AuctionListingType> = [
+    {
+      title: "Title",
+      dataIndex: "title",
+      width: 400,
+    },
+    {
+      title: "Opening Bid",
+      dataIndex: "openingBid",
+
+      sorter: (a, b) => a.openingBid - b.openingBid,
+    },
+    {
+      title: "Starting Date",
+      render: (_, record) => {
+        return moment(record.startingDate).format("MMMM DD, YYYY hh:mm A");
+      },
+    },
+    {
+      title: "Action",
+      render: (_, record) => {
+        return (
+          <>
+            <Link href={`/${locale}/bidder/auctionDetails/${record._id}`}>
+              View
+            </Link>
+          </>
+        );
+      },
+    },
+  ];
   return (
     <>
       <div className="flex flex-col ml-5 w-11/12 max-md:ml-0 max-md:w-full">
