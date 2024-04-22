@@ -4,16 +4,18 @@ import { useState } from "react";
 interface Props {
   selectedType: string;
   setSelectedType: (value: string) => void;
+  auctionLength: number;
 }
 export default function AuctionListingsTopSection({
   selectedType,
   setSelectedType,
+  auctionLength,
 }: Props) {
   return (
     <>
       <div className="flex gap-5 justify-between w-full max-md:flex-wrap max-md:max-w-full">
         <div className="flex-auto self-start mt-4 text-base leading-7 capitalize text-zinc-800">
-          Showing 1–12 of 41 results
+          {auctionLength} results
         </div>
         <div className="relative" style={{ width: "200px" }}>
           <select

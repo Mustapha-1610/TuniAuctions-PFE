@@ -13,10 +13,13 @@ import BidderLocationModal, {
   BidderSellerDeliveryInformationsData,
 } from "./modals/bidderLocationModal";
 import moment from "moment";
+import ConfirmDeliverymodal from "./modals/confirmDeliveryModal";
 
 export default function PendingDeliveriesPage() {
   const [tableData, setTableData] = useState<DeliveryType[] | undefined>();
   const [confirmDelivery, setConfirmDelivery] = useState(false);
+  const [isConfirmDeliveryModalOpen, setConfirmDeliveryModal] =
+    useState<boolean>(false);
   const [deliveryId, setDeliveryId] = useState("");
   const [isBidderDataModalOpen, setBidderDataModal] = useState(false);
   const [bidderData, setBidderData] =
@@ -130,7 +133,7 @@ export default function PendingDeliveriesPage() {
               <p
                 onClick={() => {
                   setDeliveryId(String(record._id));
-                  setConfirmDelivery(true);
+                  setConfirmDeliveryModal(true);
                 }}
                 className="cursor-pointer"
               >
@@ -162,7 +165,7 @@ export default function PendingDeliveriesPage() {
                 scroll={{ x: 800 }}
                 pagination={{
                   position: ["bottomCenter"],
-                  pageSize: 4,
+                  pageSize: 10,
                 }}
                 className="mr-2"
                 bordered
@@ -185,6 +188,15 @@ export default function PendingDeliveriesPage() {
           isBidderLocationModalOpen={isBidderDataModalOpen}
           setIsBidderLocationModalOpen={setBidderDataModal}
           setBidderData={setBidderData}
+        />
+      )}
+      {isConfirmDeliveryModalOpen && (
+        <ConfirmDeliverymodal
+          deliveryId={deliveryId}
+          auctionTitle=""
+          setTableData={setTableData}
+          isConfirmDeliveryModalOpen={isConfirmDeliveryModalOpen}
+          setConfirmDeliveryModal={setConfirmDeliveryModal}
         />
       )}
     </>

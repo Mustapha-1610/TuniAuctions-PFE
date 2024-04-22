@@ -90,6 +90,7 @@ export default function AuctionsDisplayPage({
                     <AuctionListingsTopSection
                       selectedType={selectedType}
                       setSelectedType={setSelectedType}
+                      auctionLength={selectedDisplay!.length}
                     />
                     {currentItems && (
                       <>

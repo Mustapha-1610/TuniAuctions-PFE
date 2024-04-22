@@ -27,4 +27,5 @@ export interface DeliveryType extends Document {
     productId: Types.ObjectId;
     productPicture: string;
   };
+  sellerReview: boolean;
 }

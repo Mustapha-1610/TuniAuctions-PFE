@@ -6,6 +6,7 @@ import EarningsDisplay from "./components/earningsDisplay";
 import { IoMdCreate } from "react-icons/io";
 import { FaEye } from "react-icons/fa";
 import { GiTakeMyMoney } from "react-icons/gi";
+import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
 interface DataType {
   key: React.Key;
   name: string;
@@ -64,33 +65,46 @@ const data: DataType[] = [
   },
 ];
 
-const App: React.FC = () => (
-  <div className="flex ml-2 overflow-hidden bg-white pt-12">
-    <div
-      id="main-content"
-      className="h-full w-11/12  relative overflow-y-auto lg:ml-64"
-    >
-      <h1 className="text-2xl font-bold mt-8 mb-6">
-        <span className="text-green-600">Earnings</span> : 299$
-      </h1>
-      <div className="mb-4 px-2 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-        <EarningsDisplay Amount={2} Title="Basic" />
-        <EarningsDisplay Amount={4} Title="Standard" />
-        <EarningsDisplay Amount={5} Title="Premium" />
+export default function EarningsPage() {
+  const { sellerLocaleStorageData } = useSellerProfileStore();
+  return (
+    sellerLocaleStorageData && (
+      <div className="flex ml-2 overflow-hidden bg-white pt-12">
+        <div
+          id="main-content"
+          className="h-full w-11/12  relative overflow-y-auto lg:ml-64"
+        >
+          <h1 className="text-2xl font-bold mt-8 mb-6">
+            <span className="text-green-600">Earnings</span> :{" "}
+            {sellerLocaleStorageData.earnnings}
+          </h1>
+          <div className="mb-4 px-2 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+            <EarningsDisplay
+              Amount={sellerLocaleStorageData.auctionEarnings.Basic}
+              Title="Basic"
+            />
+            <EarningsDisplay
+              Amount={sellerLocaleStorageData.auctionEarnings.Standard}
+              Title="Standard"
+            />
+            <EarningsDisplay
+              Amount={sellerLocaleStorageData.auctionEarnings.Premium}
+              Title="Premium"
+            />
+          </div>
+          <Table
+            columns={columns}
+            dataSource={data}
+            scroll={{ x: 800 }}
+            pagination={{
+              position: ["bottomCenter"],
+              pageSize: 8,
+            }}
+            bordered
+            className="mr-4"
+          />
+        </div>
       </div>
-      <Table
-        columns={columns}
-        dataSource={data}
-        scroll={{ x: 800 }}
-        pagination={{
-          position: ["bottomCenter"],
-          pageSize: 8,
-        }}
-        bordered
-        className="mr-4"
-      />
-    </div>
-  </div>
-);
-
-export default App;
+    )
+  );
+}

@@ -34,19 +34,25 @@ export default function DeliveriesDataTable({ tableData }: Props) {
       render: (_, record) => {
         return (
           <>
-            {!record.deliveryDate && record.expectedDeliveryDate ? (
+            {record.deliveryDate ? (
+              <>Delivered</>
+            ) : (
               <>
-                from :{" "}
-                {moment(record.expectedDeliveryDate.to).format(
-                  "MMMM DD, YYYY "
-                )}
-                , to :{" "}
-                {moment(record.expectedDeliveryDate.from).format(
-                  "MMMM DD, YYYY "
+                {record.expectedDeliveryDate ? (
+                  <>
+                    from :{" "}
+                    {moment(record.expectedDeliveryDate.from).format(
+                      "dddd, MMMM D, YYYY "
+                    )}
+                    , to :{" "}
+                    {moment(record.expectedDeliveryDate.to).format(
+                      "dddd, MMMM D, YYYY  "
+                    )}
+                  </>
+                ) : (
+                  <>Not decided yet</>
                 )}
               </>
-            ) : (
-              <>Not decided yet</>
             )}
           </>
         );
@@ -57,7 +63,7 @@ export default function DeliveriesDataTable({ tableData }: Props) {
       render: (_, record) => {
         return (
           record.deliveryDate &&
-          moment(record.deliveryDate).format("MMMM DD, YYYY ")
+          moment(record.deliveryDate).format("dddd, MMMM D, YYYY hh:mm A ")
         );
       },
     },

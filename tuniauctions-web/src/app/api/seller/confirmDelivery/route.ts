@@ -1,3 +1,4 @@
+import { connect } from "@/db/dbConfig";
 import deliveryModel from "@/models/auctionListingModels/deliveryModel";
 import { DeliveryType } from "@/models/types/delivery";
 import bidderModel from "@/models/usersModels/bidderModel";
@@ -6,56 +7,55 @@ import {
   serverErrorHandler,
   unautherizedError,
 } from "@/serverHelpers/errorHandler";
-import moment from "moment";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(request: NextRequest) {
   try {
+    await connect();
     const res = await verifySellerTokens(request);
     if (res.isValid) {
-      const seller = res.sellerAccount;
-      const { deliveryId, to, from } = await request.json();
+      const { deliveryId } = await request.json();
       const delivery: DeliveryType | null =
         await deliveryModel.findByIdAndUpdate(deliveryId, {
           $set: {
-            expectedDeliveryDate: {
-              from,
-              to,
-            },
-            status: "Pending delivery",
+            status: "Delivered",
+            deliveryDate: new Date(),
           },
         });
-      const deliveries = await deliveryModel.find({
-        _id: {
-          $in: seller.deliveries.pending,
-        },
-      });
-      if (delivery && delivery.expectedDeliveryDate) {
-        const fromDate = moment(delivery.expectedDeliveryDate.from).format(
-          " dddd, MMMM D, YYYY"
-        );
-        const toDate = moment(delivery.expectedDeliveryDate.to).format(
-          " dddd, MMMM D, YYYY"
-        );
+      if (delivery) {
         await bidderModel.findByIdAndUpdate(delivery.bidderId, {
           $push: {
             notifications: {
               notificationMessage:
                 delivery.productInformations.productName +
-                " delivery will arrive between " +
-                fromDate +
-                " to " +
-                toDate,
+                " auction product has been delivered successfully !",
               context: {
                 receptionDate: new Date(),
-                frontContext: "deliveryShipment",
+                frontContext: "successfullDelivery",
+                contextId: delivery._id,
                 notificationIcon: delivery.productInformations.productPicture,
               },
             },
+            "deliveries.delivered": delivery._id,
+          },
+          $pull: {
+            "deliveries.pending": delivery._id,
           },
         });
+        res.sellerAccount.deliveries.pending =
+          res.sellerAccount.deliveries.pending.filter(
+            (value) => value !== delivery._id
+          );
+        res.sellerAccount.deliveries.delivered.push(delivery._id);
+        await res.sellerAccount.save();
+        const deliveries = await deliveryModel.find({
+          _id: {
+            $in: res.sellerAccount.deliveries.pending,
+          },
+        });
+        return NextResponse.json({ success: true, deliveries });
       }
-      return NextResponse.json({ success: true, deliveries });
+      return NextResponse.json({ success: false });
     } else {
       return unautherizedError();
     }

@@ -157,7 +157,10 @@ function MyComponent({ params }: { params: { deliveryId: string } }) {
                 </>
               ) : (
                 <>
-                  <DeliveryStatusDisplay deliveryData={delivery} />
+                  <DeliveryStatusDisplay
+                    deliveryData={delivery}
+                    setDeliveryData={setDelivery}
+                  />
                 </>
               )}
             </div>

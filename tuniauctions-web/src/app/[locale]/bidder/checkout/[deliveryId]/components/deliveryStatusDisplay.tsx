@@ -1,13 +1,34 @@
 "use client";
 import { DeliveryType } from "@/models/types/delivery";
 import moment from "moment";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Rate } from "antd";
 
 interface Props {
   deliveryData: DeliveryType | undefined;
+  setDeliveryData: (value: DeliveryType) => void;
 }
-export default function DeliveryStatusDisplay({ deliveryData }: Props) {
+export default function DeliveryStatusDisplay({
+  deliveryData,
+  setDeliveryData,
+}: Props) {
   useEffect(() => {}, [deliveryData]);
+  async function handleSellerRating(value: number) {
+    if (deliveryData) {
+      const res = await fetch("/api/bidder/giveSellerRating", {
+        method: "PUT",
+        body: JSON.stringify({
+          deliveryId: deliveryData._id,
+          rating: value,
+        }),
+      });
+      const resData = await res.json();
+      console.log(resData);
+      if (resData.success) {
+        setDeliveryData(resData.delivery);
+      }
+    }
+  }
   return (
     <>
       {deliveryData && (
@@ -36,33 +57,50 @@ export default function DeliveryStatusDisplay({ deliveryData }: Props) {
                       </div>
                       <div className="mt-2 max-md:mt-10 max-md:max-w-full">
                         Expected Delivery Date :{" "}
-                        {deliveryData.expectedDeliveryDate ? (
-                          <>
-                            {moment(
-                              deliveryData.expectedDeliveryDate.from
-                            ).format(" dddd, MMMM D, YYYY")}
-                            <span className="">, To </span>
-                            {moment(
-                              deliveryData.expectedDeliveryDate.to
-                            ).format(" dddd, MMMM D, YYYY")}
-                          </>
+                        {deliveryData.deliveryDate ? (
+                          <>Delivered</>
                         ) : (
-                          <>Not known yet</>
+                          <>
+                            {deliveryData.expectedDeliveryDate ? (
+                              <>
+                                from :{" "}
+                                {moment(
+                                  deliveryData.expectedDeliveryDate.from
+                                ).format("MMMM DD, YYYY ")}
+                                , to :{" "}
+                                {moment(
+                                  deliveryData.expectedDeliveryDate.to
+                                ).format("MMMM DD, YYYY  ")}
+                              </>
+                            ) : (
+                              <>Not decided yet</>
+                            )}
+                          </>
                         )}
                       </div>
                       <div className="mt-2 max-md:mt-10 max-md:max-w-full">
                         Delivery Date :{" "}
                         {deliveryData.deliveryDate &&
                           moment(deliveryData.deliveryDate).format(
-                            " dddd, MMMM D, YYYY"
+                            " dddd, MMMM D, YYYY hh:mm A"
                           )}
                       </div>
                       <div className="mt-2 max-md:mt-10 max-md:max-w-full">
                         Status : {deliveryData.status}
                       </div>
-                      <div className="mt-2 max-md:mt-10 max-md:max-w-full">
-                        Seller Review : Give Review
-                      </div>
+                      {deliveryData.deliveryDate && (
+                        <>
+                          {!deliveryData.sellerReview && (
+                            <div className="mt-2 max-md:mt-10 max-md:max-w-full">
+                              Seller Rating :{" "}
+                              <Rate
+                                defaultValue={1}
+                                onChange={(value) => handleSellerRating(value)}
+                              />
+                            </div>
+                          )}
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>

@@ -85,6 +85,16 @@ const sellerSchema = new Schema({
       default: 0,
     },
   },
+  reviews: {
+    total: {
+      type: Number,
+      default: 0,
+    },
+    rating: {
+      type: Number,
+      default: 0,
+    },
+  },
 });
 sellerSchema.add(generalSchema);
 

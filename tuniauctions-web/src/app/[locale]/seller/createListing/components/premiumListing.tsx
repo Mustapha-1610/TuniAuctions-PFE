@@ -103,7 +103,7 @@ export default function PremiumListing() {
     };
     setTip("Creating The Auction Listing");
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SOCKET_IO_SERVER}/api/auctionListing/create/premium`,
+      `/api/seller/createAuctionListing/premium`,
 
       {
         method: "POST",

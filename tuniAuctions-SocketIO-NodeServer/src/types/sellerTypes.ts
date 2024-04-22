@@ -76,6 +76,10 @@ export interface ISeller extends Document {
   transactions: Transaction[];
   socketId: string;
   auctionEarnings: AuctionEarnings;
+  reviews: {
+    total: number;
+    rating: number;
+  };
 }
 
 export interface ISellerFrontData {
@@ -97,4 +101,8 @@ export interface ISellerFrontData {
   notifications: Notification[];
   transactions: Transaction[];
   auctionEarnings: AuctionEarnings;
+  reviews: {
+    total: number;
+    rating: number;
+  };
 }

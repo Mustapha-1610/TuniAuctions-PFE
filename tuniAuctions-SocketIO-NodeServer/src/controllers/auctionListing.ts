@@ -61,56 +61,52 @@ export async function standard(
   response: express.Response
 ) {
   try {
-    const res = await verifySellerTokens(req);
-    if (res.isValid) {
-      const seller = res.sellerAccount;
-      if (seller.packageCount.Standard > 0) {
-        const {
-          title,
-          buyItNowSection,
-          guarentee,
-          description,
-          openingBid,
-          originalPrice,
-          productCategory,
-          productPictures,
-          promotionalVideo,
-          startingDate,
-          minParticipatingBidders,
-        }: premiumListingType = req.body;
-        const newAuction = await auctionListingModel.create({
-          listingType: "Standard",
-          title,
-          description,
-          category: productCategory,
-          promotionalVideo,
-          productPictures: productPictures.reverse(),
-          originalPrice,
-          startingDate,
-          platformFees: 4,
-          openingBid,
-          guarantee: guarentee.length + " " + guarentee.period,
-          buyItNowSection,
-          featured: true,
-          minParticipatingBidders,
-          sellerId: seller._id,
-        });
-        seller.createdAuctions.upcoming.push(newAuction._id);
-        seller.packageCount.Standard -= 1;
-        const scheduleResponse = await scheduleAuctionStart(newAuction);
-        if (scheduleResponse) {
-          await seller.save();
-          const sellerFrontData = returnSellerFrontData(seller);
-          return response.json({ success: true, sellerFrontData });
-        } else {
-          console.log(scheduleResponse + "Schedule response");
-          return response.json({ success: false });
-        }
+    const { updatedAuctionListingForm, sellerId }: basicListingInfos = req.body;
+    const seller = await sellerModel.findById(sellerId);
+    if (seller.packageCount.Standard > 0) {
+      const {
+        title,
+        buyItNowSection,
+        guarentee,
+        description,
+        openingBid,
+        originalPrice,
+        productCategory,
+        productPictures,
+        promotionalVideo,
+        startingDate,
+        minParticipatingBidders,
+      }: premiumListingType = req.body;
+      const newAuction = await auctionListingModel.create({
+        listingType: "Standard",
+        title,
+        description,
+        category: productCategory,
+        promotionalVideo,
+        productPictures: productPictures.reverse(),
+        originalPrice,
+        startingDate,
+        platformFees: 4,
+        openingBid,
+        guarantee: guarentee.length + " " + guarentee.period,
+        buyItNowSection,
+        featured: true,
+        minParticipatingBidders,
+        sellerId: seller._id,
+      });
+      seller.createdAuctions.upcoming.push(newAuction._id);
+      seller.packageCount.Standard -= 1;
+      const scheduleResponse = await scheduleAuctionStart(newAuction);
+      if (scheduleResponse) {
+        await seller.save();
+        const sellerFrontData = returnSellerFrontData(seller);
+        return response.json({ success: true, sellerFrontData });
       } else {
-        return response.json({ errMessage: "emptyPackage" });
+        console.log(scheduleResponse + "Schedule response");
+        return response.json({ success: false });
       }
     } else {
-      return response.json({ authError: true });
+      return response.json({ errMessage: "emptyPackage" });
     }
   } catch (err) {
     console.log(err);

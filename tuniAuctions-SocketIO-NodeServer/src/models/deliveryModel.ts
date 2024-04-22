@@ -66,6 +66,10 @@ const deliverySchema = new Schema({
       type: String,
     },
   },
+  sellerReview: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const deliveryModel =

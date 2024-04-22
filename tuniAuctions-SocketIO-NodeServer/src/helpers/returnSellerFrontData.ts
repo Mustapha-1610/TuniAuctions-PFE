@@ -20,6 +20,7 @@ export function returnSellerFrontData(seller: ISeller) {
     _id: seller._id,
     auctionEarnings: seller.auctionEarnings,
     socketId: seller.socketId,
+    reviews: seller.reviews,
   };
   return sellerFrontData;
 }

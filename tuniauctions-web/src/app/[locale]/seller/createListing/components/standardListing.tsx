@@ -65,7 +65,8 @@ export default function StandardListing() {
   }
   const [loading, setLoading] = useState(false);
   const [tip, setTip] = useState<string>();
-  const { setSellerLocalStorageData } = useSellerProfileStore();
+  const { setSellerLocalStorageData, sellerLocaleStorageData } =
+    useSellerProfileStore();
   //
   async function handleFormSubmission(e: any) {
     setLoading(true);
@@ -96,7 +97,7 @@ export default function StandardListing() {
     };
     setTip("Creating The Auction Listing");
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SOCKET_IO_SERVER}/api/auctionListing/create/standard`,
+      `/api/seller/createAuctionListing/standard`,
 
       {
         method: "POST",
