@@ -16,11 +16,11 @@ let transporter = nodemailer.createTransport({
   },
 });
 
-export const sendBidderAccountVerificationMail = async (
+export async function sendBidderAccountVerificationMail(
   name: string,
   email: string,
   activationCode: string
-) => {
+) {
   const tokenPayload = {
     email: email,
     aCode: activationCode,
@@ -40,7 +40,7 @@ export const sendBidderAccountVerificationMail = async (
       html: accountVerificationTemplate(name, mailToken),
     })
     .catch((err) => console.log(err));
-};
+}
 
 export const sendBidderEmailChangeRequestCode = async (
   email: string,

@@ -37,7 +37,8 @@ interface PassResetCode {
 interface NotificationContext {
   receptionDate: Date;
   frontContext: string;
-  contextId: Schema.Types.ObjectId;
+  contextId?: mongoose.Types.ObjectId;
+  notificationIcon: string;
 }
 
 interface Notification {

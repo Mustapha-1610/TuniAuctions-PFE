@@ -2,6 +2,7 @@ import { connect } from "@/db/dbConfig";
 import { returnSellerFrontData } from "@/frontHelpers/seller/returnSellerFrontData";
 import pricingModel from "@/models/auctionListingModels/pricingModel";
 import { Pricing } from "@/models/types/pricing";
+import platformModel from "@/models/usersModels/platformModel";
 import { ISellerFrontData } from "@/models/usersModels/types/sellerTypes";
 import { verifySellerTokens } from "@/security/apiProtection/seller/routeProtection";
 import {
@@ -19,6 +20,39 @@ export async function PUT(request: NextRequest) {
       const pricing: Pricing | null = await pricingModel.findById(pricingId);
       if (pricing) {
         res.sellerAccount.packageCount[pricing.name] += pricing.listingsCount;
+        res.sellerAccount.transactions.push({
+          amount: pricing.price,
+          context: pricing.name + " Package Payment",
+          date: new Date(),
+          reciever: "Tuni-Auctions",
+        });
+        res.sellerAccount.notifications.push({
+          notificationMessage:
+            "Payment Successfull for " + pricing.name + " package",
+          context: {
+            receptionDate: new Date(),
+            frontContext: "packagePayment",
+            notificationIcon:
+              "https://firebasestorage.googleapis.com/v0/b/tunisianauctionwebapp.appspot.com/o/CircularReducedSizeTuniAuctionsLogo.png?alt=media&token=e5c93487-fd34-4e62-9602-964b3d0392fe",
+          },
+        });
+        await platformModel.findOneAndUpdate(
+          {},
+          {
+            $inc: {
+              ["packagesBought." + pricing.name]: pricing.price,
+            },
+            $push: {
+              transactions: {
+                amount: pricing.price,
+                context: `${pricing.name} Package purchase`,
+                date: new Date(),
+                from: res.sellerAccount.name,
+                sellerId: res.sellerAccount._id,
+              },
+            },
+          }
+        );
         await res.sellerAccount.save();
         const sellerFrontData: ISellerFrontData = returnSellerFrontData(
           res.sellerAccount

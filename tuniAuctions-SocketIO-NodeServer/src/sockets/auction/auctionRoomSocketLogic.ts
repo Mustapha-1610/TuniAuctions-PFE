@@ -3,16 +3,19 @@ import { ObjectId } from "mongoose";
 import { io } from "socket.io-client";
 
 let roomTimers = new Map<ObjectId, roomData>();
-
+interface auctionStartData {
+  auctionId: ObjectId;
+  startingBid: number;
+}
 const auctionRoomSocketLogic = (auctionRoomNameSpace: any) => {
   auctionRoomNameSpace.on("connection", (socket: any) => {
-    socket.on("startRoom", (auctionId: ObjectId) => {
-      if (!roomTimers.has(auctionId)) {
-        roomTimers.set(auctionId, {
+    socket.on("startRoom", (data: auctionStartData) => {
+      if (!roomTimers.has(data.auctionId)) {
+        roomTimers.set(data.auctionId, {
           roomTimer: 2000,
           participatingBidder: [],
           heighestBidder: {
-            bid: 0,
+            bid: data.startingBid,
             bidderName: "",
             bidderPicture: "",
             bidderId: "",
@@ -21,20 +24,20 @@ const auctionRoomSocketLogic = (auctionRoomNameSpace: any) => {
         });
       }
       const countdown = setInterval(async () => {
-        const auctionRoom = roomTimers.get(auctionId);
+        const auctionRoom = roomTimers.get(data.auctionId);
         if (auctionRoom.roomTimer <= 0) {
           clearInterval(countdown);
         } else {
-          roomTimers.set(auctionId, {
+          roomTimers.set(data.auctionId, {
             ...auctionRoom,
             roomTimer: auctionRoom.roomTimer - 1,
           });
 
-          const updatedTimerValue = roomTimers.get(auctionId);
+          const updatedTimerValue = roomTimers.get(data.auctionId);
           if (updatedTimerValue.roomTimer <= 0) {
             await axios
               .post(`${process.env.SOCKET_SERVER}/api/auctionRoom/end`, {
-                auctionId: auctionId,
+                auctionId: data.auctionId,
                 winningBidder: {
                   _id: auctionRoom.heighestBidder.bidderId,
                   name: auctionRoom.heighestBidder.bidderName,
@@ -60,10 +63,10 @@ const auctionRoomSocketLogic = (auctionRoomNameSpace: any) => {
         }
       }, 1000);
       const fixTimer = setInterval(() => {
-        const roomData = roomTimers.get(auctionId);
+        const roomData = roomTimers.get(data.auctionId);
         if (roomData.roomTimer > 0) {
           auctionRoomNameSpace
-            .to(auctionId)
+            .to(data.auctionId)
             .emit("adjustTimer", roomData.roomTimer);
         } else {
           clearInterval(fixTimer);

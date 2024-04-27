@@ -10,6 +10,7 @@ import { auctionRoomNameSpace } from "../server";
 import { io } from "socket.io-client";
 import sellerModel from "../models/sellerModel";
 import deliveryModel from "../models/deliveryModel";
+import platformModel from "../models/platformModel";
 export async function start(req: express.Request, response: express.Response) {
   try {
     const { auctionId } = req.body;
@@ -141,7 +142,23 @@ export async function end(req: express.Request, response: express.Response) {
           },
         }
       );
-
+      await platformModel.findOneAndUpdate(
+        {},
+        {
+          $inc: {
+            earnings: platformFees,
+          },
+          $push: {
+            transactions: {
+              amount: platformFees,
+              context: "Auction Payment",
+              date: new Date(),
+              from: seller.name,
+              sellerId: seller._id,
+            },
+          },
+        }
+      );
       const bidder = await bidderModel.findByIdAndUpdate(winningBidder._id, {
         $inc: {
           "balance.activeBalance": -winningBidder.winningPrice,

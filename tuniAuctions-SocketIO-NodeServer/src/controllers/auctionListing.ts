@@ -2,6 +2,7 @@ import bidderModel from "../models/bidderModel";
 import express from "express";
 import { AuctionListingType } from "../types/auctionListing";
 import { IBidder } from "../types/bidderTypes";
+import { ObjectId } from "mongoose";
 
 import auctionListingModel from "../models/auctionListingModel";
 import { bidderNameSpace } from "../server";
@@ -282,8 +283,11 @@ async function handleStart(auctionlisting: AuctionListingType) {
   auctionlisting.status = "Ongoing";
   await auctionlisting.save();
   const auctionRoomSocket = io(`${process.env.SOCKET_SERVER}/auctionRoom`);
-
-  auctionRoomSocket.emit("startRoom", auctionlisting._id);
+  const data = {
+    auctionId: auctionlisting._id,
+    startingBid: auctionlisting.openingBid,
+  };
+  auctionRoomSocket.emit("startRoom", data);
   auctionlisting.participatingBidders.map(async (value) => {
     const bidder: IBidder = await bidderModel.findByIdAndUpdate(
       value.bidderId,
