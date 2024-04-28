@@ -9,16 +9,25 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     await connect();
-    const activeBidders = await bidderModel.find({ disabled: false });
+    const activeFemaleBidders = await bidderModel.find({
+      disabled: false,
+      gender: "Female",
+    });
+    const activeMaleBidders = await bidderModel.find({
+      disabled: false,
+      gender: "Male",
+    });
+
     const activeSellers = await sellerModel.find({ disabled: false });
     const platformStats: platformModelType | null = await platformModel.findOne(
       {}
     );
     return NextResponse.json<AdminDashboardResponseType>({
-      activeBiddersCount: activeBidders.length,
       activeSellersCount: activeSellers.length,
 
       platformStats,
+      activeFemaleBidders: activeFemaleBidders.length,
+      activeMaleBidders: activeMaleBidders.length,
     });
   } catch (err) {
     return serverErrorHandler(err);
@@ -26,7 +35,8 @@ export async function GET() {
 }
 
 export interface AdminDashboardResponseType {
-  activeBiddersCount: number;
   activeSellersCount: number;
   platformStats: platformModelType | null;
+  activeFemaleBidders: number;
+  activeMaleBidders: number;
 }

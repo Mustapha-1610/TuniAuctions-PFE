@@ -23,14 +23,19 @@ export default async function Dashboard() {
           <main>
             <div className=" px-4">
               <TopStatisticsSection
-                activeBidders={resData.activeBiddersCount}
+                activeBidders={
+                  resData.activeMaleBidders + resData.activeFemaleBidders
+                }
                 activeSellers={resData.activeSellersCount}
                 earnings={resData.platformStats?.earnings}
               />
               <div className="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-2">
                 <PackageCountSection />
 
-                <LatestTransactionsSection />
+                <LatestTransactionsSection
+                  activeFemaleBidders={resData.activeFemaleBidders}
+                  activeMaleBidders={resData.activeMaleBidders}
+                />
               </div>
 
               <BottomSection />
