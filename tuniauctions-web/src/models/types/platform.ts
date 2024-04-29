@@ -12,8 +12,8 @@ export interface platformModelType extends Document {
     context: string;
   }[];
   packagesBought: {
-    standard: number;
-    premium: number;
+    Standard: number;
+    Premium: number;
     [key: string]: number;
   };
 }

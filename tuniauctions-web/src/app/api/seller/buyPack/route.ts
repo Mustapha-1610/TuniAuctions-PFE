@@ -41,18 +41,20 @@ export async function PUT(request: NextRequest) {
           {
             $inc: {
               ["packagesBought." + pricing.name]: pricing.price,
+              earnings: pricing.price,
             },
             $push: {
               transactions: {
                 amount: pricing.price,
                 context: `${pricing.name} Package purchase`,
-                date: new Date(),
+                date: new Date(2024, 4, 5, 19, 0),
                 from: res.sellerAccount.name,
                 sellerId: res.sellerAccount._id,
               },
             },
           }
         );
+
         await res.sellerAccount.save();
         const sellerFrontData: ISellerFrontData = returnSellerFrontData(
           res.sellerAccount

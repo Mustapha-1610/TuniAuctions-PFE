@@ -79,6 +79,9 @@ const generalSchema = new Schema({
     type: String,
     required: true,
   },
+  jionedAt: {
+    type: Date,
+  },
 });
 
 export default generalSchema;

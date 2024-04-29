@@ -81,6 +81,7 @@ export interface ISeller extends Document {
     total: number;
     rating: number;
   };
+  jionedAt: Date;
 }
 
 export interface ISellerFrontData {

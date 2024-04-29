@@ -40,6 +40,7 @@ export async function POST(request: NextRequest) {
       password: bcrypt.hashSync(password),
       verificationCode,
       socketId,
+      jionedAt: new Date(),
     });
     await sendBidderAccountVerificationMail(fullName, email, verificationCode);
     return successHandler();

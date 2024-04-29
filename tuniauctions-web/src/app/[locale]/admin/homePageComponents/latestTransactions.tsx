@@ -19,7 +19,7 @@ export default function GenderDistributionChart({
   const customColors = ["#f44336", "#03a9f4"]; // Specify custom colors
 
   return (
-    <div className="bg-white shadow rounded-lg p-2 sm:p-6 xl:p-8 border">
+    <div className="bg-white shadow rounded-lg p-2 sm:p-6 xl:p-8 border border-gray-400">
       <div className="">
         <div>
           <h3 className="text-xl font-bold text-gray-900 mb-2">

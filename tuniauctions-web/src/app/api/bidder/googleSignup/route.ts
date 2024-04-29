@@ -49,6 +49,7 @@ export async function POST(request: NextRequest) {
         socketId,
         verified: true,
         gmailAccount: true,
+        jionedAt: new Date(),
       });
       const bidderFrontData: IBidderFrontData =
         returnBidderFrontData(newBidder);

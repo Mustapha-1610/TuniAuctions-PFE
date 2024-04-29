@@ -3,6 +3,10 @@ import BottomSection from "./homePageComponents/bottomSection";
 import LatestTransactionsSection from "./homePageComponents/latestTransactions";
 import PackageCountSection from "./homePageComponents/packageCountSection";
 import TopStatisticsSection from "./homePageComponents/topSection";
+import PendingSellers from "./homePageComponents/components/pendingSellers";
+import PackagePurchases from "./homePageComponents/components/packagePurchase";
+import UpcomingAuctions from "./homePageComponents/components/upcomingAuctions";
+import PendingDeliveries from "./homePageComponents/components/pendingDeliveries";
 
 export default async function Dashboard() {
   const res = await fetch(
@@ -30,15 +34,25 @@ export default async function Dashboard() {
                 earnings={resData.platformStats?.earnings}
               />
               <div className="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-2">
-                <PackageCountSection />
+                <PackageCountSection
+                  transactions={resData.platformStats?.transactions}
+                />
 
                 <LatestTransactionsSection
                   activeFemaleBidders={resData.activeFemaleBidders}
                   activeMaleBidders={resData.activeMaleBidders}
                 />
               </div>
-
-              <BottomSection />
+              <div className="grid grid-cols-1 2xl:grid-cols-2 xl:gap-4 my-4">
+                <PendingSellers pendingSellers={resData.pendingSellers} />
+                <PackagePurchases platformStats={resData.platformStats} />
+              </div>
+              <div className="grid grid-cols-1 2xl:grid-cols-2 xl:gap-4 my-4">
+                <UpcomingAuctions upcomingAuctions={resData.upcomingAuctions} />
+                <PendingDeliveries
+                  pendingDeliveries={resData.pendingDeliveries}
+                />
+              </div>
             </div>
           </main>
         </div>

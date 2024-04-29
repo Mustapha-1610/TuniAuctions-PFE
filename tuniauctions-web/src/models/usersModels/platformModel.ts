@@ -28,11 +28,11 @@ const platformSchema = new Schema({
     },
   ],
   packagesBought: {
-    standard: {
+    Standard: {
       type: Number,
       default: 0,
     },
-    premium: {
+    Premium: {
       type: Number,
       default: 0,
     },
