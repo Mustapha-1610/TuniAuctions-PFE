@@ -11,9 +11,7 @@ interface Props {
   pendingDeliveries: DeliveryType[] | null;
 }
 export default function PendingDeliveries({ pendingDeliveries }: Props) {
-  const { seller, isSellerModalOpen } = useAdminStore();
-  const { delivery, setDeliveryModalState, isDeliveryModalOpen, setDelivery } =
-    useAdminStore();
+  const { setDeliveryModalState, setDelivery } = useAdminStore();
   const pendingDeliveriesAdminTableColmumnTable: TableColumnsType<DeliveryType> =
     [
       {
@@ -59,6 +57,7 @@ export default function PendingDeliveries({ pendingDeliveries }: Props) {
         render: (_, record) => {
           return (
             <p
+              className="cursor-pointer text-blue-500"
               onClick={() => {
                 setDelivery(record);
                 setDeliveryModalState(true);
@@ -98,8 +97,6 @@ export default function PendingDeliveries({ pendingDeliveries }: Props) {
           )}
         </div>
       </div>
-      {delivery && isDeliveryModalOpen && <ReportedDeliveryModal />}
-      {seller && isSellerModalOpen && <SellerDataModal />}
     </>
   );
 }

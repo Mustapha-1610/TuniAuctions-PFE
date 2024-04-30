@@ -4,16 +4,42 @@ import { AuctionListingType } from "@/models/types/auctionListing";
 import { TableColumnsType } from "antd";
 import React, { useState } from "react";
 import moment from "moment";
-import AdminAuctionListingModal from "../../modals/auctionListingModal";
-import AdminBiddingRoomModal from "../../modals/biddingRoomModal";
+import { ISeller } from "@/models/usersModels/types/sellerTypes";
+import { useAdminStore } from "@/helpers/store/admin/adminStore";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+
 interface Props {
   upcomingAuctions: AuctionListingType[] | null;
 }
 export default function UpcomingAuctions({ upcomingAuctions }: Props) {
-  const [isUpcomingAuctionModalOpen, setIsUpcomingAuctionModalState] =
-    useState<boolean>(false);
-  const [isAuctionRoomModalOpen, setAuctionRoomModalState] = useState(false);
-  const [auctionListing, setAuctionListing] = useState<AuctionListingType>();
+  const [loading, setLoading] = useState(false);
+
+  const {
+    setSeller,
+    setAuction,
+    setOngoingAuctionModalState,
+    setUpcomingAucitonModalState,
+  } = useAdminStore();
+  async function handleAuctionListingModal(auction: AuctionListingType) {
+    if (auction) {
+      setLoading(true);
+      const res = await fetch("/api/admin/fetchSellerData", {
+        method: "POST",
+        body: JSON.stringify({
+          sellerId: auction.sellerId,
+        }),
+        cache: "default",
+      });
+      const resData: ISeller = await res.json();
+      setLoading(false);
+      if (resData) {
+        setSeller(resData);
+        setAuction(auction);
+        setUpcomingAucitonModalState(true);
+      }
+    }
+  }
   const upcomingAuctionAdminTableColumnType: TableColumnsType<AuctionListingType> =
     [
       {
@@ -70,19 +96,18 @@ export default function UpcomingAuctions({ upcomingAuctions }: Props) {
             <>
               {record.status === "Pending Start" ? (
                 <p
-                  className="cursor-pointer"
+                  className="cursor-pointer text-blue-500"
                   onClick={() => {
-                    setAuctionListing(record),
-                      setIsUpcomingAuctionModalState(true);
+                    handleAuctionListingModal(record);
                   }}
                 >
                   View Listing
                 </p>
               ) : (
                 <p
-                  className="cursor-pointer"
+                  className="cursor-pointer text-blue-500"
                   onClick={() => {
-                    setAuctionListing(record), setAuctionRoomModalState(true);
+                    setAuction(record), setOngoingAuctionModalState(true);
                   }}
                 >
                   View Live Room
@@ -108,35 +133,24 @@ export default function UpcomingAuctions({ upcomingAuctions }: Props) {
           </a>
         </div>
         <div className="flow-root">
-          {upcomingAuctions && (
-            <Table
-              className="custom-transaction-table  "
-              columns={upcomingAuctionAdminTableColumnType}
-              dataSource={upcomingAuctions}
-              bordered={true}
-              size="middle"
-              pagination={false}
-              tableLayout="auto"
-            />
-          )}
+          <Spin
+            indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
+            spinning={loading}
+          >
+            {upcomingAuctions && (
+              <Table
+                className="custom-transaction-table  "
+                columns={upcomingAuctionAdminTableColumnType}
+                dataSource={upcomingAuctions}
+                bordered={true}
+                size="middle"
+                pagination={false}
+                tableLayout="auto"
+              />
+            )}
+          </Spin>
         </div>
       </div>
-      {isUpcomingAuctionModalOpen && auctionListing && (
-        <AdminAuctionListingModal
-          auctionListing={auctionListing}
-          isAuctionListingModalOpen={isUpcomingAuctionModalOpen}
-          setIsAuctionListingModalState={setIsUpcomingAuctionModalState}
-          setAuctionListing={setAuctionListing}
-        />
-      )}
-      {isAuctionRoomModalOpen && auctionListing && (
-        <AdminBiddingRoomModal
-          auctionListing={auctionListing}
-          isAuctionRoomOpen={isAuctionRoomModalOpen}
-          setAuctionRoomState={setAuctionRoomModalState}
-          setAuctionListing={setAuctionListing}
-        />
-      )}
     </>
   );
 }

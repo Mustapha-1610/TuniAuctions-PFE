@@ -11,6 +11,7 @@ import { io } from "socket.io-client";
 import sellerModel from "../models/sellerModel";
 import deliveryModel from "../models/deliveryModel";
 import platformModel from "../models/platformModel";
+import { DeliveryType } from "types/delivery";
 export async function start(req: express.Request, response: express.Response) {
   try {
     const { auctionId } = req.body;
@@ -95,7 +96,7 @@ export async function end(req: express.Request, response: express.Response) {
           bidderSocketId: bidder.socketId,
         });
       });
-      const delivery = await deliveryModel.create({
+      const delivery: DeliveryType = await deliveryModel.create({
         auctionId: auction._id,
         bidderId: winningBidder._id,
         sellerId: auction.sellerId,
@@ -142,6 +143,8 @@ export async function end(req: express.Request, response: express.Response) {
           },
         }
       );
+      delivery.sellerName = seller.name;
+      await delivery.save();
       await platformModel.findOneAndUpdate(
         {},
         {

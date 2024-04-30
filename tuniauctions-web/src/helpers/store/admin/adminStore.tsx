@@ -15,12 +15,6 @@ interface adminStoreType {
   setFinishedAuctionModalState: (value: boolean) => void;
   delivery: DeliveryType | null;
   setDelivery: (value: DeliveryType | null) => void;
-  upcomingAuctionListingId: ObjectId | null;
-  setUpcomingAuctionListingId: (value: ObjectId | null) => void;
-  ongoingAuctionListingId: ObjectId | null;
-  setOngoingAuctionListingId: (value: ObjectId | null) => void;
-  finishedAuctionListingId: ObjectId | null;
-  setFinishedAuctionListingId: (value: ObjectId | null) => void;
   seller: ISeller | null;
   setSeller: (value: ISeller | null) => void;
   isSellerModalOpen: boolean;
@@ -29,36 +23,25 @@ interface adminStoreType {
   setBidder: (value: IBidder | null) => void;
   auction: AuctionListingType | null;
   setAuction: (value: AuctionListingType | null) => void;
+  isSellerAccountApplicationModalOpen: boolean;
+  setSellerAccountApplicationModalState: (value: boolean) => void;
 }
 export const useAdminStore = create<adminStoreType>((set) => ({
   isDeliveryModalOpen: false,
-  setDeliveryModalState: (value: boolean) =>
-    set(() => ({ isDeliveryModalOpen: value })),
+  setDeliveryModalState: (value) => set(() => ({ isDeliveryModalOpen: value })),
 
   isUpcomingAuctionModalOpen: false,
-  setUpcomingAucitonModalState: (value: boolean) =>
+  setUpcomingAucitonModalState: (value) =>
     set(() => ({ isUpcomingAuctionModalOpen: value })),
   isOngoingAuctionModalOpen: false,
-  setOngoingAuctionModalState: (value: boolean) =>
+  setOngoingAuctionModalState: (value) =>
     set(() => ({ isOngoingAuctionModalOpen: value })),
   isFinishedAuctionModalOpen: false,
-  setFinishedAuctionModalState: (value: boolean) =>
+  setFinishedAuctionModalState: (value) =>
     set(() => ({ isFinishedAuctionModalOpen: value })),
 
   delivery: null,
-  setDelivery: (value: DeliveryType | null) => set(() => ({ delivery: value })),
-
-  upcomingAuctionListingId: null,
-  setUpcomingAuctionListingId: (value: ObjectId | null) =>
-    set(() => ({ upcomingAuctionListingId: value })),
-
-  ongoingAuctionListingId: null,
-  setOngoingAuctionListingId: (value: ObjectId | null) =>
-    set(() => ({ ongoingAuctionListingId: value })),
-
-  finishedAuctionListingId: null,
-  setFinishedAuctionListingId: (value: ObjectId | null) =>
-    set(() => ({ finishedAuctionListingId: value })),
+  setDelivery: (value) => set(() => ({ delivery: value })),
   seller: null,
   setSeller: (value) => set(() => ({ seller: value })),
   bidder: null,
@@ -75,5 +58,10 @@ export const useAdminStore = create<adminStoreType>((set) => ({
   setSellerModalState: (value) =>
     set(() => ({
       isSellerModalOpen: value,
+    })),
+  isSellerAccountApplicationModalOpen: false,
+  setSellerAccountApplicationModalState: (value) =>
+    set(() => ({
+      isSellerAccountApplicationModalOpen: value,
     })),
 }));

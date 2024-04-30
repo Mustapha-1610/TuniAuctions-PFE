@@ -13,29 +13,12 @@ import moment from "moment";
 export const sellerTransactionTableColumns: TableColumnsType<sellerTransactions> =
   [
     {
-      title: "Transaction Nature",
-      width: 50,
-      dataIndex: "name",
-      render: (text: any, record: any) => {
-        const color = record.name === "Recieved" ? "#5AC69F" : "#FF0000";
-        return {
-          props: {
-            style: {
-              color,
-              fontWeight: "bold",
-              fontSize: "15px", // Set the font size
-            },
-          },
-          children: <div>{text}</div>, // Render text content
-        };
-      },
-    },
-    {
       title: "Transaction Amount",
       width: 60,
       render: (_, record) => {
         return record.amount + "$";
       },
+      align: "center",
     },
     {
       title: "Transaction Date",
@@ -43,17 +26,20 @@ export const sellerTransactionTableColumns: TableColumnsType<sellerTransactions>
       render: (_, record) => {
         return moment(record.date).format("ddd, MMM D, YYYY [at] h:mm A");
       },
+      align: "center",
     },
 
     {
       title: "To",
       width: 90,
       dataIndex: "reciever",
+      align: "center",
     },
     {
       title: "Context",
       width: 100,
       dataIndex: "context",
+      align: "center",
     },
   ];
 

@@ -10,24 +10,20 @@ import {
 import moment from "moment";
 import auctionRoomSocket from "@/frontHelpers/auctionRoom/auctionRoomLogic";
 import { Modal } from "antd";
+import { useAdminStore } from "@/helpers/store/admin/adminStore";
 
-interface Props {
-  auctionListing: AuctionListingType;
-  isAuctionRoomOpen: boolean;
-  setAuctionRoomState: (value: boolean) => void;
-  setAuctionListing: (value: AuctionListingType | undefined) => void;
-}
-export default function AdminBiddingRoomModal({
-  auctionListing,
-  isAuctionRoomOpen,
-  setAuctionRoomState,
-  setAuctionListing,
-}: Props) {
+export default function AdminBiddingRoomModal() {
+  const {
+    auction,
+    isOngoingAuctionModalOpen,
+    setAuction,
+    setOngoingAuctionModalState,
+  } = useAdminStore();
   const [selectedImage, setSelectedImage] = useState("");
   const [biddingRoomData, setBiddingRoomData] = useState<auctionRoomData>({
     remainingTime: 2000,
     onlineBidders: 0,
-    heighestBid: auctionListing.openingBid,
+    heighestBid: auction!.openingBid,
     heighestBidder: "",
     bidderId: "",
     bidderPicture: "",
@@ -49,7 +45,7 @@ export default function AdminBiddingRoomModal({
   }
   useEffect(() => {
     decreaseTimer();
-    auctionRoomSocket.emit("adminJoined", auctionListing._id);
+    auctionRoomSocket.emit("adminJoined", auction!._id);
     auctionRoomSocket.on("userJoined", (data: any) => {
       setBiddingRoomData((prev) => ({
         ...prev,
@@ -81,8 +77,8 @@ export default function AdminBiddingRoomModal({
       if (intervalId) {
         clearInterval(intervalId);
       }
-      setAuctionListing(undefined);
-      setAuctionRoomState(false);
+      setAuction(data);
+      setOngoingAuctionModalState(false);
     });
     return () => {
       if (intervalId) {
@@ -95,22 +91,20 @@ export default function AdminBiddingRoomModal({
       <Modal
         title=""
         centered
-        open={isAuctionRoomOpen}
+        open={isOngoingAuctionModalOpen}
         width={1650}
         footer={null}
-        onCancel={() => (
-          setAuctionRoomState(false), setAuctionListing(undefined)
-        )}
+        onCancel={() => (setOngoingAuctionModalState(false), setAuction(null))}
       >
-        {auctionListing ? (
+        {auction ? (
           <>
             <div className="px-14 py-5 w-full bg-white border border-white border-solid max-w-[1540px] max-md:px-5 max-md:max-w-full">
               <div className="flex gap-5 max-md:flex-col max-md:gap-0">
                 <div className="flex flex-col w-7/12 max-md:ml-0 max-md:w-full">
-                  {auctionListing.productPictures && (
+                  {auction.productPictures && (
                     <Image
                       loading="lazy"
-                      src={selectedImage || auctionListing.productPictures[0]}
+                      src={selectedImage || auction.productPictures[0]}
                       className="grow w-fit object-contain aspect-[1] max-md:mt-10 max-md:max-w-full"
                       alt="Product"
                       width={400}
@@ -119,16 +113,14 @@ export default function AdminBiddingRoomModal({
                     />
                   )}
                   <div className="flex justify-center mt-4">
-                    {auctionListing.productPictures && (
+                    {auction.productPictures && (
                       <>
-                        {auctionListing.productPictures.map((image, index) => (
+                        {auction.productPictures.map((image, index) => (
                           <div
                             key={index}
                             className="w-12 h-12 mx-1 cursor-pointer rounded-full bg-gray-300"
                             onClick={() => {
-                              setSelectedImage(
-                                auctionListing.productPictures![index]
-                              );
+                              setSelectedImage(auction.productPictures![index]);
                             }}
                             style={{
                               backgroundImage: `url(${image})`,

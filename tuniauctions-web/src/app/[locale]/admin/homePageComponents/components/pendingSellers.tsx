@@ -4,16 +4,13 @@ import { Table, TableColumnsType, TableProps } from "antd";
 import { pendingSellersAdminTableColumnsType } from "./components/pendingSellersTable";
 import { useState } from "react";
 import SellerAccountApplicationModal from "../../modals/sellerApplicationModal";
+import { useAdminStore } from "@/helpers/store/admin/adminStore";
 
 interface Props {
   pendingSellers: ISeller[] | null;
 }
 export default function PendingSellers({ pendingSellers }: Props) {
-  const [
-    isSellerAccountApplicationModalOpen,
-    setSellerAccountApplicationModalState,
-  ] = useState(false);
-  const [sellerAccount, setSellerAccount] = useState<ISeller>();
+  const { setSeller, setSellerAccountApplicationModalState } = useAdminStore();
   const pendingSellersAdminTableColumnsType: TableColumnsType<ISeller> = [
     {
       title: "Seller Name",
@@ -43,6 +40,7 @@ export default function PendingSellers({ pendingSellers }: Props) {
         },
         {
           title: "Street",
+          width: 50,
           render: (_, record) => {
             return record.location.street;
           },
@@ -56,10 +54,10 @@ export default function PendingSellers({ pendingSellers }: Props) {
       render: (_, record) => {
         return (
           <p
-            className="cursor-pointer"
+            className="cursor-pointer text-blue-500"
             onClick={() => {
               setSellerAccountApplicationModalState(true);
-              setSellerAccount(record);
+              setSeller(record);
             }}
           >
             View Application
@@ -96,17 +94,6 @@ export default function PendingSellers({ pendingSellers }: Props) {
           )}
         </div>
       </div>
-      {isSellerAccountApplicationModalOpen && sellerAccount && (
-        <SellerAccountApplicationModal
-          isSellerAccountApplicationModalOpen={
-            isSellerAccountApplicationModalOpen
-          }
-          sellerData={sellerAccount}
-          setSellerAccountApplicationModalState={
-            setSellerAccountApplicationModalState
-          }
-        />
-      )}
     </>
   );
 }

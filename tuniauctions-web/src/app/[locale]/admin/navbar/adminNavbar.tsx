@@ -1,8 +1,15 @@
+"use client";
 import { useTranslations } from "next-intl";
 import TopAdminNavbarSection from "./components/topSection";
 import AdminNavigationSection from "./components/navigationSection";
 import AdminMobileNavigation from "./components/mobileNavigationSection";
 import TopSellerNavbarSection from "./components/topSection";
+import { useAdminStore } from "@/helpers/store/admin/adminStore";
+import ReportedDeliveryModal from "../modals/deliveryModal";
+import SellerDataModal from "../modals/sellerModal";
+import SellerAccountApplicationModal from "../modals/sellerApplicationModal";
+import AdminAuctionListingModal from "../modals/auctionListingModal";
+import AdminBiddingRoomModal from "../modals/biddingRoomModal";
 export interface Props {
   navigationTranslation: {
     Dashboard: string;
@@ -39,6 +46,18 @@ export default function AdminNavbar() {
     Profile: t("profile"),
     Logout: t("logout"),
   };
+  const {
+    delivery,
+    seller,
+    isDeliveryModalOpen,
+
+    isSellerModalOpen,
+    isSellerAccountApplicationModalOpen,
+    auction,
+    isUpcomingAuctionModalOpen,
+    isOngoingAuctionModalOpen,
+    setSeller,
+  } = useAdminStore();
   return (
     <>
       <nav className="bg-gray-200 border-b border-gray-200 fixed z-30 w-full">
@@ -70,6 +89,15 @@ export default function AdminNavbar() {
           ></div>
         </div>
       </div>
+      {delivery && isDeliveryModalOpen && <ReportedDeliveryModal />}
+      {seller && isSellerModalOpen && <SellerDataModal />}
+      {seller && isSellerAccountApplicationModalOpen && (
+        <SellerAccountApplicationModal />
+      )}
+      {isUpcomingAuctionModalOpen && auction && seller && (
+        <AdminAuctionListingModal />
+      )}
+      {isOngoingAuctionModalOpen && auction && <AdminBiddingRoomModal />}
     </>
   );
 }

@@ -7,7 +7,9 @@ export async function POST(request: NextRequest) {
   try {
     await connect();
     const { sellerId } = await request.json();
+
     const seller = await sellerModel.findById(sellerId);
+
     return NextResponse.json(seller);
   } catch (err) {
     return serverErrorHandler(err);

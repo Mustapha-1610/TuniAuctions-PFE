@@ -5,28 +5,24 @@ import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useState } from "react";
+import { useAdminStore } from "@/helpers/store/admin/adminStore";
 
-interface Props {
-  isSellerAccountApplicationModalOpen: boolean;
-  setSellerAccountApplicationModalState: (value: boolean) => void;
-  sellerData: ISeller | undefined;
-}
-
-export default function SellerAccountApplicationModal({
-  isSellerAccountApplicationModalOpen,
-  setSellerAccountApplicationModalState,
-  sellerData,
-}: Props) {
+export default function SellerAccountApplicationModal() {
+  const {
+    seller,
+    isSellerAccountApplicationModalOpen,
+    setSellerAccountApplicationModalState,
+  } = useAdminStore();
   const locale = useLocale();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   async function handleSellerResponse(response: boolean) {
-    if (sellerData) {
+    if (seller) {
       setLoading(true);
       const res = await fetch("/api/admin/handleSellerApproval", {
         method: "POST",
         body: JSON.stringify({
-          sellerId: sellerData._id,
+          sellerId: seller._id,
           approve: response,
         }),
       });
@@ -76,23 +72,22 @@ export default function SellerAccountApplicationModal({
         indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
         spinning={loading}
       >
-        {sellerData && (
+        {seller && (
           <div className="flex justify-between">
             {/* Seller General Information */}
             <div className="flex flex-col  w-1/2 p-4 border-r">
               <h2 className="text-lg font-bold ">Seller Information's :</h2>
               <p className="mt-4 mb-4 text-lg">
-                <span className="font-bold mt-4 mb-4">Name:</span>{" "}
-                {sellerData.name}
+                <span className="font-bold mt-4 mb-4">Name:</span> {seller.name}
               </p>
               <p className="mt-4 mb-4 text-lg">
                 <span className="font-bold">Description:</span>{" "}
-                {sellerData.description}
+                {seller.description}
               </p>
               <p className="mt-4 mb-4 text-lg">
                 <span className="font-bold">Location:</span>{" "}
-                {sellerData.location.city}, {sellerData.location.municipality},{" "}
-                {sellerData.location.street}
+                {seller.location.city}, {seller.location.municipality},{" "}
+                {seller.location.street}
               </p>
             </div>
 
@@ -100,7 +95,7 @@ export default function SellerAccountApplicationModal({
             <div className="w-1/2 p-4">
               <h2 className="text-lg font-bold mb-4">Registration License</h2>
               <Image
-                src={sellerData.registrationLicense}
+                src={seller.registrationLicense}
                 alt="Registration License"
                 className="w-full h-auto"
               />

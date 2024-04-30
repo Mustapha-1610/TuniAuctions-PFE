@@ -6,62 +6,42 @@ import { ISeller } from "@/models/usersModels/types/sellerTypes";
 import { Modal } from "antd";
 import { useEffect, useState } from "react";
 import AdminAuctionListingProductInformationSection from "./components/auctionListingModalComponents.tsx/AdminPromotionalSection";
+import { useAdminStore } from "@/helpers/store/admin/adminStore";
 
-interface Props {
-  auctionListing: AuctionListingType;
-  isAuctionListingModalOpen: boolean;
-  setIsAuctionListingModalState: (value: boolean) => void;
-  setAuctionListing: (value: AuctionListingType | undefined) => void;
-}
-export default function AdminAuctionListingModal({
-  auctionListing,
-  isAuctionListingModalOpen,
-  setIsAuctionListingModalState,
-  setAuctionListing,
-}: Props) {
-  const [sellerData, setSellerData] = useState<ISeller>();
-  async function fetchSellerData() {
-    const res = await fetch("/api/admin/fetchSellerData", {
-      method: "POST",
-      body: JSON.stringify({
-        sellerId: auctionListing.sellerId,
-      }),
-      cache: "default",
-    });
-    const resData: ISeller = await res.json();
-    setSellerData(resData);
-  }
-  useEffect(() => {
-    if (auctionListing) {
-      fetchSellerData();
-    }
-  }, [auctionListing]);
+export default function AdminAuctionListingModal() {
+  const {
+    auction,
+    isUpcomingAuctionModalOpen,
+    setUpcomingAucitonModalState,
+    setAuction,
+    seller,
+  } = useAdminStore();
   return (
     <>
       <Modal
         title=""
         centered
-        open={isAuctionListingModalOpen}
+        open={isUpcomingAuctionModalOpen}
         width={1650}
         footer={null}
-        onCancel={() => (
-          setIsAuctionListingModalState(false), setAuctionListing(undefined)
-        )}
+        onCancel={() => (setUpcomingAucitonModalState(false), setAuction(null))}
       >
-        <div className="flex flex-col items-center px-20 mt-12 pt-7 pb-16 bg-white border border-black border-solid max-md:px-5">
-          <div className="px-14 py-5 w-full bg-white border border-white border-solid max-w-[1540px] max-md:px-5 max-md:max-w-full">
-            <AdminAuctionListingProductInformationSection
-              auctionListing={auctionListing}
-            />
+        {auction && (
+          <div className="flex flex-col items-center px-20  pt-7 pb-16 bg-white  border-solid max-md:px-5">
+            <div className="px-14 py-5 w-full bg-white border border-white border-solid max-w-[1540px] max-md:px-5 max-md:max-w-full">
+              <AdminAuctionListingProductInformationSection
+                auctionListing={auction}
+              />
+            </div>
+            <PromotionalVideoAndButItNowSection auctionListing={auction} />
+            {seller && (
+              <SellerPromotionSection
+                auctionListing={auction}
+                sellerData={seller}
+              />
+            )}
           </div>
-          <PromotionalVideoAndButItNowSection auctionListing={auctionListing} />
-          {sellerData && (
-            <SellerPromotionSection
-              auctionListing={auctionListing}
-              sellerData={sellerData}
-            />
-          )}
-        </div>
+        )}
       </Modal>
     </>
   );

@@ -14,6 +14,7 @@ export default function SellerDataModal() {
       width={1240}
       onCancel={() => setSellerModalState(false)}
       footer={null}
+      className="mt-2"
     >
       {seller && (
         <div className="flex flex-col lg:flex-row justify-center gap-8">
@@ -124,7 +125,7 @@ export default function SellerDataModal() {
       {/* Transactions Table */}
       {seller && (
         <Table
-          dataSource={seller.transactions.reverse()}
+          dataSource={seller.transactions}
           columns={sellerTransactionTableColumns}
           scroll={{ x: 800 }}
           pagination={{ position: ["bottomCenter"], pageSize: 4 }}
