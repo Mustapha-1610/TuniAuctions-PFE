@@ -6,10 +6,12 @@ import moment from "moment";
 import { pendingDeliveriesAdminTableColmumnTable } from "./components/pendingDeliveriesTable";
 import { useAdminStore } from "@/helpers/store/admin/adminStore";
 import ReportedDeliveryModal from "../../modals/deliveryModal";
+import SellerDataModal from "../../modals/sellerModal";
 interface Props {
   pendingDeliveries: DeliveryType[] | null;
 }
 export default function PendingDeliveries({ pendingDeliveries }: Props) {
+  const { seller, isSellerModalOpen } = useAdminStore();
   const { delivery, setDeliveryModalState, isDeliveryModalOpen, setDelivery } =
     useAdminStore();
   const pendingDeliveriesAdminTableColmumnTable: TableColumnsType<DeliveryType> =
@@ -97,6 +99,7 @@ export default function PendingDeliveries({ pendingDeliveries }: Props) {
         </div>
       </div>
       {delivery && isDeliveryModalOpen && <ReportedDeliveryModal />}
+      {seller && isSellerModalOpen && <SellerDataModal />}
     </>
   );
 }

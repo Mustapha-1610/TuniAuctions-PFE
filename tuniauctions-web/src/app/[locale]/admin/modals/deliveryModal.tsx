@@ -4,12 +4,33 @@ import { Button, Modal, Image } from "antd";
 import { DeliveryType } from "@/models/types/delivery";
 import moment from "moment";
 import { useState } from "react";
-
+import { ObjectId } from "mongoose";
+import SellerDataModal from "./sellerModal";
 export default function ReportedDeliveryModal() {
-  const { delivery, isDeliveryModalOpen, setDeliveryModalState } =
-    useAdminStore();
+  const {
+    delivery,
+    isDeliveryModalOpen,
+    setDeliveryModalState,
+    setSeller,
+    setSellerModalState,
+    isSellerModalOpen,
+    seller,
+  } = useAdminStore();
   const [selectedImage, setSelectedImage] = useState("");
-
+  async function fetchSellerData(sellerId: string) {
+    const res = await fetch("/api/admin/fetchSellerData", {
+      method: "POST",
+      body: JSON.stringify({
+        sellerId,
+      }),
+    });
+    const resData = await res.json();
+    if (resData) {
+      setSeller(resData);
+      setDeliveryModalState(false);
+      setSellerModalState(true);
+    }
+  }
   return (
     <>
       <Modal
@@ -28,7 +49,12 @@ export default function ReportedDeliveryModal() {
                 <h2 className="text-lg font-semibold">Seller Information</h2>
                 <p>Seller ID: {String(delivery.sellerId)}</p>
                 <p>Seller Name: {delivery.sellerName}</p>
-                <p className="cursor-pointer text-blue-500" onClick={() => {}}>
+                <p
+                  className="cursor-pointer text-blue-500"
+                  onClick={() => {
+                    fetchSellerData(String(delivery.sellerId));
+                  }}
+                >
                   View Seller
                 </p>
               </div>
