@@ -35,7 +35,7 @@ export async function GET() {
 
     // Retrieve latest 4 pending deliveries
     const pendingDeliveries: DeliveryType[] | null = await deliveryModel
-      .find({ status: "Pending delivery shipment" })
+      .find({ status: "Reported" })
       .sort({ createdAt: -1 }) // Sorting in descending order based on createdAt
       .limit(4);
 

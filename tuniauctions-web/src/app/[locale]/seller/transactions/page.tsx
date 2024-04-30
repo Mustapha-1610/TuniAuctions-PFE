@@ -4,71 +4,58 @@ import { Table } from "antd";
 import type { TableColumnsType } from "antd";
 import { GiReceiveMoney, GiPayMoney } from "react-icons/gi";
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
-interface DataType {
-  key: React.Key;
-  name: string;
-  age: number;
-  address: string;
-  By: string;
-  To: string;
-}
-const columns: TableColumnsType<DataType> = [
-  {
-    title: "Transaction Nature",
-    width: 50,
-    dataIndex: "name",
-    render: (text: any, record: any) => {
-      const backgroundColor =
-        record.name === "Recieved" ? "#68D391" : "#FC8181";
-      const color = record.name === "Recieved" ? "#5AC69F" : "#FF0000";
-      return {
-        props: {
-          style: {
-            color,
-            fontWeight: "bold",
-            fontSize: "15px", // Set the font size
-          },
-        },
-        children: <div>{text}</div>, // Render text content
-      };
-    },
-  },
-  {
-    title: "Transaction Amount",
-    width: 30,
-    dataIndex: "age",
-  },
-  { title: "Transaction Date", width: 80, dataIndex: "address" },
+import {
+  ISeller,
+  sellerTransactions,
+} from "@/models/usersModels/types/sellerTypes";
+import moment from "moment";
 
-  {
-    title: "Transactioned By",
-    width: 90,
-    dataIndex: "By",
-  },
-  {
-    title: "Transactioned To",
-    width: 90,
-    dataIndex: "To",
-  },
-];
-const data: DataType[] = [
-  {
-    key: "1",
-    name: "Recieved",
-    age: 100,
-    address: "10/09/2024",
-    By: "Mustapha Talbi",
-    To: "Tuni-Auctions",
-  },
-  {
-    key: "2",
-    name: "Payed",
-    age: 32,
-    address: "10/09/2024",
-    By: "Mustapha Talbi",
-    To: "Tuni-Auctions",
-  },
-];
+export const sellerTransactionTableColumns: TableColumnsType<sellerTransactions> =
+  [
+    {
+      title: "Transaction Nature",
+      width: 50,
+      dataIndex: "name",
+      render: (text: any, record: any) => {
+        const color = record.name === "Recieved" ? "#5AC69F" : "#FF0000";
+        return {
+          props: {
+            style: {
+              color,
+              fontWeight: "bold",
+              fontSize: "15px", // Set the font size
+            },
+          },
+          children: <div>{text}</div>, // Render text content
+        };
+      },
+    },
+    {
+      title: "Transaction Amount",
+      width: 60,
+      render: (_, record) => {
+        return record.amount + "$";
+      },
+    },
+    {
+      title: "Transaction Date",
+      width: 80,
+      render: (_, record) => {
+        return moment(record.date).format("ddd, MMM D, YYYY [at] h:mm A");
+      },
+    },
+
+    {
+      title: "To",
+      width: 90,
+      dataIndex: "reciever",
+    },
+    {
+      title: "Context",
+      width: 100,
+      dataIndex: "context",
+    },
+  ];
 
 export default function TransactionsPage() {
   const { sellerLocaleStorageData } = useSellerProfileStore();
@@ -138,8 +125,8 @@ export default function TransactionsPage() {
               </div>
             </div>
             <Table
-              columns={columns}
-              dataSource={data}
+              dataSource={sellerLocaleStorageData.transactions}
+              columns={sellerTransactionTableColumns}
               scroll={{ x: 800 }}
               pagination={{
                 position: ["bottomCenter"],

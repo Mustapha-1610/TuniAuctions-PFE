@@ -46,7 +46,7 @@ interface Notification {
   context: NotificationContext;
 }
 
-interface Transaction {
+export interface sellerTransactions {
   amount: number;
   date: Date;
   reciever: string;
@@ -74,7 +74,7 @@ export interface ISeller extends Document {
   refreshToken: string;
   passResetCode: PassResetCode;
   notifications: Notification[];
-  transactions: Transaction[];
+  transactions: sellerTransactions[];
   socketId: string;
   auctionEarnings: AuctionEarnings;
   reviews: {
@@ -101,7 +101,7 @@ export interface ISellerFrontData {
   email: string;
   refreshToken: string;
   notifications: Notification[];
-  transactions: Transaction[];
+  transactions: sellerTransactions[];
   auctionEarnings: AuctionEarnings;
   reviews: {
     total: number;
