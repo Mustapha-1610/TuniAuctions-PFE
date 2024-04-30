@@ -44,7 +44,9 @@ export default async function Dashboard() {
               </div>
               <div className="grid grid-cols-1 2xl:grid-cols-2 xl:gap-4 my-4">
                 <PendingSellers pendingSellers={resData.pendingSellers} />
-                <PackagePurchases platformStats={resData.platformStats} />
+                {resData.platformStats && (
+                  <PackagePurchases platformStats={resData.platformStats} />
+                )}
               </div>
               <div className="grid grid-cols-1 2xl:grid-cols-2 xl:gap-4 my-4">
                 <UpcomingAuctions upcomingAuctions={resData.upcomingAuctions} />

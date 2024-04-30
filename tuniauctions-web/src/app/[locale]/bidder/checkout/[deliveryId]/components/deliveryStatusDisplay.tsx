@@ -2,7 +2,8 @@
 import { DeliveryType } from "@/models/types/delivery";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { Rate } from "antd";
+import { Button, Rate } from "antd";
+import ReportModal from "./reportModal";
 
 interface Props {
   deliveryData: DeliveryType | undefined;
@@ -23,17 +24,17 @@ export default function DeliveryStatusDisplay({
         }),
       });
       const resData = await res.json();
-      console.log(resData);
       if (resData.success) {
         setDeliveryData(resData.delivery);
       }
     }
   }
+  const [isReportModalOpen, setReportModalState] = useState(false);
   return (
     <>
       {deliveryData && (
         <>
-          <div className=" text-5xl leading-[57.6px] text-slate-700 max-md:mt-10 max-md:max-w-full max-md:text-4xl">
+          <div className="text-5xl leading-[57.6px] text-slate-700 max-md:mt-10 max-md:max-w-full max-md:text-4xl">
             Delivery Page
           </div>
           <div className="flex flex-col justify-center px-16 py-10 mt-12 rounded-2xl border border-gray-200 border-solid shadow-sm max-md:px-5 max-md:mt-10 max-md:max-w-full">
@@ -101,6 +102,20 @@ export default function DeliveryStatusDisplay({
                           )}
                         </>
                       )}
+                      {!deliveryData.report.subject &&
+                        moment(deliveryData.deliveryDate).isAfter(
+                          moment().subtract(7, "days")
+                        ) && (
+                          <div className="flex mt-4 ">
+                            <Button
+                              type="primary"
+                              danger
+                              onClick={() => setReportModalState(true)}
+                            >
+                              Submit Report
+                            </Button>
+                          </div>
+                        )}
                     </div>
                   </div>
                 </div>
@@ -108,6 +123,14 @@ export default function DeliveryStatusDisplay({
             </div>
           </div>
         </>
+      )}
+      {isReportModalOpen && (
+        <ReportModal
+          deliveryId={deliveryData?._id}
+          isReportModalOpen={isReportModalOpen}
+          setReportModalState={setReportModalState}
+          setDeliveryData={setDeliveryData}
+        />
       )}
     </>
   );

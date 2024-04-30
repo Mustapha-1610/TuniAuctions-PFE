@@ -64,8 +64,11 @@ export default function PackageCountSection({ transactions }: Props) {
 
   return (
     <>
-      <div className="bg-white shadow rounded-lg 2xl:col-span-2 flex border border-gray-400">
-        <BarChart width={1000} height={500} data={data} className="mt-4">
+      <div className="bg-white shadow rounded-lg 2xl:col-span-2 flex-col border border-gray-400">
+        <h3 className="text-xl font-bold leading-none text-gray-900 text-center w-full mt-2">
+          Monthly Earnings
+        </h3>
+        <BarChart width={1000} height={500} data={data} className="mt-2">
           <XAxis dataKey="month" />
           <YAxis />
           <Tooltip />

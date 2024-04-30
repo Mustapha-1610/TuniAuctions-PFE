@@ -43,7 +43,8 @@ export async function GET() {
     const upcomingAuctions: AuctionListingType[] | null =
       await auctionListingModel
         .find({ status: { $in: ["Pending Start", "Ongoing"] } })
-        .sort({ startTime: -1 });
+        .sort({ startTime: -1 })
+        .limit(4);
     const platformStats: platformModelType | null = await platformModel.findOne(
       {}
     );
