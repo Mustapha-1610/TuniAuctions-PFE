@@ -1,5 +1,4 @@
 import { AdminDashboardResponseType } from "@/app/api/admin/fetchHomePageSection/route";
-import BottomSection from "./homePageComponents/bottomSection";
 import LatestTransactionsSection from "./homePageComponents/latestTransactions";
 import PackageCountSection from "./homePageComponents/packageCountSection";
 import TopStatisticsSection from "./homePageComponents/topSection";

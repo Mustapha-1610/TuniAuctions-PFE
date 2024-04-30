@@ -43,8 +43,7 @@ export async function GET() {
     const upcomingAuctions: AuctionListingType[] | null =
       await auctionListingModel
         .find({ status: { $in: ["Pending Start", "Ongoing"] } })
-        .sort({ startTime: 1 }) // Assuming there's a startTime field for sorting
-        .limit(4);
+        .sort({ startTime: -1 });
     const platformStats: platformModelType | null = await platformModel.findOne(
       {}
     );
@@ -55,7 +54,7 @@ export async function GET() {
       platformStats,
       activeFemaleBidders: activeFemaleBidders.length,
       activeMaleBidders: activeMaleBidders.length,
-      upcomingAuctions,
+      upcomingAuctions: upcomingAuctions.reverse(),
     });
   } catch (err) {
     return serverErrorHandler(err);

@@ -5,12 +5,14 @@ import { TableColumnsType } from "antd";
 import React, { useState } from "react";
 import moment from "moment";
 import AdminAuctionListingModal from "../../modals/auctionListingModal";
+import AdminBiddingRoomModal from "../../modals/biddingRoomModal";
 interface Props {
   upcomingAuctions: AuctionListingType[] | null;
 }
 export default function UpcomingAuctions({ upcomingAuctions }: Props) {
   const [isUpcomingAuctionModalOpen, setIsUpcomingAuctionModalState] =
     useState<boolean>(false);
+  const [isAuctionRoomModalOpen, setAuctionRoomModalState] = useState(false);
   const [auctionListing, setAuctionListing] = useState<AuctionListingType>();
   const upcomingAuctionAdminTableColumnType: TableColumnsType<AuctionListingType> =
     [
@@ -77,7 +79,14 @@ export default function UpcomingAuctions({ upcomingAuctions }: Props) {
                   View Listing
                 </p>
               ) : (
-                <p>View Live Room</p>
+                <p
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setAuctionListing(record), setAuctionRoomModalState(true);
+                  }}
+                >
+                  View Live Room
+                </p>
               )}
             </>
           );
@@ -117,6 +126,14 @@ export default function UpcomingAuctions({ upcomingAuctions }: Props) {
           auctionListing={auctionListing}
           isAuctionListingModalOpen={isUpcomingAuctionModalOpen}
           setIsAuctionListingModalState={setIsUpcomingAuctionModalState}
+          setAuctionListing={setAuctionListing}
+        />
+      )}
+      {isAuctionRoomModalOpen && auctionListing && (
+        <AdminBiddingRoomModal
+          auctionListing={auctionListing}
+          isAuctionRoomOpen={isAuctionRoomModalOpen}
+          setAuctionRoomState={setAuctionRoomModalState}
           setAuctionListing={setAuctionListing}
         />
       )}

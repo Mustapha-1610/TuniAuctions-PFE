@@ -73,6 +73,27 @@ const auctionRoomSocketLogic = (auctionRoomNameSpace: any) => {
         }
       }, 10000);
     });
+    socket.on("adminJoined", (auctionId: ObjectId) => {
+      socket.join(auctionId);
+      let currentRoom = roomTimers.get(auctionId);
+      const frontData = {
+        participatingBidders: currentRoom.participatingBidder.length,
+        roomTimer: currentRoom.roomTimer,
+        bid: currentRoom.heighestBidder.bid
+          ? currentRoom.heighestBidder.bid
+          : 0,
+        bidderName: currentRoom.heighestBidder.bidderName
+          ? currentRoom.heighestBidder.bidderName
+          : "",
+        bidderPicture: currentRoom.heighestBidder.bidderPicture
+          ? currentRoom.heighestBidder.bidderPicture
+          : "",
+        bidderId: currentRoom.heighestBidder.bidderId
+          ? currentRoom.heighestBidder.bidderId
+          : "",
+      };
+      socket.emit("userJoined", frontData);
+    });
     socket.on("bidderJoinedRoom", (data: BidderJoinedRoomDataType) => {
       console.log("bidderJoinedRoom " + data);
       socket.join(data.auctionId);
@@ -103,7 +124,7 @@ const auctionRoomSocketLogic = (auctionRoomNameSpace: any) => {
             ? currentRoom.heighestBidder.bidderId
             : "",
         };
-        auctionRoomNameSpace.to(data.auctionId).emit("userJoined", frontData);
+        socket.emit("userJoined", frontData);
       }
     });
     socket.on("submitNewBid", (data: submitNewBid) => {

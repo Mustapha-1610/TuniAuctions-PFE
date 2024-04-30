@@ -8,7 +8,7 @@ import { IBidderFrontData } from "@/models/usersModels/types/bidderTypes";
 import moment from "moment";
 import { ObjectId } from "mongoose";
 
-interface auctionRoomData {
+export interface auctionRoomData {
   remainingTime: number;
   onlineBidders: number;
   heighestBid: number;
@@ -21,7 +21,7 @@ interface Props {
   bidderLocalStorageData: IBidderFrontData;
   setAuctionListing: (value: AuctionListingType) => void;
 }
-interface newHighestBidType {
+export interface newHighestBidType {
   bidderName: string;
   bid: number;
   submitTime: Date;
