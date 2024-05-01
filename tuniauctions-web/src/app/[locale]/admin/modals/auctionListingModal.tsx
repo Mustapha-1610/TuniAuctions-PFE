@@ -7,6 +7,7 @@ import { Modal } from "antd";
 import { useEffect, useState } from "react";
 import AdminAuctionListingProductInformationSection from "./components/auctionListingModalComponents.tsx/AdminPromotionalSection";
 import { useAdminStore } from "@/helpers/store/admin/adminStore";
+import FinishedAuctionDisplay from "../../bidder/auctionDetails/[id]/components/finishedAuction";
 
 export default function AdminAuctionListingModal() {
   const {
@@ -29,9 +30,13 @@ export default function AdminAuctionListingModal() {
         {auction && (
           <div className="flex flex-col items-center px-20  pt-7 pb-16 bg-white  border-solid max-md:px-5">
             <div className="px-14 py-5 w-full bg-white border border-white border-solid max-w-[1540px] max-md:px-5 max-md:max-w-full">
-              <AdminAuctionListingProductInformationSection
-                auctionListing={auction}
-              />
+              {auction.status === "Finished" ? (
+                <FinishedAuctionDisplay auctionListing={auction} />
+              ) : (
+                <AdminAuctionListingProductInformationSection
+                  auctionListing={auction}
+                />
+              )}
             </div>
             <PromotionalVideoAndButItNowSection auctionListing={auction} />
             {seller && (

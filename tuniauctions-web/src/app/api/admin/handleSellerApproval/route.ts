@@ -11,8 +11,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
   try {
     await connect();
-    const { sellerId, approve } = await request.json();
-    console.log(approve);
+    const { sellerId, approve, refresh } = await request.json();
     if (approve) {
       const seller: ISeller | null = await sellerModel.findByIdAndUpdate(
         sellerId,
@@ -28,6 +27,10 @@ export async function POST(request: NextRequest) {
         sellerId
       );
       await sendSellerDeclineMail(seller!.name);
+    }
+    if (refresh) {
+      const sellers = await sellerModel.find({ verified: false });
+      return NextResponse.json({ success: true, sellers });
     }
     return NextResponse.json({ success: true });
   } catch (err) {

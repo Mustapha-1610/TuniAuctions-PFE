@@ -10,6 +10,7 @@ import SellerDataModal from "../modals/sellerModal";
 import SellerAccountApplicationModal from "../modals/sellerApplicationModal";
 import AdminAuctionListingModal from "../modals/auctionListingModal";
 import AdminBiddingRoomModal from "../modals/biddingRoomModal";
+import BidderInformationsModal from "../modals/bidderModal";
 export interface Props {
   navigationTranslation: {
     Dashboard: string;
@@ -56,7 +57,8 @@ export default function AdminNavbar() {
     auction,
     isUpcomingAuctionModalOpen,
     isOngoingAuctionModalOpen,
-    setSeller,
+    bidder,
+    isBidderInformationModalOpen,
   } = useAdminStore();
   return (
     <>
@@ -98,6 +100,7 @@ export default function AdminNavbar() {
         <AdminAuctionListingModal />
       )}
       {isOngoingAuctionModalOpen && auction && <AdminBiddingRoomModal />}
+      {isBidderInformationModalOpen && bidder && <BidderInformationsModal />}
     </>
   );
 }

@@ -6,8 +6,10 @@ import { useRouter } from "next/navigation";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useAdminStore } from "@/helpers/store/admin/adminStore";
-
-export default function SellerAccountApplicationModal() {
+interface Props {
+  setSellers?: (value: ISeller[] | undefined) => void;
+}
+export default function SellerAccountApplicationModal({ setSellers }: Props) {
   const {
     seller,
     isSellerAccountApplicationModalOpen,
@@ -24,16 +26,18 @@ export default function SellerAccountApplicationModal() {
         body: JSON.stringify({
           sellerId: seller._id,
           approve: response,
+          refresh: setSellers ? true : false,
         }),
       });
       const resData = await res.json();
       if (resData.success) {
-        // Get the router object
-        router.push(`/${locale}/admin/sellers/active`);
-        setSellerAccountApplicationModalState(false);
+        if (setSellers && resData.sellers) {
+          setSellers(resData.sellers);
+        }
       } else {
         setSellerAccountApplicationModalState(false);
       }
+      setSellerAccountApplicationModalState(false);
       setLoading(false);
     }
   }

@@ -5,7 +5,6 @@ import moment from "moment";
 import { useState } from "react";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-
 export default function ReportedDeliveryModal() {
   const {
     delivery,
@@ -13,6 +12,8 @@ export default function ReportedDeliveryModal() {
     setDeliveryModalState,
     setSeller,
     setSellerModalState,
+    setBidder,
+    setBidderInformationsModalState,
   } = useAdminStore();
   const [selectedImage, setSelectedImage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -31,6 +32,21 @@ export default function ReportedDeliveryModal() {
     if (resData) {
       setSeller(resData);
       setSellerModalState(true);
+    }
+  }
+  async function fetchBidderData(bidderId: string) {
+    setLoading(true);
+    const res = await fetch("/api/admin/fetchBidderData", {
+      method: "POST",
+      body: JSON.stringify({
+        bidderId,
+      }),
+    });
+    const resData = await res.json();
+    setLoading(false);
+    if (resData) {
+      setBidder(resData);
+      setBidderInformationsModalState(true);
     }
   }
   return (
@@ -110,19 +126,28 @@ export default function ReportedDeliveryModal() {
                   </p>
                   <p
                     className="cursor-pointer  text-blue-500"
-                    onClick={() => {}}
+                    onClick={() => {
+                      fetchBidderData(String(delivery.bidderId));
+                    }}
                   >
                     View Bidder
                   </p>
                 </div>
                 {/* Report Information */}
                 <div>
-                  <h3 className="text-lg font-semibold">Attachments</h3>
+                  <h2 className="text-lg font-semibold">
+                    Report Informations:{" "}
+                  </h2>
+                  <p>Report Subject: {delivery.report.subject}</p>
+                  <p style={{ wordWrap: "break-word" }}>
+                    Report Description: {delivery.report.description}
+                  </p>
+                  <h6 className="text-sm font-semibold">Attachments: </h6>
                   {delivery.report.attachments.length > 0 && (
                     <div className="relative flex flex-col items-center">
                       <Image
                         src={selectedImage || delivery.report.attachments[0]}
-                        height={500}
+                        height={450}
                         width="full"
                         className="self-center mt-1"
                       />

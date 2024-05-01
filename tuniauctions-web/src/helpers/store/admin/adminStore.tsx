@@ -25,6 +25,8 @@ interface adminStoreType {
   setAuction: (value: AuctionListingType | null) => void;
   isSellerAccountApplicationModalOpen: boolean;
   setSellerAccountApplicationModalState: (value: boolean) => void;
+  isBidderInformationModalOpen: boolean;
+  setBidderInformationsModalState: (value: boolean) => void;
 }
 export const useAdminStore = create<adminStoreType>((set) => ({
   isDeliveryModalOpen: false,
@@ -63,5 +65,10 @@ export const useAdminStore = create<adminStoreType>((set) => ({
   setSellerAccountApplicationModalState: (value) =>
     set(() => ({
       isSellerAccountApplicationModalOpen: value,
+    })),
+  isBidderInformationModalOpen: false,
+  setBidderInformationsModalState: (value) =>
+    set(() => ({
+      isBidderInformationModalOpen: value,
     })),
 }));
