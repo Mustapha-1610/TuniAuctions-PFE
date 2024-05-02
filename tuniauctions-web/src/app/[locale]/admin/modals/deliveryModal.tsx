@@ -14,6 +14,8 @@ export default function ReportedDeliveryModal() {
     setSellerModalState,
     setBidder,
     setBidderInformationsModalState,
+    setAuction,
+    setUpcomingAucitonModalState,
   } = useAdminStore();
   const [selectedImage, setSelectedImage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -47,6 +49,22 @@ export default function ReportedDeliveryModal() {
     if (resData) {
       setBidder(resData);
       setBidderInformationsModalState(true);
+    }
+  }
+  async function fetchAuctionListing(auctionId: string) {
+    setLoading(true);
+    const res = await fetch("/api/admin/fetchAuctionListing", {
+      method: "POST",
+      body: JSON.stringify({
+        auctionId,
+      }),
+    });
+    const resData = await res.json();
+    setLoading(false);
+    if (resData.success) {
+      setAuction(resData.auction);
+      setSeller(resData.seller);
+      setUpcomingAucitonModalState(true);
     }
   }
   return (
@@ -91,7 +109,11 @@ export default function ReportedDeliveryModal() {
                   </p>
                   <p
                     className="cursor-pointer text-blue-500"
-                    onClick={() => {}}
+                    onClick={() => {
+                      fetchAuctionListing(
+                        String(delivery.productInformations.productId)
+                      );
+                    }}
                   >
                     View Auction Listing
                   </p>

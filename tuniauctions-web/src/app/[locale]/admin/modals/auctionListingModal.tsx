@@ -23,6 +23,7 @@ export default function AdminAuctionListingModal() {
         title=""
         centered
         open={isUpcomingAuctionModalOpen}
+        className="mt-2"
         width={1650}
         footer={null}
         onCancel={() => (setUpcomingAucitonModalState(false), setAuction(null))}

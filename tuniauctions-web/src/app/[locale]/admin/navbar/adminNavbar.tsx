@@ -59,6 +59,7 @@ export default function AdminNavbar() {
     isOngoingAuctionModalOpen,
     bidder,
     isBidderInformationModalOpen,
+    isFinishedAuctionModalOpen,
   } = useAdminStore();
   return (
     <>
