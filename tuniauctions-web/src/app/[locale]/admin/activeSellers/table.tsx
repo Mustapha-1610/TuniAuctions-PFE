@@ -1,7 +1,7 @@
 "use client";
 import { useAdminStore } from "@/helpers/store/admin/adminStore";
 import { IBidder } from "@/models/usersModels/types/bidderTypes";
-import { Table, TableColumnsType } from "antd";
+import { Table, TableColumnsType, Tag } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { HiMiniUserGroup } from "react-icons/hi2";
@@ -9,12 +9,13 @@ import BidderInformationsModal from "../modals/bidderModal";
 import { ISeller } from "@/models/usersModels/types/sellerTypes";
 import SellerAccountApplicationModal from "../modals/sellerApplicationModal";
 import { MdOutlinePendingActions } from "react-icons/md";
+import SellerDataModal from "../modals/sellerModal";
+import { FaUserCheck } from "react-icons/fa";
 
 interface Props {
   sellers: ISeller[];
 }
-export default function PendingSellersTable({ sellers }: Props) {
-  const { setBidder, setBidderInformationsModalState } = useAdminStore();
+export default function ActiveSellersTable({ sellers }: Props) {
   const [sellersData, setSellersData] = useState<ISeller[] | undefined>(
     sellers
   );
@@ -33,6 +34,7 @@ export default function PendingSellersTable({ sellers }: Props) {
     isOngoingAuctionModalOpen,
     bidder,
     isBidderInformationModalOpen,
+    setSellerModalState,
   } = useAdminStore();
   const pendingSellersAdminTableColumnsType: TableColumnsType<ISeller> = [
     {
@@ -78,17 +80,61 @@ export default function PendingSellersTable({ sellers }: Props) {
       ],
     },
     {
+      title: "Earnings",
+      dataIndex: "earnnings",
+      key: "earnnings",
+      width: 150,
+      align: "center",
+    },
+    {
+      title: "Platform Fees",
+      dataIndex: "platformFees",
+      key: "platformFees",
+      width: 150,
+      align: "center",
+    },
+    {
+      title: "Status",
+      width: 120,
+      align: "center",
+      children: [
+        {
+          title: "Verified",
+          render: (_, record) => {
+            return (
+              <Tag color={record.verified ? "green" : "red"}>
+                <span className="font-bold">{String(record.verified)}</span>
+              </Tag>
+            );
+          },
+          align: "center",
+        },
+        {
+          title: "Disabled",
+          render: (_, record) => {
+            return (
+              <Tag color={record.disabled ? "red" : "green"}>
+                <span className="font-bold">{String(record.disabled)}</span>
+              </Tag>
+            );
+          },
+          align: "center",
+        },
+      ],
+    },
+    {
       title: "Action",
       align: "center",
       render: (_, record) => {
         return (
           <p
+            className="text-blue-500 cursor-pointer"
             onClick={() => {
               setSeller(record);
-              setSellerAccountApplicationModalState(true);
+              setSellerModalState(true);
             }}
           >
-            View Application
+            View
           </p>
         );
       },
@@ -104,9 +150,9 @@ export default function PendingSellersTable({ sellers }: Props) {
         >
           <div className="flex items-center justify-center mb-2">
             <h1 className="text-2xl font-bold mb-2 mr-2">
-              Sellers Pending Approval
+              Verified Sellers Table
             </h1>
-            <MdOutlinePendingActions size={30} />
+            <FaUserCheck size={30} />
           </div>
 
           {sellersData && (
@@ -126,8 +172,8 @@ export default function PendingSellersTable({ sellers }: Props) {
           )}
         </div>
       </div>
-      {isSellerAccountApplicationModalOpen && seller && (
-        <SellerAccountApplicationModal setSellers={setSellersData} />
+      {isSellerModalOpen && seller && (
+        <SellerDataModal setSellers={setSellersData} />
       )}
     </>
   );

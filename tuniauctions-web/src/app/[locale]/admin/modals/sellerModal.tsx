@@ -5,22 +5,28 @@ import { useAdminStore } from "@/helpers/store/admin/adminStore";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useState } from "react";
-export default function SellerDataModal() {
+interface Props {
+  setSellers?: (value: ISeller[] | undefined) => void;
+}
+export default function SellerDataModal({ setSellers }: Props) {
   const [loading, setLoading] = useState(false);
 
   const { seller, setSeller, isSellerModalOpen, setSellerModalState } =
     useAdminStore();
   async function updateSellerStatus() {
     setLoading(true);
-
     const res = await fetch("/api/admin/updateSellerStatus", {
       method: "PUT",
       body: JSON.stringify({
         sellerId: seller!._id,
+        refresh: setSellers ? true : false,
       }),
     });
     const resData = await res.json();
     if (resData.success) {
+      if (setSellers && resData.sellers) {
+        setSellers(resData.sellers);
+      }
       setSeller(resData.seller);
     }
     setLoading(false);

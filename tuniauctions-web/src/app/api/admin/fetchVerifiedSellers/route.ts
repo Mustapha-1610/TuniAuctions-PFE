@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     await connect();
-    const sellers = await sellerModel.find();
+    const sellers = await sellerModel.find({ verified: true });
     return NextResponse.json(sellers);
   } catch (err) {
     return serverErrorHandler(err);
