@@ -80,7 +80,7 @@ export default function SellerAccountApplicationModal({ setSellers }: Props) {
           <div className="flex justify-between">
             {/* Seller General Information */}
             <div className="flex flex-col  w-1/2 p-4 border-r">
-              <h2 className="text-lg font-bold ">Seller Information's :</h2>
+              <h2 className="text-lg font-bold ">Seller Informations :</h2>
               <p className="mt-4 mb-4 text-lg">
                 <span className="font-bold mt-4 mb-4">Name:</span> {seller.name}
               </p>

@@ -9,12 +9,13 @@ import AdminAuctionListingModal from "../modals/auctionListingModal";
 import { ISeller } from "@/models/usersModels/types/sellerTypes";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import AdminBiddingRoomModal from "../modals/biddingRoomModal";
 
 interface Props {
-  UpcomingAuctions: AuctionListingType[];
+  ongoingAuctions: AuctionListingType[];
 }
-export default function UpcomingAuctionsTable({ UpcomingAuctions }: Props) {
-  useEffect(() => {}, [UpcomingAuctions]);
+export default function OngoingAuctionsTable({ ongoingAuctions }: Props) {
+  useEffect(() => {}, [ongoingAuctions]);
   const {
     setAuction,
     setUpcomingAucitonModalState,
@@ -22,26 +23,15 @@ export default function UpcomingAuctionsTable({ UpcomingAuctions }: Props) {
     auction,
     setSeller,
     setSellerModalState,
+    isOngoingAuctionModalOpen,
+    setOngoingAuctionModalState,
   } = useAdminStore();
   const [loading, setLoading] = useState(false);
 
   async function handleAuctionListingModal(auction: AuctionListingType) {
     if (auction) {
-      setLoading(true);
-      const res = await fetch("/api/admin/fetchSellerData", {
-        method: "POST",
-        body: JSON.stringify({
-          sellerId: auction.sellerId,
-        }),
-        cache: "default",
-      });
-      const resData: ISeller = await res.json();
-      setLoading(false);
-      if (resData) {
-        setSeller(resData);
-        setAuction(auction);
-        setUpcomingAucitonModalState(true);
-      }
+      setAuction(auction);
+      setOngoingAuctionModalState(true);
     }
   }
   async function handleSellerModal(auction: AuctionListingType) {
@@ -165,7 +155,7 @@ export default function UpcomingAuctionsTable({ UpcomingAuctions }: Props) {
           },
         },
         {
-          title: "View Listing",
+          title: "Participate",
           align: "center",
 
           render: (value, record, index) => {
@@ -194,12 +184,12 @@ export default function UpcomingAuctionsTable({ UpcomingAuctions }: Props) {
         >
           <div className="flex items-center justify-center mb-2">
             <h1 className="text-2xl font-bold mb-2 mr-2">
-              Upcoming Auctions Table
+              Ongoing Auctions Table
             </h1>
             <MdOutlinePendingActions size={30} />
           </div>
 
-          {UpcomingAuctions && (
+          {ongoingAuctions && (
             <>
               <Spin
                 indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
@@ -207,7 +197,7 @@ export default function UpcomingAuctionsTable({ UpcomingAuctions }: Props) {
               >
                 <Table
                   columns={UpcomingAuctionsColumnType}
-                  dataSource={UpcomingAuctions}
+                  dataSource={ongoingAuctions}
                   scroll={{ x: 800 }}
                   pagination={{
                     position: ["bottomCenter"],
@@ -221,7 +211,7 @@ export default function UpcomingAuctionsTable({ UpcomingAuctions }: Props) {
           )}
         </div>
       </div>
-      {isUpcomingAuctionModalOpen && auction && <AdminAuctionListingModal />}
+      {isOngoingAuctionModalOpen && auction && <AdminBiddingRoomModal />}
     </>
   );
 }

@@ -52,7 +52,7 @@ export default function PlatformTransactionsTable({ platformStats }: Props) {
     },
     {
       title: "Transaction Date",
-      width: 150,
+      width: 350,
       align: "center",
       render: (value, record, index) => {
         return moment(record.date).format("ddd, MMM D, YYYY [at] h:mm A");
@@ -61,6 +61,7 @@ export default function PlatformTransactionsTable({ platformStats }: Props) {
     {
       title: "Context",
       align: "center",
+      width: 290,
       dataIndex: "context",
     },
     {
@@ -87,6 +88,7 @@ export default function PlatformTransactionsTable({ platformStats }: Props) {
             return (
               <>
                 <p
+                  className="cursor-pointer text-blue-500"
                   onClick={() => {
                     fetchSellerData(String(record.sellerId));
                   }}

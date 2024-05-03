@@ -1,14 +1,8 @@
 "use client";
 import { useAdminStore } from "@/helpers/store/admin/adminStore";
-import { IBidder } from "@/models/usersModels/types/bidderTypes";
 import { Table, TableColumnsType, Tag } from "antd";
-import moment from "moment";
 import { useEffect, useState } from "react";
-import { HiMiniUserGroup } from "react-icons/hi2";
-import BidderInformationsModal from "../modals/bidderModal";
 import { ISeller } from "@/models/usersModels/types/sellerTypes";
-import SellerAccountApplicationModal from "../modals/sellerApplicationModal";
-import { MdOutlinePendingActions } from "react-icons/md";
 import SellerDataModal from "../modals/sellerModal";
 import { FaUserCheck } from "react-icons/fa";
 
@@ -22,18 +16,10 @@ export default function ActiveSellersTable({ sellers }: Props) {
 
   useEffect(() => {}, [sellers]);
   const {
-    delivery,
     seller,
-    isDeliveryModalOpen,
     setSeller,
-    setSellerAccountApplicationModalState,
     isSellerModalOpen,
-    isSellerAccountApplicationModalOpen,
-    auction,
-    isUpcomingAuctionModalOpen,
-    isOngoingAuctionModalOpen,
-    bidder,
-    isBidderInformationModalOpen,
+
     setSellerModalState,
   } = useAdminStore();
   const pendingSellersAdminTableColumnsType: TableColumnsType<ISeller> = [

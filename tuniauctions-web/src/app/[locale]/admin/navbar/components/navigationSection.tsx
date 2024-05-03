@@ -77,7 +77,7 @@ export default function AdminNavigationSection({
       <ul className="space-y-1 pb-2">
         <li>
           <Link
-            href={"/" + locale + "/seller"}
+            href={"/" + locale + "/admin"}
             className="text-base text-gray-900 font-nobrmal rounded-lg hover:bg-gray-300 flex items-center p-2 group "
           >
             <IoAnalytics size={27} />
@@ -111,7 +111,10 @@ export default function AdminNavigationSection({
             <ul className="ml-6 mt-2">
               <li>
                 <Link
-                  href={"/" + locale + "/seller/createListing"}
+                  href={"/" + locale + "/admin/pendingSellers"}
+                  onClick={() => {
+                    setIsEarningsDropdownOpen(false);
+                  }}
                   className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
                 >
                   <MdOutlinePendingActions size={28} />
@@ -120,34 +123,41 @@ export default function AdminNavigationSection({
               </li>
               <li>
                 <Link
-                  href={"/" + locale + "/seller/auctionListings"}
+                  href={"/" + locale + "/admin/activeSellers"}
+                  onClick={() => {
+                    setIsEarningsDropdownOpen(false);
+                  }}
                   className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ml-1"
                 >
                   <FaUserCheck size={29} />
 
-                  <span className="ml-1">Active</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={"/" + locale + "/seller/createListing"}
-                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
-                >
-                  <FaUserAltSlash size={28} />
-                  <span className="ml-2">Disabled</span>
+                  <span className="ml-1">Verified</span>
                 </Link>
               </li>
             </ul>
           )}
         </li>
         <li>
-          <div
-            onClick={toggleDeliveriesDropdown}
+          <Link
+            href={"/" + locale + "/admin/bidders"}
+            onClick={() => {
+              setIsEarningsDropdownOpen(false);
+            }}
             className="text-base text-gray-900 font-nobrmal rounded-lg hover:bg-gray-300 flex items-center p-2 group "
           >
             <HiMiniUserGroup size={32} />
 
             <span className="ml-3 flex-1 whitespace-nowrap">Bidders</span>
+          </Link>
+        </li>
+        <li>
+          <a
+            onClick={toggleEarningsDropdown}
+            className="text-base text-gray-900 font-nobrmal rounded-lg hover:bg-gray-300 flex items-center p-2 group "
+          >
+            <FaUserTie size={27} />
+
+            <span className="ml-3 flex-1 whitespace-nowrap">Auctions</span>
             <svg
               className="w-4 h-4 ml-auto text-gray-500 transform group-hover:-rotate-180 transition duration-150"
               fill="currentColor"
@@ -160,26 +170,109 @@ export default function AdminNavigationSection({
                 clipRule="evenodd"
               ></path>
             </svg>
-          </div>
-          {isDeliveriesDropdown && (
+          </a>
+          {isEarningsDropdownOpen && (
             <ul className="ml-6 mt-2">
               <li>
                 <Link
-                  href={"/" + locale + "/seller/auctionListings"}
-                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ml-1"
+                  href={"/" + locale + "/admin/upcomingAuctions"}
+                  onClick={() => {
+                    setIsEarningsDropdownOpen(false);
+                  }}
+                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
                 >
-                  <FaUserCheck size={29} />
-
-                  <span className="ml-1">Active</span>
+                  <MdOutlinePendingActions size={28} />
+                  <span className="ml-2">Upcoming</span>
                 </Link>
               </li>
               <li>
                 <Link
-                  href={"/" + locale + "/seller/createListing"}
+                  href={"/" + locale + "/admin/ongoingAuctions"}
+                  onClick={() => {
+                    setIsEarningsDropdownOpen(false);
+                  }}
+                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ml-1"
+                >
+                  <FaUserCheck size={29} />
+
+                  <span className="ml-1">Ongoing</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={"/" + locale + "/admin/finishedAuctions"}
+                  onClick={() => {
+                    setIsEarningsDropdownOpen(false);
+                  }}
+                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ml-1"
+                >
+                  <FaUserCheck size={29} />
+
+                  <span className="ml-1">Finished</span>
+                </Link>
+              </li>
+            </ul>
+          )}
+        </li>
+        <li>
+          <a
+            onClick={toggleEarningsDropdown}
+            className="text-base text-gray-900 font-nobrmal rounded-lg hover:bg-gray-300 flex items-center p-2 group "
+          >
+            <FaUserTie size={27} />
+
+            <span className="ml-3 flex-1 whitespace-nowrap">Deliveries</span>
+            <svg
+              className="w-4 h-4 ml-auto text-gray-500 transform group-hover:-rotate-180 transition duration-150"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"
+                clipRule="evenodd"
+              ></path>
+            </svg>
+          </a>
+          {isEarningsDropdownOpen && (
+            <ul className="ml-6 mt-2">
+              <li>
+                <Link
+                  href={"/" + locale + "/admin/reportedDeliveries"}
+                  onClick={() => {
+                    setIsEarningsDropdownOpen(false);
+                  }}
+                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ml-1"
+                >
+                  <FaUserCheck size={29} />
+
+                  <span className="ml-1">Reported</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={"/" + locale + "/admin/pendingDeliveries"}
+                  onClick={() => {
+                    setIsEarningsDropdownOpen(false);
+                  }}
                   className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
                 >
-                  <FaUserAltSlash size={28} />
-                  <span className="ml-2">Disabled</span>
+                  <MdOutlinePendingActions size={28} />
+                  <span className="ml-2">Pending</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={"/" + locale + "/admin/deliveredDeliveries"}
+                  onClick={() => {
+                    setIsEarningsDropdownOpen(false);
+                  }}
+                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ml-1"
+                >
+                  <FaUserCheck size={29} />
+
+                  <span className="ml-1">Delivered</span>
                 </Link>
               </li>
             </ul>
@@ -187,7 +280,7 @@ export default function AdminNavigationSection({
         </li>
         <li>
           <Link
-            href={"/" + locale + "/seller/transactions"}
+            href={"/" + locale + "/admin/transactions"}
             className="text-base text-gray-900 font-nobrmal rounded-lg hover:bg-gray-300 flex items-center p-2 group "
           >
             <GiMoneyStack size={37} />

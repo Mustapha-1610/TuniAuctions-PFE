@@ -70,7 +70,7 @@ export default function ReportedDeliveryModal() {
   return (
     <>
       <Modal
-        title="Reported Delivery Information"
+        title="Delivery Information"
         centered
         open={isDeliveryModalOpen}
         width={1280} // Increased width for better organization
@@ -128,69 +128,105 @@ export default function ReportedDeliveryModal() {
                   </h2>
                   <p>
                     Delivery Date:{" "}
-                    {moment(delivery.deliveryDate).format(
-                      "dddd, MMMM D, YYYY hh:mm A"
+                    {delivery.deliveryDate ? (
+                      moment(delivery.deliveryDate).format(
+                        "dddd, MMMM D, YYYY hh:mm A"
+                      )
+                    ) : delivery.expectedDeliveryDate?.from ? (
+                      <>
+                        From{" "}
+                        {moment(delivery.expectedDeliveryDate?.from).format(
+                          "dddd, MMMM D, YYYY hh:mm A"
+                        )}{" "}
+                        to{" "}
+                        {moment(delivery.expectedDeliveryDate?.to).format(
+                          "dddd, MMMM D, YYYY hh:mm A"
+                        )}
+                      </>
+                    ) : (
+                      <>Not Decided Yet</>
                     )}
                   </p>
                 </div>
                 {/* Bidder Information */}
                 <div className="border-b border-gray-200 pb-4">
                   <h2 className="text-lg font-semibold">Bidder Information</h2>
-                  <p>
-                    Bidder Name: {delivery.biddderDeliveryInformations?.name}
-                  </p>
-                  <p>
-                    Bidder Phone Number:{" "}
-                    {delivery.biddderDeliveryInformations?.phoneNumber}
-                  </p>
-                  <p>
-                    Bidder Street: {delivery.biddderDeliveryInformations?.sreet}
-                  </p>
-                  <p
-                    className="cursor-pointer  text-blue-500"
-                    onClick={() => {
-                      fetchBidderData(String(delivery.bidderId));
-                    }}
-                  >
-                    View Bidder
-                  </p>
+                  {delivery.biddderDeliveryInformations?.name ? (
+                    <>
+                      <p>
+                        Bidder Name:{" "}
+                        {delivery.biddderDeliveryInformations?.name}
+                      </p>
+                      <p>
+                        Bidder Phone Number:{" "}
+                        {delivery.biddderDeliveryInformations?.phoneNumber}
+                      </p>
+                      <p>
+                        Bidder Street:{" "}
+                        {delivery.biddderDeliveryInformations?.sreet}
+                      </p>
+                      <p
+                        className="cursor-pointer  text-blue-500"
+                        onClick={() => {
+                          fetchBidderData(String(delivery.bidderId));
+                        }}
+                      >
+                        View Bidder
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <p>Not Submitted Yet</p>
+                    </>
+                  )}
                 </div>
                 {/* Report Information */}
                 <div>
-                  <h2 className="text-lg font-semibold">
-                    Report Informations:{" "}
-                  </h2>
-                  <p>Report Subject: {delivery.report.subject}</p>
-                  <p style={{ wordWrap: "break-word" }}>
-                    Report Description: {delivery.report.description}
-                  </p>
-                  <h6 className="text-sm font-semibold">Attachments: </h6>
-                  {delivery.report.attachments.length > 0 && (
-                    <div className="relative flex flex-col items-center">
-                      <Image
-                        src={selectedImage || delivery.report.attachments[0]}
-                        height={450}
-                        width="full"
-                        className="self-center mt-1"
-                      />
-                      <div className="flex justify-center mt-4">
-                        {delivery.report.attachments.map((image, index) => (
-                          <div
-                            key={index}
-                            className="w-12 h-12 mx-1 cursor-pointer rounded-full bg-gray-300 border border-gray-400"
-                            onClick={() => {
-                              setSelectedImage(
-                                delivery.report.attachments[index]
-                              );
-                            }}
-                            style={{
-                              backgroundImage: `url(${image})`,
-                              backgroundSize: "cover",
-                            }}
-                          ></div>
-                        ))}
-                      </div>
-                    </div>
+                  {delivery.report.subject ? (
+                    <>
+                      {" "}
+                      <h2 className="text-lg font-semibold">
+                        Report Informations:{" "}
+                      </h2>
+                      <p>Report Subject: {delivery.report.subject}</p>
+                      <p style={{ wordWrap: "break-word" }}>
+                        Report Description: {delivery.report.description}
+                      </p>
+                      <h6 className="text-sm font-semibold">Attachments: </h6>
+                      {delivery.report.attachments.length > 0 && (
+                        <div className="relative flex flex-col items-center">
+                          <Image
+                            src={
+                              selectedImage || delivery.report.attachments[0]
+                            }
+                            height={450}
+                            width="full"
+                            className="self-center mt-1"
+                          />
+                          <div className="flex justify-center mt-4">
+                            {delivery.report.attachments.map((image, index) => (
+                              <div
+                                key={index}
+                                className="w-12 h-12 mx-1 cursor-pointer rounded-full bg-gray-300 border border-gray-400"
+                                onClick={() => {
+                                  setSelectedImage(
+                                    delivery.report.attachments[index]
+                                  );
+                                }}
+                                style={{
+                                  backgroundImage: `url(${image})`,
+                                  backgroundSize: "cover",
+                                }}
+                              ></div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <h2 className="text-lg font-semibold">No Report!</h2>
+                    </>
                   )}
                 </div>
               </div>

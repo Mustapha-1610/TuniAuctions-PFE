@@ -46,7 +46,7 @@ export default function PendingSellersTable({ sellers }: Props) {
       title: "Description",
       dataIndex: "description",
       key: "description",
-      width: 150,
+      width: 500,
       align: "center",
     },
     {
@@ -56,6 +56,7 @@ export default function PendingSellersTable({ sellers }: Props) {
       children: [
         {
           title: "City",
+          width: 90,
           render: (_, record) => {
             return record.location.city;
           },
@@ -63,6 +64,8 @@ export default function PendingSellersTable({ sellers }: Props) {
         },
         {
           title: "Municipality",
+          width: 90,
+
           render: (_, record) => {
             return record.location.municipality;
           },
@@ -70,6 +73,7 @@ export default function PendingSellersTable({ sellers }: Props) {
         },
         {
           title: "Street",
+          width: 450,
           render: (_, record) => {
             return record.location.street;
           },
@@ -83,6 +87,7 @@ export default function PendingSellersTable({ sellers }: Props) {
       render: (_, record) => {
         return (
           <p
+            className="cursor-pointer text-blue-500"
             onClick={() => {
               setSeller(record);
               setSellerAccountApplicationModalState(true);
@@ -104,7 +109,7 @@ export default function PendingSellersTable({ sellers }: Props) {
         >
           <div className="flex items-center justify-center mb-2">
             <h1 className="text-2xl font-bold mb-2 mr-2">
-              Sellers Pending Approval
+              Sellers Pending Approval Table
             </h1>
             <MdOutlinePendingActions size={30} />
           </div>

@@ -1,10 +1,10 @@
+"use client";
 import { AuctionListingType } from "@/models/types/auctionListing";
 import { useEffect, useState } from "react";
 
 interface Props {
   auctionListing: AuctionListingType;
 }
-
 export default function PromotionalVideoAndButItNowSection({
   auctionListing,
 }: Props) {
@@ -14,7 +14,6 @@ export default function PromotionalVideoAndButItNowSection({
     );
     return match && match[1];
   };
-
   return (
     <>
       <div className="mt-7 w-full max-w-[1396px] max-md:max-w-full">
@@ -23,7 +22,11 @@ export default function PromotionalVideoAndButItNowSection({
             !("buyItNowSection" in auctionListing) ? "flex-col" : ""
           }`}
         >
-          <div className={`flex flex-col w-[50%] max-md:ml-0 max-md:w-full`}>
+          <div
+            className={`flex flex-col w-[${
+              !("buyItNowSection" in auctionListing) ? "100" : "57"
+            }%] max-md:ml-0 max-md:w-full`}
+          >
             {auctionListing.promotionalVideo && (
               <div className="flex flex-col grow px-8 py-6 w-full text-3xl text-center text-black bg-white border border-white border-solid max-md:px-5 max-md:max-w-full">
                 <div className="self-center font-bold">Promotional Video</div>
@@ -36,7 +39,7 @@ export default function PromotionalVideoAndButItNowSection({
                       title="YouTube video player"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
-                      className="w-full h-[350px]"
+                      className="w-full h-full"
                       loading="lazy"
                     ></iframe>
                   </div>
@@ -47,7 +50,7 @@ export default function PromotionalVideoAndButItNowSection({
 
           {"buyItNowSection" in auctionListing && (
             <a
-              className="flex flex-col ml-5 w-[50%] max-md:ml-0 max-md:w-full mt-12"
+              className="flex flex-col ml-5 w-[44%] max-md:ml-0 max-md:w-full mt-12"
               href={auctionListing.buyItNowSection?.storeLink}
               target="_blank"
               rel="noopener noreferrer"

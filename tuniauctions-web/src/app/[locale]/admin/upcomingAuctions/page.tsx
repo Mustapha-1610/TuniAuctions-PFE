@@ -1,6 +1,6 @@
-import PlatformTransactionsTable from "./table";
+import UpcomingAuctionsTable from "./table";
 
-export default async function UpcomingAuctionsTable() {
+export default async function UpcomingAuctionsTablePage() {
   async function fetchUpcomingAuctions() {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/fetchUpcomingAuctions`,
@@ -13,5 +13,5 @@ export default async function UpcomingAuctionsTable() {
     return resData;
   }
   const upcomingAuctions = await fetchUpcomingAuctions();
-  return <PlatformTransactionsTable UpcomingAuctions={upcomingAuctions} />;
+  return <UpcomingAuctionsTable UpcomingAuctions={upcomingAuctions} />;
 }
