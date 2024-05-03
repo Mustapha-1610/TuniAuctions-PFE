@@ -2,24 +2,30 @@
 import { useLocale } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
-import { MdOutlinePendingActions, MdLanguage } from "react-icons/md";
-import { FaUserAltSlash, FaUserCheck, FaUserTie } from "react-icons/fa";
-import { CgProfile } from "react-icons/cg";
+import {
+  MdOutlinePendingActions,
+  MdLanguage,
+  MdOutlinePending,
+  MdError,
+} from "react-icons/md";
+import { FaUserCheck, FaUserTie } from "react-icons/fa";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { CgLogOut } from "react-icons/cg";
 import { Props } from "../adminNavbar";
 import { resDataType } from "@/serverHelpers/types";
-import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
 import { IoAnalytics } from "react-icons/io5";
 import { HiMiniUserGroup } from "react-icons/hi2";
-import { GiMoneyStack } from "react-icons/gi";
+import { GiHandTruck, GiMoneyStack } from "react-icons/gi";
+import { useAdminStore } from "@/helpers/store/admin/adminStore";
+import { RiAuctionFill } from "react-icons/ri";
+import { useAdminProfileStore } from "@/helpers/store/admin/adminProfileStore";
+import { IoMdCheckmark } from "react-icons/io";
 
 export default function AdminNavigationSection({
   navigationTranslation,
 }: Props) {
   const [isEarningsDropdownOpen, setIsEarningsDropdownOpen] = useState(false);
-  const [isDeliveriesDropdown, setIsDeliveriesDropdown] = useState(false);
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
 
   const locale = useLocale();
@@ -39,13 +45,17 @@ export default function AdminNavigationSection({
       display: "Arabic",
       flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Flag_of_Saudi_Arabia.svg/2560px-Flag_of_Saudi_Arabia.svg.png",
     },
-  ]; // replace with your actual locales
+  ];
   const toggleEarningsDropdown = () => {
     setIsEarningsDropdownOpen(!isEarningsDropdownOpen);
   };
-  const toggleDeliveriesDropdown = () => {
-    setIsDeliveriesDropdown(!isDeliveriesDropdown);
-  };
+  const {
+    isDeliveriesNavigationOpen,
+    isAuctionsNavigationOpen,
+    setAuctionNavigationState,
+    setDeliveriesNavigationState,
+  } = useAdminStore();
+  const { setAdminLocalStorageData } = useAdminProfileStore();
   const pathname = usePathname();
   const router = useRouter();
   const changeLanguage = (lang: string) => {
@@ -57,21 +67,26 @@ export default function AdminNavigationSection({
   const handleLanguageChange = (e: string) => {
     changeLanguage(e);
   };
-  const { signoutSeller } = useSellerProfileStore();
   async function handleLogout() {
     try {
-      const res = await fetch("/api/seller/signout", {
+      const res = await fetch("/api/admin/signout", {
         method: "POST",
       });
       const resData: resDataType = await res.json();
       if (resData.success) {
         router.push("/" + locale);
-        signoutSeller();
+        setAdminLocalStorageData(null);
       }
     } catch (err) {
       console.log(err);
     }
   }
+  function handleNavigation() {
+    setDeliveriesNavigationState(false);
+    setIsEarningsDropdownOpen(false);
+    setAuctionNavigationState(false);
+  }
+
   return (
     <>
       <ul className="space-y-1 pb-2">
@@ -79,6 +94,7 @@ export default function AdminNavigationSection({
           <Link
             href={"/" + locale + "/admin"}
             className="text-base text-gray-900 font-nobrmal rounded-lg hover:bg-gray-300 flex items-center p-2 group "
+            onClick={handleNavigation}
           >
             <IoAnalytics size={27} />
             <span className="ml-3 flex-1 whitespace-nowrap">
@@ -112,9 +128,7 @@ export default function AdminNavigationSection({
               <li>
                 <Link
                   href={"/" + locale + "/admin/pendingSellers"}
-                  onClick={() => {
-                    setIsEarningsDropdownOpen(false);
-                  }}
+                  onClick={handleNavigation}
                   className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
                 >
                   <MdOutlinePendingActions size={28} />
@@ -124,9 +138,7 @@ export default function AdminNavigationSection({
               <li>
                 <Link
                   href={"/" + locale + "/admin/activeSellers"}
-                  onClick={() => {
-                    setIsEarningsDropdownOpen(false);
-                  }}
+                  onClick={handleNavigation}
                   className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ml-1"
                 >
                   <FaUserCheck size={29} />
@@ -140,9 +152,7 @@ export default function AdminNavigationSection({
         <li>
           <Link
             href={"/" + locale + "/admin/bidders"}
-            onClick={() => {
-              setIsEarningsDropdownOpen(false);
-            }}
+            onClick={handleNavigation}
             className="text-base text-gray-900 font-nobrmal rounded-lg hover:bg-gray-300 flex items-center p-2 group "
           >
             <HiMiniUserGroup size={32} />
@@ -152,10 +162,12 @@ export default function AdminNavigationSection({
         </li>
         <li>
           <a
-            onClick={toggleEarningsDropdown}
+            onClick={() => {
+              setAuctionNavigationState(!isAuctionsNavigationOpen);
+            }}
             className="text-base text-gray-900 font-nobrmal rounded-lg hover:bg-gray-300 flex items-center p-2 group "
           >
-            <FaUserTie size={27} />
+            <RiAuctionFill size={27} />
 
             <span className="ml-3 flex-1 whitespace-nowrap">Auctions</span>
             <svg
@@ -171,42 +183,46 @@ export default function AdminNavigationSection({
               ></path>
             </svg>
           </a>
-          {isEarningsDropdownOpen && (
+          {isAuctionsNavigationOpen && (
             <ul className="ml-6 mt-2">
               <li>
                 <Link
                   href={"/" + locale + "/admin/upcomingAuctions"}
-                  onClick={() => {
-                    setIsEarningsDropdownOpen(false);
-                  }}
+                  onClick={handleNavigation}
                   className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
                 >
-                  <MdOutlinePendingActions size={28} />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width={27}
+                    height={27}
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M19 22h-3q-.425 0-.712-.288T15 21t.288-.712T16 20h3V10H5v3q0 .425-.288.713T4 14t-.712-.288T3 13V6q0-.825.588-1.412T5 4h1V3q0-.425.288-.712T7 2t.713.288T8 3v1h8V3q0-.425.288-.712T17 2t.713.288T18 3v1h1q.825 0 1.413.588T21 6v14q0 .825-.587 1.413T19 22m-9.825-2H2q-.425 0-.712-.288T1 19t.288-.712T2 18h7.175L7.3 16.1q-.275-.275-.287-.687T7.3 14.7q.275-.275.7-.275t.7.275l3.6 3.6q.3.3.3.7t-.3.7l-3.6 3.6q-.275.275-.687.288T7.3 23.3q-.275-.275-.275-.7t.275-.7z"
+                    ></path>
+                  </svg>
+
                   <span className="ml-2">Upcoming</span>
                 </Link>
               </li>
               <li>
                 <Link
                   href={"/" + locale + "/admin/ongoingAuctions"}
-                  onClick={() => {
-                    setIsEarningsDropdownOpen(false);
-                  }}
-                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ml-1"
+                  onClick={handleNavigation}
+                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
                 >
-                  <FaUserCheck size={29} />
-
+                  <MdOutlinePending size={28} />
                   <span className="ml-1">Ongoing</span>
                 </Link>
               </li>
               <li>
                 <Link
                   href={"/" + locale + "/admin/finishedAuctions"}
-                  onClick={() => {
-                    setIsEarningsDropdownOpen(false);
-                  }}
-                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ml-1"
+                  onClick={handleNavigation}
+                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
                 >
-                  <FaUserCheck size={29} />
+                  <IoMdCheckmark size={29} />
 
                   <span className="ml-1">Finished</span>
                 </Link>
@@ -216,10 +232,12 @@ export default function AdminNavigationSection({
         </li>
         <li>
           <a
-            onClick={toggleEarningsDropdown}
+            onClick={() => {
+              setDeliveriesNavigationState(!isDeliveriesNavigationOpen);
+            }}
             className="text-base text-gray-900 font-nobrmal rounded-lg hover:bg-gray-300 flex items-center p-2 group "
           >
-            <FaUserTie size={27} />
+            <GiHandTruck size={29} />
 
             <span className="ml-3 flex-1 whitespace-nowrap">Deliveries</span>
             <svg
@@ -235,17 +253,15 @@ export default function AdminNavigationSection({
               ></path>
             </svg>
           </a>
-          {isEarningsDropdownOpen && (
+          {isDeliveriesNavigationOpen && (
             <ul className="ml-6 mt-2">
               <li>
                 <Link
                   href={"/" + locale + "/admin/reportedDeliveries"}
-                  onClick={() => {
-                    setIsEarningsDropdownOpen(false);
-                  }}
-                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ml-1"
+                  onClick={handleNavigation}
+                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
                 >
-                  <FaUserCheck size={29} />
+                  <MdError size={29} />
 
                   <span className="ml-1">Reported</span>
                 </Link>
@@ -253,9 +269,7 @@ export default function AdminNavigationSection({
               <li>
                 <Link
                   href={"/" + locale + "/admin/pendingDeliveries"}
-                  onClick={() => {
-                    setIsEarningsDropdownOpen(false);
-                  }}
+                  onClick={handleNavigation}
                   className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
                 >
                   <MdOutlinePendingActions size={28} />
@@ -265,12 +279,10 @@ export default function AdminNavigationSection({
               <li>
                 <Link
                   href={"/" + locale + "/admin/deliveredDeliveries"}
-                  onClick={() => {
-                    setIsEarningsDropdownOpen(false);
-                  }}
-                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ml-1"
+                  onClick={handleNavigation}
+                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
                 >
-                  <FaUserCheck size={29} />
+                  <IoMdCheckmark size={29} />
 
                   <span className="ml-1">Delivered</span>
                 </Link>
@@ -282,6 +294,7 @@ export default function AdminNavigationSection({
           <Link
             href={"/" + locale + "/admin/transactions"}
             className="text-base text-gray-900 font-nobrmal rounded-lg hover:bg-gray-300 flex items-center p-2 group "
+            onClick={handleNavigation}
           >
             <GiMoneyStack size={37} />
 
@@ -292,14 +305,6 @@ export default function AdminNavigationSection({
         </li>
       </ul>
       <div className="space-y-2 pt-2">
-        <Link
-          href={"/" + locale + "/seller/profile"}
-          className="text-base text-gray-900 font-nobrmal rounded-lg hover:bg-gray-300 flex items-center p-2 group "
-        >
-          <CgProfile size={31} />
-
-          <span className="ml-4"> {navigationTranslation.Profile}</span>
-        </Link>
         <a
           onClick={() => {
             setIsLanguageDropdownOpen(!isLanguageDropdownOpen);
@@ -329,7 +334,9 @@ export default function AdminNavigationSection({
                 <div
                   key={index}
                   className="text-base text-gray-900 font-bold  rounded-lg hover:bg-gray-100 flex items-center p-2 group"
-                  onClick={() => handleLanguageChange(locale.lang)}
+                  onClick={() => (
+                    handleLanguageChange(locale.lang), handleNavigation()
+                  )}
                 >
                   <div className="ml-2 flex items-center" key={index}>
                     <Image
@@ -347,8 +354,10 @@ export default function AdminNavigationSection({
           </ul>
         )}
         <div
-          className="text-base text-gray-900 font-nobrmal rounded-lg hover:bg-gray-300 flex items-center p-2 group "
-          onClick={handleLogout}
+          className="text-base text-gray-900 font-nobrmal rounded-lg hover:bg-gray-300 flex items-center p-2 group  cursor-pointer"
+          onClick={() => {
+            handleLogout(), handleNavigation();
+          }}
         >
           <CgLogOut size={31} />
 

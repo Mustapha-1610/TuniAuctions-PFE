@@ -73,6 +73,16 @@ export interface basicListingInfos {
   sellerId: string;
 }
 
+export interface premiumListingInfos {
+  updatedAuctionListingForm: premiumListingType;
+  sellerId: string;
+  type: "Basic" | "Standard" | "Premium";
+}
+
+export interface standardListingInfos {
+  updatedAuctionListingForm: standardListingType;
+  sellerId: string;
+}
 interface IDKPLEASE {
   title: string;
   guarentee: {

@@ -58,10 +58,6 @@ export default function PackageCountSection({ transactions }: Props) {
     }
   }, [transactions]);
 
-  // Generate random colors for bars
-  const getRandomColor = () =>
-    `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-
   return (
     <>
       <div className="bg-white shadow rounded-lg 2xl:col-span-2 flex-col border border-gray-400">
@@ -72,11 +68,12 @@ export default function PackageCountSection({ transactions }: Props) {
           <XAxis dataKey="month" />
           <YAxis />
           <Tooltip />
-          <Bar dataKey="earnings" fill="#A7C7E7">
+          <Bar dataKey="earnings" fill="#46a683">
             <LabelList
               dataKey="earnings"
               position="top"
-              formatter={(value: number) => `$${value.toFixed(2)}`} // Add dollar sign and format amount
+              formatter={(value: number) => `$${value.toFixed(2)}`}
+              className="font-bold text-black" // Add dollar sign and format amount
             />
           </Bar>
         </BarChart>

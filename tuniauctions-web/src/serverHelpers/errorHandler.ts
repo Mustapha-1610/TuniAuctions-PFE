@@ -53,3 +53,48 @@ export function unautherizedError(error?: string, errorCode?: unknown) {
   });
   return response;
 }
+
+export function unautherizedAdminError(error?: string, errorCode?: unknown) {
+  const response = NextResponse.json({
+    success: false,
+    serverError: false,
+    errorCode: errorCode || null,
+    errorMessage: error || null,
+    authError: true,
+  });
+  response.cookies.set("refreshAdminToken", "", {
+    expires: new Date(0),
+    sameSite: "none",
+    secure: true,
+    httpOnly: true,
+  });
+  response.cookies.set("accessAdminToken", "", {
+    expires: new Date(0),
+    sameSite: "none",
+    secure: true,
+    httpOnly: true,
+  });
+  return response;
+}
+export function unautherizedSellerError(error?: string, errorCode?: unknown) {
+  const response = NextResponse.json({
+    success: false,
+    serverError: false,
+    errorCode: errorCode || null,
+    errorMessage: error || null,
+    authError: true,
+  });
+  response.cookies.set("refreshSellerToken", "", {
+    expires: new Date(0),
+    sameSite: "none",
+    secure: true,
+    httpOnly: true,
+  });
+  response.cookies.set("accessSellerToken", "", {
+    expires: new Date(0),
+    sameSite: "none",
+    secure: true,
+    httpOnly: true,
+  });
+  return response;
+}

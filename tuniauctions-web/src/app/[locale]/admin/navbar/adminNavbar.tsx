@@ -1,6 +1,5 @@
 "use client";
 import { useTranslations } from "next-intl";
-import TopAdminNavbarSection from "./components/topSection";
 import AdminNavigationSection from "./components/navigationSection";
 import AdminMobileNavigation from "./components/mobileNavigationSection";
 import TopSellerNavbarSection from "./components/topSection";
@@ -11,6 +10,10 @@ import SellerAccountApplicationModal from "../modals/sellerApplicationModal";
 import AdminAuctionListingModal from "../modals/auctionListingModal";
 import AdminBiddingRoomModal from "../modals/biddingRoomModal";
 import BidderInformationsModal from "../modals/bidderModal";
+import { useEffect } from "react";
+import { resDataType } from "@/serverHelpers/types";
+import { useAdminProfileStore } from "@/helpers/store/admin/adminProfileStore";
+import { useRouter } from "next/navigation";
 export interface Props {
   navigationTranslation: {
     Dashboard: string;
@@ -29,7 +32,9 @@ export interface Props {
     Logout: string;
   };
 }
+
 export default function AdminNavbar() {
+  const router = useRouter();
   const t = useTranslations("Seller.NavigationSection");
   const navigationTranslation = {
     Dashboard: t("dashboard"),
@@ -51,7 +56,6 @@ export default function AdminNavbar() {
     delivery,
     seller,
     isDeliveryModalOpen,
-
     isSellerModalOpen,
     isSellerAccountApplicationModalOpen,
     auction,
@@ -59,8 +63,31 @@ export default function AdminNavbar() {
     isOngoingAuctionModalOpen,
     bidder,
     isBidderInformationModalOpen,
-    isFinishedAuctionModalOpen,
   } = useAdminStore();
+  const { setAdminLocalStorageData } = useAdminProfileStore();
+  useEffect(() => {
+    async function getData() {
+      const res = await fetch("/api/admin/getData", {
+        method: "POST",
+      });
+      const resData: resDataType = await res.json();
+      if (resData.adminAccount) {
+        setAdminLocalStorageData(resData.adminAccount);
+      } else if (resData.authError) {
+        async () => {
+          const res = await fetch("/api/admin/signout", {
+            method: "POST",
+          });
+          const resData: resDataType = await res.json();
+          if (resData.success) {
+            setAdminLocalStorageData(null);
+            router.push("/");
+          }
+        };
+      }
+    }
+    getData();
+  }, []);
   return (
     <>
       <nav className="bg-gray-200 border-b border-gray-200 fixed z-30 w-full">

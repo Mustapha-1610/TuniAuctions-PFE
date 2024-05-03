@@ -15,6 +15,7 @@ import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore
 import { useNavbarState } from "@/helpers/store/general/navbarState";
 import ForgotPassword from "./components/forgotPassword";
 import bidderSocket from "@/frontHelpers/bidder/bidderSocketLogic";
+import { useAdminProfileStore } from "@/helpers/store/admin/adminProfileStore";
 
 export default function LoginModal() {
   //
@@ -28,6 +29,7 @@ export default function LoginModal() {
   const locale = useLocale();
   const { setSellerLocalStorageData } = useSellerProfileStore();
   const { setBidderLocalStorageData } = useBidderProfileStore();
+  const { setAdminLocalStorageData } = useAdminProfileStore();
   const {
     setSignupModalState,
     setGenderSignupFormModalState,
@@ -72,6 +74,10 @@ export default function LoginModal() {
           setSellerLocalStorageData(resData.sellerFrontData);
           setLoginModalState();
           router.push("/" + locale + "/seller");
+        } else if (resData.adminAccount) {
+          setAdminLocalStorageData(resData.adminAccount);
+          setLoginModalState();
+          router.push("/" + locale + "/admin");
         }
       } else {
         setErrorMessage(errTranslations(`authErros.${resData.errorMessage}`));

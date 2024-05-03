@@ -1,7 +1,12 @@
+"use client";
 import NavigationSection from "./components/navigationSection";
 import TopSellerNavbarSection from "./components/topSection";
 import MobileNavigation from "./components/mobileNavigationSection";
 import { useTranslations } from "next-intl";
+import { useEffect } from "react";
+import { resDataType } from "@/serverHelpers/types";
+import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
+import { useRouter } from "next/navigation";
 export interface Props {
   navigationTranslation: {
     Dashboard: string;
@@ -38,6 +43,32 @@ const Navbar = () => {
     Profile: t("profile"),
     Logout: t("logout"),
   };
+  const { setSellerLocalStorageData, signoutSeller } = useSellerProfileStore();
+  const router = useRouter();
+
+  useEffect(() => {
+    async function getData() {
+      const res = await fetch("/api/seller/getData", {
+        method: "POST",
+      });
+      const resData: resDataType = await res.json();
+      if (resData.sellerFrontData) {
+        setSellerLocalStorageData(resData.sellerFrontData);
+      } else if (resData.authError) {
+        async () => {
+          const res = await fetch("/api/seller/signout", {
+            method: "POST",
+          });
+          const resData: resDataType = await res.json();
+          if (resData.success) {
+            signoutSeller();
+            router.push("/");
+          }
+        };
+      }
+    }
+    getData();
+  }, []);
   return (
     <>
       <nav className="bg-black border-b border-gray-200 fixed z-30 w-full">

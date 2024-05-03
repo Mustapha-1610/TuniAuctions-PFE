@@ -141,5 +141,10 @@
     "zodErrors": {
       "email": "بريد إلكتروني غير صالح!"
     }
+  },
+  "admin": {
+    "notifications": {
+      "auctionStart": "تم بدء غرفة المزاد لـ : "
+    }
   }
 }

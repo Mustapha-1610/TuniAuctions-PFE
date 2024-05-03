@@ -141,5 +141,10 @@
     "zodErrors": {
       "email": "Invalid Email!"
     }
+  },
+  "admin": {
+    "notifications": {
+      "auctionStart": "Auction Room Started For : "
+    }
   }
 }

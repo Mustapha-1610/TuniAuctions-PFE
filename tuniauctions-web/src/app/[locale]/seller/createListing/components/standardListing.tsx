@@ -97,7 +97,7 @@ export default function StandardListing() {
     };
     setTip("Creating The Auction Listing");
     const res = await fetch(
-      `/api/seller/createAuctionListing/standard`,
+      `${process.env.NEXT_PUBLIC_SOCKET_IO_SERVER}/api/auctionListing/create/basic`,
 
       {
         method: "POST",
@@ -106,7 +106,11 @@ export default function StandardListing() {
           "Content-Type": "application/json",
         },
 
-        body: JSON.stringify(updatedAuctionListingForm),
+        body: JSON.stringify({
+          updatedAuctionListingForm,
+          sellerId: sellerLocaleStorageData?._id,
+          type: "Standard",
+        }),
 
         credentials: "include",
       }

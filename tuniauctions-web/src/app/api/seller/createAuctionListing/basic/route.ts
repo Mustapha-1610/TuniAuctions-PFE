@@ -1,7 +1,7 @@
 import { connect } from "@/db/dbConfig";
 import { returnSellerFrontData } from "@/frontHelpers/seller/returnSellerFrontData";
 import auctionListingModel from "@/models/auctionListingModels/auctionListing";
-import { verifySellerTokens } from "@/security/apiProtection/seller/routeProtection";
+import { verifySellerToken } from "@/security/apiProtection/seller/routeProtection";
 import {
   serverErrorHandler,
   userInputCausedErrors,
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     const reqBody = await request.json();
     const isSchemaValid = basicListingSchema.safeParse(reqBody);
     if (isSchemaValid.success) {
-      const res = await verifySellerTokens(request);
+      const res = await verifySellerToken(request);
       if (res.isValid) {
         const seller = res.sellerAccount;
         const {

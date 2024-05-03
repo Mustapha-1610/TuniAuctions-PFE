@@ -5,7 +5,14 @@ export default async function middleware(request: NextRequest) {
   const [, locale, ...segments] = request.nextUrl.pathname.split("/");
   const path = segments.join("/");
 
-  const publicRoutes = [`auctions`, "aboutus", "howitworks", ""];
+  const publicRoutes = [
+    `auctions`,
+    "aboutus",
+    "howitworks",
+    "",
+    "auctionListing",
+    "",
+  ];
   if (locale != "") {
     let token: string = "";
     if (publicRoutes.includes(path)) {
@@ -21,6 +28,10 @@ export default async function middleware(request: NextRequest) {
     }
     if (path.startsWith("seller")) {
       token = request.cookies.get("refreshSellerToken")?.value || "";
+      if (!token) return handleRouteProtection(locale, request);
+    }
+    if (path.startsWith("admin")) {
+      token = request.cookies.get("refreshAdminToken")?.value || "";
       if (!token) return handleRouteProtection(locale, request);
     }
   }

@@ -1,3 +1,4 @@
+import { adminModelType } from "@/models/types/admin";
 import { IBidderFrontData } from "@/models/usersModels/types/bidderTypes";
 import { ISellerFrontData } from "@/models/usersModels/types/sellerTypes";
 
@@ -9,4 +10,5 @@ export type resDataType = {
   success: boolean;
   bidderFrontData: IBidderFrontData | null;
   sellerFrontData: ISellerFrontData | null;
+  adminAccount: adminModelType | null;
 };

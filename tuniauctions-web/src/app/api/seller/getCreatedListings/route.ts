@@ -5,7 +5,7 @@ import {
   AuctionListingType,
   sellerAuctionListingFrontData,
 } from "@/models/types/auctionListing";
-import { verifySellerTokens } from "@/security/apiProtection/seller/routeProtection";
+import { verifySellerToken } from "@/security/apiProtection/seller/routeProtection";
 import {
   serverErrorHandler,
   userInputCausedErrors,
@@ -18,7 +18,7 @@ export interface sellerCreatedAuctionsResponse {
 export async function POST(request: NextRequest) {
   try {
     await connect();
-    const res = await verifySellerTokens(request);
+    const res = await verifySellerToken(request);
     if (res.isValid) {
       const auctionListings: AuctionListingType[] | null =
         await auctionListingModel.find({

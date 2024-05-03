@@ -22,31 +22,33 @@ export default function PromotionalVideoAndButItNowSection({
             !("buyItNowSection" in auctionListing) ? "flex-col" : ""
           }`}
         >
-          <div
-            className={`flex flex-col w-[${
-              !("buyItNowSection" in auctionListing) ? "100" : "57"
-            }%] max-md:ml-0 max-md:w-full`}
-          >
-            {auctionListing.promotionalVideo && (
-              <div className="flex flex-col grow px-8 py-6 w-full text-3xl text-center text-black bg-white border border-white border-solid max-md:px-5 max-md:max-w-full">
-                <div className="self-center font-bold">Promotional Video</div>
-                {auctionListing.promotionalVideo && (
-                  <div className="mt-3.5 w-full aspect-[2.13] max-md:max-w-full border border-white border-solid">
-                    <iframe
-                      src={`https://www.youtube.com/embed/${getYouTubeVideoId(
-                        auctionListing.promotionalVideo
-                      )}`}
-                      title="YouTube video player"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="w-full h-full"
-                      loading="lazy"
-                    ></iframe>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
+          {auctionListing && (
+            <div
+              className={`flex flex-col w-[${
+                !("buyItNowSection" in auctionListing) ? "100" : "52"
+              }%] max-md:ml-0 max-md:w-full`}
+            >
+              {auctionListing.promotionalVideo && (
+                <div className="flex flex-col grow px-8 py-6 w-full text-3xl text-center text-black bg-white border border-white border-solid max-md:px-5 max-md:max-w-full">
+                  <div className="self-center font-bold">Promotional Video</div>
+                  {auctionListing.promotionalVideo && (
+                    <div className="mt-3.5 w-full aspect-[2.13] max-md:max-w-full border border-white border-solid">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${getYouTubeVideoId(
+                          auctionListing.promotionalVideo
+                        )}`}
+                        title="YouTube video player"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="w-full h-full"
+                        loading="lazy"
+                      ></iframe>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
 
           {"buyItNowSection" in auctionListing && (
             <a

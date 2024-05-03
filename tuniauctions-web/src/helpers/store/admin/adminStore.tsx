@@ -1,10 +1,12 @@
 import { create } from "zustand";
-import { ObjectId } from "mongoose";
 import { DeliveryType } from "@/models/types/delivery";
 import { ISeller } from "@/models/usersModels/types/sellerTypes";
 import { IBidder } from "@/models/usersModels/types/bidderTypes";
 import { AuctionListingType } from "@/models/types/auctionListing";
+import { adminModelType } from "@/models/types/admin";
 interface adminStoreType {
+  admin: adminModelType | null;
+  setAdmin: (value: adminModelType | null) => void;
   isDeliveryModalOpen: boolean;
   setDeliveryModalState: (value: boolean) => void;
   isUpcomingAuctionModalOpen: boolean;
@@ -27,8 +29,14 @@ interface adminStoreType {
   setSellerAccountApplicationModalState: (value: boolean) => void;
   isBidderInformationModalOpen: boolean;
   setBidderInformationsModalState: (value: boolean) => void;
+  isDeliveriesNavigationOpen: boolean;
+  setDeliveriesNavigationState: (value: boolean) => void;
+  isAuctionsNavigationOpen: boolean;
+  setAuctionNavigationState: (value: boolean) => void;
 }
 export const useAdminStore = create<adminStoreType>((set) => ({
+  admin: null,
+  setAdmin: (value) => set(() => ({ admin: value })),
   isDeliveryModalOpen: false,
   setDeliveryModalState: (value) => set(() => ({ isDeliveryModalOpen: value })),
 
@@ -70,5 +78,15 @@ export const useAdminStore = create<adminStoreType>((set) => ({
   setBidderInformationsModalState: (value) =>
     set(() => ({
       isBidderInformationModalOpen: value,
+    })),
+  isAuctionsNavigationOpen: false,
+  isDeliveriesNavigationOpen: false,
+  setAuctionNavigationState: (value) =>
+    set(() => ({
+      isAuctionsNavigationOpen: value,
+    })),
+  setDeliveriesNavigationState: (value) =>
+    set(() => ({
+      isDeliveriesNavigationOpen: value,
     })),
 }));

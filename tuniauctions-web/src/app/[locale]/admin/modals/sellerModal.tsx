@@ -1,13 +1,48 @@
-import { Modal, Table, Image, Tag } from "antd";
-import { ISeller } from "@/models/usersModels/types/sellerTypes";
-import { sellerTransactionTableColumns } from "../../seller/transactions/page";
+import { Modal, Table, Image, Tag, TableColumnsType } from "antd";
+import {
+  ISeller,
+  sellerTransactions,
+} from "@/models/usersModels/types/sellerTypes";
 import { useAdminStore } from "@/helpers/store/admin/adminStore";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useState } from "react";
+import moment from "moment";
 interface Props {
   setSellers?: (value: ISeller[] | undefined) => void;
 }
+export const sellerTransactionTableColumns: TableColumnsType<sellerTransactions> =
+  [
+    {
+      title: "Transaction Amount",
+      width: 60,
+      render: (_, record) => {
+        return record.amount + "$";
+      },
+      align: "center",
+    },
+    {
+      title: "Transaction Date",
+      width: 80,
+      render: (_, record) => {
+        return moment(record.date).format("ddd, MMM D, YYYY [at] h:mm A");
+      },
+      align: "center",
+    },
+
+    {
+      title: "To",
+      width: 90,
+      dataIndex: "reciever",
+      align: "center",
+    },
+    {
+      title: "Context",
+      width: 100,
+      dataIndex: "context",
+      align: "center",
+    },
+  ];
 export default function SellerDataModal({ setSellers }: Props) {
   const [loading, setLoading] = useState(false);
 

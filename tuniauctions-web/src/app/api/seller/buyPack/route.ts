@@ -4,7 +4,7 @@ import pricingModel from "@/models/auctionListingModels/pricingModel";
 import { Pricing } from "@/models/types/pricing";
 import platformModel from "@/models/usersModels/platformModel";
 import { ISellerFrontData } from "@/models/usersModels/types/sellerTypes";
-import { verifySellerTokens } from "@/security/apiProtection/seller/routeProtection";
+import { verifySellerToken } from "@/security/apiProtection/seller/routeProtection";
 import {
   serverErrorHandler,
   unautherizedError,
@@ -13,7 +13,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(request: NextRequest) {
   try {
-    const res = await verifySellerTokens(request);
+    const res = await verifySellerToken(request);
     if (res.isValid) {
       await connect();
       const { pricingId } = await request.json();

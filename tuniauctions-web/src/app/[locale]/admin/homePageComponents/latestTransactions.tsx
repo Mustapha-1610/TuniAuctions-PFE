@@ -25,7 +25,7 @@ export default function GenderDistributionChart({
           <h3 className="text-xl font-bold text-gray-900 mb-2">
             Active Bidders Gender Distribution
           </h3>
-          <ResponsiveContainer width="100%" height={350}>
+          <ResponsiveContainer width="100%" height={350} className="mt-12">
             <PieChart>
               <Pie
                 data={chartData}

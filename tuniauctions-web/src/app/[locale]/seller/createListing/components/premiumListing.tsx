@@ -73,7 +73,8 @@ export default function PremiumListing() {
   }
   const [loading, setLoading] = useState(false);
   const [tip, setTip] = useState<string>();
-  const { setSellerLocalStorageData } = useSellerProfileStore();
+  const { setSellerLocalStorageData, sellerLocaleStorageData } =
+    useSellerProfileStore();
   async function handleFormSubmission(e: any) {
     setLoading(true);
     e.preventDefault();
@@ -102,8 +103,9 @@ export default function PremiumListing() {
       productPictures: productPictures,
     };
     setTip("Creating The Auction Listing");
+
     const res = await fetch(
-      `/api/seller/createAuctionListing/premium`,
+      `${process.env.NEXT_PUBLIC_SOCKET_IO_SERVER}/api/auctionListing/create/basic`,
 
       {
         method: "POST",
@@ -112,7 +114,11 @@ export default function PremiumListing() {
           "Content-Type": "application/json",
         },
 
-        body: JSON.stringify(updatedAuctionListingForm),
+        body: JSON.stringify({
+          updatedAuctionListingForm,
+          sellerId: sellerLocaleStorageData?._id,
+          type: "Premium",
+        }),
 
         credentials: "include",
       }
@@ -120,7 +126,6 @@ export default function PremiumListing() {
     const resBody: resDataType = await res.json();
     setLoading(false);
     setTip("");
-    console.log(resBody);
     if (resBody.sellerFrontData) {
       setSellerLocalStorageData(resBody.sellerFrontData);
     }

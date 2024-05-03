@@ -1,7 +1,7 @@
 import deliveryModel from "@/models/auctionListingModels/deliveryModel";
 import { DeliveryType } from "@/models/types/delivery";
 import bidderModel from "@/models/usersModels/bidderModel";
-import { verifySellerTokens } from "@/security/apiProtection/seller/routeProtection";
+import { verifySellerToken } from "@/security/apiProtection/seller/routeProtection";
 import {
   serverErrorHandler,
   unautherizedError,
@@ -11,7 +11,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(request: NextRequest) {
   try {
-    const res = await verifySellerTokens(request);
+    const res = await verifySellerToken(request);
     if (res.isValid) {
       const seller = res.sellerAccount;
       const { deliveryId, to, from } = await request.json();

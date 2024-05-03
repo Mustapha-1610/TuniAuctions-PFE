@@ -141,5 +141,10 @@
     "zodErrors": {
       "email": "E-mail invalide!"
     }
+  },
+  "admin": {
+    "notifications": {
+      "auctionStart": "Salle de d'enchères démarrée pour : "
+    }
   }
 }

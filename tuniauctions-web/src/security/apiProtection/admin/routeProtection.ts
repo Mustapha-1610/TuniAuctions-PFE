@@ -1,8 +1,6 @@
 import { connect } from "@/db/dbConfig";
 import { adminModelType } from "@/models/types/admin";
 import adminModel from "@/models/usersModels/adminModel";
-import sellerModel from "@/models/usersModels/sellerModel";
-import { ISeller } from "@/models/usersModels/types/sellerTypes";
 import jwt, {
   JwtPayload,
   JsonWebTokenError,
@@ -12,7 +10,7 @@ import { NextRequest } from "next/server";
 interface ValidResponse {
   isValid: true;
   newAccessToken?: string;
-  sellerAccount: ISeller;
+  adminAccount: adminModelType;
 }
 
 interface ErrorResponse {
@@ -21,32 +19,27 @@ interface ErrorResponse {
 }
 
 export type VerifyBidderTokensResponse = ValidResponse | ErrorResponse;
-export async function verifySellerToken(
+export async function verifyAdminToken(
   request: NextRequest
 ): Promise<VerifyBidderTokensResponse> {
   try {
     await connect();
-    const accessToken = request.cookies.get("accessSellerToken")?.value || "";
-    const refreshToken = request.cookies.get("refreshSellerToken")?.value || "";
-    let sellerAccount: ISeller | null = null;
-
+    const accessToken = request.cookies.get("accessAdminToken")?.value || "";
+    const refreshToken = request.cookies.get("refreshAdminToken")?.value || "";
+    let adminAccount: adminModelType | null = null;
     try {
       if (accessToken) {
         const decodedAccessToken = jwt.verify(
           accessToken,
           process.env.ACCESS_TOKEN_SECRET!
         ) as JwtPayload;
-        sellerAccount = await sellerModel.findById(
-          decodedAccessToken.seller_id
-        );
+        adminAccount = await adminModel.findById(decodedAccessToken.admin_id);
       } else {
         const decodedRefreshToken = jwt.verify(
           refreshToken,
           process.env.REFRESH_TOKEN_SECRET!
         ) as JwtPayload;
-        sellerAccount = await sellerModel.findById(
-          decodedRefreshToken.seller_id
-        );
+        adminAccount = await adminModel.findById(decodedRefreshToken.admin_id);
       }
     } catch (err) {
       if (err instanceof TokenExpiredError && refreshToken) {
@@ -54,21 +47,19 @@ export async function verifySellerToken(
           refreshToken,
           process.env.REFRESH_TOKEN_SECRET!
         ) as JwtPayload;
-        sellerAccount = await sellerModel.findById(
-          decodedRefreshToken.seller_id
-        );
+        adminAccount = await adminModel.findById(decodedRefreshToken.admin_id);
       } else {
         throw err;
       }
     }
 
-    if (sellerAccount && sellerAccount.refreshToken === refreshToken) {
+    if (adminAccount && adminAccount.refreshToken === refreshToken) {
       const newAccessToken = jwt.sign(
-        { seller_id: sellerAccount._id },
+        { admin_id: adminAccount._id },
         process.env.ACCESS_TOKEN_SECRET!,
         { expiresIn: "10m" }
       );
-      return { isValid: true, newAccessToken, sellerAccount };
+      return { isValid: true, newAccessToken, adminAccount };
     } else {
       return { isValid: false, errorStage: "error Stage 1" };
     }

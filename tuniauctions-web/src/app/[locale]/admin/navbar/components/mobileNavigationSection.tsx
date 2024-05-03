@@ -2,6 +2,7 @@
 import { useSellerNavbarStore } from "@/helpers/store/sellerNavbarState";
 import NavigationSection from "./navigationSection";
 import { Props } from "../adminNavbar";
+import AdminNavigationSection from "./navigationSection";
 export default function AdminMobileNavigation({
   navigationTranslation,
 }: Props) {
@@ -26,7 +27,9 @@ export default function AdminMobileNavigation({
         }`}
       >
         <div className="px-2 py-2">
-          <NavigationSection navigationTranslation={navigationTranslation} />
+          <AdminNavigationSection
+            navigationTranslation={navigationTranslation}
+          />
         </div>
       </div>
     </>

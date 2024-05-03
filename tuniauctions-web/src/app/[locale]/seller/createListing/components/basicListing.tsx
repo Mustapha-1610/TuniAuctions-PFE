@@ -92,6 +92,7 @@ export default function BasicListing() {
         body: JSON.stringify({
           updatedAuctionListingForm,
           sellerId: sellerLocaleStorageData?._id,
+          type: "Basic",
         }),
 
         credentials: "include",

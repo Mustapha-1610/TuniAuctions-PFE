@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 
-export default function refreshBidderAccessToken(
+export default function refreshAdminToken(
   response: NextResponse,
   newAccessToken?: string
 ) {
   newAccessToken &&
-    response.cookies.set("accessBidderToken", newAccessToken, {
+    response.cookies.set("accessAdminToken", newAccessToken, {
       httpOnly: true,
       sameSite: "none",
       secure: true,

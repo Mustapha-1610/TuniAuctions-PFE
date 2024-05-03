@@ -1,12 +1,12 @@
 import deliveryModel from "@/models/auctionListingModels/deliveryModel";
 import { DeliveryType } from "@/models/types/delivery";
-import { verifySellerTokens } from "@/security/apiProtection/seller/routeProtection";
+import { verifySellerToken } from "@/security/apiProtection/seller/routeProtection";
 import { serverErrorHandler } from "@/serverHelpers/errorHandler";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
-    const res = await verifySellerTokens(request);
+    const res = await verifySellerToken(request);
     if (res.isValid) {
       const pendingDeliveries: DeliveryType[] | undefined =
         await deliveryModel.find({

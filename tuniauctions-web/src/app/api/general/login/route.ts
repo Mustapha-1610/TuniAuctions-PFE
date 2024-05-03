@@ -16,6 +16,8 @@ import {
   ISellerFrontData,
 } from "@/models/usersModels/types/sellerTypes";
 import { returnSellerFrontData } from "@/frontHelpers/seller/returnSellerFrontData";
+import { adminModelType } from "@/models/types/admin";
+import adminModel from "@/models/usersModels/adminModel";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -96,7 +98,6 @@ async function handeLogin(email: string, password: string) {
       let existingSeller: ISeller | null = await sellerModel.findOne({
         email: email.toUpperCase(),
       });
-      console.log(email);
       if (existingSeller) {
         if (!bcrypt.compareSync(password, existingSeller.password)) {
           return userInputCausedErrors("wrongInputs");
@@ -144,7 +145,50 @@ async function handeLogin(email: string, password: string) {
           }
         }
       } else {
-        return userInputCausedErrors("wrongInputs");
+        let existingAdmin: adminModelType | null = await adminModel.findOne({
+          email: email.toUpperCase(),
+        });
+        if (existingAdmin) {
+          if (!bcrypt.compareSync(password, existingAdmin.password)) {
+            return userInputCausedErrors("wrongInputs");
+          } else {
+            const response = NextResponse.json({
+              success: true,
+              adminAccount: existingAdmin,
+            });
+            const accessToken = jwt.sign(
+              { admin_id: existingAdmin._id },
+              process.env.ACCESS_TOKEN_SECRET!,
+              {
+                expiresIn: "10m",
+              }
+            );
+            const refreshToken = jwt.sign(
+              { admin_id: existingAdmin._id },
+              process.env.REFRESH_TOKEN_SECRET!,
+              {
+                expiresIn: "1y",
+              }
+            );
+            existingAdmin.refreshToken = refreshToken;
+            await existingAdmin.save();
+            response.cookies.set("accessAdminToken", accessToken, {
+              httpOnly: true,
+              sameSite: "none",
+              secure: true,
+              expires: new Date(Date.now() + 10 * 60 * 1000),
+            });
+            response.cookies.set("refreshAdminToken", refreshToken, {
+              httpOnly: true,
+              sameSite: "none",
+              secure: true,
+              expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
+            });
+            return response;
+          }
+        } else {
+          return userInputCausedErrors("wrongInputs");
+        }
       }
     }
   } catch (err) {
