@@ -1,12 +1,19 @@
 "use client";
-import { Modal, Table, Image, Tag, Button } from "antd";
-import { transactionTableColumns } from "../../bidder/balance/components/table";
+import { Modal, Table, Image, Tag, Button, TableColumnsType } from "antd";
 import { useAdminStore } from "@/helpers/store/admin/adminStore";
 import { useState } from "react";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { IBidder } from "@/models/usersModels/types/bidderTypes";
+import { useTranslations } from "next-intl";
+import moment from "moment";
 
+interface transactionTableDataType {
+  amount: number;
+  date: Date;
+  reciever: string;
+  context: string;
+}
 interface Props {
   setBidders?: (value: IBidder[] | undefined) => void;
   refresh?: boolean;
@@ -23,6 +30,9 @@ export default function BidderInformationsModal({
     setBidderInformationsModalState,
     setBidder,
   } = useAdminStore();
+  const tableTitles = useTranslations("bidder.transactionTableTitles");
+  const tableText = useTranslations("bidder.transactions");
+
   async function updateBidderStatus() {
     setLoading(true);
 
@@ -42,6 +52,42 @@ export default function BidderInformationsModal({
     }
     setLoading(false);
   }
+  const transactionTableColumns: TableColumnsType<transactionTableDataType> = [
+    {
+      title: tableTitles("context"),
+      render: (_, record) => {
+        return tableText(record.context);
+      },
+      key: "context",
+    },
+    {
+      title: tableTitles("amount"),
+      render: (_, record, index) => {
+        return <div key={index}>{record.amount}$</div>;
+      },
+      sorter: {
+        compare: (a, b) => a.amount - b.amount,
+      },
+      key: "amount",
+    },
+    {
+      title: tableTitles("date"),
+      key: "date",
+      width: 250,
+      render: (_, record, index) => {
+        return (
+          <div key={index}>
+            {moment(record.date).format("ddd, MMM D, YYYY [at] h:mm A")}
+          </div>
+        );
+      },
+    },
+    {
+      title: tableTitles("to"),
+      dataIndex: "reciever",
+      key: "reciever",
+    },
+  ];
   return (
     <Modal
       title="Bidder Information"

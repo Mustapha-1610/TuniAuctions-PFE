@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
-import { Table, TableColumnsType, TableProps } from "antd";
+import { Table, TableColumnsType } from "antd";
 import moment from "moment";
 import { useTranslations } from "next-intl";
 
