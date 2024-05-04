@@ -40,16 +40,11 @@ export async function PUT(request: NextRequest) {
         await bidderModel.findByIdAndUpdate(delivery.bidderId, {
           $push: {
             notifications: {
-              notificationMessage:
-                delivery.productInformations.productName +
-                " delivery will arrive between " +
-                fromDate +
-                " to " +
-                toDate,
+              notificationMessage: "deliveryShipmentSuccessfull",
               context: {
                 receptionDate: new Date(),
-                frontContext: "deliveryShipment",
-                notificationIcon: delivery.productInformations.productPicture,
+                frontContext: "deliveryShipmentSuccessfull",
+                notificationIcon: fromDate + ", " + toDate,
               },
             },
           },

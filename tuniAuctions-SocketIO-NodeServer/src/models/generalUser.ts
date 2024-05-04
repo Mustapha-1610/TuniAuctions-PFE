@@ -48,6 +48,7 @@ const generalSchema = new Schema({
           type: Schema.Types.ObjectId,
         },
         notificationIcon: { type: String },
+        displayName: { type: String },
       },
       readStatus: {
         type: Boolean,
@@ -78,6 +79,9 @@ const generalSchema = new Schema({
   socketId: {
     type: String,
     required: true,
+  },
+  jionedAt: {
+    type: Date,
   },
 });
 

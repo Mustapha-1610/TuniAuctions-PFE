@@ -20,16 +20,17 @@ export async function POST(request: NextRequest) {
         res.bidderAccount.transactions.push({
           amount,
           date: new Date(),
-          context: "Balance Increase",
+          context: "balanceIncrease",
           reciever: "Tuni-Auctions",
         });
         res.bidderAccount.notifications.push({
-          notificationMessage: "Transaction Successfull For " + amount + " $",
+          notificationMessage: "transactionSuccessfull",
           context: {
-            frontContext: "Transaction",
+            frontContext: "transactionSuccessfull",
             receptionDate: new Date(),
             notificationIcon:
               "https://firebasestorage.googleapis.com/v0/b/tunisianauctionwebapp.appspot.com/o/CircularReducedSizeTuniAuctionsLogo.png?alt=media&token=e5c93487-fd34-4e62-9602-964b3d0392fe",
+            displayName: amount,
           },
         });
         await res.bidderAccount.save();

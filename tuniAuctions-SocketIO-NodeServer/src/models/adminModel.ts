@@ -30,13 +30,11 @@ const adminSchema = new Schema({
         frontContext: {
           type: String,
         },
-        displayName: {
-          type: String,
-        },
         contextId: {
           type: Schema.Types.ObjectId,
         },
         notificationIcon: { type: String },
+        displayName: { type: String },
       },
       readStatus: {
         type: Boolean,

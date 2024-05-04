@@ -22,18 +22,18 @@ export async function PUT(request: NextRequest) {
         res.sellerAccount.packageCount[pricing.name] += pricing.listingsCount;
         res.sellerAccount.transactions.push({
           amount: pricing.price,
-          context: pricing.name + " Package Payment",
+          context: "packagePayment",
           date: new Date(),
           reciever: "Tuni-Auctions",
         });
         res.sellerAccount.notifications.push({
-          notificationMessage:
-            "Payment Successfull for " + pricing.name + " package",
+          notificationMessage: "packagePayment",
           context: {
             receptionDate: new Date(),
             frontContext: "packagePayment",
             notificationIcon:
               "https://firebasestorage.googleapis.com/v0/b/tunisianauctionwebapp.appspot.com/o/CircularReducedSizeTuniAuctionsLogo.png?alt=media&token=e5c93487-fd34-4e62-9602-964b3d0392fe",
+            displayName: pricing.name,
           },
         });
         await platformModel.findOneAndUpdate(

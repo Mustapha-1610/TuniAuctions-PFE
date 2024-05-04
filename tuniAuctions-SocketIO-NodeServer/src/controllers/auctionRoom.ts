@@ -77,14 +77,12 @@ export async function end(req: express.Request, response: express.Response) {
         const bidder = await bidderModel.findByIdAndUpdate(value.bidderId, {
           $push: {
             notifications: {
-              notificationMessage:
-                "Auction room ended for " +
-                auction.title +
-                " auction, Thank you for your participation",
+              notificationMessage: "auctionEnded",
               context: {
                 receptionDate: new Date(),
                 frontContext: "auctionEnded",
                 notificationIcon: auction.productPictures[0],
+                displayName: auction.title,
               },
             },
           },
@@ -119,18 +117,17 @@ export async function end(req: express.Request, response: express.Response) {
             "createdAuctions.finished": auction._id,
             "deliveries.pending": delivery._id,
             notifications: {
-              notificationMessage:
-                "Auction room ended for " + auction.title + " auction",
+              notificationMessage: "auctionEnded",
               context: {
                 receptionDate: new Date(),
                 frontContext: "auctionEnded",
-                contextId: auction._id,
                 notificationIcon: auction.productPictures[0],
+                displayName: auction.title,
               },
             },
             transactions: {
               amount: winningBidder.winningPrice - platformFees,
-              context: "Auction Payment",
+              context: "auctionPayment",
               date: new Date(),
               reciever: "Me",
             },
@@ -169,19 +166,19 @@ export async function end(req: express.Request, response: express.Response) {
         $push: {
           transactions: {
             amount: winningBidder.winningPrice,
-            context: "Auction Payment",
+            context: "auctionPayment",
             date: new Date(),
             reciever: seller.name,
           },
           "deliveries.pending": delivery._id,
           notifications: {
-            notificationMessage:
-              "Congratulations on winning  " + auction.title + " auction!",
+            notificationMessage: "auctionWin",
             context: {
               receptionDate: new Date(),
               frontContext: "auctionWin",
               contextId: auction._id,
               notificationIcon: auction.productPictures[0],
+              displayName: auction.title,
             },
           },
         },

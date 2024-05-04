@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import mongoose, { Document } from "mongoose";
+import { Document } from "mongoose";
 
 export interface platformModelType extends Document {
   earnings: number;
@@ -12,8 +12,8 @@ export interface platformModelType extends Document {
     context: string;
   }[];
   packagesBought: {
-    standard: number;
-    premium: number;
+    Standard: number;
+    Premium: number;
     [key: string]: number;
   };
 }

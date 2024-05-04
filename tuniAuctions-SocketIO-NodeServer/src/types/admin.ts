@@ -1,10 +1,15 @@
 import { ObjectId } from "mongodb";
 import mongoose, { Document } from "mongoose";
 interface NotificationContext {
-  receptionDate: Date;
-  frontContext: string;
-  contextId?: mongoose.Types.ObjectId;
-  notificationIcon: string;
+  notificationMessage: string;
+  context: {
+    receptionDate: Date;
+    frontContext?: string;
+    contextId: string;
+    notificationIcon: string;
+    displayName: string;
+  };
+  readStatus: boolean;
 }
 
 export interface adminModelType extends Document {

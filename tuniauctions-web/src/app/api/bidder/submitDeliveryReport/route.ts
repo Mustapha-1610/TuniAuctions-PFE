@@ -1,6 +1,7 @@
 import { connect } from "@/db/dbConfig";
 import deliveryModel from "@/models/auctionListingModels/deliveryModel";
 import { DeliveryType } from "@/models/types/delivery";
+import sellerModel from "@/models/usersModels/sellerModel";
 import { verifyBidderTokens } from "@/security/apiProtection/bidder/routeProtection";
 import {
   serverErrorHandler,
@@ -29,6 +30,17 @@ export async function PUT(request: NextRequest) {
           { new: true } // This option makes sure the updated document is returned
         );
       if (delivery) {
+        await sellerModel.findByIdAndUpdate(delivery.sellerId, {
+          $push: {
+            notificationMessage: "deliveryReport",
+            context: {
+              receptionDate: new Date(),
+              frontContext: "deliveryReport",
+              notificationIcon: delivery.productInformations.productPicture,
+              displayName: delivery.productInformations.productName,
+            },
+          },
+        });
         return NextResponse.json({ success: true, delivery });
       } else {
         return NextResponse.json({ success: false });

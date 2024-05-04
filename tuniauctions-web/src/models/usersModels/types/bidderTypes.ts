@@ -39,6 +39,7 @@ export interface IBidder extends Document {
       frontContext: string;
       contextId?: mongoose.Types.ObjectId;
       notificationIcon: string;
+      displayName?: string;
     };
     readStatus?: boolean;
   }[];
@@ -82,6 +83,7 @@ export interface IBidderFrontData {
       frontContext: string;
       contextId?: mongoose.Types.ObjectId;
       notificationIcon: string;
+      displayName?: string;
     };
     readStatus?: boolean;
   }[];

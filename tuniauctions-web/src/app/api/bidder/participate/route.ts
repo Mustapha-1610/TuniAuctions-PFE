@@ -34,15 +34,13 @@ export async function POST(request: NextRequest) {
           res.bidderAccount.auctionReferences.upcoming.push(auctionListing._id);
           res.bidderAccount.notifications.push({
             context: {
-              frontContext: "auctionParticipation",
+              frontContext: "confirmAuctionParticipation",
               notificationIcon: auctionListing.productPictures[0],
               receptionDate: new Date(),
               contextId: auctionListing._id,
+              displayName: auctionListing.title,
             },
-            notificationMessage:
-              "Confirmed participation for " +
-              auctionListing.title +
-              " auction",
+            notificationMessage: "confirmAuctionParticipation",
             readStatus: false,
           });
           await auctionListing.save(), await res.bidderAccount.save();

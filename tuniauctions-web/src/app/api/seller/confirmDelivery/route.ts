@@ -26,14 +26,13 @@ export async function PUT(request: NextRequest) {
         await bidderModel.findByIdAndUpdate(delivery.bidderId, {
           $push: {
             notifications: {
-              notificationMessage:
-                delivery.productInformations.productName +
-                " auction product has been delivered successfully !",
+              notificationMessage: "deliverySuccessfull",
               context: {
                 receptionDate: new Date(),
-                frontContext: "successfullDelivery",
+                frontContext: "deliverySuccessfull",
                 contextId: delivery._id,
                 notificationIcon: delivery.productInformations.productPicture,
+                displayName: delivery.productInformations.productName,
               },
             },
             "deliveries.delivered": delivery._id,

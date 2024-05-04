@@ -28,4 +28,9 @@ export interface DeliveryType extends Document {
     productPicture: string;
   };
   sellerReview: boolean;
+  report: {
+    subject: string;
+    description: string;
+    attachments: string[];
+  };
 }

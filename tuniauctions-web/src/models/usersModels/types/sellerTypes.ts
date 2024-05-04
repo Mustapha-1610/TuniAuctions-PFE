@@ -39,11 +39,13 @@ interface NotificationContext {
   frontContext: string;
   contextId?: mongoose.Types.ObjectId;
   notificationIcon: string;
+  displayName?: string;
 }
 
 interface Notification {
   notificationMessage: string;
   context: NotificationContext;
+  readStatus?: boolean;
 }
 
 export interface sellerTransactions {

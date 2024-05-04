@@ -16,7 +16,7 @@ import {
   standardListingInfos,
 } from "./zodSchema/auctionListingSchema";
 import { returnSellerFrontData } from "../helpers/returnSellerFrontData";
-
+import moment from "moment";
 import nodeSchedule from "node-schedule";
 import sellerModel from "../models/sellerModel";
 import { ISeller } from "../types/sellerTypes";
@@ -196,17 +196,10 @@ export async function scheduleAuctionStart(newAuction: AuctionListingType) {
       nodeSchedule.scheduleJob(newAuction.startingDate, async () => {
         const resfreshedAuction: AuctionListingType =
           await auctionListingModel.findById(newAuction._id);
-        console.log(
-          resfreshedAuction.participatingBidders.length,
-          resfreshedAuction.minParticipatingBidders,
-          "Participating"
-        );
         if (
           resfreshedAuction.participatingBidders.length <
           resfreshedAuction.minParticipatingBidders
         ) {
-          console.log("made it here");
-
           await handleReSchedule(resfreshedAuction);
         } else {
           await handleStart(resfreshedAuction);
@@ -214,7 +207,6 @@ export async function scheduleAuctionStart(newAuction: AuctionListingType) {
       });
       return true;
     } else {
-      console.log(newAuction + "ERROR");
       return true;
     }
   } catch (err) {
@@ -235,19 +227,32 @@ async function handleReSchedule(auctionlisting: AuctionListingType) {
       auctionlisting.startingDate = newStartingDate;
       await auctionlisting.save();
       auctionlisting.participatingBidders.map(async (value) => {
-        console.log("so far so good");
         const bidder = await bidderModel.findByIdAndUpdate(value.bidderId, {
           $push: {
             notifications: {
-              notificationMessage:
-                auctionlisting.title +
-                " auction has been delayed for 3 days due to minimum participating bidders treshhold not being met",
+              notificationMessage: "auctionDelayed",
               context: {
                 receptionDate: new Date(),
-                frontContext: "auctionDelay",
+                frontContext: "auctionDelayed",
                 contextId: auctionlisting._id,
                 notificationIcon: auctionlisting.productPictures[0],
+                displayName: moment(newStartingDate).format(
+                  "ddd, MMM D, YYYY [at] h:mm A"
+                ),
               },
+            },
+          },
+        });
+        await sellerModel.findByIdAndUpdate(auctionlisting.sellerId, {
+          $push: {
+            notificationMessage: "auctionDelayed",
+            context: {
+              receptionDate: new Date(),
+              frontContext: "auctionDelayed",
+              notificationIcon: auctionlisting.productPictures[0],
+              displayName: moment(newStartingDate).format(
+                "ddd, MMM D, YYYY [at] h:mm A"
+              ),
             },
           },
         });
@@ -267,15 +272,29 @@ async function handleReSchedule(auctionlisting: AuctionListingType) {
         const bidder = await bidderModel.findByIdAndUpdate(value.bidderId, {
           $push: {
             notifications: {
-              notificationMessage:
-                auctionlisting.title +
-                " auction has been delayed for a week due to minimum participating bidders treshhold not being met",
+              notificationMessage: "auctionDelayed",
               context: {
                 receptionDate: new Date(),
-                frontContext: "auctionDelay",
+                frontContext: "auctionDelayed",
                 contextId: auctionlisting._id,
                 notificationIcon: auctionlisting.productPictures[0],
+                displayName: moment(newStartingDate).format(
+                  "ddd, MMM D, YYYY [at] h:mm A"
+                ),
               },
+            },
+          },
+        });
+        await sellerModel.findByIdAndUpdate(auctionlisting.sellerId, {
+          $push: {
+            notificationMessage: "auctionDelayed",
+            context: {
+              receptionDate: new Date(),
+              frontContext: "auctionDelayed",
+              notificationIcon: auctionlisting.productPictures[0],
+              displayName: moment(newStartingDate).format(
+                "ddd, MMM D, YYYY [at] h:mm A"
+              ),
             },
           },
         });
@@ -305,13 +324,13 @@ async function handleStart(auctionlisting: AuctionListingType) {
       {
         $push: {
           notifications: {
-            notificationMessage:
-              "Auction room started for " + auctionlisting.title + " auction",
+            notificationMessage: "auctionStart",
             context: {
               receptionDate: new Date(),
-              frontContext: "auctionRoomStart",
+              frontContext: "auctionStart",
               contextId: auctionlisting._id,
               notificationIcon: auctionlisting.productPictures[0],
+              displayName: auctionlisting.title,
             },
           },
         },
@@ -321,6 +340,20 @@ async function handleStart(auctionlisting: AuctionListingType) {
         },
       }
     );
+    await sellerModel.findByIdAndUpdate(auctionlisting.sellerId, {
+      $push: {
+        notifications: {
+          notificationMessage: "auctionStart",
+          context: {
+            receptionDate: new Date(),
+            frontContext: "auctionStart",
+            contextId: auctionlisting._id,
+            notificationIcon: auctionlisting.productPictures[0],
+            displayName: auctionlisting.title,
+          },
+        },
+      },
+    });
     bidderNameSpace.emit("refreshData", {
       bidderSocketId: bidder.socketId,
     });

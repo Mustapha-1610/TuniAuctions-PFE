@@ -146,5 +146,30 @@
     "notifications": {
       "auctionStart": "Salle de d'enchères démarrée pour : "
     }
+  },
+  "bidder": {
+    "notifications": {
+      "transactionSuccessfull": "Paiement réussie pour $",
+      "auctionDelayed": "En raison du seuil minimum de participation des enchérisseurs non atteint, l'enchère a été retardée à : ",
+      "auctionStart": "Salle d'enchères commencée pour : ",
+      "auctionEnded": "Merci pour votre participation, salle d'enchères terminée pour : ",
+      "auctionWin": "Félicitations pour avoir remporté l'enchère pour : ",
+      "confirmAuctionParticipation": "Participation confirmée pour : ",
+      "deliverySuccessfull": "Livraison réussie du produit pour : ",
+      "deliveryShipmentSuccessfull": "Expédition de livraison confirmée, le produit arrivera entre : "
+    },
+    "transactions": {
+      "auctionPayment": "Paiement d'enchères",
+      "balanceIncrease": "Augmentation du solde"
+    }
+  },
+  "seller": {
+    "notifications": {
+      "packagePayment": "Paiement réussie pour le colis : ",
+      "auctionDelayed": "En raison du seuil minimum de participation des enchérisseurs non atteint, l'enchère a été retardée à : ",
+      "auctionStart": "Salle d'enchères commencée pour : ",
+      "auctionEnded": "Salle d'enchères terminée pour : ",
+      "deliveryReport": "Un rapport a été soumis sur la livraison pour : "
+    }
   }
 }

@@ -146,5 +146,36 @@
     "notifications": {
       "auctionStart": "Auction Room Started For : "
     }
+  },
+  "bidder": {
+    "notifications": {
+      "transactionSuccessfull": "Payment successfull for $",
+      "auctionDelayed": "Due to minimum bidder participation threshhold not being met, auction have been delayed to :",
+      "auctionStart": "Auction room started for : ",
+      "auctionEnded": "Thank you for your participation, auction room ended for : ",
+      "auctionWin": "Congratulations on winning auction for : ",
+      "confirmAuctionParticipation": "Confirmed participation for : ",
+      "deliverySuccessfull": "Successfull product delivery for : ",
+      "deliveryShipmentSuccessfull": "Delivery shipment confirmed, product will arive between : "
+    },
+    "transactions": {
+      "auctionPayment": "Auction payment",
+      "balanceIncrease": "Balance increase"
+    },
+    "transactionTableTitles": {
+      "context": "Context",
+      "amount": "Amount",
+      "date": "Date",
+      "to": "To"
+    }
+  },
+  "seller": {
+    "notifications": {
+      "packagePayment": "Payment successfull for package : ",
+      "auctionDelayed": "Due to minimum bidder participation threshhold not being met, auction have been delayed to :",
+      "auctionStart": "Auction room started for : ",
+      "auctionEnded": "Auction room ended for : ",
+      "deliveryReport": "A report has been submitted on delivery for : "
+    }
   }
 }

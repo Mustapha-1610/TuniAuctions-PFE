@@ -146,5 +146,30 @@
     "notifications": {
       "auctionStart": "تم بدء غرفة المزاد لـ : "
     }
+  },
+  "bidder": {
+    "notifications": {
+      "transactionSuccessfull": "تمت الدفع بنجاح لـ $",
+      "auctionDelayed": "نظرًا لعدم تحقيق الحد الأدنى لمشاركة المزايدين، تم تأجيل المزاد إلى: ",
+      "auctionStart": "بدء غرفة المزاد لـ: ",
+      "auctionEnded": "شكرًا لمشاركتك، انتهت غرفة المزاد لـ: ",
+      "auctionWin": "تهانينا على الفوز بالمزاد على: ",
+      "confirmAuctionParticipation": "تأكيد المشاركة في المزاد لـ: ",
+      "deliverySuccessfull": "تم تسليم المنتج بنجاح لـ: ",
+      "deliveryShipmentSuccessfull": "تم تأكيد شحن التسليم، سيصل المنتج بين: "
+    },
+    "transactions": {
+      "auctionPayment": "دفع المزاد",
+      "balanceIncrease": "زيادة الرصيد"
+    }
+  },
+  "seller": {
+    "notifications": {
+      "packagePayment": "تم الدفع بنجاح للطرد: ",
+      "auctionDelayed": "نظرًا لعدم تحقيق الحد الأدنى لمشاركة المزايدين، تم تأجيل المزاد إلى: ",
+      "auctionStart": "بدء غرفة المزاد لـ: ",
+      "auctionEnded": "انتهت غرفة المزاد لـ: ",
+      "deliveryReport": "تم تقديم تقرير عن التسليم لـ: "
+    }
   }
 }

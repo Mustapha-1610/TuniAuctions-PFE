@@ -7,67 +7,43 @@ import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { useBidderNavigationStore } from "@/helpers/store/bidder/bidderNavigationStore";
 import { useRouter } from "next/navigation";
+import { ISellerFrontData } from "@/models/usersModels/types/sellerTypes";
 
 interface Props {
-  bidderData: IBidderFrontData | null;
-  setNotificationsMenuState: () => void;
+  sellerData: ISellerFrontData | null;
+  setNotificationsMenuState: (value: boolean) => void;
 }
 
-export default function Notifications({
-  bidderData,
+export default function SellerNotificationsMenu({
+  sellerData,
   setNotificationsMenuState,
 }: Props) {
   const locale = useLocale();
   const router = useRouter();
-  const {
-    setSelectedProfileComponent,
-    setSelectedBalanceComponent,
-    setSelectedDashboardComponent,
-  } = useBidderNavigationStore();
+
   function handleNotificationRouting(context: string, contextId?: string) {
-    if (context === "transactionSuccessfull") {
-      setSelectedBalanceComponent("transactions");
-      router.push(`/${locale}/bidder/balance`);
-    } else if (context === "auctionStart" && contextId) {
-      router.push(`/${locale}/bidder/auctionRoom/${contextId}`);
-    } else if (context === ("auctionDelayed" || "auctionEnded") && contextId) {
-      router.push(`/${locale}/bidder/auctionDetails/${contextId}`);
-    } else if (context === "confirmAuctionParticipation" && contextId) {
-      setSelectedDashboardComponent("Deliveries");
-      router.push(`/${locale}/bidder/dashboard`);
-    } else if (
-      context ===
-        ("auctionWin" ||
-          "deliverySuccessfull" ||
-          "deliveryShipmentSuccessfull") &&
-      contextId
-    ) {
-      setSelectedDashboardComponent("Deliveries");
-      router.push(`/${locale}/bidder/dashboard`);
-    }
-    setNotificationsMenuState();
+    setNotificationsMenuState(false);
   }
-  const notificationTranslations = useTranslations("bidder.notifications");
+  const notificationTranslations = useTranslations("seller.notifications");
 
   return (
     <>
-      <div className="absolute mt-4 left-3/3 transform -translate-x-2/3 bg-white text-black border border-netral-200 rounded-md shadow-lg max-w-xl z-10">
+      <div className="absolute mt-4 left-9/10 transform -translate-x-2/3 bg-white text-black border border-netral-200 rounded-md shadow-lg max-w-xl z-10">
         <div className="py-2 px-3 border-b border-gray-300 font-bold flex justify-between items-center">
           <span>Notifications</span>
           <Link
             href={`/${locale}/bidder/profile`}
             className="cursor-pointer text-sm text-gray-500"
             onClick={() => {
-              setNotificationsMenuState();
-              setSelectedProfileComponent("notifications");
+              setNotificationsMenuState(false);
             }}
           >
             View All
           </Link>
         </div>
         <div className="h-72 w-80 overflow-y-auto">
-          {bidderData?.notifications &&
-            bidderData.notifications.map((value, index) => {
+          {sellerData?.notifications &&
+            sellerData.notifications.map((value, index) => {
               return (
                 <div
                   className="p-3 hover:bg-gray-100 cursor-pointer flex items-center"

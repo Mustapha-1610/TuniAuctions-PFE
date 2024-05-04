@@ -48,6 +48,7 @@ const generalSchema = new Schema({
           type: Schema.Types.ObjectId,
         },
         notificationIcon: { type: String },
+        displayName: { type: String },
       },
       readStatus: {
         type: Boolean,

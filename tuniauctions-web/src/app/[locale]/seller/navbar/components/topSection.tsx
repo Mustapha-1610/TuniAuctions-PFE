@@ -3,6 +3,8 @@ import { useSellerNavbarStore } from "@/helpers/store/sellerNavbarState";
 import { MdNotifications } from "react-icons/md";
 import Link from "next/link";
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
+import { useState } from "react";
+import SellerNotificationsMenu from "./notifications";
 export default function TopSellerNavbarSection() {
   const isSideBarOpenTest = useSellerNavbarStore(
     (state: any) => state.isSideBarOpen
@@ -11,6 +13,7 @@ export default function TopSellerNavbarSection() {
     (state: any) => state.changeSideBarState
   );
   const { sellerLocaleStorageData } = useSellerProfileStore();
+  const [isNotificationsMenuOpen, setNotificationsMenuState] = useState(false);
   return (
     <>
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -79,18 +82,34 @@ export default function TopSellerNavbarSection() {
               <div className="relative">
                 <div
                   className="cursor-pointer"
-                  onClick={() => console.log("Notifications clicked")} // Replace with actual click handler
+                  onClick={() =>
+                    setNotificationsMenuState(!isNotificationsMenuOpen)
+                  } // Replace with actual click handler
                 >
-                  {sellerLocaleStorageData?.notifications.length! > 0 && (
-                    <div className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center">
-                      <span className="text-sm font-bold">
-                        {sellerLocaleStorageData?.notifications.length}
-                      </span>
-                    </div>
-                  )}
+                  {sellerLocaleStorageData &&
+                    sellerLocaleStorageData.notifications.filter(
+                      (notification: any) => !notification.readStatus
+                    ).length > 0 && (
+                      <>
+                        <div className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center">
+                          <span className="text-sm font-bold">
+                            {
+                              sellerLocaleStorageData.notifications.filter(
+                                (notification: any) => !notification.readStatus
+                              ).length
+                            }
+                          </span>
+                        </div>
+                      </>
+                    )}
                   <MdNotifications color="white" size={25} />
                 </div>
-                {/* Notification Menu - example content */}
+                {isNotificationsMenuOpen && (
+                  <SellerNotificationsMenu
+                    sellerData={sellerLocaleStorageData}
+                    setNotificationsMenuState={setNotificationsMenuState}
+                  />
+                )}
               </div>
               {/* Profile Picture */}
               <Link href={"/en/seller/profile"} className="relative">
