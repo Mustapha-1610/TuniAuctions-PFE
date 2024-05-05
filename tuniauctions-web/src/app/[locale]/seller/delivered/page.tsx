@@ -12,14 +12,14 @@ import { useSellerStore } from "@/helpers/store/seller/sellerStore";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import SellerAuctionListingModal from "../modals/auctionListingModal";
+import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
 
 export default function DeliveredDeliveriesPage() {
   const [tableData, setTableData] = useState<DeliveryType[] | undefined>();
+  const { sellerLocaleStorageData } = useSellerProfileStore();
   const {
     isUpcomingAuctionModalOpen,
     auction,
-    setDelivery,
-    setDeliveryModalState,
     setAuction,
     setUpcomingAucitonModalState,
   } = useSellerStore();
@@ -27,6 +27,8 @@ export default function DeliveredDeliveriesPage() {
 
   useEffect(() => {
     async function getDeliveries() {
+      setLoading(true);
+
       const res = await fetch("/api/seller/fetchDeliveriedDeliveries", {
         method: "POST",
       });
@@ -34,6 +36,7 @@ export default function DeliveredDeliveriesPage() {
       if (resData) {
         setTableData(resData);
       }
+      setLoading(false);
     }
     getDeliveries();
   }, []);
@@ -53,7 +56,7 @@ export default function DeliveredDeliveriesPage() {
   const columns: TableColumnsType<DeliveryType> = [
     {
       title: "Product Name",
-      width: 80,
+      width: 190,
       align: "center",
       render: (_, value) => {
         return value.productInformations.productName;
@@ -132,7 +135,7 @@ export default function DeliveredDeliveriesPage() {
         className="h-full w-11/12   relative overflow-y-auto lg:ml-64"
       >
         <div className="flex items-center mb-2">
-          <h1 className="text-2xl font-bold mb-2 mr-2">Delivered</h1>
+          <h1 className="text-2xl font-bold mb-2 mr-2">Delivered Deliveries</h1>
           <IoMdCheckmarkCircle size={30} />
         </div>
         <div className="mb-4 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -140,7 +143,8 @@ export default function DeliveredDeliveriesPage() {
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <span className="text-2xl sm:text-3xl leading-none font-bold text-white">
-                  2,340
+                  {sellerLocaleStorageData &&
+                    sellerLocaleStorageData.deliveries.delivered.length}
                 </span>
                 <h3 className="text-base text-white font-normal ">
                   Delivered Products
@@ -157,6 +161,7 @@ export default function DeliveredDeliveriesPage() {
           spinning={loading}
         >
           <Table
+            className="mr-1"
             columns={columns}
             dataSource={tableData}
             scroll={{ x: 800 }}

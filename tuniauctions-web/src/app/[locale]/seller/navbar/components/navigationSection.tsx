@@ -3,7 +3,7 @@ import { useLocale } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
 import { BiSolidBadgeDollar } from "react-icons/bi";
-import { FaHandHoldingDollar } from "react-icons/fa6";
+import { FaCircleExclamation, FaHandHoldingDollar } from "react-icons/fa6";
 import { TbTruckDelivery } from "react-icons/tb";
 import { RiAuctionFill } from "react-icons/ri";
 import {
@@ -49,9 +49,13 @@ export default function NavigationSection({ navigationTranslation }: Props) {
   ]; // replace with your actual locales
   const toggleEarningsDropdown = () => {
     setIsEarningsDropdownOpen(!isEarningsDropdownOpen);
+    setIsDeliveriesDropdown(false);
+    setIsLanguageDropdownOpen(false);
   };
   const toggleDeliveriesDropdown = () => {
     setIsDeliveriesDropdown(!isDeliveriesDropdown);
+    setIsEarningsDropdownOpen(false);
+    setIsLanguageDropdownOpen(false);
   };
   const pathname = usePathname();
   const router = useRouter();
@@ -79,6 +83,11 @@ export default function NavigationSection({ navigationTranslation }: Props) {
       console.log(err);
     }
   }
+  function handleNavigation() {
+    setIsDeliveriesDropdown(false);
+    setIsEarningsDropdownOpen(false);
+    setIsLanguageDropdownOpen(false);
+  }
   return (
     <>
       <ul className="space-y-2 pb-2">
@@ -86,22 +95,11 @@ export default function NavigationSection({ navigationTranslation }: Props) {
           <Link
             href={"/" + locale + "/seller"}
             className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
+            onClick={handleNavigation}
           >
             <MdDashboardCustomize size={30} />
             <span className="ml-3 flex-1 whitespace-nowrap">
               {navigationTranslation.Dashboard}
-            </span>
-          </Link>
-        </li>
-        <li>
-          <Link
-            href={"/" + locale + "/seller/earnings"}
-            className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
-          >
-            <FaHandHoldingDollar size={32} />
-
-            <span className="ml-3 flex-1 whitespace-nowrap">
-              {navigationTranslation.Earnings}
             </span>
           </Link>
         </li>
@@ -134,6 +132,7 @@ export default function NavigationSection({ navigationTranslation }: Props) {
                 <Link
                   href={"/" + locale + "/seller/auctionListings"}
                   className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
+                  onClick={handleNavigation}
                 >
                   <MdFormatListBulleted size={28} />
 
@@ -146,6 +145,7 @@ export default function NavigationSection({ navigationTranslation }: Props) {
                 <Link
                   href={"/" + locale + "/seller/createListing"}
                   className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
+                  onClick={handleNavigation}
                 >
                   <IoIosCreate size={32} />
                   <span className="ml-2">
@@ -186,6 +186,7 @@ export default function NavigationSection({ navigationTranslation }: Props) {
                 <Link
                   href={"/" + locale + "/seller/pendingDeliveries"}
                   className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
+                  onClick={handleNavigation}
                 >
                   <MdOutlinePendingActions size={32} />
                   <span className="ml-2">{navigationTranslation.Pending}</span>
@@ -195,11 +196,22 @@ export default function NavigationSection({ navigationTranslation }: Props) {
                 <Link
                   href={"/" + locale + "/seller/delivered"}
                   className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
+                  onClick={handleNavigation}
                 >
                   <MdChecklist size={30} />
                   <span className="ml-2">
                     {navigationTranslation.Delivered}
                   </span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={"/" + locale + "/seller/reported"}
+                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
+                  onClick={handleNavigation}
+                >
+                  <FaCircleExclamation size={30} />
+                  <span className="ml-2">Reported</span>
                 </Link>
               </li>
             </ul>
@@ -209,6 +221,7 @@ export default function NavigationSection({ navigationTranslation }: Props) {
           <Link
             href={"/" + locale + "/seller/transactions"}
             className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
+            onClick={handleNavigation}
           >
             <GrTransaction size={28} />
 
@@ -217,28 +230,33 @@ export default function NavigationSection({ navigationTranslation }: Props) {
             </span>
           </Link>
         </li>
+        <li>
+          <Link
+            href={"/" + locale + "/seller/pricing"}
+            className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
+            onClick={handleNavigation}
+          >
+            <BiSolidBadgeDollar size={32} />
+
+            <span className="ml-4"> {navigationTranslation.Pricing}</span>
+          </Link>
+        </li>
       </ul>
       <div className="space-y-2 pt-2">
         <Link
           href={"/" + locale + "/seller/profile"}
           className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
+          onClick={handleNavigation}
         >
           <CgProfile size={31} />
 
           <span className="ml-4"> {navigationTranslation.Profile}</span>
         </Link>
-        <Link
-          href={"/" + locale + "/seller/pricing"}
-          className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
-        >
-          <BiSolidBadgeDollar size={32} />
-
-          <span className="ml-4"> {navigationTranslation.Pricing}</span>
-        </Link>
         <a
           href="#"
           target="_blank"
           className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
+          onClick={handleNavigation}
         >
           <FaFileAlt size={29} />
 
@@ -248,6 +266,7 @@ export default function NavigationSection({ navigationTranslation }: Props) {
           href="#"
           target="_blank"
           className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
+          onClick={handleNavigation}
         >
           <GrHelpBook size={31} />
 
@@ -283,7 +302,9 @@ export default function NavigationSection({ navigationTranslation }: Props) {
                 <div
                   key={index}
                   className="text-base text-gray-900 font-bold  rounded-lg hover:bg-gray-100 flex items-center p-2 group"
-                  onClick={() => handleLanguageChange(locale.lang)}
+                  onClick={() => (
+                    handleLanguageChange(locale.lang), handleNavigation()
+                  )}
                 >
                   <div className="ml-2 flex items-center" key={index}>
                     <Image

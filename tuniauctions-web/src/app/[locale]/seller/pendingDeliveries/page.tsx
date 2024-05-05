@@ -2,9 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import type { TableColumnsType } from "antd";
-import { FaUserAlt } from "react-icons/fa";
-import { GrDeliver } from "react-icons/gr";
-import { TbCheckupList } from "react-icons/tb";
 import { MdPending } from "react-icons/md";
 import { sellerFetchDeliveriesType } from "@/app/api/seller/getDeliveries/route";
 import { DeliveryType } from "@/models/types/delivery";
@@ -38,6 +35,7 @@ export default function PendingDeliveriesPage() {
     useState<BidderSellerDeliveryInformationsData>();
   useEffect(() => {
     async function getDeliveies() {
+      setLoading(true);
       const res = await fetch("/api/seller/getDeliveries", {
         method: "POST",
       });
@@ -45,6 +43,7 @@ export default function PendingDeliveriesPage() {
       if (resData.pendingDeliveries) {
         setTableData(resData.pendingDeliveries);
       }
+      setLoading(false);
     }
     getDeliveies();
   }, []);
@@ -204,30 +203,26 @@ export default function PendingDeliveriesPage() {
           className="h-full w-11/12  relative overflow-y-auto lg:ml-64"
         >
           <div className="flex items-center mb-2">
-            <h1 className="text-2xl font-bold mb-2 mr-2">Pending</h1>
+            <h1 className="text-2xl font-bold mb-2 mr-2">Pending Deliveries</h1>
             <MdPending size={30} />
           </div>
 
-          {tableData && (
-            <>
-              <Spin
-                indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
-                spinning={loading}
-              >
-                <Table
-                  columns={columns}
-                  dataSource={tableData}
-                  scroll={{ x: 800 }}
-                  pagination={{
-                    position: ["bottomCenter"],
-                    pageSize: 10,
-                  }}
-                  className="mr-2"
-                  bordered
-                />
-              </Spin>
-            </>
-          )}
+          <Spin
+            indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
+            spinning={loading}
+          >
+            <Table
+              columns={columns}
+              dataSource={tableData}
+              scroll={{ x: 800 }}
+              pagination={{
+                position: ["bottomCenter"],
+                pageSize: 10,
+              }}
+              className="mr-2"
+              bordered
+            />
+          </Spin>
         </div>
       </div>
       {confirmDelivery && (
