@@ -11,7 +11,7 @@ export default async function Dashboard() {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/fetchHomePageSection`,
     {
-      method: "GET",
+      method: "POST",
       cache: "no-cache",
     }
   );

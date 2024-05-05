@@ -1,7 +1,21 @@
+"use client";
+import React from "react";
+import moment from "moment";
+import { useLocale, useTranslations } from "next-intl";
+import Link from "next/link";
+import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
+
 export default function LatestTransactionsSection() {
+  const tableTranslations = useTranslations("seller.transactions");
+  const tableHeaderTranslations = useTranslations(
+    "seller.transactionTableTitles"
+  );
+  const locale = useLocale();
+  const { sellerLocaleStorageData } = useSellerProfileStore();
+
   return (
     <>
-      <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+      <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 border">
         <div className="mb-4 flex items-center justify-between">
           <div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">
@@ -12,12 +26,12 @@ export default function LatestTransactionsSection() {
             </span>
           </div>
           <div className="flex-shrink-0">
-            <a
-              href="#"
+            <Link
+              href={`/${locale}/seller/transactions`}
               className="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg p-2"
             >
               View all
-            </a>
+            </Link>
           </div>
         </div>
         <div className="flex flex-col mt-4">
@@ -31,111 +45,46 @@ export default function LatestTransactionsSection() {
                         scope="col"
                         className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
-                        Transaction Nature
+                        {tableHeaderTranslations("context")}
                       </th>
                       <th
                         scope="col"
                         className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
-                        Date & Time
+                        {tableHeaderTranslations("date")}
                       </th>
                       <th
                         scope="col"
                         className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
-                        Amount
+                        {tableHeaderTranslations("amount")}
                       </th>
                     </tr>
                   </thead>
                   <tbody className="bg-white">
-                    <tr>
-                      <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                        Payed
-                      </td>
-                      <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                        Apr 23 ,2024
-                      </td>
-                      <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                        $2300
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                        Recieved
-                      </td>
-                      <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                        Mar 07 ,2023
-                      </td>
-                      <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                        $2300
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                        Recieved
-                      </td>
-                      <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                        Jan 08 ,2021
-                      </td>
-                      <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                        $2300
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                        Recieved
-                      </td>
-                      <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                        Jan 08 ,2021
-                      </td>
-                      <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                        $2300
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                        Recieved
-                      </td>
-                      <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                        Jan 08 ,2021
-                      </td>
-                      <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                        $2300
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                        Recieved
-                      </td>
-                      <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                        Jan 08 ,2021
-                      </td>
-                      <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                        $2300
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                        Recieved
-                      </td>
-                      <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                        Jan 08 ,2021
-                      </td>
-                      <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                        $2300
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                        Recieved
-                      </td>
-                      <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                        Jan 08 ,2021
-                      </td>
-                      <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                        $2300
-                      </td>
-                    </tr>
+                    {sellerLocaleStorageData &&
+                      sellerLocaleStorageData.transactions
+                        .reverse()
+                        .slice(0, 8)
+                        .map((item, index) => {
+                          return (
+                            <React.Fragment key={index}>
+                              <tr>
+                                <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                                  {tableTranslations(item.context)}
+                                </td>
+                                <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                                  {moment(item.date).format(
+                                    "ddd, MMM D, YYYY [at] h:mm A"
+                                  )}
+                                </td>
+                                <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                  ${item.amount}
+                                </td>
+                              </tr>
+                            </React.Fragment>
+                          );
+                        })}
                   </tbody>
                 </table>
               </div>

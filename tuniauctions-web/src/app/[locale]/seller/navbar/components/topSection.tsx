@@ -57,12 +57,7 @@ export default function TopSellerNavbarSection() {
               href="#"
               className="text-xl font-bold flex items-center lg:ml-2.5"
             >
-              <img
-                src="https://demo.themesberg.com/windster/images/logo.svg"
-                className="h-6 mr-2"
-                alt="Windster Logo"
-              />
-              <span className="self-center text-white whitespace-nowrap hidden lg:inline-block">
+              <span className="self-center text-black whitespace-nowrap hidden lg:inline-block">
                 Tuni-Auctions
               </span>
             </a>
@@ -102,7 +97,7 @@ export default function TopSellerNavbarSection() {
                         </div>
                       </>
                     )}
-                  <MdNotifications color="white" size={25} />
+                  <MdNotifications color="black" size={25} />
                 </div>
                 {isNotificationsMenuOpen && (
                   <SellerNotificationsMenu

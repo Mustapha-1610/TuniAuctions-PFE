@@ -3,14 +3,17 @@ import React, { useEffect, useState } from "react";
 import StatisticsSection from "./components/statisticsSection";
 import StatisticsTable from "./components/table";
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
-import { sellerAuctionListingFrontData } from "@/models/types/auctionListing";
+import {
+  AuctionListingType,
+  sellerAuctionListingFrontData,
+} from "@/models/types/auctionListing";
 import { sellerCreatedAuctionsResponse } from "@/app/api/seller/getCreatedListings/route";
 
 export interface auctionListingsChildrenProps {
-  auctionListings: sellerAuctionListingFrontData[];
+  auctionListings: AuctionListingType[];
 }
 export default function AuctionListingsPage() {
-  const [listings, setListings] = useState<sellerAuctionListingFrontData[]>([]);
+  const [listings, setListings] = useState<AuctionListingType[]>([]);
   useEffect(() => {
     async function handleListingsFetch() {
       const res = await fetch("/api/seller/getCreatedListings", {

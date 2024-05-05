@@ -6,13 +6,14 @@ import {
   sellerAuctionListingFrontData,
 } from "@/models/types/auctionListing";
 import { verifySellerToken } from "@/security/apiProtection/seller/routeProtection";
+import refreshSellerToken from "@/security/apiProtection/seller/tokenHandelingFunctions/confirmAccess";
 import {
   serverErrorHandler,
-  userInputCausedErrors,
+  unautherizedSellerError,
 } from "@/serverHelpers/errorHandler";
 import { NextRequest, NextResponse } from "next/server";
 export interface sellerCreatedAuctionsResponse {
-  sellerFrontListings: sellerAuctionListingFrontData[];
+  sellerFrontListings: AuctionListingType[];
   success: boolean;
 }
 export async function POST(request: NextRequest) {
@@ -22,24 +23,21 @@ export async function POST(request: NextRequest) {
     if (res.isValid) {
       const auctionListings: AuctionListingType[] | null =
         await auctionListingModel.find({
-          _id: {
-            $in:
-              res.sellerAccount.createdAuctions.upcoming ||
-              res.sellerAccount.createdAuctions.finished,
-          },
+          sellerId: res.sellerAccount._id,
         });
       if (auctionListings) {
-        const auctionListingSellerFrontData =
-          returnSellerCreatedListingsFrontData(auctionListings);
-        return NextResponse.json<sellerCreatedAuctionsResponse>({
-          sellerFrontListings: auctionListingSellerFrontData,
+        const response = NextResponse.json<sellerCreatedAuctionsResponse>({
+          sellerFrontListings: auctionListings,
           success: true,
         });
+        if (res.newAccessToken)
+          return refreshSellerToken(response, res.newAccessToken);
+        return response;
       } else {
         return NextResponse.json({ success: false });
       }
     } else {
-      return userInputCausedErrors("");
+      return unautherizedSellerError();
     }
   } catch (err) {
     return serverErrorHandler(err);

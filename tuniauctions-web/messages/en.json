@@ -176,6 +176,16 @@
       "auctionStart": "Auction room started for : ",
       "auctionEnded": "Auction room ended for : ",
       "deliveryReport": "A report has been submitted on delivery for : "
+    },
+    "transactions": {
+      "auctionPayment": "Auction Payment",
+      "packagePayment": "Auction Payment"
+    },
+    "transactionTableTitles": {
+      "context": "Context",
+      "date": "Date",
+      "amount": "Amount",
+      "to": "To"
     }
   }
 }

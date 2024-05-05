@@ -144,7 +144,7 @@
   },
   "admin": {
     "notifications": {
-      "auctionStart": "Salle de d'enchères démarrée pour : "
+      "auctionStart": "Salle d'enchères démarrée pour : "
     }
   },
   "bidder": {

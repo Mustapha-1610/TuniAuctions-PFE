@@ -11,7 +11,7 @@ import { ISeller } from "@/models/usersModels/types/sellerTypes";
 import { serverErrorHandler } from "@/serverHelpers/errorHandler";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function POST() {
   try {
     await connect();
     const activeFemaleBidders = await bidderModel.find({

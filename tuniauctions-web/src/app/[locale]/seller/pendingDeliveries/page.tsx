@@ -14,10 +14,22 @@ import BidderLocationModal, {
 } from "./modals/bidderLocationModal";
 import moment from "moment";
 import ConfirmDeliverymodal from "./modals/confirmDeliveryModal";
+import { useSellerStore } from "@/helpers/store/seller/sellerStore";
+import SellerAuctionListingModal from "../modals/auctionListingModal";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 export default function PendingDeliveriesPage() {
+  const {
+    auction,
+    isUpcomingAuctionModalOpen,
+    setUpcomingAucitonModalState,
+    setAuction,
+  } = useSellerStore();
   const [tableData, setTableData] = useState<DeliveryType[] | undefined>();
   const [confirmDelivery, setConfirmDelivery] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const [isConfirmDeliveryModalOpen, setConfirmDeliveryModal] =
     useState<boolean>(false);
   const [deliveryId, setDeliveryId] = useState("");
@@ -30,16 +42,30 @@ export default function PendingDeliveriesPage() {
         method: "POST",
       });
       const resData: sellerFetchDeliveriesType = await res.json();
-      console.log(resData);
       if (resData.pendingDeliveries) {
         setTableData(resData.pendingDeliveries);
       }
     }
     getDeliveies();
   }, []);
+  async function getAuction(auctionId: String) {
+    setLoading(true);
+    const res = await fetch("/api/seller/fetchListing", {
+      method: "POST",
+      body: JSON.stringify({ auctionId }),
+    });
+    const resData = await res.json();
+    if (resData.success) {
+      setAuction(resData.auction);
+      setUpcomingAucitonModalState(true);
+    }
+    setLoading(false);
+  }
   const columns: TableColumnsType<DeliveryType> = [
     {
       title: "Product",
+      align: "center",
+
       width: 200,
       render: (_, record) => {
         return record.productInformations.productName;
@@ -48,6 +74,8 @@ export default function PendingDeliveriesPage() {
     {
       title: "Winning Bidder",
       width: 200,
+      align: "center",
+
       render: (_, record) => {
         return (
           <>
@@ -77,6 +105,8 @@ export default function PendingDeliveriesPage() {
     },
     {
       title: "Expected Delivery Day",
+      align: "center",
+
       width: 300,
       render: (_, record) => {
         return (
@@ -100,6 +130,8 @@ export default function PendingDeliveriesPage() {
     {
       title: "Guarantee",
       width: 200,
+      align: "center",
+
       render: (_, record) => {
         return (
           <>
@@ -113,8 +145,27 @@ export default function PendingDeliveriesPage() {
       },
     },
     {
+      title: "Listing",
+      width: 200,
+      align: "center",
+      render: (_, record) => {
+        return (
+          <p
+            className="cursor-pointer text-blue-500"
+            onClick={() => {
+              getAuction(String(record.auctionId));
+            }}
+          >
+            View Listing
+          </p>
+        );
+      },
+    },
+    {
       title: "Action",
       width: 200,
+      align: "center",
+
       render: (_, record) => {
         return (
           <>
@@ -159,17 +210,22 @@ export default function PendingDeliveriesPage() {
 
           {tableData && (
             <>
-              <Table
-                columns={columns}
-                dataSource={tableData}
-                scroll={{ x: 800 }}
-                pagination={{
-                  position: ["bottomCenter"],
-                  pageSize: 10,
-                }}
-                className="mr-2"
-                bordered
-              />
+              <Spin
+                indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
+                spinning={loading}
+              >
+                <Table
+                  columns={columns}
+                  dataSource={tableData}
+                  scroll={{ x: 800 }}
+                  pagination={{
+                    position: ["bottomCenter"],
+                    pageSize: 10,
+                  }}
+                  className="mr-2"
+                  bordered
+                />
+              </Spin>
             </>
           )}
         </div>
@@ -199,6 +255,7 @@ export default function PendingDeliveriesPage() {
           setConfirmDeliveryModal={setConfirmDeliveryModal}
         />
       )}
+      {isUpcomingAuctionModalOpen && auction && <SellerAuctionListingModal />}
     </>
   );
 }

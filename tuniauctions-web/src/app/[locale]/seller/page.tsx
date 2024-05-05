@@ -12,9 +12,9 @@ export default function Dashboard() {
           className="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64"
         >
           <main>
-            {/* Content Container */}
             <div className=" px-4">
               <TopStatisticsSection />
+
               <div className="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-2">
                 <PackageCountSection />
 
@@ -24,7 +24,6 @@ export default function Dashboard() {
               <BottomSection />
             </div>
           </main>
-          {/*<FooterSection />*/}
         </div>
       </div>
     </>

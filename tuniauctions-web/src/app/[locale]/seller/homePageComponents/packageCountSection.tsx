@@ -1,29 +1,79 @@
+"use client";
+import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
+import { ObjectId } from "mongodb";
+import React, { useEffect, useState } from "react";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, LabelList } from "recharts";
+
+type transactions =
+  | {
+      amount: number;
+      date: Date;
+      reciever: string;
+      context: string;
+    }[]
+  | undefined;
 export default function PackageCountSection() {
+  const { sellerLocaleStorageData } = useSellerProfileStore();
+
+  const [data, setData] = useState([]);
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const processData = (transactions: transactions) => {
+    if (transactions) {
+      const monthlyEarnings: any = {};
+      transactions.forEach((transaction: any) => {
+        const month = new Date(transaction.date).getMonth();
+        if (!monthlyEarnings[month]) {
+          monthlyEarnings[month] = 0;
+        }
+        monthlyEarnings[month] += parseFloat(transaction.amount);
+      });
+
+      const chartData: any = Object.entries(monthlyEarnings).map(
+        ([month, amount]: any) => ({
+          month: monthNames[parseInt(month, 10)],
+          earnings: amount,
+        })
+      );
+      return chartData;
+    }
+  };
+  useEffect(() => {
+    if (sellerLocaleStorageData && sellerLocaleStorageData.transactions) {
+      setData(processData(sellerLocaleStorageData.transactions));
+    }
+  }, [sellerLocaleStorageData]);
   return (
     <>
-      <div className="bg-white shadow rounded-lg 2xl:col-span-2 flex ">
-        <div className="flex-1 border-r border-black flex flex-col items-center justify-center text-center">
-          <img
-            src="https://img.freepik.com/premium-vector/packaging-box-icon-vector-logo-template_917138-1363.jpg"
-            alt="Your Image Description"
-            className="w-3/4"
-          />
-          <div className="pb-8">
-            <h2 className="font-bold pb-4 text-3xl">Standard Listings</h2>
-            <p className="font-bold text-xl">Count : 0</p>
-          </div>
-        </div>
-        <div className="flex-1 border-black flex flex-col items-center justify-center text-center">
-          <img
-            src="https://img.freepik.com/premium-vector/packaging-box-icon-vector-logo-template_917138-1363.jpg"
-            alt="Your Image Description"
-            className="w-3/4"
-          />
-          <div className="pb-8">
-            <h2 className="font-bold pb-4 text-3xl">Premium Listings</h2>
-            <p className="font-bold text-xl">Count : 0</p>
-          </div>
-        </div>
+      <div className="bg-white shadow rounded-lg 2xl:col-span-2 flex-col border ">
+        <h3 className="text-xl font-bold leading-none text-gray-900 text-center w-full mt-2">
+          Monthly Earnings
+        </h3>
+        <BarChart width={1000} height={500} data={data} className="mt-2">
+          <XAxis dataKey="month" />
+          <YAxis />
+          <Tooltip />
+          <Bar dataKey="earnings" fill="#46a683">
+            <LabelList
+              dataKey="earnings"
+              position="top"
+              formatter={(value: number) => `$${value.toFixed(2)}`}
+              className="font-bold text-black" // Add dollar sign and format amount
+            />
+          </Bar>
+        </BarChart>
       </div>
     </>
   );

@@ -8,13 +8,21 @@ import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import moment from "moment";
+import { useTranslations } from "next-intl";
 interface Props {
   setSellers?: (value: ISeller[] | undefined) => void;
 }
-export const sellerTransactionTableColumns: TableColumnsType<sellerTransactions> =
-  [
+
+export default function SellerDataModal({ setSellers }: Props) {
+  const [loading, setLoading] = useState(false);
+  const tableTranslations = useTranslations("seller.transactions");
+  const tableHeaderTranslations = useTranslations(
+    "seller.transactionTableTitles"
+  );
+
+  const sellerTransactionTableColumns: TableColumnsType<sellerTransactions> = [
     {
-      title: "Transaction Amount",
+      title: tableHeaderTranslations("amount"),
       width: 60,
       render: (_, record) => {
         return record.amount + "$";
@@ -22,7 +30,7 @@ export const sellerTransactionTableColumns: TableColumnsType<sellerTransactions>
       align: "center",
     },
     {
-      title: "Transaction Date",
+      title: tableHeaderTranslations("date"),
       width: 80,
       render: (_, record) => {
         return moment(record.date).format("ddd, MMM D, YYYY [at] h:mm A");
@@ -31,21 +39,20 @@ export const sellerTransactionTableColumns: TableColumnsType<sellerTransactions>
     },
 
     {
-      title: "To",
+      title: tableHeaderTranslations("to"),
       width: 90,
       dataIndex: "reciever",
       align: "center",
     },
     {
-      title: "Context",
+      title: tableHeaderTranslations("context"),
       width: 100,
-      dataIndex: "context",
+      render: (_, record) => {
+        return tableTranslations(record.context);
+      },
       align: "center",
     },
   ];
-export default function SellerDataModal({ setSellers }: Props) {
-  const [loading, setLoading] = useState(false);
-
   const { seller, setSeller, isSellerModalOpen, setSellerModalState } =
     useAdminStore();
   async function updateSellerStatus() {

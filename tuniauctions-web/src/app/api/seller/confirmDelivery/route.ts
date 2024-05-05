@@ -3,6 +3,7 @@ import deliveryModel from "@/models/auctionListingModels/deliveryModel";
 import { DeliveryType } from "@/models/types/delivery";
 import bidderModel from "@/models/usersModels/bidderModel";
 import { verifySellerToken } from "@/security/apiProtection/seller/routeProtection";
+import refreshSellerToken from "@/security/apiProtection/seller/tokenHandelingFunctions/confirmAccess";
 import {
   serverErrorHandler,
   unautherizedError,
@@ -52,7 +53,10 @@ export async function PUT(request: NextRequest) {
             $in: res.sellerAccount.deliveries.pending,
           },
         });
-        return NextResponse.json({ success: true, deliveries });
+        const response = NextResponse.json({ success: true, deliveries });
+        if (res.newAccessToken)
+          return refreshSellerToken(response, res.newAccessToken);
+        return response;
       }
       return NextResponse.json({ success: false });
     } else {

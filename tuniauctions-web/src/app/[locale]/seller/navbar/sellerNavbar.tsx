@@ -71,7 +71,7 @@ const Navbar = () => {
   }, []);
   return (
     <>
-      <nav className="bg-black border-b border-gray-200 fixed z-30 w-full">
+      <nav className="bg-white border-b  fixed z-30 w-full">
         <TopSellerNavbarSection />
       </nav>
 
