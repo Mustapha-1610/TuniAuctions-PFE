@@ -5,6 +5,7 @@ import { handleFirebaseImageUpload } from "@/app/[locale]/firebaseFunctions/hand
 import { resDataType } from "@/serverHelpers/types";
 import React from "react";
 import { IoMdSettings } from "react-icons/io";
+import { useBidderNavigationStore } from "@/helpers/store/bidder/bidderNavigationStore";
 
 interface Props {
   setSelectedProfileComponent: (
@@ -36,7 +37,7 @@ export default function TopSection({
       console.log(resData);
     }
   };
-
+  const { setEditInformationsModalState } = useBidderNavigationStore();
   return (
     <>
       <div className="flex z-10 gap-10 justify-between items-start self-start pr-20 max-md:flex-wrap max-md:pr-5 max-md:max-w-full">
@@ -79,7 +80,12 @@ export default function TopSection({
             {bidderLocalStorageData?.fullName}
           </div>
 
-          <div className="justify-center flex flex-rows  px-4 py-2 text-sm mt-12 tracking-wide  rounded-lg bg-slate-200 max-md:px-5 text-center cursor-pointer">
+          <div
+            className="justify-center flex flex-rows  px-4 py-2 text-sm mt-12 tracking-wide  rounded-lg bg-slate-200 max-md:px-5 text-center cursor-pointer"
+            onClick={() => {
+              setEditInformationsModalState(true);
+            }}
+          >
             Edit <IoMdSettings className="ml-2" size={19} />
           </div>
         </div>

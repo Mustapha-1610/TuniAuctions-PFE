@@ -117,7 +117,10 @@ export default function ReportedDeliveryModal() {
                   >
                     View Auction Listing
                   </p>
-                  <Image src={delivery.productInformations.productPicture} />
+                  <Image
+                    alt="Auction Product Picture"
+                    src={delivery.productInformations.productPicture}
+                  />
                 </div>
               </div>
               <div className="lg:w-1/2">
@@ -196,6 +199,7 @@ export default function ReportedDeliveryModal() {
                       {delivery.report.attachments.length > 0 && (
                         <div className="relative flex flex-col items-center">
                           <Image
+                            alt="Attachment Picture"
                             src={
                               selectedImage || delivery.report.attachments[0]
                             }

@@ -13,6 +13,10 @@ interface navigationState {
     value: "statsAndAdresses" | "notifications"
   ) => void;
   setSelectedDashboardComponent: (value: "Auctions" | "Deliveries") => void;
+  isEditInformationsModalOpen: boolean;
+  setEditInformationsModalState: (value: boolean) => void;
+  isEditEmailModalOpen: boolean;
+  setEditEmailModalState: (value: boolean) => void;
 }
 export const useBidderNavigationStore = create<navigationState>((set) => ({
   selectedProfileComponent: "statsAndAdresses",
@@ -35,5 +39,15 @@ export const useBidderNavigationStore = create<navigationState>((set) => ({
   setSelectedDashboardComponent: (value: "Auctions" | "Deliveries") =>
     set(() => ({
       selectedDashboardComponent: value,
+    })),
+  isEditEmailModalOpen: false,
+  isEditInformationsModalOpen: false,
+  setEditInformationsModalState: (value) =>
+    set(() => ({
+      isEditInformationsModalOpen: value,
+    })),
+  setEditEmailModalState: (value) =>
+    set(() => ({
+      isEditEmailModalOpen: value,
     })),
 }));

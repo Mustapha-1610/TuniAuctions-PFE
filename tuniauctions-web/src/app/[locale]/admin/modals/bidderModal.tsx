@@ -132,6 +132,7 @@ export default function BidderInformationsModal({
                     preview={true}
                     className="w-32 h-32 rounded-full"
                     style={{ margin: "auto" }} // Center the image horizontally
+                    alt="Bidder Picture"
                   />
                 </div>
               </div>

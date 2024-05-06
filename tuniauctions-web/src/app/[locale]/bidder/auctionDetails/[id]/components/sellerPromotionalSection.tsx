@@ -10,6 +10,7 @@ import {
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
 import { AuctionListingType } from "@/models/types/auctionListing";
 import { SellerSocialSectionDetailsType } from "@/app/api/general/fetchAuctionListing/route";
+import Image from "next/image";
 interface Props {
   auctionListing: AuctionListingType;
   sellerData: SellerSocialSectionDetailsType;
@@ -23,15 +24,21 @@ export default function SellerPromotionSection({
       {sellerData && (
         <div className="flex flex-col pb-2.5 mt-7 w-full bg-white rounded-2xl border border-black border-solid max-w-[1600px] max-md:max-w-full">
           <div className="flex overflow-hidden relative flex-col items-center px-16 pt-16 w-full min-h-[250px] max-md:px-5 max-md:max-w-full">
-            <img
+            <Image
               loading="lazy"
-              srcSet={sellerData?.coverPicture}
+              src={sellerData.coverPicture || ""}
               className="object-cover absolute inset-0 size-full rounded rounded-lg"
+              alt="Cover Picture"
+              width={700}
+              height={200}
             />
-            <img
+            <Image
               loading="lazy"
-              srcSet={sellerData?.businessPicture}
+              src={sellerData?.businessPicture || ""}
               className="z-10 mb-0 max-w-full aspect-[1.03] w-[170px] max-md:mb-2.5 rounded rounded-xl"
+              alt="Business Picture"
+              width={300}
+              height={200}
             />
           </div>
 

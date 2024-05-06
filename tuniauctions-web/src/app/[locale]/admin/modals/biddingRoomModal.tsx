@@ -1,7 +1,6 @@
 "use client";
 
 import { AuctionListingType } from "@/models/types/auctionListing";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import {
   auctionRoomData,
@@ -9,7 +8,7 @@ import {
 } from "../../bidder/auctionRoom/[id]/components/biddingAndInformationsSection";
 import moment from "moment";
 import auctionRoomSocket from "@/frontHelpers/auctionRoom/auctionRoomLogic";
-import { Modal } from "antd";
+import { Image, Modal } from "antd";
 import { useAdminStore } from "@/helpers/store/admin/adminStore";
 
 export default function AdminBiddingRoomModal() {
@@ -109,7 +108,6 @@ export default function AdminBiddingRoomModal() {
                       alt="Product"
                       width={400}
                       height={200}
-                      quality={85}
                     />
                   )}
                   <div className="flex justify-center mt-4">
@@ -139,10 +137,12 @@ export default function AdminBiddingRoomModal() {
                         Highest Bidder : {biddingRoomData.heighestBidder}
                       </div>
                       {biddingRoomData.bidderPicture && (
-                        <img
+                        <Image
                           src={biddingRoomData.bidderPicture}
                           alt="Bidder's Profile"
                           className="rounded-full w-10 h-10 mr-3"
+                          width={10}
+                          height={10}
                         />
                       )}
                     </div>

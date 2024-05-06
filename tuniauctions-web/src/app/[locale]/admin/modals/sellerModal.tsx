@@ -110,6 +110,7 @@ export default function SellerDataModal({ setSellers }: Props) {
                 <p>
                   <strong>Registration License:</strong>{" "}
                   <Image
+                    alt="Registration License"
                     src={seller.registrationLicense}
                     preview={true}
                     className="w-32 h-32 rounded-lg"

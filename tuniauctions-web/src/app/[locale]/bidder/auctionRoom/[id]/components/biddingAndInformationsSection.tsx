@@ -152,10 +152,12 @@ export default function BiddingAndInformationsSection({
                       Highest Bidder : {biddingRoomData.heighestBidder}
                     </div>
                     {biddingRoomData.bidderPicture && (
-                      <img
+                      <Image
                         src={biddingRoomData.bidderPicture}
                         alt="Bidder's Profile"
                         className="rounded-full w-10 h-10 mr-3"
+                        height={70}
+                        width={70}
                       />
                     )}
                   </div>

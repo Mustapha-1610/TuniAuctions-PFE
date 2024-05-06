@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { FaMoneyBillWave } from "react-icons/fa";
+import { FaHeart, FaMoneyBillWave } from "react-icons/fa";
 import { GiCancel, GiTakeMyMoney } from "react-icons/gi";
 import { LuCalendarDays } from "react-icons/lu";
 import { MdOutlineGroups } from "react-icons/md";

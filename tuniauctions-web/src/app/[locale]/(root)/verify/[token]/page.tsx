@@ -1,7 +1,4 @@
-"use client";
 import { verifyMailResponse } from "@/app/api/bidder/verify/route";
-import { useNavbarState } from "@/helpers/store/general/navbarState";
-import { IoCheckmarkSharp } from "react-icons/io5";
 import VerifiedComponent from "./components/verified";
 import PreverifiedComponent from "./components/preverified";
 import ExpiredComponent from "./components/expired";

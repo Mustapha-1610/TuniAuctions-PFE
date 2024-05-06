@@ -4,10 +4,14 @@ import Notifications from "./components/notifications";
 import TopSection from "./components/topSection";
 import BidderStatisticsAndAdresses from "./components/statisticsAndAdresses";
 import { useBidderNavigationStore } from "@/helpers/store/bidder/bidderNavigationStore";
+import EditInformationsModal from "./modals/editInformationsModal";
 
 export default function MyComponent() {
-  const { selectedProfileComponent, setSelectedProfileComponent } =
-    useBidderNavigationStore();
+  const {
+    selectedProfileComponent,
+    setSelectedProfileComponent,
+    isEditInformationsModalOpen,
+  } = useBidderNavigationStore();
   React.useEffect(() => {
     return () => {
       setSelectedProfileComponent("statsAndAdresses");
@@ -31,6 +35,7 @@ export default function MyComponent() {
           <div className="mb-4" />
         </div>
       </div>
+      {isEditInformationsModalOpen && <EditInformationsModal />}
     </div>
   );
 }

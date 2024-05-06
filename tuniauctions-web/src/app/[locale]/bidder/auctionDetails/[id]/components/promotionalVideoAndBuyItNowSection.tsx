@@ -1,5 +1,6 @@
 "use client";
 import { AuctionListingType } from "@/models/types/auctionListing";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 interface Props {
@@ -59,10 +60,13 @@ export default function PromotionalVideoAndButItNowSection({
             >
               <div className="flex flex-col items-center self-stretch px-1.5 pt-7 pb-5 my-auto w-full text-center text-black bg-white border border-black border-solid max-md:mt-10 max-md:max-w-full">
                 <div className="text-3xl font-bold">Buy It Now</div>
-                <img
+                <Image
+                  alt="Buy It Now Promotional Picture"
                   loading="lazy"
-                  srcSet={auctionListing.buyItNowSection?.promotionalPicture}
+                  src={auctionListing.buyItNowSection?.promotionalPicture || ""}
                   className="mt-1 max-w-full aspect-[1.59] w-[253px]"
+                  width={120}
+                  height={120}
                 />
                 <div className="self-stretch px-14 pt-2 pb-3.5 mt-6 text-xl bg-white rounded-lg border border-white border-solid max-md:pr-6 max-md:pl-5 max-md:max-w-full">
                   {auctionListing.buyItNowSection?.promotionalDescription}
