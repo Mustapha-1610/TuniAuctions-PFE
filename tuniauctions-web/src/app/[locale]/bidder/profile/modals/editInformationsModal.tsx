@@ -7,6 +7,7 @@ import { resDataType } from "@/serverHelpers/types";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useState } from "react";
+import EditNameModal from "./changeNameModal";
 
 export default function EditInformationsModal() {
   const {
@@ -14,6 +15,8 @@ export default function EditInformationsModal() {
     setEditInformationsModalState,
     isEditEmailModalOpen,
     setEditEmailModalState,
+    setEditNameModalState,
+    isEditNameModalOpen,
   } = useBidderNavigationStore();
   const [loading, setLoading] = useState(false);
 
@@ -47,7 +50,7 @@ export default function EditInformationsModal() {
             <Button
               type="dashed"
               className="w-full"
-              onClick={() => console.log("Change Name Clicked")}
+              onClick={() => setEditNameModalState(true)}
             >
               Edit Name
             </Button>
@@ -61,7 +64,7 @@ export default function EditInformationsModal() {
             <Button
               type="dashed"
               className="w-full"
-              onClick={() => console.log("Change Password Clicked")}
+              onClick={() => setEditNameModalState(true)}
             >
               Edit Password
             </Button>
@@ -69,6 +72,7 @@ export default function EditInformationsModal() {
         </Spin>
       </Modal>
       {isEditEmailModalOpen && <EditEmailModal />}
+      {isEditNameModalOpen && <EditNameModal />}
     </>
   );
 }

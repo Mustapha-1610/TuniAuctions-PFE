@@ -17,6 +17,10 @@ interface navigationState {
   setEditInformationsModalState: (value: boolean) => void;
   isEditEmailModalOpen: boolean;
   setEditEmailModalState: (value: boolean) => void;
+  isEditNameModalOpen: boolean;
+  setEditNameModalState: (value: boolean) => void;
+  isEditPasswordModalOpen: boolean;
+  setEditPasswordModalState: (value: boolean) => void;
 }
 export const useBidderNavigationStore = create<navigationState>((set) => ({
   selectedProfileComponent: "statsAndAdresses",
@@ -49,5 +53,17 @@ export const useBidderNavigationStore = create<navigationState>((set) => ({
   setEditEmailModalState: (value) =>
     set(() => ({
       isEditEmailModalOpen: value,
+    })),
+  isEditNameModalOpen: false,
+
+  setEditNameModalState: (value) =>
+    set(() => ({
+      isEditNameModalOpen: value,
+    })),
+  isEditPasswordModalOpen: false,
+
+  setEditPasswordModalState: (value) =>
+    set(() => ({
+      isEditNameModalOpen: value,
     })),
 }));

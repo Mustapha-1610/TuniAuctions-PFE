@@ -65,6 +65,7 @@ export default function EditEmailModal() {
           setEditEmailModalState(false);
         }}
         footer={null}
+        maskClosable={false}
       >
         <Spin
           indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
