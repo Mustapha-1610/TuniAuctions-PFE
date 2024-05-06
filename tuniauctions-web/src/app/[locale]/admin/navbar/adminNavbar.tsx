@@ -14,6 +14,8 @@ import { useEffect } from "react";
 import { resDataType } from "@/serverHelpers/types";
 import { useAdminProfileStore } from "@/helpers/store/admin/adminProfileStore";
 import { useRouter } from "next/navigation";
+import adminSocket from "@/frontHelpers/admin/adminSocket";
+
 export interface Props {
   navigationTranslation: {
     Dashboard: string;
@@ -73,20 +75,22 @@ export default function AdminNavbar() {
       const resData: resDataType = await res.json();
       if (resData.adminAccount) {
         setAdminLocalStorageData(resData.adminAccount);
+        adminSocket.connect();
       } else if (resData.authError) {
-        async () => {
-          const res = await fetch("/api/admin/signout", {
-            method: "POST",
-          });
-          const resData: resDataType = await res.json();
-          if (resData.success) {
-            setAdminLocalStorageData(null);
-            router.push("/");
-          }
-        };
+        const res = await fetch("/api/admin/signout", {
+          method: "POST",
+        });
+        const resData: resDataType = await res.json();
+        if (resData.success) {
+          setAdminLocalStorageData(null);
+          router.push("/");
+        }
       }
     }
     getData();
+    adminSocket.on("refreshAdminData", async () => {
+      getData();
+    });
   }, []);
   return (
     <>

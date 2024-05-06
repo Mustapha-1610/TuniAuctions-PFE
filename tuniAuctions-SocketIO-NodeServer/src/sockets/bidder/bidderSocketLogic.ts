@@ -35,8 +35,3 @@ const bidderNameSpaceLogic = (bidderNameSpace: any) => {
 };
 
 export default bidderNameSpaceLogic;
-
-interface DisplayCongrats {
-  bidderSocketId: string;
-  auctionTitle: string;
-}

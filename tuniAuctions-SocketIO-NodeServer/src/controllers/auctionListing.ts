@@ -2,25 +2,19 @@ import bidderModel from "../models/bidderModel";
 import express from "express";
 import { AuctionListingType } from "../types/auctionListing";
 import { IBidder } from "../types/bidderTypes";
-import { ObjectId } from "mongoose";
-
 import auctionListingModel from "../models/auctionListingModel";
 import { bidderNameSpace } from "../server";
+import { adminRoomNameSpace } from "../server";
+import { sellerNameSapce } from "../server";
 import { io } from "socket.io-client";
-import { verifySellerTokens } from "../security/seller/apiProtection";
-import {
-  basicListingInfos,
-  basicListingType,
-  premiumListingInfos,
-  premiumListingType,
-  standardListingInfos,
-} from "./zodSchema/auctionListingSchema";
+import { premiumListingInfos } from "./zodSchema/auctionListingSchema";
 import { returnSellerFrontData } from "../helpers/returnSellerFrontData";
 import moment from "moment";
 import nodeSchedule from "node-schedule";
 import sellerModel from "../models/sellerModel";
 import { ISeller } from "../types/sellerTypes";
 import adminModel from "../models/adminModel";
+
 export async function basic(req: express.Request, response: express.Response) {
   try {
     const { updatedAuctionListingForm, sellerId, type }: premiumListingInfos =
@@ -67,122 +61,6 @@ export async function basic(req: express.Request, response: express.Response) {
       }
     } else {
       return response.json({ success: false });
-    }
-  } catch (err) {
-    console.log(err);
-    return response.json({ serverError: true });
-  }
-}
-
-export async function standard(
-  req: express.Request,
-  response: express.Response
-) {
-  try {
-    const { updatedAuctionListingForm, sellerId }: standardListingInfos =
-      req.body;
-    const seller = await sellerModel.findById(sellerId);
-    if (seller.packageCount.Standard > 0) {
-      const newAuction = await auctionListingModel.create({
-        listingType: "Standard",
-        title: updatedAuctionListingForm.title,
-        description: updatedAuctionListingForm.description,
-        category: updatedAuctionListingForm.productCategory,
-        promotionalVideo: updatedAuctionListingForm.promotionalVideo,
-        productPictures: updatedAuctionListingForm.productPictures.reverse(),
-        originalPrice: updatedAuctionListingForm.originalPrice,
-        startingDate: updatedAuctionListingForm.startingDate,
-        platformFees: 4,
-        openingBid: updatedAuctionListingForm.openingBid,
-        guarantee:
-          updatedAuctionListingForm.guarentee.length +
-          " " +
-          updatedAuctionListingForm.guarentee.period,
-        buyItNowSection: updatedAuctionListingForm.buyItNowSection,
-        featured: true,
-        minParticipatingBidders:
-          updatedAuctionListingForm.minParticipatingBidders,
-        sellerId: seller._id,
-      });
-      seller.createdAuctions.upcoming.push(newAuction._id);
-      seller.packageCount.Standard -= 1;
-      const scheduleResponse = await scheduleAuctionStart(newAuction);
-      if (scheduleResponse) {
-        await seller.save();
-        const sellerFrontData = returnSellerFrontData(seller);
-        return response.json({ success: true, sellerFrontData });
-      } else {
-        console.log(scheduleResponse + "Schedule response");
-        return response.json({ success: false });
-      }
-    } else {
-      return response.json({ errMessage: "emptyPackage" });
-    }
-  } catch (err) {
-    console.log(err);
-    return response.json({ serverError: true });
-  }
-}
-
-export async function premium(
-  req: express.Request,
-  response: express.Response
-) {
-  try {
-    const res = await verifySellerTokens(req);
-    if (res.isValid) {
-      const seller = res.sellerAccount;
-
-      if (seller.packageCount.Premium > 0) {
-        const {
-          title,
-          buyItNowSection,
-          guarentee,
-          description,
-          openingBid,
-          originalPrice,
-          productCategory,
-          productPictures,
-          promotionalVideo,
-          socialsSection,
-          startingDate,
-          minParticipatingBidders,
-        }: premiumListingType = req.body;
-        const newAuction = await auctionListingModel.create({
-          listingType: "Premium",
-          title,
-          description,
-          category: productCategory,
-          promotionalVideo,
-          productPictures: productPictures.reverse(),
-          originalPrice,
-          startingDate,
-          platformFees: 4,
-          openingBid,
-          guarantee: guarentee.length + " " + guarentee.period,
-          buyItNowSection,
-          socialsSection,
-          featured: true,
-          minParticipatingBidders,
-          sellerId: seller._id,
-        });
-        seller.createdAuctions.upcoming.push(newAuction._id);
-        seller.packageCount.Premium -= 1;
-        await seller.save();
-        const scheduleResponse = await scheduleAuctionStart(newAuction);
-        if (scheduleResponse) {
-          await seller.save();
-          const sellerFrontData = returnSellerFrontData(seller);
-          return response.json({ success: true, sellerFrontData });
-        } else {
-          console.log(scheduleResponse + "Schedule response");
-          return response.json({ success: false });
-        }
-      } else {
-        return response.json({ errMessage: "emptyPackage" });
-      }
-    } else {
-      return response.json({ authError: true });
     }
   } catch (err) {
     console.log(err);
@@ -243,22 +121,47 @@ async function handleReSchedule(auctionlisting: AuctionListingType) {
             },
           },
         });
-        await sellerModel.findByIdAndUpdate(auctionlisting.sellerId, {
-          $push: {
-            notificationMessage: "auctionDelayed",
-            context: {
-              receptionDate: new Date(),
-              frontContext: "auctionDelayed",
-              notificationIcon: auctionlisting.productPictures[0],
-              displayName: moment(newStartingDate).format(
-                "ddd, MMM D, YYYY [at] h:mm A"
-              ),
+        const seller: ISeller = await sellerModel.findByIdAndUpdate(
+          auctionlisting.sellerId,
+          {
+            $push: {
+              notificationMessage: "auctionDelayed",
+              context: {
+                receptionDate: new Date(),
+                frontContext: "auctionDelayed",
+                notificationIcon: auctionlisting.productPictures[0],
+                displayName: moment(newStartingDate).format(
+                  "ddd, MMM D, YYYY [at] h:mm A"
+                ),
+              },
             },
-          },
-        });
+          }
+        );
+        await adminModel.findOneAndUpdate(
+          {},
+          {
+            $push: {
+              notifications: {
+                notificationMessage: "auctionDelay",
+                context: {
+                  receptionDate: new Date(),
+                  frontContext: "auctionDelay",
+                  contextId: auctionlisting._id,
+                  notificationIcon: auctionlisting.productPictures[0],
+                  displayName: auctionlisting.title,
+                },
+                readStatus: false,
+              },
+            },
+          }
+        );
         bidderNameSpace.emit("refreshData", {
           bidderSocketId: bidder.socketId,
         });
+        sellerNameSapce.emit("refreshData", {
+          sellerSocketId: seller.socketId,
+        });
+        adminRoomNameSpace.emit("refreshData");
       });
       scheduleAuctionStart(auctionlisting);
     } else {
@@ -311,8 +214,6 @@ async function handleStart(auctionlisting: AuctionListingType) {
   auctionlisting.status = "Ongoing";
   await auctionlisting.save();
   const auctionRoomSocket = io(`${process.env.SOCKET_SERVER}/auctionRoom`);
-  const adminSocket = io(`${process.env.SOCKET_SERVER}/admin`);
-
   const data = {
     auctionId: auctionlisting._id,
     startingBid: auctionlisting.openingBid,
@@ -340,7 +241,13 @@ async function handleStart(auctionlisting: AuctionListingType) {
         },
       }
     );
-    await sellerModel.findByIdAndUpdate(auctionlisting.sellerId, {
+    bidderNameSpace.emit("refreshData", {
+      bidderSocketId: bidder.socketId,
+    });
+  });
+  const seller: ISeller = await sellerModel.findByIdAndUpdate(
+    auctionlisting.sellerId,
+    {
       $push: {
         notifications: {
           notificationMessage: "auctionStart",
@@ -353,11 +260,8 @@ async function handleStart(auctionlisting: AuctionListingType) {
           },
         },
       },
-    });
-    bidderNameSpace.emit("refreshData", {
-      bidderSocketId: bidder.socketId,
-    });
-  });
+    }
+  );
   await adminModel.findOneAndUpdate(
     {},
     {
@@ -376,5 +280,11 @@ async function handleStart(auctionlisting: AuctionListingType) {
       },
     }
   );
+  console.log("got here");
+  const sellerSocket = io(`${process.env.SOCKET_SERVER}/seller`);
+
+  const adminSocket = io(`${process.env.SOCKET_SERVER}/admin`);
+
+  sellerSocket.emit("refreshData", seller.socketId);
   adminSocket.emit("refreshData");
 }

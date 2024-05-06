@@ -73,16 +73,13 @@ const deliverySchema = new Schema({
   report: {
     subject: {
       type: String,
-      required: true,
     },
     description: {
       type: String,
-      required: false,
     },
     attachments: [
       {
         type: String,
-        required: false,
       },
     ],
   },

@@ -179,7 +179,7 @@
     },
     "transactions": {
       "auctionPayment": "Auction Payment",
-      "packagePayment": "Auction Payment"
+      "packagePayment": "Package Payment"
     },
     "transactionTableTitles": {
       "context": "Context",

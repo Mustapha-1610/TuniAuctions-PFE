@@ -1,12 +1,10 @@
 "use client";
 import { useSellerNavbarStore } from "@/helpers/store/sellerNavbarState";
 import { MdNotifications } from "react-icons/md";
-import Link from "next/link";
-import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
-import { useTranslations } from "next-intl";
 import { useAdminProfileStore } from "@/helpers/store/admin/adminProfileStore";
 import { useState } from "react";
 import AdminNotifications from "./notifications";
+import { resDataType } from "@/serverHelpers/types";
 export default function TopSellerNavbarSection() {
   const isSideBarOpenTest = useSellerNavbarStore(
     (state: any) => state.isSideBarOpen
@@ -18,7 +16,22 @@ export default function TopSellerNavbarSection() {
     useAdminProfileStore();
   const [isNotificationsMenuOpen, setIsNotificationsMenuState] =
     useState<boolean>(false);
-
+  async function clearNotifications() {
+    if (
+      adminLocalStorageData!.notifications.filter(
+        (notification: any) => !notification.readStatus
+      ).length
+    ) {
+      const res = await fetch("/api/admin/clearNotifications", {
+        method: "POST",
+      });
+      const resData: resDataType = await res.json();
+      if (resData.adminAccount) {
+        setAdminLocalStorageData(resData.adminAccount);
+      } else if (resData.authError) {
+      }
+    }
+  }
   return (
     <>
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -79,9 +92,10 @@ export default function TopSellerNavbarSection() {
               <div className="relative">
                 <div
                   className="cursor-pointer"
-                  onClick={() =>
-                    setIsNotificationsMenuState(!isNotificationsMenuOpen)
-                  } // Replace with actual click handler
+                  onClick={() => (
+                    setIsNotificationsMenuState(!isNotificationsMenuOpen),
+                    clearNotifications()
+                  )} // Replace with actual click handler
                 >
                   {adminLocalStorageData &&
                     adminLocalStorageData.notifications.filter(

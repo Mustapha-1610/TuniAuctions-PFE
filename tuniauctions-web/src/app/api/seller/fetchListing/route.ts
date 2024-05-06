@@ -1,7 +1,6 @@
 import { connect } from "@/db/dbConfig";
 import auctionListingModel from "@/models/auctionListingModels/auctionListing";
 import { AuctionListingType } from "@/models/types/auctionListing";
-import sellerModel from "@/models/usersModels/sellerModel";
 import { serverErrorHandler } from "@/serverHelpers/errorHandler";
 import { NextRequest, NextResponse } from "next/server";
 

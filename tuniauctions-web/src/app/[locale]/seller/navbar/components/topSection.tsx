@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
 import { useState } from "react";
 import SellerNotificationsMenu from "./notifications";
+import { resDataType } from "@/serverHelpers/types";
 export default function TopSellerNavbarSection() {
   const isSideBarOpenTest = useSellerNavbarStore(
     (state: any) => state.isSideBarOpen
@@ -12,8 +13,26 @@ export default function TopSellerNavbarSection() {
   const setIsSideBarOpenTest = useSellerNavbarStore(
     (state: any) => state.changeSideBarState
   );
-  const { sellerLocaleStorageData } = useSellerProfileStore();
+  const { sellerLocaleStorageData, setSellerLocalStorageData } =
+    useSellerProfileStore();
   const [isNotificationsMenuOpen, setNotificationsMenuState] = useState(false);
+  async function clearNotifications() {
+    if (
+      sellerLocaleStorageData!.notifications.filter(
+        (notification: any) => !notification.readStatus
+      ).length
+    ) {
+      const res = await fetch("/api/seller/clearNotifications", {
+        method: "POST",
+      });
+      const resData: resDataType = await res.json();
+      if (resData.sellerFrontData) {
+        setSellerLocalStorageData(resData.sellerFrontData);
+      } else if (resData.authError) {
+      }
+    }
+  }
+
   return (
     <>
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -77,9 +96,10 @@ export default function TopSellerNavbarSection() {
               <div className="relative">
                 <div
                   className="cursor-pointer"
-                  onClick={() =>
-                    setNotificationsMenuState(!isNotificationsMenuOpen)
-                  } // Replace with actual click handler
+                  onClick={() => (
+                    setNotificationsMenuState(!isNotificationsMenuOpen),
+                    clearNotifications()
+                  )} // Replace with actual click handler
                 >
                   {sellerLocaleStorageData &&
                     sellerLocaleStorageData.notifications.filter(

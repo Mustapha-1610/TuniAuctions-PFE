@@ -1,8 +1,9 @@
 "use client";
 import { GoEye } from "react-icons/go";
-import { FaEye } from "react-icons/fa";
+import { FaEye, FaMoneyBillWave } from "react-icons/fa";
 import { MdStarRate } from "react-icons/md";
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
+import { RiAuctionFill } from "react-icons/ri";
 
 export default function TopStatisticsSection() {
   const { sellerLocaleStorageData } = useSellerProfileStore();
@@ -15,12 +16,12 @@ export default function TopStatisticsSection() {
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <span className="text-2xl sm:text-3xl leading-none font-bold text-white">
-                  {sellerLocaleStorageData.earnnings}
+                  {sellerLocaleStorageData.earnnings.toFixed(2)}
                 </span>
                 <h3 className="text-base text-white font-normal ">Earnings</h3>
               </div>
               <div className="ml-5 w-0 flex items-center justify-end flex-1 ">
-                <FaEye size={50} color="white" />
+                <FaMoneyBillWave size={50} color="white" />
               </div>
             </div>
           </div>
@@ -35,7 +36,7 @@ export default function TopStatisticsSection() {
                 </h3>
               </div>
               <div className="ml-5 w-0 flex items-center justify-end flex-1 ">
-                <GoEye size={50} color="white" />
+                <RiAuctionFill size={50} color="white" />
               </div>
             </div>
           </div>

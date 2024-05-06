@@ -125,12 +125,20 @@ export async function end(req: express.Request, response: express.Response) {
                 displayName: auction.title,
               },
             },
-            transactions: {
-              amount: winningBidder.winningPrice - platformFees,
-              context: "auctionPayment",
-              date: new Date(),
-              reciever: "Me",
-            },
+            transactions: [
+              {
+                amount: winningBidder.winningPrice - platformFees,
+                context: "auctionPayment",
+                date: new Date(),
+                reciever: "Me",
+              },
+              {
+                amount: platformFees,
+                context: "platformPayment",
+                date: new Date(),
+                reciever: "Tuni-Auctions",
+              },
+            ],
           },
           $inc: {
             earnnings: winningBidder.winningPrice - platformFees,
@@ -151,7 +159,7 @@ export async function end(req: express.Request, response: express.Response) {
           $push: {
             transactions: {
               amount: platformFees,
-              context: "Auction Payment",
+              context: "auctionFees",
               date: new Date(),
               from: seller.name,
               sellerId: seller._id,

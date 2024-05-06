@@ -7,6 +7,9 @@ import { useEffect } from "react";
 import { resDataType } from "@/serverHelpers/types";
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
 import { useRouter } from "next/navigation";
+import sellerSocket from "@/frontHelpers/seller/sellerSocket";
+import { useSellerStore } from "@/helpers/store/seller/sellerStore";
+import SellerBiddingRoomModal from "../modals/biddingRoomModal";
 export interface Props {
   navigationTranslation: {
     Dashboard: string;
@@ -54,21 +57,24 @@ const Navbar = () => {
       const resData: resDataType = await res.json();
       if (resData.sellerFrontData) {
         setSellerLocalStorageData(resData.sellerFrontData);
+        sellerSocket.emit("sellerConnection", resData.sellerFrontData.socketId);
       } else if (resData.authError) {
-        async () => {
-          const res = await fetch("/api/seller/signout", {
-            method: "POST",
-          });
-          const resData: resDataType = await res.json();
-          if (resData.success) {
-            signoutSeller();
-            router.push("/");
-          }
-        };
+        const res = await fetch("/api/seller/signout", {
+          method: "POST",
+        });
+        const resData: resDataType = await res.json();
+        if (resData.success) {
+          signoutSeller();
+          router.push("/");
+        }
       }
     }
     getData();
+    sellerSocket.on("refreshSellerData", async () => {
+      getData();
+    });
   }, []);
+  const { auction, isOngoingAuctionModalOpen } = useSellerStore();
   return (
     <>
       <nav className="bg-white border-b  fixed z-30 w-full">
@@ -100,6 +106,7 @@ const Navbar = () => {
           ></div>
         </div>
       </div>
+      {auction && isOngoingAuctionModalOpen && <SellerBiddingRoomModal />}
     </>
   );
 };

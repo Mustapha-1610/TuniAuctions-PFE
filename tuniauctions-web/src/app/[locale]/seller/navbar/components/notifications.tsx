@@ -1,13 +1,15 @@
 "use client";
-import { IBidderFrontData } from "@/models/usersModels/types/bidderTypes";
 import Image from "next/image";
 import moment from "moment";
 import { FaCircleExclamation } from "react-icons/fa6";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
-import { useBidderNavigationStore } from "@/helpers/store/bidder/bidderNavigationStore";
 import { useRouter } from "next/navigation";
 import { ISellerFrontData } from "@/models/usersModels/types/sellerTypes";
+import { useState } from "react";
+import { useSellerStore } from "@/helpers/store/seller/sellerStore";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 interface Props {
   sellerData: ISellerFrontData | null;
@@ -20,8 +22,34 @@ export default function SellerNotificationsMenu({
 }: Props) {
   const locale = useLocale();
   const router = useRouter();
-
-  function handleNotificationRouting(context: string, contextId?: string) {
+  const [loading, setLoading] = useState(false);
+  const { setAuction, setOngoingAuctionModalState } = useSellerStore();
+  async function handleNotificationRouting(
+    context: string,
+    contextId?: string
+  ) {
+    if (context === "auctionStart") {
+      setLoading(true);
+      const res = await fetch("/api/seller/fetchListing", {
+        method: "POST",
+        body: JSON.stringify({ auctionId: contextId }),
+      });
+      const resData = await res.json();
+      console.log(resData);
+      if (resData.success) {
+        if (resData.auction.status !== "Ongoing") {
+          router.push(`/${locale}/seller/auctionListings`);
+          setNotificationsMenuState(false);
+        } else {
+          setAuction(resData.auction);
+          setOngoingAuctionModalState(true);
+          setNotificationsMenuState(false);
+        }
+      }
+      setLoading(false);
+    } else if (context === "auctionEnded" && contextId) {
+      router.push(`/${locale}/seller/auctionListings`);
+    }
     setNotificationsMenuState(false);
   }
   const notificationTranslations = useTranslations("seller.notifications");
@@ -42,49 +70,54 @@ export default function SellerNotificationsMenu({
           </Link>
         </div>
         <div className="h-72 w-80 overflow-y-auto">
-          {sellerData?.notifications &&
-            sellerData.notifications.map((value, index) => {
-              return (
-                <div
-                  className="p-3 hover:bg-gray-100 cursor-pointer flex items-center"
-                  key={index}
-                  onClick={() => {
-                    handleNotificationRouting(
-                      value.notificationMessage,
-                      String(value.context.contextId)
-                    );
-                  }}
-                >
-                  <Image
-                    height={300}
-                    width={400}
-                    data-tooltip-target="tooltip-jese"
-                    className="h-12 w-12 rounded-xl cursor-pointer"
-                    src={value.context.notificationIcon}
-                    alt="Medium avatar"
-                  />
-                  <div className="ml-2">
-                    <p className="text-sm font-semibold">
-                      {notificationTranslations(value.notificationMessage) +
-                        value.context.displayName}
-                    </p>
-                    <p className="text-xs text-gray-500 flex flex-rows">
-                      Sent at:{" "}
-                      {moment(value.context.receptionDate).format(
-                        "ddd, MMM D, YYYY [at] h:mm A"
-                      )}
-                      {!value.readStatus && (
-                        <FaCircleExclamation
-                          className="ml-1"
-                          size={13}
-                          color="black"
-                        />
-                      )}
-                    </p>
+          <Spin
+            indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
+            spinning={loading}
+          >
+            {sellerData?.notifications &&
+              sellerData.notifications.map((value, index) => {
+                return (
+                  <div
+                    className="p-3 hover:bg-gray-100 cursor-pointer flex items-center"
+                    key={index}
+                    onClick={() => {
+                      handleNotificationRouting(
+                        value.notificationMessage,
+                        String(value.context.contextId)
+                      );
+                    }}
+                  >
+                    <Image
+                      height={300}
+                      width={400}
+                      data-tooltip-target="tooltip-jese"
+                      className="h-12 w-12 rounded-xl cursor-pointer"
+                      src={value.context.notificationIcon}
+                      alt="Medium avatar"
+                    />
+                    <div className="ml-2">
+                      <p className="text-sm font-semibold">
+                        {notificationTranslations(value.notificationMessage) +
+                          value.context.displayName}
+                      </p>
+                      <p className="text-xs text-gray-500 flex flex-rows">
+                        Sent at:{" "}
+                        {moment(value.context.receptionDate).format(
+                          "ddd, MMM D, YYYY [at] h:mm A"
+                        )}
+                        {!value.readStatus && (
+                          <FaCircleExclamation
+                            className="ml-1"
+                            size={13}
+                            color="black"
+                          />
+                        )}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+          </Spin>
         </div>
       </div>
     </>

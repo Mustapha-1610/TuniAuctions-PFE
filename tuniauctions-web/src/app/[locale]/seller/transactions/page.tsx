@@ -3,7 +3,6 @@ import React from "react";
 import { Table } from "antd";
 import type { TableColumnsType } from "antd";
 import { GiReceiveMoney, GiPayMoney } from "react-icons/gi";
-import EarningsDisplay from "../earnings/components/earningsDisplay";
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
 import { sellerTransactions } from "@/models/usersModels/types/sellerTypes";
 import moment from "moment";
@@ -67,10 +66,10 @@ export default function TransactionsPage() {
                       <div className="flex border flex-col grow justify-center self-stretch p-5 mx-auto w-full font-semibold bg-green-500 rounded-lg border-black shadow-sm leading-[150%] text-zinc-800 max-md:mt-6">
                         <div className="flex border-black flex-wrap gap-5 justify-between content-center">
                           <div className="flex flex-col flex-1">
-                            <div className="text-base whitespace-nowrap">
+                            <div className="text-base whitespace-nowrap text-white">
                               Earnings Recieved{" "}
                             </div>
-                            <div className="mt-3 text-2xl">
+                            <div className="mt-3 text-2xl text-white">
                               {sellerLocaleStorageData &&
                                 sellerLocaleStorageData.earnnings}
                               $
@@ -91,10 +90,10 @@ export default function TransactionsPage() {
                       <div className="flex border flex-col grow justify-center self-stretch p-5 mx-auto w-full font-semibold bg-red-500 rounded-lg border-black shadow-sm leading-[150%] text-zinc-800 max-md:mt-6">
                         <div className="flex border-black flex-wrap gap-5 justify-between content-center">
                           <div className="flex flex-col flex-1">
-                            <div className="text-base whitespace-nowrap">
+                            <div className="text-base whitespace-nowrap text-white">
                               Platform Fees
                             </div>
-                            <div className="mt-3 text-2xl">
+                            <div className="mt-3 text-2xl text-white">
                               {sellerLocaleStorageData &&
                                 sellerLocaleStorageData.platformFees}
                               $

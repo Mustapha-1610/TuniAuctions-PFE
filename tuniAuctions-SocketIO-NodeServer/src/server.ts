@@ -6,6 +6,7 @@ import { Server } from "socket.io";
 import cookieParser from "cookie-parser";
 import bidderNameSpaceLogic from "./sockets/bidder/bidderSocketLogic";
 import sellerNameSpaceLogic from "./sockets/seller/sellerSocketLogic";
+import adminNameSpaceLogic from "./sockets/admin/adminSocketLogic";
 import connectDB from "../DB/dbConfig";
 import auctionRouter from "./routers/auctionRoomRouter";
 import auctionRoomSocketLogic from "./sockets/auction/auctionRoomSocketLogic";
@@ -51,7 +52,14 @@ serverApp.listen(PORT, () => {
 const bidderNameSpace = io.of("/bidder");
 const sellerNameSapce = io.of("/seller");
 const auctionRoomNameSpace = io.of("/auctionRoom");
+const adminRoomNameSpace = io.of("/admin");
 bidderNameSpaceLogic(bidderNameSpace);
 sellerNameSpaceLogic(sellerNameSapce);
 auctionRoomSocketLogic(auctionRoomNameSpace);
-export { bidderNameSpace, sellerNameSapce, auctionRoomNameSpace };
+adminNameSpaceLogic(adminRoomNameSpace);
+export {
+  bidderNameSpace,
+  sellerNameSapce,
+  auctionRoomNameSpace,
+  adminRoomNameSpace,
+};
