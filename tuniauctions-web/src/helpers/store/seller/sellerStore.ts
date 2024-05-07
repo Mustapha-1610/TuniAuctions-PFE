@@ -21,6 +21,8 @@ interface sellerStoreTypes {
   setAuction: (value: AuctionListingType | null) => void;
   isAuctionStatisticsModalOpen: boolean;
   setAuctionStatisticsModalState: (value: boolean) => void;
+  isNotificationsModalOpen: boolean;
+  setNotificationsModalState: (value: boolean) => void;
 }
 export const useSellerStore = create<sellerStoreTypes>((set) => ({
   isDeliveryModalOpen: false,
@@ -54,4 +56,9 @@ export const useSellerStore = create<sellerStoreTypes>((set) => ({
       isSellerModalOpen: value,
     })),
   isSellerAccountApplicationModalOpen: false,
+  isNotificationsModalOpen: false,
+  setNotificationsModalState: (value) =>
+    set(() => ({
+      isNotificationsModalOpen: value,
+    })),
 }));

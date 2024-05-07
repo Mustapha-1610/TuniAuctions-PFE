@@ -10,6 +10,7 @@ const nextConfig = {
       { hostname: "cdn.builder.io" },
       { hostname: "cdn.britannica.com" },
       { hostname: "upload.wikimedia.org" },
+      { hostname: "htmlcolorcodes.com" },
     ],
   },
 };

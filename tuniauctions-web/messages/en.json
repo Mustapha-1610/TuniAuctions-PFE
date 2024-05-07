@@ -176,7 +176,8 @@
       "auctionDelayed": "Due to minimum bidder participation threshhold not being met, auction have been delayed to :",
       "auctionStart": "Auction room started for : ",
       "auctionEnded": "Auction room ended for : ",
-      "deliveryReport": "A report has been submitted on delivery for : "
+      "deliveryReport": "A report has been submitted on delivery for : ",
+      "sentAt": "Sent at:"
     },
     "transactions": {
       "auctionPayment": "Auction Payment",

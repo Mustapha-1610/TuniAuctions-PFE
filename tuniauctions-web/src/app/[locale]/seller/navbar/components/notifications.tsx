@@ -10,6 +10,8 @@ import { useState } from "react";
 import { useSellerStore } from "@/helpers/store/seller/sellerStore";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import "moment/locale/fr";
+import "moment/locale/ar";
 
 interface Props {
   sellerData: ISellerFrontData | null;
@@ -23,7 +25,12 @@ export default function SellerNotificationsMenu({
   const locale = useLocale();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const { setAuction, setOngoingAuctionModalState } = useSellerStore();
+  const {
+    setAuction,
+    setOngoingAuctionModalState,
+    setNotificationsModalState,
+  } = useSellerStore();
+
   async function handleNotificationRouting(
     context: string,
     contextId?: string
@@ -53,7 +60,18 @@ export default function SellerNotificationsMenu({
     setNotificationsMenuState(false);
   }
   const notificationTranslations = useTranslations("seller.notifications");
-
+  const getDateFormat = (locale: string) => {
+    switch (locale) {
+      case "en":
+        return "ddd, MMM D, YYYY [at] h:mm A";
+      case "fr":
+        return "ddd D MMM YYYY [à] HH:mm";
+      case "ar":
+        return "ddd، D MMM، YYYY [في] HH:mm";
+      default:
+        return "ddd, MMM D, YYYY [at] h:mm A";
+    }
+  };
   return (
     <>
       <div className="absolute mt-4 left-9/10 transform -translate-x-2/3 bg-white text-black border border-netral-200 rounded-md shadow-lg max-w-xl z-10">
@@ -64,6 +82,7 @@ export default function SellerNotificationsMenu({
             className="cursor-pointer text-sm text-gray-500"
             onClick={() => {
               setNotificationsMenuState(false);
+              setNotificationsModalState(true);
             }}
           >
             View All
@@ -101,10 +120,12 @@ export default function SellerNotificationsMenu({
                           value.context.displayName}
                       </p>
                       <p className="text-xs text-gray-500 flex flex-rows">
-                        Sent at:{" "}
-                        {moment(value.context.receptionDate).format(
-                          "ddd, MMM D, YYYY [at] h:mm A"
-                        )}
+                        <span className="mr-1">
+                          {notificationTranslations("sentAt")}
+                        </span>
+                        {moment(value.context.receptionDate)
+                          .locale(locale)
+                          .format(getDateFormat(locale))}
                         {!value.readStatus && (
                           <FaCircleExclamation
                             className="ml-1"

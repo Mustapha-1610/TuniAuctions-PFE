@@ -26,7 +26,7 @@ Hi ${name}, Welcome to Tuni-Auctions! We're thrilled to have you on board, and w
     <div style="background-color: #000; margin-top: 32px; height: 1px;"></div>
     <div style="text-align: center; margin-top: 32px;">
       <a href="${process.env
-        .NEXT_PUBLIC_API_BASE_URL!}/en/verify/${mailToken}"  style="display: inline-block; background-color: #000; color: #fff; text-decoration: none; padding: 12px 60px; font: 18px Inter, sans-serif; border-radius: 50px;">Verify My Email</a>
+        .NEXT_PUBLIC_API_BASE_URL!}/${language}/verify/${mailToken}"  style="display: inline-block; background-color: #000; color: #fff; text-decoration: none; padding: 12px 60px; font: 18px Inter, sans-serif; border-radius: 50px;">Verify My Email</a>
     </div>
     <p style="font-family: Inter, sans-serif; line-height: 26px;">
         Thank you for choosing our services!
@@ -91,7 +91,7 @@ Salut ${name}, Bienvenue sur Tuni-Auctions ! Nous sommes ravis de vous accueilli
     <div style="background-color: #000; margin-top: 32px; height: 1px;"></div>
     <div style="text-align: center; margin-top: 32px;">
       <a href="${process.env
-        .NEXT_PUBLIC_API_BASE_URL!}/en/verify/${mailToken}"  style="display: inline-block; background-color: #000; color: #fff; text-decoration: none; padding: 12px 60px; font: 18px Inter, sans-serif; border-radius: 50px;">Vérifier mon e-mail</a>
+        .NEXT_PUBLIC_API_BASE_URL!}/${language}/verify/${mailToken}"  style="display: inline-block; background-color: #000; color: #fff; text-decoration: none; padding: 12px 60px; font: 18px Inter, sans-serif; border-radius: 50px;">Vérifier mon e-mail</a>
     </div>
     <p style="font-family: Inter, sans-serif; line-height: 26px;">
         Merci d'avoir choisi nos services !
@@ -157,7 +157,7 @@ Salut ${name}, Bienvenue sur Tuni-Auctions ! Nous sommes ravis de vous accueilli
     <div style="background-color: #000; margin-top: 32px; height: 1px;"></div>
     <div style="text-align: center; margin-top: 32px;">
       <a href="${process.env
-        .NEXT_PUBLIC_API_BASE_URL!}/en/verify/${mailToken}"  style="display: inline-block; background-color: #000; color: #fff; text-decoration: none; padding: 12px 60px; font: 18px Inter, sans-serif; border-radius: 50px;">تحقق من بريدي الإلكتروني</a>
+        .NEXT_PUBLIC_API_BASE_URL!}/${language}/verify/${mailToken}"  style="display: inline-block; background-color: #000; color: #fff; text-decoration: none; padding: 12px 60px; font: 18px Inter, sans-serif; border-radius: 50px;">تحقق من بريدي الإلكتروني</a>
     </div>
     <p style="font-family: Inter, sans-serif; line-height: 26px;">
         شكرًا لاختيار خدماتنا!
@@ -223,7 +223,7 @@ Hallo ${name}, Willkommen bei Tuni-Auctions! Wir freuen uns, dass Sie an Bord si
     <div style="background-color: #000; margin-top: 32px; height: 1px;"></div>
     <div style="text-align: center; margin-top: 32px;">
       <a href="${process.env
-        .NEXT_PUBLIC_API_BASE_URL!}/en/verify/${mailToken}"  style="display: inline-block; background-color: #000; color: #fff; text-decoration: none; padding: 12px 60px; font: 18px Inter, sans-serif; border-radius: 50px;">Meine E-Mail überprüfen</a>
+        .NEXT_PUBLIC_API_BASE_URL!}/${language}/verify/${mailToken}" style="display: inline-block; background-color: #000; color: #fff; text-decoration: none; padding: 12px 60px; font: 18px Inter, sans-serif; border-radius: 50px;">Meine E-Mail überprüfen</a>
     </div>
     <p style="font-family: Inter, sans-serif; line-height: 26px;">
         Vielen Dank, dass Sie unsere Dienste gewählt haben!

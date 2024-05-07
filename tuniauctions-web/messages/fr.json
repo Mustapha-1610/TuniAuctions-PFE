@@ -170,7 +170,8 @@
       "auctionDelayed": "En raison du seuil minimum de participation des enchérisseurs non atteint, l'enchère a été retardée à : ",
       "auctionStart": "Salle d'enchères commencée pour : ",
       "auctionEnded": "Salle d'enchères terminée pour : ",
-      "deliveryReport": "Un rapport a été soumis sur la livraison pour : "
+      "deliveryReport": "Un rapport a été soumis sur la livraison pour : ",
+      "sentAt": "Envoyé à:"
     }
   }
 }

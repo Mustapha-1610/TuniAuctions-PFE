@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import sellerSocket from "@/frontHelpers/seller/sellerSocket";
 import { useSellerStore } from "@/helpers/store/seller/sellerStore";
 import SellerBiddingRoomModal from "../modals/biddingRoomModal";
+import NotificationsModal from "../modals/notificationsModal";
 export interface Props {
   navigationTranslation: {
     Dashboard: string;
@@ -74,7 +75,8 @@ const Navbar = () => {
       getData();
     });
   }, []);
-  const { auction, isOngoingAuctionModalOpen } = useSellerStore();
+  const { auction, isOngoingAuctionModalOpen, isNotificationsModalOpen } =
+    useSellerStore();
   return (
     <>
       <nav className="bg-white border-b  fixed z-30 w-full">
@@ -107,6 +109,7 @@ const Navbar = () => {
         </div>
       </div>
       {auction && isOngoingAuctionModalOpen && <SellerBiddingRoomModal />}
+      {isNotificationsModalOpen && <NotificationsModal />}
     </>
   );
 };

@@ -1,12 +1,8 @@
 "use client";
-import { AuctionListingType } from "@/models/types/auctionListing";
 import PromotionalVideoAndButItNowSection from "../../bidder/auctionDetails/[id]/components/promotionalVideoAndBuyItNowSection";
 import SellerPromotionSection from "../../bidder/auctionDetails/[id]/components/sellerPromotionalSection";
-import { ISeller } from "@/models/usersModels/types/sellerTypes";
 import { Modal } from "antd";
-import { useEffect, useState } from "react";
 import AdminAuctionListingProductInformationSection from "../../admin/modals/components/auctionListingModalComponents.tsx/AdminPromotionalSection";
-import { useAdminStore } from "@/helpers/store/admin/adminStore";
 import FinishedAuctionDisplay from "../../bidder/auctionDetails/[id]/components/finishedAuction";
 import { useSellerStore } from "@/helpers/store/seller/sellerStore";
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
