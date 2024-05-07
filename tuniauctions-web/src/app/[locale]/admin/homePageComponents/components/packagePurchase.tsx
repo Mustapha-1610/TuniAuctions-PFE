@@ -1,5 +1,7 @@
 "use client";
 import { platformModelType } from "@/models/types/platform";
+import { useLocale } from "next-intl";
+import Link from "next/link";
 import React, { useEffect } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts";
 
@@ -20,6 +22,7 @@ export default function PackagePurchases({ platformStats }: Props) {
   ];
   const customColors = ["#D31F4A", "#00008B"];
   useEffect(() => {}, [platformStats]);
+  const locale = useLocale();
   return (
     <>
       <div className="bg-white shadow rounded-lg mb-4 p-4 sm:p-6 h-full border border-gray-400">
@@ -27,12 +30,12 @@ export default function PackagePurchases({ platformStats }: Props) {
           <h3 className="text-xl font-bold leading-none text-gray-900">
             Package Earnings Comparison
           </h3>
-          <a
-            href="#"
+          <Link
+            href={`/${locale}/admin/transactions`}
             className="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg inline-flex items-center p-2"
           >
             View all
-          </a>
+          </Link>
         </div>
         <div className="flow-root mt-2">
           <ResponsiveContainer width="100%" height={350}>

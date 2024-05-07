@@ -7,6 +7,8 @@ import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { useBidderNavigationStore } from "@/helpers/store/bidder/bidderNavigationStore";
 import { useRouter } from "next/navigation";
+import "moment/locale/fr";
+import "moment/locale/ar";
 
 interface Props {
   bidderData: IBidderFrontData | null;
@@ -48,7 +50,18 @@ export default function Notifications({
     setNotificationsMenuState();
   }
   const notificationTranslations = useTranslations("bidder.notifications");
-
+  const getDateFormat = (locale: string) => {
+    switch (locale) {
+      case "en":
+        return "ddd, MMM D, YYYY [at] h:mm A";
+      case "fr":
+        return "ddd D MMM YYYY [à] HH:mm";
+      case "ar":
+        return "ddd، D MMM، YYYY [في] HH:mm";
+      default:
+        return "ddd, MMM D, YYYY [at] h:mm A"; // Default to English format
+    }
+  };
   return (
     <>
       <div className="absolute mt-4 left-3/3 transform -translate-x-2/3 bg-white text-black border border-netral-200 rounded-md shadow-lg max-w-xl z-10">
@@ -93,10 +106,12 @@ export default function Notifications({
                         value.context.displayName}
                     </p>
                     <p className="text-xs text-gray-500 flex flex-rows">
-                      Sent at:{" "}
-                      {moment(value.context.receptionDate).format(
-                        "ddd, MMM D, YYYY [at] h:mm A"
-                      )}
+                      <span className="mr-2">
+                        {notificationTranslations("sentAt")}
+                      </span>
+                      {moment(value.context.receptionDate)
+                        .locale(locale)
+                        .format(getDateFormat(locale))}
                       {!value.readStatus && (
                         <FaCircleExclamation
                           className="ml-1"

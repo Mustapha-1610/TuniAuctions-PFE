@@ -8,12 +8,15 @@ import { ISeller } from "@/models/usersModels/types/sellerTypes";
 import { useAdminStore } from "@/helpers/store/admin/adminStore";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import { useLocale } from "next-intl";
+import Link from "next/link";
 
 interface Props {
   upcomingAuctions: AuctionListingType[] | null;
 }
 export default function UpcomingAuctions({ upcomingAuctions }: Props) {
   const [loading, setLoading] = useState(false);
+  const locale = useLocale();
 
   const {
     setSeller,
@@ -125,12 +128,12 @@ export default function UpcomingAuctions({ upcomingAuctions }: Props) {
           <h3 className="text-xl font-bold leading-none text-gray-900">
             Upcoming Auctions
           </h3>
-          <a
-            href="#"
+          <Link
+            href={`/${locale}/admin/upcomingAuctions`}
             className="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg inline-flex items-center p-2"
           >
             View all
-          </a>
+          </Link>
         </div>
         <div className="flow-root">
           <Spin

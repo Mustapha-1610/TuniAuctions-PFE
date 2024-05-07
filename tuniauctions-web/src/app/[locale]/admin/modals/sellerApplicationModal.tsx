@@ -33,6 +33,8 @@ export default function SellerAccountApplicationModal({ setSellers }: Props) {
       if (resData.success) {
         if (setSellers && resData.sellers) {
           setSellers(resData.sellers);
+        } else {
+          router.push(`/${locale}/admin/pendingSellers`);
         }
       } else {
         setSellerAccountApplicationModalState(false);

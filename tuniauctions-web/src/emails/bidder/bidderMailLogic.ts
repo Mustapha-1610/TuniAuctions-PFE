@@ -3,23 +3,22 @@ import jwt from "jsonwebtoken";
 import { accountVerificationTemplate } from "./htmlTemplates/accountVerificationTemplate";
 import { emailChangeRequestTemplate } from "./htmlTemplates/emailChangeRequestCode";
 import { passwordChangeRequestTemplate } from "./htmlTemplates/passwordChangeRequestCodeTemplate";
-let transporter = nodemailer.createTransport({
-  host: "smtp-mail.outlook.com",
-  port: 587,
-  secure: false,
+const user = "mustapha.talbi2002@gmail.com";
+const pass = "lhxa ryjh kszp sejk";
+
+const transporter = nodemailer.createTransport({
+  service: "Gmail",
   auth: {
-    user: "tuni-auctions@outlook.com",
-    pass: "FinalYearInternshipProjectEmailPassword",
-  },
-  tls: {
-    ciphers: "SSLv3",
+    user: user,
+    pass: pass,
   },
 });
 
 export async function sendBidderAccountVerificationMail(
   name: string,
   email: string,
-  activationCode: string
+  activationCode: string,
+  language: "en" | "fr" | "ar" | "gr"
 ) {
   const tokenPayload = {
     email: email,
@@ -29,7 +28,7 @@ export async function sendBidderAccountVerificationMail(
     tokenPayload,
     process.env.NODEMAILER_TOKEN_SECRET!,
     {
-      expiresIn: "1m",
+      expiresIn: "10m",
     }
   );
   await transporter
@@ -37,7 +36,7 @@ export async function sendBidderAccountVerificationMail(
       from: "tuni-auctions@outlook.com",
       to: email,
       subject: "Tuni-Auctions Account Activation",
-      html: accountVerificationTemplate(name, mailToken),
+      html: accountVerificationTemplate(name, mailToken, language),
     })
     .catch((err) => console.log(err));
 }

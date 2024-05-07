@@ -156,7 +156,8 @@
       "auctionWin": "Félicitations pour avoir remporté l'enchère pour : ",
       "confirmAuctionParticipation": "Participation confirmée pour : ",
       "deliverySuccessfull": "Livraison réussie du produit pour : ",
-      "deliveryShipmentSuccessfull": "Expédition de livraison confirmée, le produit arrivera entre : "
+      "deliveryShipmentSuccessfull": "Expédition de livraison confirmée, le produit arrivera entre : ",
+      "sentAt": "Envoyé à:"
     },
     "transactions": {
       "auctionPayment": "Paiement d'enchères",

@@ -1,4 +1,4 @@
-import { Modal, Button } from "antd";
+import { Modal, Button, Image } from "antd";
 import { useState } from "react";
 import { handleFirebaseImageUpload } from "@/app/[locale]/firebaseFunctions/handleUploadImage";
 import { resDataType } from "@/serverHelpers/types";
@@ -64,28 +64,38 @@ export default function ChangeBidderProfilePictureModal({
     >
       <div className="flex flex-col items-center justify-center">
         {selectedImage ? (
-          <img
+          <Image
             src={URL.createObjectURL(selectedImage)}
             alt="Selected Profile Picture"
             className="rounded-full w-56 h-56 mb-4"
+            height={230}
+            width={230}
           />
         ) : (
-          <img
+          <Image
             src={bidderPicture}
             alt="Bidder Profile Picture"
             className="rounded-full w-56 h-56 mb-4"
+            height={230}
+            width={230}
           />
         )}
-        <label className="cursor-pointer">
-          <label className="cursor-pointer">
-            <input type="file" className="hidden" onChange={handleFileChange} />
-            <div className="border-2 border-blue-500 text-blue-500 rounded px-4 py-2 hover:bg-blue-500 hover:text-white transition-colors duration-200">
-              Choose Picture
-            </div>
+        {!loading && (
+          <label className="cursor-pointer mt-4">
+            <label className="cursor-pointer">
+              <input
+                type="file"
+                className="hidden"
+                onChange={handleFileChange}
+              />
+              <div className="border-2 border-blue-500 text-blue-500 rounded px-1 py-1 hover:bg-blue-500 hover:text-white transition-colors duration-200">
+                Choose Picture
+              </div>
+            </label>
           </label>
-        </label>
+        )}
         {selectedImage && (
-          <div className="flex gap-4">
+          <div className="flex gap-4 mt-4">
             <Button
               key="confirm"
               type="primary"

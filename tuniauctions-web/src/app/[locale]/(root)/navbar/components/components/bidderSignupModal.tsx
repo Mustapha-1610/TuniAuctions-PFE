@@ -10,11 +10,13 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { IoIosWarning } from "react-icons/io";
 import { useBidderSignupModalTranslations } from "@/app/[locale]/nextIntlTranslations/bidder/signupModalTranslations";
 import { ErrText } from "./sellerSignupModal";
+import { useLocale } from "next-intl";
 
 export default function BidderSignupForm() {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const bidTranslations = useBidderSignupModalTranslations();
+  const locale = useLocale();
   const {
     register,
     handleSubmit,
@@ -27,7 +29,13 @@ export default function BidderSignupForm() {
       setErrorMessage("");
       const res = await fetch("/api/bidder/signup", {
         method: "POST",
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          fullName: formData.fullName,
+          gender: formData.gender,
+          email: formData.email,
+          password: formData.password,
+          language: locale,
+        }),
       });
 
       const resData: resDataType = await res.json();

@@ -12,6 +12,7 @@ import { SellerSocialSectionDetailsType } from "@/app/api/general/fetchAuctionLi
 import SellerPromotionSection from "./components/sellerPromotionalSection";
 import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
 import FinishedAuctionDisplay from "./components/finishedAuction";
+import { IoIosSend } from "react-icons/io";
 
 export interface AuctionListingDetails {
   auctionListing: AuctionListingType;
@@ -70,7 +71,12 @@ export default function AuctionPage({
         >
           <BsChatSquareTextFill size={45} className="text-xl" />
         </button>
-        {isChatOpen && <ChatBox onClose={handleChatClose} />}
+        {isChatOpen && (
+          <ChatBox
+            onClose={handleChatClose}
+            productName={auctionListing.title}
+          />
+        )}
       </div>
     </>
   );
@@ -97,8 +103,9 @@ function ChatMessage({ message, isUser }: messageProps) {
 
 interface ChatBoxProps {
   onClose: (open: boolean) => void;
+  productName: string;
 }
-function ChatBox({ onClose }: ChatBoxProps) {
+function ChatBox({ onClose, productName }: ChatBoxProps) {
   const [messages, setMessages] = React.useState<any>([]);
   const [newMessage, setNewMessage] = React.useState<any>("");
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
@@ -113,7 +120,6 @@ function ChatBox({ onClose }: ChatBoxProps) {
 
   const handleSend = async () => {
     const userMessages = newMessage;
-    setNewMessage("");
     await handleGoogleApiSend(userMessages);
   };
 
@@ -123,6 +129,7 @@ function ChatBox({ onClose }: ChatBoxProps) {
         method: "POST",
         body: JSON.stringify({
           userInput: message,
+          productName,
         }),
       });
       const res = await response.json();
@@ -140,7 +147,7 @@ function ChatBox({ onClose }: ChatBoxProps) {
 
   return (
     <div
-      className="fixed z-50 bottom-4 right-4 lg:bottom-6 lg:right-6 p-6 bg-gray-800  rounded-xl"
+      className="fixed z-50 bottom-4 right-4 lg:bottom-6 lg:right-6 p-6 bg-neutral-900 w-[400px]  rounded-xl"
       style={{
         height: "55vh",
         display: "flex",
@@ -176,9 +183,9 @@ function ChatBox({ onClose }: ChatBoxProps) {
         />
         <button
           onClick={handleSend}
-          className="bg-blue-500 text-white rounded-lg px-4 py-2"
+          className="bg-blue-500 text-white rounded-lg px-2 py-2"
         >
-          Send
+          <IoIosSend size={27} />
         </button>
       </div>
     </div>

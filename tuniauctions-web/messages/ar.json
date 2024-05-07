@@ -156,7 +156,8 @@
       "auctionWin": "تهانينا على الفوز بالمزاد على: ",
       "confirmAuctionParticipation": "تأكيد المشاركة في المزاد لـ: ",
       "deliverySuccessfull": "تم تسليم المنتج بنجاح لـ: ",
-      "deliveryShipmentSuccessfull": "تم تأكيد شحن التسليم، سيصل المنتج بين: "
+      "deliveryShipmentSuccessfull": "تم تأكيد شحن التسليم، سيصل المنتج بين: ",
+      "sentAt": "أرسل في:"
     },
     "transactions": {
       "auctionPayment": "دفع المزاد",

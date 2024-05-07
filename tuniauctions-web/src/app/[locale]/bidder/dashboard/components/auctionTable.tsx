@@ -6,52 +6,122 @@ import type { TableColumnsType, TableProps } from "antd";
 import Link from "next/link";
 import { useLocale } from "next-intl";
 import moment from "moment";
+import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
+import EditLockedBalanceModal from "./editLockedBalanceModal";
 
 interface Props {
   tableData: getDashboardTableDataResponse;
 }
 
 export default function AuctionDataTable({ tableData }: Props) {
+  const { bidderLocalStorageData, setBidderLocalStorageData } =
+    useBidderProfileStore();
   const [data, setDataTable] = useState<AuctionListingType[] | undefined>(
     tableData.upcomingAuctions
   );
   const [selectedItem, setSelectedItem] = useState("upcoming");
   const locale = useLocale();
+  const [isEditBalanceModalOpen, setEditBalanceModalState] =
+    useState<boolean>(false);
+  const [auction, setAuction] = useState<AuctionListingType>();
+  const [previousLockedBalance, setPreviousLockedBalance] = useState<number>();
   const columns: TableColumnsType<AuctionListingType> = [
     {
       title: "Title",
       dataIndex: "title",
-      width: 400,
+      width: 200,
+      align: "center",
     },
     {
       title: "Opening Bid",
-      dataIndex: "openingBid",
+      width: 140,
+      render: (_, record) => {
+        return record.openingBid + "$";
+      },
+      align: "center",
 
       sorter: (a, b) => a.openingBid - b.openingBid,
     },
     {
+      title: "Locked Balance",
+      width: 140,
+
+      align: "center",
+      render: (_, record) => {
+        const item =
+          bidderLocalStorageData &&
+          record.participatingBidders.find(
+            (b) => b.bidderId === bidderLocalStorageData._id
+          );
+        return item?.lockedBalance + "$";
+      },
+    },
+    {
       title: "Starting Date",
+      align: "center",
+      width: 260,
       render: (_, record) => {
         return moment(record.startingDate).format("MMMM DD, YYYY hh:mm A");
       },
     },
     {
       title: "End Date",
+      align: "center",
+      width: 260,
+
       render: (_, record) => {
         return moment(record.endDate).format("MMMM DD, YYYY hh:mm A");
       },
     },
     {
       title: "Action",
-      render: (_, record) => {
-        return (
-          <>
-            <Link href={`/${locale}/bidder/auctionDetails/${record._id}`}>
-              View
-            </Link>
-          </>
-        );
-      },
+      align: "center",
+      children: [
+        {
+          title: "Locked Balance",
+          align: "center",
+          width: 120,
+          render: (_, record) => {
+            const item =
+              bidderLocalStorageData &&
+              record.participatingBidders.find(
+                (b) => b.bidderId === bidderLocalStorageData._id
+              );
+            return (
+              <>
+                <div
+                  className="cursor-pointer text-blue-500"
+                  onClick={() => {
+                    item && setPreviousLockedBalance(item?.lockedBalance),
+                      setAuction(record),
+                      setEditBalanceModalState(true);
+                  }}
+                >
+                  Edit
+                </div>
+              </>
+            );
+          },
+        },
+        {
+          title: "Listing",
+          align: "center",
+          width: 120,
+
+          render: (_, record) => {
+            return (
+              <>
+                <Link
+                  href={`/${locale}/bidder/auctionDetails/${record._id}`}
+                  className="cursor-pointer text-blue-500"
+                >
+                  View
+                </Link>
+              </>
+            );
+          },
+        },
+      ],
     },
   ];
   return (
@@ -98,11 +168,23 @@ export default function AuctionDataTable({ tableData }: Props) {
               className="rounded-lg "
               columns={columns}
               dataSource={data || tableData.upcomingAuctions}
-              pagination={{ pageSize: 8 }}
+              pagination={{ pageSize: 5 }}
+              bordered
             />
           </div>
         </div>
       </div>
+      {bidderLocalStorageData && auction && previousLockedBalance && (
+        <EditLockedBalanceModal
+          activeBalance={bidderLocalStorageData.balance.activeBalance}
+          isEditLockedBalanceModalOpen={isEditBalanceModalOpen}
+          auctionListing={auction}
+          previousLockedBalance={previousLockedBalance}
+          setBidderLocalStorageData={setBidderLocalStorageData}
+          setEditLockedBalanceModalSate={setEditBalanceModalState}
+          setTableData={setDataTable}
+        />
+      )}
     </>
   );
 }

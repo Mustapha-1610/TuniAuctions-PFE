@@ -155,9 +155,9 @@ function MyComponent(props: MyComponentProps) {
               <div className="flex flex-col self-stretch pb-5 my-auto font-medium text-center text-gray-500 max-md:mt-10">
                 <div className="flex flex-col items-center px-3.5 pt-20">
                   <div className="self-stretch text-xl leading-9">
-                    "Vivamus sagittis lacus vel augue laoreet rutrum <br />{" "}
+                    Vivamus sagittis lacus vel augue laoreet rutrum <br />{" "}
                     faucibus dolor auctor. Vestibulum ligula porta felis <br />{" "}
-                    euismod semper. Cras justo odio consectetur."
+                    euismod semper. Cras justo odio consectetur.
                   </div>
                   <div className="mt-5 text-xl font-bold tracking-normal leading-7 text-slate-700">
                     Coriss Ambady

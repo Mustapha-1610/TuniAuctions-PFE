@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     if (!validatedForm.success) {
       return userInputCausedErrors("missingInputs");
     }
-    const { fullName, gender, email, password } = reqBody;
+    const { fullName, gender, email, password, language } = reqBody;
     await connect();
     let exsistingUser = await sellerModel.findOne({
       email: email.toUpperCase(),
@@ -42,7 +42,12 @@ export async function POST(request: NextRequest) {
       socketId,
       jionedAt: new Date(),
     });
-    await sendBidderAccountVerificationMail(fullName, email, verificationCode);
+    await sendBidderAccountVerificationMail(
+      fullName,
+      email,
+      verificationCode,
+      language
+    );
     return successHandler();
   } catch (err) {
     console.log(err);

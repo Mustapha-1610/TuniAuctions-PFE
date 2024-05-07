@@ -5,12 +5,16 @@ import { pendingSellersAdminTableColumnsType } from "./components/pendingSellers
 import { useState } from "react";
 import SellerAccountApplicationModal from "../../modals/sellerApplicationModal";
 import { useAdminStore } from "@/helpers/store/admin/adminStore";
+import Link from "next/link";
+import { useLocale } from "next-intl";
 
 interface Props {
   pendingSellers: ISeller[] | null;
 }
 export default function PendingSellers({ pendingSellers }: Props) {
   const { setSeller, setSellerAccountApplicationModalState } = useAdminStore();
+  const locale = useLocale();
+
   const pendingSellersAdminTableColumnsType: TableColumnsType<ISeller> = [
     {
       title: "Seller Name",
@@ -73,12 +77,12 @@ export default function PendingSellers({ pendingSellers }: Props) {
           <h3 className="text-xl font-bold leading-none text-gray-900">
             Sellers Pending Approval
           </h3>
-          <a
-            href="#"
+          <Link
+            href={`/${locale}/admin/pendingSellers`}
             className="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg inline-flex items-center p-2"
           >
             View all
-          </a>
+          </Link>
         </div>
         <div className="flow-root">
           {pendingSellers && (

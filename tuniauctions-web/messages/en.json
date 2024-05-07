@@ -156,7 +156,8 @@
       "auctionWin": "Congratulations on winning auction for : ",
       "confirmAuctionParticipation": "Confirmed participation for : ",
       "deliverySuccessfull": "Successfull product delivery for : ",
-      "deliveryShipmentSuccessfull": "Delivery shipment confirmed, product will arive between : "
+      "deliveryShipmentSuccessfull": "Delivery shipment confirmed, product will arive between : ",
+      "sentAt": "Sent at:"
     },
     "transactions": {
       "auctionPayment": "Auction payment",

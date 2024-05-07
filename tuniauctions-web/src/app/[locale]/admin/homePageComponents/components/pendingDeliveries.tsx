@@ -7,11 +7,15 @@ import { pendingDeliveriesAdminTableColmumnTable } from "./components/pendingDel
 import { useAdminStore } from "@/helpers/store/admin/adminStore";
 import ReportedDeliveryModal from "../../modals/deliveryModal";
 import SellerDataModal from "../../modals/sellerModal";
+import { useLocale } from "next-intl";
+import Link from "next/link";
 interface Props {
   pendingDeliveries: DeliveryType[] | null;
 }
 export default function PendingDeliveries({ pendingDeliveries }: Props) {
   const { setDeliveryModalState, setDelivery } = useAdminStore();
+  const locale = useLocale();
+
   const pendingDeliveriesAdminTableColmumnTable: TableColumnsType<DeliveryType> =
     [
       {
@@ -76,12 +80,12 @@ export default function PendingDeliveries({ pendingDeliveries }: Props) {
           <h3 className="text-xl font-bold leading-none text-gray-900">
             Pending Deliveries
           </h3>
-          <a
-            href="#"
+          <Link
+            href={`/${locale}/admin/pendingDeliveries`}
             className="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg inline-flex items-center p-2"
           >
             View all
-          </a>
+          </Link>
         </div>
         <div className="flow-root">
           {pendingDeliveries && (
