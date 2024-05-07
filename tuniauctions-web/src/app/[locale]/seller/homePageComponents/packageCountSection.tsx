@@ -35,7 +35,7 @@ export default function PackageCountSection() {
     if (transactions) {
       const monthlyEarnings: any = {};
       transactions.forEach((transaction: any) => {
-        if (transaction.context === "Me") {
+        if (transaction.reciever === "Me") {
           const month = new Date(transaction.date).getMonth();
           if (!monthlyEarnings[month]) {
             monthlyEarnings[month] = 0;

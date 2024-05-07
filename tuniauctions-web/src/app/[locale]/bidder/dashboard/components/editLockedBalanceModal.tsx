@@ -30,6 +30,7 @@ export default function EditLockedBalanceModal({
 
   const handleConfirm = async () => {
     setLoading(true);
+    setErrorMessage("");
     if (newLockedBalance !== previousLockedBalance) {
       if (newLockedBalance > auctionListing.openingBid) {
         if (newLockedBalance < activeBalance) {
@@ -46,6 +47,7 @@ export default function EditLockedBalanceModal({
           if (resData.success) {
             setBidderLocalStorageData(resData.bidderFrontData);
             setTableData(resData.auctions);
+            setEditLockedBalanceModalSate(false);
           } else {
             setErrorMessage(resData.errorMessage);
           }
@@ -63,6 +65,7 @@ export default function EditLockedBalanceModal({
 
   const handleCancel = () => {
     setEditLockedBalanceModalSate(false);
+    setErrorMessage("");
   };
 
   return (
@@ -74,13 +77,13 @@ export default function EditLockedBalanceModal({
       footer={null}
     >
       <div className="flex flex-col items-center justify-center">
+        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
         <Input
           min={auctionListing.openingBid}
           value={newLockedBalance || 0}
           onChange={(e) => setNewLockedBalance(parseInt(e.target.value))}
           placeholder="Enter verification code"
         />
-
         <div className="flex gap-4 mt-4">
           <Button
             key="confirm"

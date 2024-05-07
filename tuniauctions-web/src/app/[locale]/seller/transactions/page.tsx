@@ -6,14 +6,29 @@ import { GiReceiveMoney, GiPayMoney } from "react-icons/gi";
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
 import { sellerTransactions } from "@/models/usersModels/types/sellerTypes";
 import moment from "moment";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import "moment/locale/fr";
+import "moment/locale/ar";
 
 export default function TransactionsPage() {
   const tableTranslations = useTranslations("seller.transactions");
   const tableHeaderTranslations = useTranslations(
     "seller.transactionTableTitles"
   );
+  const locale = useLocale();
 
+  const getDateFormat = (locale: string) => {
+    switch (locale) {
+      case "en":
+        return "ddd, MMM D, YYYY [at] h:mm A";
+      case "fr":
+        return "ddd D MMM YYYY [à] HH:mm";
+      case "ar":
+        return "ddd، D MMM، YYYY [في] HH:mm";
+      default:
+        return "ddd, MMM D, YYYY [at] h:mm A";
+    }
+  };
   const sellerTransactionTableColumns: TableColumnsType<sellerTransactions> = [
     {
       title: tableHeaderTranslations("amount"),
@@ -27,7 +42,7 @@ export default function TransactionsPage() {
       title: tableHeaderTranslations("date"),
       width: 80,
       render: (_, record) => {
-        return moment(record.date).format("ddd, MMM D, YYYY [at] h:mm A");
+        return moment(record.date).locale(locale).format(getDateFormat(locale));
       },
       align: "center",
     },
@@ -121,7 +136,7 @@ export default function TransactionsPage() {
             dataSource={sellerLocaleStorageData.transactions}
             columns={sellerTransactionTableColumns}
             scroll={{ x: 800 }}
-            pagination={{ position: ["bottomCenter"], pageSize: 4 }}
+            pagination={{ position: ["bottomCenter"], pageSize: 10 }}
             bordered
             className="mt-2"
           />
