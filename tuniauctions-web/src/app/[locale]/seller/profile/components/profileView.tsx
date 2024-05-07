@@ -5,11 +5,18 @@ import IsEditingProfile from "./editProfile";
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
 import { handleFirebaseImageUpload } from "@/app/[locale]/firebaseFunctions/handleUploadImage";
 import { resDataType } from "@/serverHelpers/types";
+import ChangeBusinessPictureModal from "./changeBusinessPictureModal";
+import ChangeCoverPictureModal from "./changeCoverPictureModal";
+import Image from "next/image";
 
 export default function SellerProfile() {
   const [isEditing, setIsEditing] = useState<Boolean>(false);
   const { sellerLocaleStorageData, setSellerLocalStorageData } =
     useSellerProfileStore();
+  const [isChaneBusinessPictureModalOpen, setChangeBusinessPictureModalState] =
+    useState(false);
+  const [isChangeCoverPictureModalOpen, setChangeCoverPictureModalState] =
+    useState(false);
   async function handleImageUpload(
     e: React.ChangeEvent<HTMLInputElement>,
     imageType: string
@@ -49,30 +56,35 @@ export default function SellerProfile() {
                 }}
               >
                 <label>
-                  <img
+                  <Image
                     loading="lazy"
-                    srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/9d7f516d18a5674bc080abfd86dbb7700dc72f74c0640e3ca131160052ef1a0d?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d7f516d18a5674bc080abfd86dbb7700dc72f74c0640e3ca131160052ef1a0d?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d7f516d18a5674bc080abfd86dbb7700dc72f74c0640e3ca131160052ef1a0d?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d7f516d18a5674bc080abfd86dbb7700dc72f74c0640e3ca131160052ef1a0d?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d7f516d18a5674bc080abfd86dbb7700dc72f74c0640e3ca131160052ef1a0d?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d7f516d18a5674bc080abfd86dbb7700dc72f74c0640e3ca131160052ef1a0d?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d7f516d18a5674bc080abfd86dbb7700dc72f74c0640e3ca131160052ef1a0d?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d7f516d18a5674bc080abfd86dbb7700dc72f74c0640e3ca131160052ef1a0d?apiKey=452d394c7c1e42459c0e2415b6f84ad2&"
+                    alt="image"
+                    width={70}
+                    height={70}
+                    src="https://firebasestorage.googleapis.com/v0/b/tunisianauctionwebapp.appspot.com/o/DisplayImages%2F9d7f516d18a5674bc080abfd86dbb7700dc72f74c0640e3ca131160052ef1a0d.png?alt=media&token=d0e11772-d885-4925-8739-1036ac7b29d6"
                     className="self-end w-8 aspect-square cursor-pointer"
-                  />
-                  <input
-                    type="file"
-                    className="hidden"
-                    onChange={(e) => {
-                      handleImageUpload(e, "cover");
+                    onClick={() => {
+                      setChangeCoverPictureModalState(true);
                     }}
                   />
                 </label>
 
                 <div style={{ position: "relative", width: "200px" }}>
-                  <img
+                  <Image
                     loading="lazy"
-                    srcSet={sellerLocaleStorageData?.businessPicture}
+                    src={sellerLocaleStorageData?.businessPicture || ""}
                     className="mt-5 border-4 border-white border-solid aspect-square w-[200px]"
+                    alt="Business Picture"
+                    width={200}
+                    height={200}
                   />
                   <label>
-                    <img
+                    <Image
                       loading="lazy"
-                      srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/9d7f516d18a5674bc080abfd86dbb7700dc72f74c0640e3ca131160052ef1a0d?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d7f516d18a5674bc080abfd86dbb7700dc72f74c0640e3ca131160052ef1a0d?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d7f516d18a5674bc080abfd86dbb7700dc72f74c0640e3ca131160052ef1a0d?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d7f516d18a5674bc080abfd86dbb7700dc72f74c0640e3ca131160052ef1a0d?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d7f516d18a5674bc080abfd86dbb7700dc72f74c0640e3ca131160052ef1a0d?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d7f516d18a5674bc080abfd86dbb7700dc72f74c0640e3ca131160052ef1a0d?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d7f516d18a5674bc080abfd86dbb7700dc72f74c0640e3ca131160052ef1a0d?apiKey=452d394c7c1e42459c0e2415b6f84ad2&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/9d7f516d18a5674bc080abfd86dbb7700dc72f74c0640e3ca131160052ef1a0d?apiKey=452d394c7c1e42459c0e2415b6f84ad2&"
+                      alt="image"
+                      width={70}
+                      height={70}
+                      src="https://firebasestorage.googleapis.com/v0/b/tunisianauctionwebapp.appspot.com/o/DisplayImages%2F9d7f516d18a5674bc080abfd86dbb7700dc72f74c0640e3ca131160052ef1a0d.png?alt=media&token=d0e11772-d885-4925-8739-1036ac7b29d6"
                       className="self-end w-8 aspect-square"
                       style={{
                         position: "absolute",
@@ -80,12 +92,8 @@ export default function SellerProfile() {
                         right: 0,
                         cursor: "pointer",
                       }}
-                    />
-                    <input
-                      type="file"
-                      className="hidden"
-                      onChange={(e) => {
-                        handleImageUpload(e, "profile");
+                      onClick={() => {
+                        setChangeBusinessPictureModalState(true);
                       }}
                     />
                   </label>
@@ -109,23 +117,6 @@ export default function SellerProfile() {
                       {sellerLocaleStorageData?.name}
                     </div>
                   </div>
-                  <div className="w-full sm:w-1/2">
-                    <label
-                      htmlFor="stock2"
-                      className="block text-sm  text-gray-700 font-bold"
-                    >
-                      Phone Number
-                    </label>
-                    <div
-                      style={{ overflowWrap: "break-word" }}
-                      id="stock1"
-                      className="mt-1 p-2 w-full"
-                    >
-                      phoneNumber
-                    </div>
-                  </div>
-                </div>
-                <div className="mb-4 flex flex-col sm:flex-row gap-4">
                   <div className="w-full sm:w-1/2 mb-2 sm:mb-0">
                     <label
                       htmlFor="stock1"
@@ -141,6 +132,8 @@ export default function SellerProfile() {
                       {sellerLocaleStorageData?.email}
                     </div>
                   </div>
+                </div>
+                <div className="mb-4 flex flex-col sm:flex-row gap-4">
                   <div className="w-full sm:w-1/2">
                     <label
                       htmlFor="stock2"
@@ -156,8 +149,6 @@ export default function SellerProfile() {
                       {sellerLocaleStorageData?.location.city}
                     </div>
                   </div>
-                </div>
-                <div className="mb-4 flex flex-col sm:flex-row gap-4">
                   <div className="w-full sm:w-1/2 mb-2 sm:mb-0">
                     <label
                       htmlFor="stock1"
@@ -173,7 +164,9 @@ export default function SellerProfile() {
                       {sellerLocaleStorageData?.location.municipality}
                     </div>
                   </div>
-                  <div className="w-full sm:w-1/2">
+                </div>
+                <div className="mb-4 flex flex-col sm:flex-row gap-4">
+                  <div className="w-full sm:w-2/2">
                     <label
                       htmlFor="stock2"
                       className="block text-sm  text-gray-700 font-bold"
@@ -217,6 +210,24 @@ export default function SellerProfile() {
             </div>
           </div>
         </>
+      )}
+      {sellerLocaleStorageData && (
+        <ChangeBusinessPictureModal
+          businessPicture={sellerLocaleStorageData.businessPicture}
+          isChaneBusinessPictureModalOpen={isChaneBusinessPictureModalOpen}
+          setChangeBusinessPictureModalState={
+            setChangeBusinessPictureModalState
+          }
+          setSellerLocalStoraData={setSellerLocalStorageData}
+        />
+      )}
+      {sellerLocaleStorageData && (
+        <ChangeCoverPictureModal
+          coverPicture={sellerLocaleStorageData.coverPicture}
+          isChangeCoverPictureModalOpen={isChangeCoverPictureModalOpen}
+          setChangeCoverPictureModalState={setChangeCoverPictureModalState}
+          setSellerLocalStoraData={setSellerLocalStorageData}
+        />
       )}
     </>
   );
