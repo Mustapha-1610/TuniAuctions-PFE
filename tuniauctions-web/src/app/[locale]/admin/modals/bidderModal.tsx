@@ -150,7 +150,7 @@ export default function BidderInformationsModal({
                 </p>
                 <p>
                   <strong>Saved Auctions:</strong>{" "}
-                  {bidder.auctionReferences.saved.length}
+                  {bidder.auctionReferences.participated.length}
                 </p>
               </div>
 

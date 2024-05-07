@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
   try {
     await connect();
     const reqbody = await request.json();
-    const { email } = reqbody;
+    const { email, language } = reqbody;
 
     const bidder: IBidder | null = await bidderModel.findOne({
       email,
@@ -22,7 +22,8 @@ export async function POST(request: NextRequest) {
       await sendBidderAccountVerificationMail(
         bidder.fullName,
         bidder.email,
-        bidder.verificationCode
+        bidder.verificationCode,
+        language
       );
       return NextResponse.json({
         success: true,
