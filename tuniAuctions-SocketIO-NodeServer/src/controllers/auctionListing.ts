@@ -20,7 +20,7 @@ export async function basic(req: express.Request, response: express.Response) {
     const { updatedAuctionListingForm, sellerId, type }: premiumListingInfos =
       req.body;
     const seller: ISeller = await sellerModel.findById(sellerId);
-    if (seller && seller.packageCount[type] > 0) {
+    if ((seller && seller.packageCount[type] > 0) || type === "Basic") {
       const newAuction = await auctionListingModel.create({
         listingType: type,
         title: updatedAuctionListingForm.title,
@@ -56,7 +56,6 @@ export async function basic(req: express.Request, response: express.Response) {
         const sellerFrontData = returnSellerFrontData(seller);
         return response.json({ success: true, sellerFrontData });
       } else {
-        console.log(scheduleResponse + "Schedule response");
         return response.json({ success: false });
       }
     } else {
@@ -171,7 +170,6 @@ async function handleReSchedule(auctionlisting: AuctionListingType) {
       auctionlisting.startingDate = newStartingDate;
       await auctionlisting.save();
       auctionlisting.participatingBidders.map(async (value) => {
-        console.log(auctionlisting.participatingBidders + "Participating");
         const bidder = await bidderModel.findByIdAndUpdate(value.bidderId, {
           $push: {
             notifications: {
@@ -280,7 +278,6 @@ async function handleStart(auctionlisting: AuctionListingType) {
       },
     }
   );
-  console.log("got here");
   const sellerSocket = io(`${process.env.SOCKET_SERVER}/seller`);
 
   const adminSocket = io(`${process.env.SOCKET_SERVER}/admin`);

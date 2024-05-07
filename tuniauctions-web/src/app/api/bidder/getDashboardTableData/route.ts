@@ -20,10 +20,10 @@ export async function POST(request: NextRequest) {
             $in: res.bidderAccount.auctionReferences.upcoming,
           },
         });
-      const savedAuctions: AuctionListingType[] | undefined =
+      const participatedAuctions: AuctionListingType[] | undefined =
         await auctionListingModel.find({
           _id: {
-            $in: res.bidderAccount.auctionReferences.saved,
+            $in: res.bidderAccount.auctionReferences.participated,
           },
         });
       const pendingDeliveries: DeliveryType[] | undefined =
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
       const response = NextResponse.json<getDashboardTableDataResponse>({
         deliveredDeliveries,
         pendingDeliveries,
-        savedAuctions,
+        participatedAuctions,
         upcomingAuctions,
       });
       return refreshBidderAccessToken(response, res.newAccessToken);
@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
 
 export interface getDashboardTableDataResponse {
   upcomingAuctions: AuctionListingType[] | undefined;
-  savedAuctions: AuctionListingType[] | undefined;
+  participatedAuctions: AuctionListingType[] | undefined;
   pendingDeliveries: DeliveryType[] | undefined;
   deliveredDeliveries: DeliveryType[] | undefined;
 }

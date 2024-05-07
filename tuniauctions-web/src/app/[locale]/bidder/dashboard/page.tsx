@@ -13,7 +13,7 @@ export default function MyComponent() {
     React.useState<getDashboardTableDataResponse>({
       deliveredDeliveries: undefined,
       pendingDeliveries: undefined,
-      savedAuctions: undefined,
+      participatedAuctions: undefined,
       upcomingAuctions: undefined,
     });
   React.useEffect(() => {
@@ -26,12 +26,11 @@ export default function MyComponent() {
       setTableData({
         deliveredDeliveries: resData.deliveredDeliveries,
         pendingDeliveries: resData.pendingDeliveries,
-        savedAuctions: resData.savedAuctions,
+        participatedAuctions: resData.participatedAuctions,
         upcomingAuctions: resData.upcomingAuctions,
       });
     }
     getTableData();
-    console.log("working");
   }, []);
   return (
     <div className="flex mt-24 flex-col justify-center px-2 bg-white max-md:px-2">

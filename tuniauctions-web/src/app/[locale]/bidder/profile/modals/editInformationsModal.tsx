@@ -8,6 +8,7 @@ import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import EditNameModal from "./changeNameModal";
+import EditPasswordModal from "./changePasswordModal";
 
 export default function EditInformationsModal() {
   const {
@@ -17,10 +18,12 @@ export default function EditInformationsModal() {
     setEditEmailModalState,
     setEditNameModalState,
     isEditNameModalOpen,
+    setEditPasswordModalState,
+    isEditPasswordModalOpen,
   } = useBidderNavigationStore();
   const [loading, setLoading] = useState(false);
 
-  const handleSendRequestCode = async () => {
+  const handleResetMailRequestCode = async () => {
     setLoading(true);
     const res = await fetch("/api/bidder/email/requestResetCode", {
       method: "PUT",
@@ -31,6 +34,18 @@ export default function EditInformationsModal() {
     }
     setLoading(false);
   };
+  async function handleResetPasswordRequestCode() {
+    setLoading(true);
+    const res = await fetch("/api/bidder/password/requestResetCode", {
+      method: "PUT",
+    });
+    const resData: resDataType = await res.json();
+    if (resData.success) {
+      setEditPasswordModalState(true);
+    }
+    setLoading(false);
+  }
+
   return (
     <>
       <Modal
@@ -57,14 +72,14 @@ export default function EditInformationsModal() {
             <Button
               type="dashed"
               className="w-full"
-              onClick={() => handleSendRequestCode()}
+              onClick={() => handleResetMailRequestCode()}
             >
               Edit Email
             </Button>
             <Button
               type="dashed"
               className="w-full"
-              onClick={() => setEditNameModalState(true)}
+              onClick={() => handleResetPasswordRequestCode()}
             >
               Edit Password
             </Button>
@@ -73,6 +88,7 @@ export default function EditInformationsModal() {
       </Modal>
       {isEditEmailModalOpen && <EditEmailModal />}
       {isEditNameModalOpen && <EditNameModal />}
+      {isEditPasswordModalOpen && <EditPasswordModal />}
     </>
   );
 }

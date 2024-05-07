@@ -64,7 +64,6 @@ export async function end(req: express.Request, response: express.Response) {
     if (auction) {
       auction.status = "Finished";
       auction.endDate = new Date();
-      console.log(winningBidder);
       auction.winningBidder = {
         name: String(winningBidder.bidderName),
         _id: winningBidder._id,
@@ -85,6 +84,7 @@ export async function end(req: express.Request, response: express.Response) {
                 displayName: auction.title,
               },
             },
+            "auctionReferences.participated": auction._id,
           },
           $pull: {
             "auctionReferences.upcoming": auction._id,

@@ -36,6 +36,12 @@ export default function AuctionDataTable({ tableData }: Props) {
       },
     },
     {
+      title: "End Date",
+      render: (_, record) => {
+        return moment(record.endDate).format("MMMM DD, YYYY hh:mm A");
+      },
+    },
+    {
       title: "Action",
       render: (_, record) => {
         return (
@@ -73,16 +79,16 @@ export default function AuctionDataTable({ tableData }: Props) {
                 </div>
                 <div
                   className={`grow justify-center items-center px-16 py-4 border-gray-200 border-solid border-b-[3px] w-fit max-md:px-5 max-md:max-w-full cursor-pointer ${
-                    selectedItem == "saved"
+                    selectedItem == "participated"
                       ? "text-blue-800"
                       : "text-neutral-900"
                   }`}
                   onClick={() => {
-                    setDataTable(tableData.savedAuctions);
-                    setSelectedItem("saved");
+                    setDataTable(tableData.participatedAuctions);
+                    setSelectedItem("participated");
                   }}
                 >
-                  Saved
+                  Participated
                 </div>
               </div>
             </div>

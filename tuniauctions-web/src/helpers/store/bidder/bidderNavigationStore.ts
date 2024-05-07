@@ -64,6 +64,6 @@ export const useBidderNavigationStore = create<navigationState>((set) => ({
 
   setEditPasswordModalState: (value) =>
     set(() => ({
-      isEditNameModalOpen: value,
+      isEditPasswordModalOpen: value,
     })),
 }));

@@ -11,26 +11,20 @@ import {
   userInputCausedErrors,
 } from "@/serverHelpers/errorHandler";
 import { NextRequest, NextResponse } from "next/server";
+import bcrypt from "bcryptjs";
 
 export async function PUT(request: NextRequest) {
   try {
-    const { newEmail } = await request.json();
+    const { newPassword, confirmNewPassword } = await request.json();
     await connect();
     const res = await verifyBidderTokens(request);
     if (res.isValid) {
-      if (res.bidderAccount.email.toUpperCase() === newEmail.toUpperCase()) {
-        return userInputCausedErrors("sameMail");
-      }
-      const bidder = await bidderModel.findOne({
-        email: newEmail.toUpperCase(),
-      });
-      if (bidder) return userInputCausedErrors("existsAlready");
-      const seller = await sellerModel.findOne({
-        email: newEmail.toUpperCase(),
-      });
-      if (seller) return userInputCausedErrors("existsAlready");
+      if (newPassword !== confirmNewPassword)
+        return userInputCausedErrors("mismatch");
+      if (bcrypt.compareSync(newPassword, res.bidderAccount.password))
+        return userInputCausedErrors("oldPassword");
 
-      res.bidderAccount.email = newEmail.toUpperCase();
+      res.bidderAccount.password = bcrypt.hashSync(newPassword);
       await res.bidderAccount.save();
       const bidderFrontData: IBidderFrontData = returnBidderFrontData(
         res.bidderAccount

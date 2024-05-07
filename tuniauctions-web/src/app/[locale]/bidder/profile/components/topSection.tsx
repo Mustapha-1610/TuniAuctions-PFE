@@ -3,9 +3,10 @@ import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore
 import { TbCameraUp } from "react-icons/tb";
 import { handleFirebaseImageUpload } from "@/app/[locale]/firebaseFunctions/handleUploadImage";
 import { resDataType } from "@/serverHelpers/types";
-import React from "react";
+import React, { useState } from "react";
 import { IoMdSettings } from "react-icons/io";
 import { useBidderNavigationStore } from "@/helpers/store/bidder/bidderNavigationStore";
+import ChangeBidderProfilePictureModal from "./components/changePicturePreset";
 
 interface Props {
   setSelectedProfileComponent: (
@@ -19,6 +20,8 @@ export default function TopSection({
 }: Props) {
   const { bidderLocalStorageData, setBidderLocalStorageData } =
     useBidderProfileStore();
+  const [isChangePictureModalOpen, setChangePictureModalState] =
+    useState<boolean>(false);
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file: File | undefined = e.target.files?.[0];
     if (file) {
@@ -69,9 +72,13 @@ export default function TopSection({
             src={bidderLocalStorageData?.profilePicture}
             className="shrink-0 object-cover max-w-full aspect-[1] w-[200px] rounded-full"
           />
-          <label className="absolute bottom-0 right-0 bg-white rounded-full p-1 cursor-pointer">
+          <label
+            className="absolute bottom-0 right-0 bg-white rounded-full p-1 cursor-pointer"
+            onClick={() => {
+              setChangePictureModalState(true);
+            }}
+          >
             <TbCameraUp size={26} />
-            <input type="file" className="hidden" onChange={handleFileChange} />
           </label>
         </div>
 
@@ -90,6 +97,14 @@ export default function TopSection({
           </div>
         </div>
       </div>
+      {isChangePictureModalOpen && bidderLocalStorageData && (
+        <ChangeBidderProfilePictureModal
+          isChangePictureModalOpen={isChangePictureModalOpen}
+          setChangePictureModalState={setChangePictureModalState}
+          setBidderLocalStorageData={setBidderLocalStorageData}
+          bidderPicture={bidderLocalStorageData.profilePicture}
+        />
+      )}
     </>
   );
 }

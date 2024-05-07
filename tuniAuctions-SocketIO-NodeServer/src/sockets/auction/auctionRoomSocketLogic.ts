@@ -145,7 +145,6 @@ const auctionRoomSocketLogic = (auctionRoomNameSpace: any) => {
             bidderId: data.bidderId,
           },
         });
-        console.log(roomTimers);
         const frontData = {
           bidderName: data.bidderName,
           bid: data.bid,

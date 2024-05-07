@@ -2,7 +2,6 @@ let connectedBidders: Record<string, any> = {};
 const bidderNameSpaceLogic = (bidderNameSpace: any) => {
   bidderNameSpace.on("connection", (socket: any) => {
     socket.on("bidderConnection", async (bidderSocketId: string) => {
-      console.log("connected");
       const bidder = connectedBidders[bidderSocketId];
 
       if (bidder && bidder.socketId) {

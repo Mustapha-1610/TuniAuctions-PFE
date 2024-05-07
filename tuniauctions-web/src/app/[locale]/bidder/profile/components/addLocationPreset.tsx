@@ -86,7 +86,9 @@ export default function AddLocationPreset({
         <div className="flex flex-col bg-white">
           <div className="flex flex-col items-center justify-center flex-grow">
             <div className="flex flex-col pb-2 bg-white items-center mt-8 mx-4">
-              <div className="text-center   font-bold text-lg ">text</div>
+              <div className="text-center   font-bold text-lg ">
+                Location Preset
+              </div>
               <form
                 className={`px-10 py-8 w-full max-w-xl bg-white rounded-lg sm:w-[600px]`}
                 onSubmit={handleSubmit(onSubmit)}

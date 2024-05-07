@@ -12,7 +12,7 @@ export interface IBidder extends Document {
   };
   auctionReferences: {
     upcoming: mongoose.Types.ObjectId[];
-    saved: mongoose.Types.ObjectId[];
+    participated: mongoose.Types.ObjectId[];
   };
   deliveries: {
     pending: mongoose.Types.ObjectId[];
@@ -64,7 +64,7 @@ export interface IBidderFrontData {
   };
   auctionReferences: {
     upcoming: mongoose.Types.ObjectId[];
-    saved: mongoose.Types.ObjectId[];
+    participated: mongoose.Types.ObjectId[];
   };
   deliveries: {
     pending: mongoose.Types.ObjectId[];
@@ -83,6 +83,7 @@ export interface IBidderFrontData {
       frontContext: string;
       contextId?: mongoose.Types.ObjectId;
       notificationIcon: string;
+      displayName?: string;
     };
     readStatus?: boolean;
   }[];

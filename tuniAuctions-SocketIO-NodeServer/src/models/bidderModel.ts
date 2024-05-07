@@ -37,7 +37,7 @@ const bidderSchema = new Schema({
   },
   auctionReferences: {
     upcoming: [Schema.Types.ObjectId],
-    saved: [Schema.Types.ObjectId],
+    participated: [Schema.Types.ObjectId],
   },
   deliveries: {
     pending: [Schema.Types.ObjectId],
