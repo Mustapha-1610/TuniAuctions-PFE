@@ -20,6 +20,7 @@ export async function PUT(request: NextRequest) {
       );
       if (delivery) {
         delivery.sellerReview = true;
+        delivery.sellerRating = rating;
         await delivery.save();
         await sellerModel.findByIdAndUpdate(delivery?.sellerId, {
           $inc: {

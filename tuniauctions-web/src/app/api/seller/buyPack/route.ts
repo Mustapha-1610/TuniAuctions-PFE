@@ -47,7 +47,7 @@ export async function PUT(request: NextRequest) {
               transactions: {
                 amount: pricing.price,
                 context: `${pricing.name} Package purchase`,
-                date: new Date(2024, 4, 5, 19, 0),
+                date: new Date(),
                 from: res.sellerAccount.name,
                 sellerId: res.sellerAccount._id,
               },

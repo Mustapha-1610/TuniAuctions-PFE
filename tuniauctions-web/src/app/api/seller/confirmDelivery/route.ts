@@ -2,6 +2,8 @@ import { connect } from "@/db/dbConfig";
 import deliveryModel from "@/models/auctionListingModels/deliveryModel";
 import { DeliveryType } from "@/models/types/delivery";
 import bidderModel from "@/models/usersModels/bidderModel";
+import platformModel from "@/models/usersModels/platformModel";
+import sellerModel from "@/models/usersModels/sellerModel";
 import { verifySellerToken } from "@/security/apiProtection/seller/routeProtection";
 import refreshSellerToken from "@/security/apiProtection/seller/tokenHandelingFunctions/confirmAccess";
 import {
@@ -41,13 +43,56 @@ export async function PUT(request: NextRequest) {
           $pull: {
             "deliveries.pending": delivery._id,
           },
+          $set: {
+            status: "Delivered",
+          },
         });
-        res.sellerAccount.deliveries.pending =
-          res.sellerAccount.deliveries.pending.filter(
-            (value) => value !== delivery._id
-          );
-        res.sellerAccount.deliveries.delivered.push(delivery._id);
-        await res.sellerAccount.save();
+        const seller = await sellerModel.findByIdAndUpdate(
+          res.sellerAccount._id,
+          {
+            $push: {
+              transactions: [
+                {
+                  amount: delivery.sellerEarnings,
+                  context: "auctionPayment",
+                  date: new Date(),
+                  reciever: "Me",
+                },
+                {
+                  amount: delivery.platformFees,
+                  context: "platformPayment",
+                  date: new Date(),
+                  reciever: "Tuni-Auctions",
+                },
+              ],
+              "deliveries.pending": delivery._id,
+            },
+            $pull: {
+              "deliveries.delivered": delivery._id,
+            },
+            $inc: {
+              earnnings: delivery.sellerEarnings,
+              platformFees: delivery.platformFees,
+            },
+          }
+        );
+        await platformModel.findOneAndUpdate(
+          {},
+          {
+            $inc: {
+              earnings: delivery.platformFees,
+            },
+            $push: {
+              transactions: {
+                amount: delivery.platformFees,
+                context: "auctionFees",
+                date: new Date(),
+                from: seller.name,
+                sellerId: seller._id,
+              },
+            },
+          }
+        );
         const deliveries = await deliveryModel.find({
           _id: {
             $in: res.sellerAccount.deliveries.pending,

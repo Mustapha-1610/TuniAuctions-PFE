@@ -94,6 +94,8 @@ export async function end(req: express.Request, response: express.Response) {
           bidderSocketId: bidder.socketId,
         });
       });
+      const platformFees =
+        winningBidder.winningPrice * (auction.platformFees / 100);
       const delivery: DeliveryType = await deliveryModel.create({
         auctionId: auction._id,
         bidderId: winningBidder._id,
@@ -104,9 +106,10 @@ export async function end(req: express.Request, response: express.Response) {
           productId: auction._id,
           productPicture: auction.productPictures[0],
         },
+        platformFees,
+        sellerEarnings: winningBidder.winningPrice - platformFees,
       });
-      const platformFees =
-        winningBidder.winningPrice * (auction.platformFees / 100);
+
       const seller: ISeller = await sellerModel.findByIdAndUpdate(
         auction.sellerId,
         {
@@ -125,48 +128,11 @@ export async function end(req: express.Request, response: express.Response) {
                 displayName: auction.title,
               },
             },
-            transactions: [
-              {
-                amount: winningBidder.winningPrice - platformFees,
-                context: "auctionPayment",
-                date: new Date(),
-                reciever: "Me",
-              },
-              {
-                amount: platformFees,
-                context: "platformPayment",
-                date: new Date(),
-                reciever: "Tuni-Auctions",
-              },
-            ],
-          },
-          $inc: {
-            earnnings: winningBidder.winningPrice - platformFees,
-            platformFees: platformFees,
-            ["auctionEarnings." + auction.listingType]:
-              winningBidder.winningPrice - platformFees,
           },
         }
       );
       delivery.sellerName = seller.name;
       await delivery.save();
-      await platformModel.findOneAndUpdate(
-        {},
-        {
-          $inc: {
-            earnings: platformFees,
-          },
-          $push: {
-            transactions: {
-              amount: platformFees,
-              context: "auctionFees",
-              date: new Date(),
-              from: seller.name,
-              sellerId: seller._id,
-            },
-          },
-        }
-      );
       const bidder = await bidderModel.findByIdAndUpdate(winningBidder._id, {
         $inc: {
           "balance.activeBalance": -winningBidder.winningPrice,

@@ -70,6 +70,9 @@ const deliverySchema = new Schema({
     type: Boolean,
     default: false,
   },
+  sellerRating: {
+    type: Number,
+  },
   report: {
     subject: {
       type: String,
@@ -82,6 +85,12 @@ const deliverySchema = new Schema({
         type: String,
       },
     ],
+    sellerEarnings: {
+      type: Number,
+    },
+    platformFees: {
+      type: Number,
+    },
   },
 });
 

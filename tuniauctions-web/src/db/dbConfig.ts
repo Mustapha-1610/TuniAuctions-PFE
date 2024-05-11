@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 let connected = false;
-const count = 0;
 export async function connect() {
   if (connected) {
     return;

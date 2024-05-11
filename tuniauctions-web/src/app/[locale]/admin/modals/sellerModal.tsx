@@ -101,6 +101,9 @@ export default function SellerDataModal({ setSellers }: Props) {
                   <strong>Email:</strong> {seller.email}
                 </p>
                 <p>
+                  <strong>Rating:</strong> {seller.reviews.rating}
+                </p>
+                <p>
                   <strong>Description:</strong> {seller.description}
                 </p>
                 <p>

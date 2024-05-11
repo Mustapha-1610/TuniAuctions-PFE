@@ -70,21 +70,27 @@ const deliverySchema = new Schema({
     type: Boolean,
     default: false,
   },
+  sellerRating: {
+    type: Number,
+  },
   report: {
     subject: {
       type: String,
-      required: true,
     },
     description: {
       type: String,
-      required: false,
     },
     attachments: [
       {
         type: String,
-        required: false,
       },
     ],
+    sellerEarnings: {
+      type: Number,
+    },
+    platformFees: {
+      type: Number,
+    },
   },
 });
 

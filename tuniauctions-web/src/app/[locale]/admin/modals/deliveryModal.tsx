@@ -89,6 +89,9 @@ export default function ReportedDeliveryModal() {
                   <h2 className="text-lg font-semibold">Seller Information</h2>
                   <p>Seller ID: {String(delivery.sellerId)}</p>
                   <p>Seller Name: {delivery.sellerName}</p>
+                  <p>Earnings: {delivery.sellerEarnings}</p>
+                  <p>Platform Fees: {delivery.platformFees}</p>
+                  <p>Service Rating: {delivery.sellerReview}</p>
                   <p
                     className="cursor-pointer text-blue-500"
                     onClick={() => {
@@ -98,7 +101,6 @@ export default function ReportedDeliveryModal() {
                     View Seller
                   </p>
                 </div>
-                {/* Product Information */}
                 <div className="border-b border-gray-200 pb-4">
                   <h2 className="text-lg font-semibold">Auction Information</h2>
                   <p>

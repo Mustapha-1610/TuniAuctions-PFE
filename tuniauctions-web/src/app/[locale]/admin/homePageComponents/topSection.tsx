@@ -20,7 +20,7 @@ export default function TopStatisticsSection({
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <span className="text-2xl sm:text-3xl leading-none font-bold text-black">
-                {earnings} $
+                {earnings?.toFixed(2)} $
               </span>
               <h3 className="text-bold  font-normal ">Earnings</h3>
             </div>

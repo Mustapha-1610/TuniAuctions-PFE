@@ -33,4 +33,7 @@ export interface DeliveryType extends Document {
     description: string;
     attachments: string[];
   };
+  sellerEarnings: number;
+  platformFees: number;
+  sellerRating: number;
 }

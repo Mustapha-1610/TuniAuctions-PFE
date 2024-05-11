@@ -1,10 +1,6 @@
 import * as React from "react";
 
-interface MyComponentProps {
-  // Add any necessary props here
-}
-
-function MyComponent(props: MyComponentProps) {
+export default function AboutUsPage() {
   return (
     <div className="flex flex-col">
       <div className="flex justify-center items-center px-16 py-20 w-full text-center bg-indigo-50 max-md:px-5 max-md:py-10">
@@ -220,5 +216,3 @@ function MyComponent(props: MyComponentProps) {
     </div>
   );
 }
-
-export default MyComponent;

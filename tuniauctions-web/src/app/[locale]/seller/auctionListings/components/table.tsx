@@ -101,6 +101,7 @@ export default function StatisticsTable({
     {
       title: "Starting Date",
       align: "center",
+      width: 260,
       dataIndex: "startingDate",
       sorter: (a, b) =>
         moment(a.startingDate).unix() - moment(b.startingDate).unix(),
