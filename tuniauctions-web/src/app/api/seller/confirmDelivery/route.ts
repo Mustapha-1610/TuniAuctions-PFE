@@ -1,4 +1,5 @@
 import { connect } from "@/db/dbConfig";
+import { returnSellerFrontData } from "@/frontHelpers/seller/returnSellerFrontData";
 import deliveryModel from "@/models/auctionListingModels/deliveryModel";
 import { DeliveryType } from "@/models/types/delivery";
 import bidderModel from "@/models/usersModels/bidderModel";
@@ -51,6 +52,15 @@ export async function PUT(request: NextRequest) {
           res.sellerAccount._id,
           {
             $push: {
+              notifications: {
+                notificationMessage: "auctionPayment",
+                context: {
+                  receptionDate: new Date(),
+                  frontContext: "auctionPayment",
+                  notificationIcon: delivery.productInformations.productPicture,
+                  displayName: delivery.sellerEarnings,
+                },
+              },
               transactions: [
                 {
                   amount: delivery.sellerEarnings,
@@ -93,12 +103,17 @@ export async function PUT(request: NextRequest) {
             },
           }
         );
+        const sellerFrontData = returnSellerFrontData(seller);
         const deliveries = await deliveryModel.find({
           _id: {
             $in: res.sellerAccount.deliveries.pending,
           },
         });
-        const response = NextResponse.json({ success: true, deliveries });
+        const response = NextResponse.json({
+          success: true,
+          deliveries,
+          sellerFrontData,
+        });
         if (res.newAccessToken)
           return refreshSellerToken(response, res.newAccessToken);
         return response;

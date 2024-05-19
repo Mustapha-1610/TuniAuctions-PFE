@@ -44,7 +44,7 @@ export async function PUT(request: NextRequest) {
               context: {
                 receptionDate: new Date(),
                 frontContext: "deliveryShipmentSuccessfull",
-                notificationIcon: fromDate + ", " + toDate,
+                notificationIcon: delivery.productInformations.productPicture,
               },
             },
           },

@@ -44,7 +44,7 @@ export default function PendingSellers({ pendingSellers }: Props) {
         },
         {
           title: "Street",
-          width: 50,
+          width: 300,
           render: (_, record) => {
             return record.location.street;
           },

@@ -11,6 +11,8 @@ import { LuCalendarDays } from "react-icons/lu";
 import { MdOutlineGroups } from "react-icons/md";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import moment from "moment";
+import { getauctionStartDateFormat } from "@/app/[locale]/nextIntlTranslations/getTime";
+import { useLocale } from "next-intl";
 
 interface Props {
   auctionListing:
@@ -49,6 +51,7 @@ export default function ProductInformationsSection({
 
     hanleLoadingImages();
   }, []);
+  const locale = useLocale();
   return (
     <>
       <div className="px-14 py-5 w-full bg-white border border-white border-solid max-w-[1540px] max-md:px-5 max-md:max-w-full">
@@ -126,9 +129,9 @@ export default function ProductInformationsSection({
                   </div>
                   <div className="my-auto text-right">
                     <p>
-                      {moment(auctionListing.startingDate).format(
-                        "MMMM DD, YYYY HH:mm"
-                      )}
+                      {moment(auctionListing.startingDate)
+                        .locale(locale)
+                        .format(getauctionStartDateFormat(locale))}
                     </p>
                   </div>
                 </div>

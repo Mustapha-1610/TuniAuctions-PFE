@@ -72,7 +72,7 @@ export default function ChangeCoverPictureModal({
           <Image
             src={URL.createObjectURL(selectedImage)}
             alt="Selected Business Picture"
-            className="flex flex-col gap-5 px-6 py-5 rounded-xl  border-solid max-md:pl-5 max-md:max-w-full bg-cover"
+            className="flex flex-col gap-5 px-6 py-5 rounded-xl  border-solid max-md:pl-5 max-md:max-w-full bg-cover object-cover"
             height={270}
             width={1400}
           />

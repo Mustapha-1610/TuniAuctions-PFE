@@ -72,9 +72,10 @@ export default function PackageCountSection({ transactions }: Props) {
             <Bar dataKey="earnings" fill="#46a683">
               <LabelList
                 dataKey="earnings"
-                position="top"
+                position="insideTop" // Try different positions such as "insideTop", "insideMiddle", "insideEnd"
                 formatter={(value: number) => `$${value.toFixed(2)}`}
-                className="font-bold text-black" // Add dollar sign and format amount
+                className="font-bold text-white" // Add dollar sign and format amount
+                fill="white"
               />
             </Bar>
           </BarChart>

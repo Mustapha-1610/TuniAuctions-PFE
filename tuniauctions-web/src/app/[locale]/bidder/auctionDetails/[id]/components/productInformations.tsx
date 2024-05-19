@@ -14,6 +14,7 @@ import ConfirmUnparticipationModal from "./confirmUnparticipationModal";
 import { useNavbarState } from "@/helpers/store/general/navbarState";
 import Link from "next/link";
 import { useLocale } from "next-intl";
+import { getauctionStartDateFormat } from "@/app/[locale]/nextIntlTranslations/getTime";
 
 interface Props {
   auctionListing: AuctionListingType;
@@ -126,9 +127,9 @@ export default function ProductInformations({
                       </div>
                       <div className="my-auto text-right">
                         <p>
-                          {moment(auctionListing.startingDate).format(
-                            "MMMM DD, YYYY HH:mm"
-                          )}
+                          {moment(auctionListing.startingDate)
+                            .locale(locale)
+                            .format(getauctionStartDateFormat(locale))}
                         </p>
                       </div>
                     </div>

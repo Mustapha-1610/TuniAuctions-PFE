@@ -16,7 +16,7 @@ function ChatMessage({ message, isUser }: messageProps) {
         className={`rounded-lg px-4 py-2 m-2 ${
           isUser ? "bg-blue-500 text-white" : "bg-gray-200 text-black"
         }`}
-        style={{ maxWidth: "200px", wordWrap: "break-word" }}
+        style={{ maxWidth: "320px", wordWrap: "break-word" }}
       >
         {message}
       </div>
@@ -80,7 +80,7 @@ export default function ChatBox({
 
   return (
     <div
-      className="fixed z-50 bottom-4 right-4 lg:bottom-6 lg:right-6 p-6 bg-neutral-900 w-[400px]  rounded-xl"
+      className="fixed z-50 bottom-4 right-4 lg:bottom-6 lg:right-6 p-6 bg-neutral-900 w-[440px]  rounded-xl"
       style={{
         height: "55vh",
         display: "flex",

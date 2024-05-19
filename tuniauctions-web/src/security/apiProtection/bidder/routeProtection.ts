@@ -60,7 +60,12 @@ export async function verifyBidderTokens(
       }
     }
 
-    if (bidderAccount && bidderAccount.refreshToken === refreshToken) {
+    if (
+      bidderAccount &&
+      bidderAccount.refreshToken === refreshToken &&
+      !bidderAccount.disabled &&
+      bidderAccount.verified
+    ) {
       const newAccessToken = jwt.sign(
         { bidder_id: bidderAccount._id },
         process.env.ACCESS_TOKEN_SECRET!,

@@ -1,6 +1,8 @@
+"use client";
 import React, { useState } from "react";
 import { Modal } from "antd";
 import { DeliveryType } from "@/models/types/delivery";
+import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
 
 interface Props {
   auctionTitle: string;
@@ -17,6 +19,7 @@ export default function ConfirmDeliverymodal({
   isConfirmDeliveryModalOpen,
   setConfirmDeliveryModal,
 }: Props) {
+  const { setSellerLocalStorageData } = useSellerProfileStore();
   const [errMessage, setErrMessage] = useState("");
   async function confirmDelivery() {
     setErrMessage("");
@@ -25,8 +28,9 @@ export default function ConfirmDeliverymodal({
       body: JSON.stringify({ deliveryId }),
     });
     const resData = await res.json();
-    if (resData.success) {
+    if (resData.success && resData.sellerFrontData) {
       setTableData(resData.deliveries);
+      setSellerLocalStorageData(resData.sellerFrontData);
       setConfirmDeliveryModal(false);
     } else {
       setConfirmDeliveryModal(false);

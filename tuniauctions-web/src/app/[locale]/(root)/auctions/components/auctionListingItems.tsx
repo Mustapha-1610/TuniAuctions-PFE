@@ -3,6 +3,7 @@ import { useLocale } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import moment from "moment";
+import { getauctionStartDateFormat } from "@/app/[locale]/nextIntlTranslations/getTime";
 
 interface Props {
   auctionItem: AuctionListingType;
@@ -44,9 +45,9 @@ export default function AuctionListingItems({ auctionItem }: Props) {
             <div className="mt-3 p-2 bg-purple-200 text-purple-800 rounded-lg shadow-md">
               <div className="text-xs leading-3 font-medium">Starts on:</div>
               <div className="text-gl font-bold">
-                {moment(auctionItem.startingDate).format(
-                  "ddd, MMM D, YYYY [at] h:mm A"
-                )}
+                {moment(auctionItem.startingDate)
+                  .locale(locale)
+                  .format(getauctionStartDateFormat(locale))}
               </div>
             </div>
           </div>

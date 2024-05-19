@@ -103,7 +103,7 @@
       }
     },
     "seller": {
-      "success": "Nous avons bien reçu votre demande de création d'un nouveau compte. Veuillez noter que votre compte est actuellement en cours de vérification par nos administrateurs pour garantir l'exactitude des informations fournies. Vous recevrez un e-mail avec plus de détails une fois que le processus de vérification sera terminé. Merci pour votre patience et votre compréhension.",
+      "success": "Merci pour votre demande. Votre nouveau compte est en cours de vérification par nos administrateurs. Vous recevrez un email une fois la vérification terminée. Nous apprécions votre patience.",
       "name": "Nom de l'Entreprise",
       "email": "E-mail",
       "password": "Mot de Passe",
@@ -166,12 +166,27 @@
   },
   "seller": {
     "notifications": {
-      "packagePayment": "Paiement réussie pour le colis : ",
-      "auctionDelayed": "En raison du seuil minimum de participation des enchérisseurs non atteint, l'enchère a été retardée à : ",
-      "auctionStart": "Salle d'enchères commencée pour : ",
-      "auctionEnded": "Salle d'enchères terminée pour : ",
-      "deliveryReport": "Un rapport a été soumis sur la livraison pour : ",
-      "sentAt": "Envoyé à:"
+      "packagePayment": "Paiement réussi pour le forfait : ",
+      "auctionDelayed": "En raison du seuil minimum de participation des enchérisseurs non atteint, l'enchère a été retardée à :",
+      "auctionStart": "La salle des enchères a commencé pour : ",
+      "auctionEnded": "La salle des enchères s'est terminée pour : ",
+      "deliveryReport": "Un rapport a été soumis pour la livraison de : ",
+      "sentAt": "Envoyé à :",
+      "auctionPayment": "Paiement de l'enchère reçu pour : "
+    },
+    "transactions": {
+      "auctionPayment": "Paiement de l'enchère",
+      "packagePayment": "Paiement du forfait"
+    },
+    "transactionTableTitles": {
+      "context": "Contexte",
+      "date": "Date",
+      "amount": "Montant",
+      "to": "À"
+    },
+    "earningsPage": {
+      "platformFees": "Frais de la plateforme",
+      "earningsReceived": "Revenus reçus"
     }
   }
 }

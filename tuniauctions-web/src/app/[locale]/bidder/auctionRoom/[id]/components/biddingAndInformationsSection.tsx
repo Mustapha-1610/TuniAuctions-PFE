@@ -7,6 +7,8 @@ import auctionRoomSocket from "@/frontHelpers/auctionRoom/auctionRoomLogic";
 import { IBidderFrontData } from "@/models/usersModels/types/bidderTypes";
 import moment from "moment";
 import { ObjectId } from "mongoose";
+import "moment/locale/fr";
+import "moment/locale/ar";
 
 export interface auctionRoomData {
   remainingTime: number;
@@ -35,6 +37,18 @@ export default function BiddingAndInformationsSection({
   bidderLocalStorageData,
   setAuctionListing,
 }: Props) {
+  const getDateFormat = (locale: string) => {
+    switch (locale) {
+      case "en":
+        return "ddd, MMM D, YYYY [at] h:mm A";
+      case "fr":
+        return "ddd D MMM YYYY [à] HH:mm";
+      case "ar":
+        return "ddd، D MMM، YYYY [في] HH:mm";
+      default:
+        return "ddd, MMM D, YYYY [at] h:mm A"; // Default to English format
+    }
+  };
   const [selectedImage, setSelectedImage] = useState("");
   const [errMessage, setErrMessage] = useState("");
   const [biddingRoomData, setBiddingRoomData] = useState<auctionRoomData>({
@@ -105,6 +119,7 @@ export default function BiddingAndInformationsSection({
       }
     };
   }, [bidderLocalStorageData]);
+
   return (
     <>
       {auctionListing ? (

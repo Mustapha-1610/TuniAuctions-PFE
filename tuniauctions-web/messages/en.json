@@ -103,7 +103,7 @@
       }
     },
     "seller": {
-      "success": "We have received your request to create a new account. Please note that your account is currently under verification by our administrators to ensure the accuracy of the information provided. You will receive an email with further details once the verification process is complete. Thank you for your patience and understanding.",
+      "success": "Thank you for your request. Your new account is being verified by our administrators. You'll receive an email once verification is complete. We appreciate your patience.",
       "name": "Business Name",
       "email": "Email",
       "password": "Password",
@@ -177,7 +177,8 @@
       "auctionStart": "Auction room started for : ",
       "auctionEnded": "Auction room ended for : ",
       "deliveryReport": "A report has been submitted on delivery for : ",
-      "sentAt": "Sent at:"
+      "sentAt": "Sent at:",
+      "auctionPayment": "Auction Payment Recieved For : "
     },
     "transactions": {
       "auctionPayment": "Auction Payment",
@@ -188,6 +189,10 @@
       "date": "Date",
       "amount": "Amount",
       "to": "To"
+    },
+    "earningsPage": {
+      "platformFees": "Platform Fees",
+      "earningsReceived": "Earnings Received"
     }
   }
 }

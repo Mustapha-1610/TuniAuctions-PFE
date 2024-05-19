@@ -65,8 +65,8 @@ export default function PromotionalVideoAndButItNowSection({
                   loading="lazy"
                   src={auctionListing.buyItNowSection?.promotionalPicture || ""}
                   className="mt-1 max-w-full aspect-[1.59] w-[253px]"
-                  width={120}
-                  height={120}
+                  width={250}
+                  height={250}
                 />
                 <div className="self-stretch px-14 pt-2 pb-3.5 mt-6 text-xl bg-white rounded-lg border border-white border-solid max-md:pr-6 max-md:pl-5 max-md:max-w-full">
                   {auctionListing.buyItNowSection?.promotionalDescription}

@@ -35,8 +35,9 @@ export default function PreviewModal({
           width={1650}
           footer={null}
           onCancel={() => setPreviewModalOpen(false)}
+          className="mt-2"
         >
-          <div className="flex flex-col items-center px-20 mt-6 pt-7 pb-16 bg-white border border-black border-solid max-md:px-5">
+          <div className="flex flex-col items-center px-20  pb-16 bg-white  max-md:px-5">
             <ProductInformationsSection
               auctionListing={auctionListing}
               productPictures={picture.productPictures}

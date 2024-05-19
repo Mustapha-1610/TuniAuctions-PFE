@@ -15,6 +15,7 @@ export default function TransactionsPage() {
   const tableHeaderTranslations = useTranslations(
     "seller.transactionTableTitles"
   );
+  const earningsTranslation = useTranslations("seller.earningsPage");
   const locale = useLocale();
 
   const getDateFormat = (locale: string) => {
@@ -82,7 +83,7 @@ export default function TransactionsPage() {
                         <div className="flex border-black flex-wrap gap-5 justify-between content-center">
                           <div className="flex flex-col flex-1">
                             <div className="text-base whitespace-nowrap text-white">
-                              Earnings Recieved{" "}
+                              {earningsTranslation("earningsReceived")}
                             </div>
                             <div className="mt-3 text-2xl text-white">
                               {sellerLocaleStorageData &&
@@ -106,7 +107,7 @@ export default function TransactionsPage() {
                         <div className="flex border-black flex-wrap gap-5 justify-between content-center">
                           <div className="flex flex-col flex-1">
                             <div className="text-base whitespace-nowrap text-white">
-                              Platform Fees
+                              {earningsTranslation("platformFees")}
                             </div>
                             <div className="mt-3 text-2xl text-white">
                               {sellerLocaleStorageData &&

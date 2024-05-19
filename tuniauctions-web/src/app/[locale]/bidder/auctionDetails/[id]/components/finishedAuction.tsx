@@ -9,6 +9,8 @@ import moment from "moment";
 import { AuctionListingType } from "@/models/types/auctionListing";
 import Image from "next/image";
 import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
+import { useLocale } from "next-intl";
+import { getauctionStartDateFormat } from "@/app/[locale]/nextIntlTranslations/getTime";
 
 interface Props {
   auctionListing: AuctionListingType;
@@ -20,6 +22,7 @@ export default function FinishedAuctionDisplay({ auctionListing }: Props) {
   useEffect(() => {
     console.log(bidderLocalStorageData);
   }, [bidderLocalStorageData]);
+  const locale = useLocale();
   return (
     <>
       {auctionListing ? (
@@ -109,9 +112,9 @@ export default function FinishedAuctionDisplay({ auctionListing }: Props) {
                       </div>
                       <div className="my-auto text-right">
                         <p>
-                          {moment(auctionListing.endDate).format(
-                            "MMMM DD, YYYY HH:mm"
-                          )}
+                          {moment(auctionListing.startingDate)
+                            .locale(locale)
+                            .format(getauctionStartDateFormat(locale))}
                         </p>
                       </div>
                     </div>

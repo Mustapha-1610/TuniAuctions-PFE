@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import ChatBox from "./aiChat";
 import { BsChatSquareTextFill } from "react-icons/bs";
 
@@ -11,6 +12,17 @@ export default function AiChatSection({ auctionListingTitle }: Props) {
   const handleChatClose = () => {
     setIsChatOpen(false);
   };
+  useEffect(() => {
+    if (messages.length <= 0) {
+      setMessages([
+        ...messages,
+        {
+          message: `Welcome! I'm Google's ai chat assistant "Gemini" and im here to help you with any questions you might have. Whether you need information, assistance, or just a bit of advice regarding the ${auctionListingTitle}, feel free to ask, and I'll do my best to provide the answers you're looking for.`,
+          isUser: false,
+        },
+      ]);
+    }
+  }, []);
   return (
     <div>
       {/* Your other components... */}

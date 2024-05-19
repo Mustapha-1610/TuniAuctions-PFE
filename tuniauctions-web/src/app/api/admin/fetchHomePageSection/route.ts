@@ -31,7 +31,7 @@ export async function POST() {
     const pendingSellers: ISeller[] | null = await sellerModel
       .find({ disabled: false, verified: false })
       .sort({ createdAt: -1 }) // Sorting in descending order based on createdAt
-      .limit(4);
+      .limit(5);
 
     // Retrieve latest 4 pending deliveries
     const pendingDeliveries: DeliveryType[] | null = await deliveryModel
