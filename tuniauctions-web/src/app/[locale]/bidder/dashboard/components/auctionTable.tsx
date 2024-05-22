@@ -8,6 +8,8 @@ import { useLocale } from "next-intl";
 import moment from "moment";
 import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
 import EditLockedBalanceModal from "./editLockedBalanceModal";
+import { getauctionStartDateFormat } from "@/app/[locale]/nextIntlTranslations/getTime";
+import { LuCircleSlash2 } from "react-icons/lu";
 
 interface Props {
   tableData: getDashboardTableDataResponse;
@@ -61,7 +63,9 @@ export default function AuctionDataTable({ tableData }: Props) {
       align: "center",
       width: 260,
       render: (_, record) => {
-        return moment(record.startingDate).format("MMMM DD, YYYY hh:mm A");
+        return moment(record.startingDate)
+          .locale(locale)
+          .format(getauctionStartDateFormat(locale));
       },
     },
     {
@@ -70,7 +74,9 @@ export default function AuctionDataTable({ tableData }: Props) {
       width: 260,
 
       render: (_, record) => {
-        return moment(record.endDate).format("MMMM DD, YYYY hh:mm A");
+        return moment(record.endDate)
+          .locale(locale)
+          .format(getauctionStartDateFormat(locale));
       },
     },
     {
@@ -89,16 +95,24 @@ export default function AuctionDataTable({ tableData }: Props) {
               );
             return (
               <>
-                <div
-                  className="cursor-pointer text-blue-500"
-                  onClick={() => {
-                    item && setPreviousLockedBalance(item?.lockedBalance),
-                      setAuction(record),
-                      setEditBalanceModalState(true);
-                  }}
-                >
-                  Edit
-                </div>
+                {record.status !== "Pending Start" ? (
+                  <div className="flex justify-center items-center">
+                    <LuCircleSlash2 size={23} />
+                  </div>
+                ) : (
+                  <>
+                    <div
+                      className="cursor-pointer text-blue-500"
+                      onClick={() => {
+                        item && setPreviousLockedBalance(item?.lockedBalance),
+                          setAuction(record),
+                          setEditBalanceModalState(true);
+                      }}
+                    >
+                      Edit
+                    </div>
+                  </>
+                )}
               </>
             );
           },
@@ -109,15 +123,20 @@ export default function AuctionDataTable({ tableData }: Props) {
           width: 120,
 
           render: (_, record) => {
-            return (
-              <>
-                <Link
-                  href={`/${locale}/bidder/auctionDetails/${record._id}`}
-                  className="cursor-pointer text-blue-500"
-                >
-                  View
-                </Link>
-              </>
+            return record.status === "Ongoing" ? (
+              <Link
+                href={`/${locale}/bidder/auctionRoom/${record._id}`}
+                className="cursor-pointer text-blue-500"
+              >
+                Participate
+              </Link>
+            ) : (
+              <Link
+                href={`/${locale}/bidder/auctionDetails/${record._id}`}
+                className="cursor-pointer text-blue-500"
+              >
+                View
+              </Link>
             );
           },
         },
@@ -158,7 +177,7 @@ export default function AuctionDataTable({ tableData }: Props) {
                     setSelectedItem("participated");
                   }}
                 >
-                  Participated
+                  Finished
                 </div>
               </div>
             </div>

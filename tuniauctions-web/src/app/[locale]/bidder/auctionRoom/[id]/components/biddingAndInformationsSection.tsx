@@ -9,6 +9,7 @@ import moment from "moment";
 import { ObjectId } from "mongoose";
 import "moment/locale/fr";
 import "moment/locale/ar";
+import { useLocale } from "next-intl";
 
 export interface auctionRoomData {
   remainingTime: number;
@@ -37,18 +38,6 @@ export default function BiddingAndInformationsSection({
   bidderLocalStorageData,
   setAuctionListing,
 }: Props) {
-  const getDateFormat = (locale: string) => {
-    switch (locale) {
-      case "en":
-        return "ddd, MMM D, YYYY [at] h:mm A";
-      case "fr":
-        return "ddd D MMM YYYY [à] HH:mm";
-      case "ar":
-        return "ddd، D MMM، YYYY [في] HH:mm";
-      default:
-        return "ddd, MMM D, YYYY [at] h:mm A"; // Default to English format
-    }
-  };
   const [selectedImage, setSelectedImage] = useState("");
   const [errMessage, setErrMessage] = useState("");
   const [biddingRoomData, setBiddingRoomData] = useState<auctionRoomData>({
@@ -119,7 +108,19 @@ export default function BiddingAndInformationsSection({
       }
     };
   }, [bidderLocalStorageData]);
+  const formatRemainingTime = (remainingTime: number, locale: string) => {
+    const duration = moment.duration(remainingTime * 1000);
 
+    const minutes = duration.minutes();
+    const seconds = duration.seconds();
+
+    const formattedMinutes = minutes.toLocaleString(locale);
+    const formattedSeconds = seconds.toLocaleString(locale);
+
+    // Return the formatted time string
+    return `${formattedMinutes}:${formattedSeconds}`;
+  };
+  const locale = useLocale();
   return (
     <>
       {auctionListing ? (
@@ -170,7 +171,7 @@ export default function BiddingAndInformationsSection({
                       <Image
                         src={biddingRoomData.bidderPicture}
                         alt="Bidder's Profile"
-                        className="rounded-full w-10 h-10 mr-3"
+                        className="rounded-full w-10 h-10 ml-3"
                         height={70}
                         width={70}
                       />
@@ -184,6 +185,7 @@ export default function BiddingAndInformationsSection({
                       <div className="flex items-center justify-center px-14 text-5xl font-bold text-center text-black whitespace-nowrap bg-white rounded-full border border-black border-solid h-[156px] stroke-[1px] w-[156px] max-md:px-5 max-md:text-4xl mx-auto">
                         {moment
                           .utc(biddingRoomData.remainingTime * 1000)
+                          .locale(locale)
                           .format("mm:ss")}
                       </div>
 

@@ -39,10 +39,10 @@ export async function POST(request: NextRequest) {
           },
         });
       const response = NextResponse.json<getDashboardTableDataResponse>({
-        deliveredDeliveries,
-        pendingDeliveries,
-        participatedAuctions,
-        upcomingAuctions,
+        deliveredDeliveries: deliveredDeliveries.reverse(),
+        pendingDeliveries: pendingDeliveries.reverse(),
+        participatedAuctions: participatedAuctions.reverse(),
+        upcomingAuctions: upcomingAuctions.reverse(),
       });
       return refreshBidderAccessToken(response, res.newAccessToken);
     } else {

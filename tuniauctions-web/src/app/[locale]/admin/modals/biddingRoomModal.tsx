@@ -8,8 +8,10 @@ import {
 } from "../../bidder/auctionRoom/[id]/components/biddingAndInformationsSection";
 import moment from "moment";
 import auctionRoomSocket from "@/frontHelpers/auctionRoom/auctionRoomLogic";
-import { Image, Modal } from "antd";
+import { Modal } from "antd";
 import { useAdminStore } from "@/helpers/store/admin/adminStore";
+import { useLocale } from "next-intl";
+import Image from "next/image";
 
 export default function AdminBiddingRoomModal() {
   const {
@@ -85,6 +87,7 @@ export default function AdminBiddingRoomModal() {
       }
     };
   }, []);
+  const locale = useLocale();
   return (
     <>
       <Modal
@@ -108,6 +111,7 @@ export default function AdminBiddingRoomModal() {
                       alt="Product"
                       width={400}
                       height={200}
+                      quality={85}
                     />
                   )}
                   <div className="flex justify-center mt-4">
@@ -137,12 +141,10 @@ export default function AdminBiddingRoomModal() {
                         Highest Bidder : {biddingRoomData.heighestBidder}
                       </div>
                       {biddingRoomData.bidderPicture && (
-                        <Image
+                        <img
                           src={biddingRoomData.bidderPicture}
                           alt="Bidder's Profile"
-                          className="rounded-full w-10 h-10 mr-3"
-                          width={10}
-                          height={10}
+                          className="rounded-full w-10 h-10 ml-3"
                         />
                       )}
                     </div>
@@ -154,6 +156,7 @@ export default function AdminBiddingRoomModal() {
                         <div className="flex items-center justify-center px-14 text-5xl font-bold text-center text-black whitespace-nowrap bg-white rounded-full border border-black border-solid h-[156px] stroke-[1px] w-[156px] max-md:px-5 max-md:text-4xl mx-auto">
                           {moment
                             .utc(biddingRoomData.remainingTime * 1000)
+                            .locale(locale)
                             .format("mm:ss")}
                         </div>
 

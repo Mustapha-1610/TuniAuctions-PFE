@@ -76,7 +76,7 @@ export default function AdminNotifications({
             spinning={loading}
           >
             {adminData?.notifications &&
-              adminData.notifications.map((value, index) => {
+              adminData.notifications.reverse().map((value, index) => {
                 return (
                   <div
                     className="p-3 hover:bg-gray-100 cursor-pointer flex items-center"

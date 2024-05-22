@@ -22,7 +22,7 @@ export default function PromotionalSection({ auctionListing }: Props) {
         >
           <div
             className={`flex flex-col w-[${
-              !("buyItNowSection" in auctionListing) ? "100" : "56"
+              !("buyItNowSection" in auctionListing) ? "100" : "52"
             }%] max-md:ml-0 max-md:w-full`}
           >
             {auctionListing.promotionalVideo && (

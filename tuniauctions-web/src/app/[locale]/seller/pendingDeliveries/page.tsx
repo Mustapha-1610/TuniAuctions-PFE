@@ -15,6 +15,8 @@ import { useSellerStore } from "@/helpers/store/seller/sellerStore";
 import SellerAuctionListingModal from "../modals/auctionListingModal";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import { getauctionStartDateFormat } from "@/app/[locale]/nextIntlTranslations/getTime";
+import { useLocale } from "next-intl";
 
 export default function PendingDeliveriesPage() {
   const {
@@ -60,6 +62,7 @@ export default function PendingDeliveriesPage() {
     }
     setLoading(false);
   }
+  const locale = useLocale();
   const columns: TableColumnsType<DeliveryType> = [
     {
       title: "Product",
@@ -104,7 +107,7 @@ export default function PendingDeliveriesPage() {
     },
     {
       title: "Expected Delivery Day",
-      align: "center",
+      align: "left",
 
       width: 300,
       render: (_, record) => {
@@ -113,13 +116,13 @@ export default function PendingDeliveriesPage() {
             {record.expectedDeliveryDate && (
               <>
                 From :{" "}
-                {moment(record.expectedDeliveryDate.from).format(
-                  " dddd, MMMM D, YYYY"
-                )}
+                {moment(record.expectedDeliveryDate.from)
+                  .locale(locale)
+                  .format("ddd, MMM D, YYYY ")}
                 <span className="">, To : </span>
-                {moment(record.expectedDeliveryDate.to).format(
-                  " dddd, MMMM D, YYYY"
-                )}
+                {moment(record.expectedDeliveryDate.to)
+                  .locale(locale)
+                  .format("ddd, MMM D, YYYY ")}
               </>
             )}
           </>
@@ -174,7 +177,7 @@ export default function PendingDeliveriesPage() {
                   setDeliveryId(String(record._id));
                   setConfirmDelivery(true);
                 }}
-                className="cursor-pointer"
+                className="cursor-pointer text-blue-500"
               >
                 Confirm Delivery Shipment
               </p>
@@ -185,7 +188,7 @@ export default function PendingDeliveriesPage() {
                   setDeliveryId(String(record._id));
                   setConfirmDeliveryModal(true);
                 }}
-                className="cursor-pointer"
+                className="cursor-pointer text-blue-500"
               >
                 Confirm Delivery
               </p>
@@ -213,7 +216,7 @@ export default function PendingDeliveriesPage() {
           >
             <Table
               columns={columns}
-              dataSource={tableData}
+              dataSource={tableData?.reverse()}
               scroll={{ x: 800 }}
               pagination={{
                 position: ["bottomCenter"],
@@ -244,7 +247,6 @@ export default function PendingDeliveriesPage() {
       {isConfirmDeliveryModalOpen && (
         <ConfirmDeliverymodal
           deliveryId={deliveryId}
-          auctionTitle=""
           setTableData={setTableData}
           isConfirmDeliveryModalOpen={isConfirmDeliveryModalOpen}
           setConfirmDeliveryModal={setConfirmDeliveryModal}

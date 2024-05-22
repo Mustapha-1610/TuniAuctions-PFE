@@ -5,7 +5,6 @@ import { DeliveryType } from "@/models/types/delivery";
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
 
 interface Props {
-  auctionTitle: string;
   deliveryId: string;
   setConfirmDeliveryModal: (value: boolean) => void;
   isConfirmDeliveryModalOpen: boolean;
@@ -14,14 +13,15 @@ interface Props {
 
 export default function ConfirmDeliverymodal({
   setTableData,
-  auctionTitle,
   deliveryId,
   isConfirmDeliveryModalOpen,
   setConfirmDeliveryModal,
 }: Props) {
   const { setSellerLocalStorageData } = useSellerProfileStore();
   const [errMessage, setErrMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   async function confirmDelivery() {
+    setLoading(true);
     setErrMessage("");
     const res = await fetch("/api/seller/confirmDelivery", {
       method: "PUT",
@@ -35,11 +35,12 @@ export default function ConfirmDeliverymodal({
     } else {
       setConfirmDeliveryModal(false);
     }
+    setLoading(false);
   }
   return (
     <>
       <Modal
-        title="Confirm Delivery ?"
+        title={"Confirm Product Delivery Arrival ?"}
         open={isConfirmDeliveryModalOpen}
         onOk={() => {
           setConfirmDeliveryModal(false);
@@ -54,10 +55,10 @@ export default function ConfirmDeliverymodal({
 
         <button
           type="button"
-          className="mt-6 px-16 py-3 w-full bg-gray-800 text-white rounded-lg"
+          className="mt-6 px-16 py-3 w-full bg-green-800 text-white rounded-lg"
           onClick={confirmDelivery}
         >
-          Submit
+          {loading ? "Loading ..." : "Confirm"}
         </button>
       </Modal>
     </>

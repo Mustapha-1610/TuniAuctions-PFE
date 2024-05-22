@@ -17,6 +17,7 @@ export async function POST(request: NextRequest) {
         _id: {
           $in: res.sellerAccount.deliveries.delivered,
         },
+        status: "Delivered",
       });
       const response = NextResponse.json(deliveries);
       if (res.newAccessToken)

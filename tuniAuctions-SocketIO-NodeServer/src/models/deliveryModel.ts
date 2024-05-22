@@ -85,12 +85,12 @@ const deliverySchema = new Schema({
         type: String,
       },
     ],
-    sellerEarnings: {
-      type: Number,
-    },
-    platformFees: {
-      type: Number,
-    },
+  },
+  sellerEarnings: {
+    type: Number,
+  },
+  platformFees: {
+    type: Number,
   },
 });
 

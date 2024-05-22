@@ -24,6 +24,7 @@ export default function ConfirmModal({
   const [selectedToDate, setSelectedToDate] = useState<Date | null>(null);
   const [minToDate, setMinToDate] = useState<Date | null>(null);
   const [errMessage, setErrMessage] = useState("");
+  const [loading, setlOading] = useState(false);
   useEffect(() => {
     // Update minToDate when selectedFromDate changes
     setMinToDate(selectedFromDate);
@@ -39,6 +40,7 @@ export default function ConfirmModal({
   };
   async function confirmDeliveryShipment() {
     if (selectedFromDate && selectedToDate) {
+      setlOading(true);
       setErrMessage("");
       const res = await fetch("/api/seller/Confirmdeliveryshipment", {
         method: "PUT",
@@ -56,6 +58,7 @@ export default function ConfirmModal({
     } else {
       setErrMessage("Provide Expected Delivery Date");
     }
+    setlOading(false);
   }
   return (
     <>
@@ -101,9 +104,10 @@ export default function ConfirmModal({
         <button
           type="button"
           className="mt-6 px-16 py-3 w-full bg-gray-800 text-white rounded-lg"
+          disabled={loading}
           onClick={confirmDeliveryShipment}
         >
-          Submit
+          {loading ? "Loading ..." : "Confirm"}
         </button>
       </Modal>
     </>

@@ -26,6 +26,7 @@ export async function PUT(request: NextRequest) {
             deliveryDate: new Date(),
           },
         });
+      console.log(delivery);
       if (delivery) {
         await bidderModel.findByIdAndUpdate(delivery.bidderId, {
           $push: {
@@ -75,10 +76,10 @@ export async function PUT(request: NextRequest) {
                   reciever: "Tuni-Auctions",
                 },
               ],
-              "deliveries.pending": delivery._id,
+              "deliveries.delivered": delivery._id,
             },
             $pull: {
-              "deliveries.delivered": delivery._id,
+              "deliveries.pending": delivery._id,
             },
             $inc: {
               earnnings: delivery.sellerEarnings,

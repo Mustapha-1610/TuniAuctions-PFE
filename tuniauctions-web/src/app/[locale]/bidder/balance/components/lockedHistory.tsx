@@ -3,7 +3,8 @@ import React from "react";
 import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
 import { Table, TableColumnsType } from "antd";
 import moment from "moment";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { getauctionStartDateFormat } from "@/app/[locale]/nextIntlTranslations/getTime";
 
 export default function TransactionHistory() {
   interface transactionTableDataType {
@@ -14,7 +15,7 @@ export default function TransactionHistory() {
   }
   const tableTitles = useTranslations("bidder.transactionTableTitles");
   const tableText = useTranslations("bidder.transactions");
-
+  const locale = useLocale();
   const transactionTableColumns: TableColumnsType<transactionTableDataType> = [
     {
       title: tableTitles("context"),
@@ -40,7 +41,9 @@ export default function TransactionHistory() {
       render: (_, record, index) => {
         return (
           <div key={index}>
-            {moment(record.date).format("ddd, MMM D, YYYY [at] h:mm A")}
+            {moment(record.date)
+              .locale(locale)
+              .format(getauctionStartDateFormat(locale))}
           </div>
         );
       },

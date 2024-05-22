@@ -11,6 +11,7 @@ import moment from "moment";
 import auctionRoomSocket from "@/frontHelpers/auctionRoom/auctionRoomLogic";
 import { Modal } from "antd";
 import { useSellerStore } from "@/helpers/store/seller/sellerStore";
+import { useLocale } from "next-intl";
 
 export default function SellerBiddingRoomModal() {
   const {
@@ -86,6 +87,7 @@ export default function SellerBiddingRoomModal() {
       }
     };
   }, []);
+  const locale = useLocale();
   return (
     <>
       <Modal
@@ -142,7 +144,7 @@ export default function SellerBiddingRoomModal() {
                         <img
                           src={biddingRoomData.bidderPicture}
                           alt="Bidder's Profile"
-                          className="rounded-full w-10 h-10 mr-3"
+                          className="rounded-full w-10 h-10 ml-3"
                         />
                       )}
                     </div>
@@ -154,6 +156,7 @@ export default function SellerBiddingRoomModal() {
                         <div className="flex items-center justify-center px-14 text-5xl font-bold text-center text-black whitespace-nowrap bg-white rounded-full border border-black border-solid h-[156px] stroke-[1px] w-[156px] max-md:px-5 max-md:text-4xl mx-auto">
                           {moment
                             .utc(biddingRoomData.remainingTime * 1000)
+                            .locale(locale)
                             .format("mm:ss")}
                         </div>
 

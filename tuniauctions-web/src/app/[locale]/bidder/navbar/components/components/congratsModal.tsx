@@ -1,11 +1,7 @@
 "use client";
-
-import { useBidderNavbarState } from "@/helpers/store/bidder/bidderNavbarStore";
-import { resDataType } from "@/serverHelpers/types";
 import { Modal } from "antd";
 import { useLocale } from "next-intl";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 interface Props {
   isCongratsModalOpen: boolean;
@@ -18,11 +14,10 @@ export default function AuctionCongratsModal({
   setCongratsModal,
 }: Props) {
   const locale = useLocale();
-  const router = useRouter();
   return (
     <>
       <Modal
-        title="Congratulations"
+        title="🎉Congratulations🎉"
         centered
         open={isCongratsModalOpen}
         width={600}
@@ -32,18 +27,22 @@ export default function AuctionCongratsModal({
         }}
         maskClosable={false}
       >
-        <p>
-          Congratulations On Winning {auctionTitle} auction!{" "}
+        <div className="flex flex-col items-center">
+          <p className="text-center mb-4">
+            You've won {auctionTitle} auction! The winning bid amount will be
+            deducted from your balance. Please provide your delivery details to
+            the seller to initiate the shipping process.
+          </p>
           <Link
             onClick={() => {
               setCongratsModal(false);
             }}
+            className=" px-16 py-3 bg-gray-800 text-white rounded-lg text-center"
             href={`/${locale}/bidder/dashboard`}
-            className="text-blue-600"
           >
             Check it out
           </Link>
-        </p>
+        </div>
       </Modal>
     </>
   );

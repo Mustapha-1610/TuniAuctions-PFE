@@ -4,9 +4,10 @@ import LocationPresets from "./components/locationPresets";
 import { DeliveryType } from "@/models/types/delivery";
 import DeliveryStatusDisplay from "./components/deliveryStatusDisplay";
 import Image from "next/image";
+import { Input } from "antd";
 export interface locationPeset {
-  phoneNumber: string;
-  street: string;
+  phoneNumber: string | null;
+  street: string | null;
 }
 function MyComponent({ params }: { params: { deliveryId: string } }) {
   const [selectedOption, setSelectedOption] = React.useState<string>("billing");
@@ -14,19 +15,27 @@ function MyComponent({ params }: { params: { deliveryId: string } }) {
     undefined
   );
   const [locationPreset, setLocationPreset] = React.useState<locationPeset>({
-    phoneNumber: "",
-    street: "",
+    phoneNumber: null,
+    street: null,
   });
   const [submitting, setSubmitting] = React.useState<boolean>(false);
   async function confirmLocation() {
-    const res = await fetch("/api/bidder/confirmLocation", {
-      method: "POST",
-      body: JSON.stringify({ locationPreset, deliveryId: params.deliveryId }),
-    });
-    const resData = await res.json();
-    if (resData.delivery) {
-      setDelivery(resData.delivery);
+    if (
+      (locationPreset.street !== null || "") &&
+      (locationPreset.phoneNumber !== null || "")
+    ) {
+      setSubmitting(true);
+      const res = await fetch("/api/bidder/confirmLocation", {
+        method: "POST",
+        body: JSON.stringify({ locationPreset, deliveryId: params.deliveryId }),
+      });
+      const resData = await res.json();
+      if (resData.delivery) {
+        setDelivery(resData.delivery);
+      }
+      setSubmitting(false);
     }
+    setSubmitting(false);
   }
   async function getDeliveryData() {
     const res = await fetch("/api/general/getDeliveryData", {
@@ -93,8 +102,8 @@ function MyComponent({ params }: { params: { deliveryId: string } }) {
                         {selectedOption === "billing" ? (
                           <>
                             <div className="flex gap-5 justify-between mt-12 max-md:flex-wrap max-md:mt-10">
-                              <input
-                                type="text"
+                              <Input
+                                size="large"
                                 placeholder="Phone Number"
                                 onChange={(e) => {
                                   setLocationPreset((prev) => ({
@@ -102,18 +111,19 @@ function MyComponent({ params }: { params: { deliveryId: string } }) {
                                     phoneNumber: e.target.value,
                                   }));
                                 }}
-                                className="shrink-0 max-w-full bg-white rounded-xl border border-black border-solid h-[65px] w-[446px] text-xl"
+                                className="shrink-0 max-w-full rounded-xl h-[65px] w-[446px] text-xl"
                               />
                             </div>
-                            <textarea
-                              placeholder="Adress"
+                            <Input.TextArea
+                              placeholder="Address"
                               onChange={(e) => {
                                 setLocationPreset((prev) => ({
                                   ...prev,
                                   street: e.target.value,
                                 }));
                               }}
-                              className="shrink-0 mt-4 bg-white rounded-xl border border-black border-solid h-[203px] max-md:max-w-full text-xl"
+                              className="shrink-0 mt-4 rounded-xl h-[203px] max-md:max-w-full text-xl"
+                              autoSize={{ minRows: 4, maxRows: 6 }}
                             />
                           </>
                         ) : (
@@ -126,7 +136,7 @@ function MyComponent({ params }: { params: { deliveryId: string } }) {
                         <button
                           type="button"
                           onClick={() => {
-                            confirmLocation(), setSubmitting(true);
+                            confirmLocation();
                           }}
                           className="justify-center items-center self-center px-8 py-6 mt-7 max-w-full text-xl tracking-wide leading-5 text-center text-white whitespace-nowrap bg-emerald-400 rounded w-[442px] max-md:px-5 cursor-pointer"
                           disabled={submitting}

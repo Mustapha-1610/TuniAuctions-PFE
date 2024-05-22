@@ -7,6 +7,7 @@ import { DeliveryType } from "@/models/types/delivery";
 import { useLocale } from "next-intl";
 import Link from "next/link";
 import moment from "moment";
+import { getauctionStartDateFormat } from "@/app/[locale]/nextIntlTranslations/getTime";
 
 interface Props {
   tableData: getDashboardTableDataResponse;
@@ -40,14 +41,14 @@ export default function DeliveriesDataTable({ tableData }: Props) {
               <>
                 {record.expectedDeliveryDate ? (
                   <>
-                    from :{" "}
-                    {moment(record.expectedDeliveryDate.from).format(
-                      "dddd, MMMM D, YYYY "
-                    )}
-                    , to :{" "}
-                    {moment(record.expectedDeliveryDate.to).format(
-                      "dddd, MMMM D, YYYY  "
-                    )}
+                    From :{" "}
+                    {moment(record.expectedDeliveryDate.from)
+                      .locale(locale)
+                      .format("ddd, MMM D, YYYY ")}
+                    <span className="">, To : </span>
+                    {moment(record.expectedDeliveryDate.to)
+                      .locale(locale)
+                      .format("ddd, MMM D, YYYY ")}
                   </>
                 ) : (
                   <>Not decided yet</>
@@ -63,7 +64,9 @@ export default function DeliveriesDataTable({ tableData }: Props) {
       render: (_, record) => {
         return (
           record.deliveryDate &&
-          moment(record.deliveryDate).format("dddd, MMMM D, YYYY hh:mm A ")
+          moment(record.deliveryDate)
+            .locale(locale)
+            .format(getauctionStartDateFormat(locale))
         );
       },
     },
