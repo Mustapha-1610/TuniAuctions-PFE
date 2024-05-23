@@ -29,7 +29,7 @@ export default function AuctionCongratsModal({
       >
         <div className="flex flex-col items-center">
           <p className="text-center mb-4">
-            You've won {auctionTitle} auction! The winning bid amount will be
+            You ve won {auctionTitle} auction! The winning bid amount will be
             deducted from your balance. Please provide your delivery details to
             the seller to initiate the shipping process.
           </p>
