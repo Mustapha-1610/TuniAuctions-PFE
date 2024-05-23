@@ -13,6 +13,7 @@ import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import SellerAuctionListingModal from "../modals/auctionListingModal";
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
+import { useLocale } from "next-intl";
 
 export default function DeliveredDeliveriesPage() {
   const [tableData, setTableData] = useState<DeliveryType[] | undefined>();
@@ -53,6 +54,7 @@ export default function DeliveredDeliveriesPage() {
     }
     setLoading(false);
   }
+  const locale = useLocale();
   const columns: TableColumnsType<DeliveryType> = [
     {
       title: "Product Name",
@@ -90,7 +92,9 @@ export default function DeliveredDeliveriesPage() {
         return (
           <>
             {record.deliveryDate &&
-              moment(record.deliveryDate).format("dddd, MMMM D, YYYY hh:mm A ")}
+              moment(record.deliveryDate)
+                .locale(locale)
+                .format("dddd, MMMM D, YYYY hh:mm A ")}
           </>
         );
       },

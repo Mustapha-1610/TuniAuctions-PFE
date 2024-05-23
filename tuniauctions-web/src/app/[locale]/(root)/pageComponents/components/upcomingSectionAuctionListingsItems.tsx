@@ -61,7 +61,9 @@ export default function UpcomingSectionAuctionListingsItems({
                     )}
                   </div>
                   <div className="text-sm font-semibold tracking-wider leading-5 whitespace-nowrap text-zinc-600">
-                    {moment(listing.startingDate).format("ddd, MMM D, YYYY")}
+                    {moment(listing.startingDate)
+                      .locale(locale)
+                      .format("ddd, MMM D, YYYY")}
                   </div>
                 </div>
               </div>

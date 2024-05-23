@@ -44,10 +44,13 @@ export default function TopStatisticsSection() {
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <span className="text-2xl sm:text-3xl leading-none font-bold text-white">
-                  {sellerLocaleStorageData.reviews.rating}
+                  {(
+                    sellerLocaleStorageData.reviews.rating /
+                    sellerLocaleStorageData.reviews.total
+                  ).toFixed(1)}
                 </span>
                 <h3 className="text-base text-white font-normal ">
-                  Profile Rating
+                  Service Rating
                 </h3>
               </div>
               <div className="ml-5 w-0 flex items-center justify-end flex-1">

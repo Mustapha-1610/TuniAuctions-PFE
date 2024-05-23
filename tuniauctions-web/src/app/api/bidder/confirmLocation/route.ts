@@ -16,7 +16,6 @@ export async function POST(request: NextRequest) {
     if (res.isValid) {
       const { locationPreset, deliveryId } = await request.json();
       if (locationPreset) {
-        console.log(locationPreset);
         const delivery: DeliveryType | null = await deliveryModel.findById(
           deliveryId
         );

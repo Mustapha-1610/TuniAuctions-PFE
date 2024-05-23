@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { Modal } from "antd";
 import { DeliveryType } from "@/models/types/delivery";
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
+import { useLocale } from "next-intl";
+import { useRouter } from "next/navigation";
 
 interface Props {
   deliveryId: string;
@@ -20,6 +22,8 @@ export default function ConfirmDeliverymodal({
   const { setSellerLocalStorageData } = useSellerProfileStore();
   const [errMessage, setErrMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const locale = useLocale();
+  const router = useRouter();
   async function confirmDelivery() {
     setLoading(true);
     setErrMessage("");
@@ -32,6 +36,7 @@ export default function ConfirmDeliverymodal({
       setTableData(resData.deliveries);
       setSellerLocalStorageData(resData.sellerFrontData);
       setConfirmDeliveryModal(false);
+      router.push(`/${locale}/seller/delivered`);
     } else {
       setConfirmDeliveryModal(false);
     }

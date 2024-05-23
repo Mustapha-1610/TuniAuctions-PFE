@@ -19,7 +19,6 @@ export default function FeaturedSectionAuctionListingsContainer({
   return (
     <>
       <div className="flex flex-wrap gap-5 justify-center md:flex-col md:gap-0 md:px-3">
-        {/* updated width to fit 4 items per row */}
         <Link
           href={
             specificRoute
@@ -28,7 +27,6 @@ export default function FeaturedSectionAuctionListingsContainer({
           }
           className="flex flex-col w-1/4 w-full  p-4 bg-white rounded-md border border-solid border-zinc-300 md:w-full md:mb-2"
         >
-          {/* Item content */}
           <div className="flex justify-center">
             <Image
               loading="lazy"
@@ -55,9 +53,9 @@ export default function FeaturedSectionAuctionListingsContainer({
             <div className="mt-3 p-2 bg-purple-200 text-purple-800 rounded-lg shadow-md">
               <div className="text-xs leading-3 font-medium">Starts on:</div>
               <div className="text-gl font-bold">
-                {moment(listing.startingDate).format(
-                  "ddd, MMM D, YYYY [at] h:mm A"
-                )}
+                {moment(listing.startingDate)
+                  .locale(locale)
+                  .format("ddd, MMM D, YYYY [at] h:mm A")}
               </div>
             </div>
           </div>

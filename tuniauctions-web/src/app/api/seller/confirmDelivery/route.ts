@@ -26,7 +26,6 @@ export async function PUT(request: NextRequest) {
             deliveryDate: new Date(),
           },
         });
-      console.log(delivery);
       if (delivery) {
         await bidderModel.findByIdAndUpdate(delivery.bidderId, {
           $push: {

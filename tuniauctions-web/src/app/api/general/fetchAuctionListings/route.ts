@@ -6,6 +6,7 @@ import { NextResponse } from "next/server";
 
 export async function POST() {
   try {
+    console.log("something");
     await connect();
     const upcomingAuctions: AuctionListingType[] | null =
       await auctionListingModel.find({ status: "Pending Start" });
