@@ -31,12 +31,6 @@ export async function PUT(request: NextRequest) {
         },
       });
       if (delivery && delivery.expectedDeliveryDate) {
-        const fromDate = moment(delivery.expectedDeliveryDate.from).format(
-          " dddd, MMMM D, YYYY"
-        );
-        const toDate = moment(delivery.expectedDeliveryDate.to).format(
-          " dddd, MMMM D, YYYY"
-        );
         await bidderModel.findByIdAndUpdate(delivery.bidderId, {
           $push: {
             notifications: {

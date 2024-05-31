@@ -2,7 +2,6 @@ import { connect } from "@/db/dbConfig";
 import { returnBidderFrontData } from "@/frontHelpers/bidder/returnBidderFrontData";
 import auctionListingModel from "@/models/auctionListingModels/auctionListing";
 import { AuctionListingType } from "@/models/types/auctionListing";
-import bidderModel from "@/models/usersModels/bidderModel";
 import { verifyBidderTokens } from "@/security/apiProtection/bidder/routeProtection";
 import {
   serverErrorHandler,

@@ -108,18 +108,6 @@ export default function BiddingAndInformationsSection({
       }
     };
   }, [bidderLocalStorageData]);
-  const formatRemainingTime = (remainingTime: number, locale: string) => {
-    const duration = moment.duration(remainingTime * 1000);
-
-    const minutes = duration.minutes();
-    const seconds = duration.seconds();
-
-    const formattedMinutes = minutes.toLocaleString(locale);
-    const formattedSeconds = seconds.toLocaleString(locale);
-
-    // Return the formatted time string
-    return `${formattedMinutes}:${formattedSeconds}`;
-  };
   const locale = useLocale();
   return (
     <>
@@ -191,7 +179,9 @@ export default function BiddingAndInformationsSection({
 
                       <div className="flex gap-1 px-2 py-3 mt-6 text-base font-bold text-center text-black bg-white border-solid max-md:w-full">
                         <div>Minimum Bid :</div>
-                        <div>{biddingRoomData.heighestBid * 1.04}</div>
+                        <div>
+                          {(biddingRoomData.heighestBid * 1.04).toFixed(0)}
+                        </div>
                       </div>
 
                       <div className="flex flex-col gap-3 self-stretch text-base font-bold text-center text-black max-md:flex-wrap max-md:mt-6 max-md:max-w-full">
