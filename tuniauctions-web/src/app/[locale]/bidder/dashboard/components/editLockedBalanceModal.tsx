@@ -33,26 +33,22 @@ export default function EditLockedBalanceModal({
     setErrorMessage("");
     if (newLockedBalance !== previousLockedBalance) {
       if (newLockedBalance > auctionListing.openingBid) {
-        if (newLockedBalance < activeBalance) {
-          const res = await fetch("/api/bidder/editLockedBalance", {
-            method: "PUT",
-            body: JSON.stringify({
-              previousLockedBalance,
-              newLockedBalance,
-              minPartFee: auctionListing.openingBid,
-              auctionId: auctionListing._id,
-            }),
-          });
-          const resData = await res.json();
-          if (resData.success) {
-            setBidderLocalStorageData(resData.bidderFrontData);
-            setTableData(resData.auctions);
-            setEditLockedBalanceModalSate(false);
-          } else {
-            setErrorMessage(resData.errorMessage);
-          }
+        const res = await fetch("/api/bidder/editLockedBalance", {
+          method: "PUT",
+          body: JSON.stringify({
+            previousLockedBalance,
+            newLockedBalance,
+            minPartFee: auctionListing.openingBid,
+            auctionId: auctionListing._id,
+          }),
+        });
+        const resData = await res.json();
+        if (resData.success) {
+          setBidderLocalStorageData(resData.bidderFrontData);
+          setTableData(resData.auctions);
+          setEditLockedBalanceModalSate(false);
         } else {
-          setErrorMessage("notEnoughBalance");
+          setErrorMessage(resData.errorMessage);
         }
       } else {
         setErrorMessage("lessThenMinFee");

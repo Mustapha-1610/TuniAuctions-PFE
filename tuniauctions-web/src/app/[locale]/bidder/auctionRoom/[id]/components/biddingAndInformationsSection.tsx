@@ -57,7 +57,6 @@ export default function BiddingAndInformationsSection({
     }
 
     intervalId = setInterval(() => {
-      console.log("decreasing");
       setBiddingRoomData((prev) => ({
         ...prev,
         remainingTime: prev.remainingTime > 0 ? prev.remainingTime - 1 : 0,
@@ -67,7 +66,6 @@ export default function BiddingAndInformationsSection({
   useEffect(() => {
     decreaseTimer();
     auctionRoomSocket.on("userJoined", (data: any) => {
-      console.log("test");
       setBiddingRoomData((prev) => ({
         ...prev,
         remainingTime: data.roomTimer,
@@ -79,7 +77,6 @@ export default function BiddingAndInformationsSection({
       }));
     });
     auctionRoomSocket.on("newHighestBidder", (data: newHighestBidType) => {
-      console.log("new heighest bidder");
       setBiddingRoomData((prev) => ({
         ...prev,
         remainingTime: 45,
@@ -90,7 +87,6 @@ export default function BiddingAndInformationsSection({
       }));
     });
     auctionRoomSocket.on("adjustTimer", (data: number) => {
-      console.log("adjusting");
       setBiddingRoomData((prev) => ({
         ...prev,
         remainingTime: data,

@@ -46,8 +46,9 @@ export default function BidderNavbar() {
         setBidderLocalStorageData(resData.bidderFrontData);
         bidderSocket.emit("bidderConnection", resData.bidderFrontData.socketId);
       } else if (resData.authError) {
+        console.log("loggin out");
         signoutBidder();
-        setAnautherizedModalState();
+        setAnautherizedModalState(true);
         router.push(`/${locale}`);
       }
     }
@@ -78,7 +79,7 @@ export default function BidderNavbar() {
         setBidderLocalStorageData(resData.bidderFrontData!);
       } else if (resData.authError) {
         signoutBidder();
-        setAnautherizedModalState();
+        setAnautherizedModalState(true);
         router.push(`/${locale}`);
       }
     }
@@ -172,7 +173,6 @@ export default function BidderNavbar() {
         }`}
       >
         <MobileNavbar />
-        {isAnautherizedModalOpen && <UnautherizedModal />}
         {isCongratsModalOpen && (
           <AuctionCongratsModal
             auctionTitle={congratsAuctionTitle}

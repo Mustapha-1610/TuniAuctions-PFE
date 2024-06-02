@@ -18,7 +18,9 @@ export default function UnautherizedModal() {
         open={isAnautherizedModalOpen}
         width={600}
         footer={null}
-        onCancel={setAnautherizedModalState}
+        onCancel={() => {
+          setAnautherizedModalState(false);
+        }}
         maskClosable={false}
       >
         <p>
