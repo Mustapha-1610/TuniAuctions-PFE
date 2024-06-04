@@ -31,7 +31,7 @@ export default function HeroSection({
         />
         <div className="flex relative flex-col w-full max-w-[1202px] max-md:max-w-full items-center justify-center">
           <div
-            className="mt-52 font-bold text-white text-8xl tracking-tighter leading-[95px] max-md:mt-10 max-md:max-w-full max-md:text-4xl max-md:leading-[49px] text-center"
+            className="mt-52 font-bold text-white text-8xl leading-relaxed tracking-tighter max-md:mt-10 max-md:max-w-full max-md:text-4xl max-md:leading-relaxed text-center"
             style={{
               backgroundImage: "linear-gradient(45deg, #979797, #FFFFFF)",
               WebkitBackgroundClip: "text",
@@ -42,13 +42,13 @@ export default function HeroSection({
           </div>
 
           <div
-            onClick={() => (
+            onClick={() => {
               specificRoute
                 ? router.push("/" + locale + specificRoute + "/auctions")
-                : router.push("/" + locale + "/auctions"),
-              setSelectedCategory("")
-            )}
-            className="flex cursor-pointer gap-2 items-center justify-center  rounded-xl  px-14 py-6 mt-12 text-base font-medium tracking-wide leading-4 text-white bg-slate-600  max-md:mt-10"
+                : router.push("/" + locale + "/auctions");
+              setSelectedCategory("");
+            }}
+            className="flex cursor-pointer gap-2 items-center justify-center rounded-xl px-14 py-6 mt-12 text-base font-medium tracking-wide leading-4 text-white bg-slate-600 max-md:mt-10"
           >
             <div className="text-gl">{BrowseButtonText}</div>
           </div>

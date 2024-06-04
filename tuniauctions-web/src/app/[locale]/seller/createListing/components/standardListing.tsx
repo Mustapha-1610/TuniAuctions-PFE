@@ -164,7 +164,7 @@ export default function StandardListing() {
           <DatePickingSection setAuctionListingForm={setAuctionListingForm} />
           <GuarenteeSection setAuctionListingForm={setAuctionListingForm} />
 
-          <div className="mb-6">
+          <div className="mb-6 mt-4">
             <button
               className="bg-blue-500 mr-2 text-white px-4 py-2 rounded-md"
               type="submit"

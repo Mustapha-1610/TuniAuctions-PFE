@@ -8,7 +8,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useBidderProfileStore } from "@/helpers/store/bidder/bidderProfileStore";
 import { useBidderNavigationStore } from "@/helpers/store/bidder/bidderNavigationStore";
 import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function Notifications() {
   const { bidderLocalStorageData } = useBidderProfileStore();
@@ -41,6 +41,19 @@ export default function Notifications() {
       router.push(`/${locale}/bidder/auctionRoom/${contextId}`);
     }
   }
+  const notificationTranslations = useTranslations("bidder.notifications");
+  const getDateFormat = (locale: string) => {
+    switch (locale) {
+      case "en":
+        return "ddd, MMM D, YYYY [at] h:mm A";
+      case "fr":
+        return "ddd D MMM YYYY [à] HH:mm";
+      case "ar":
+        return "ddd، D MMM، YYYY [في] HH:mm";
+      default:
+        return "ddd, MMM D, YYYY [at] h:mm A"; // Default to English format
+    }
+  };
   return (
     <>
       <div className=" mr-12 pt-12 max-w-full w-[960px] max-md:mr-2.5">
@@ -72,13 +85,16 @@ export default function Notifications() {
                     />
                     <div className="flex flex-col justify-center my-auto">
                       <div className="text-base font-medium text-neutral-900">
-                        {value.notificationMessage}
+                        {notificationTranslations(value.notificationMessage) +
+                          value.context.displayName}
                       </div>
                       <div className="text-sm text-slate-600">
-                        Recieved{" "}
-                        {moment(value.context.receptionDate).format(
-                          "ddd, MMM D, YYYY [at] h:mm A"
-                        )}
+                        <span className="mr-2">
+                          {notificationTranslations("sentAt")}
+                        </span>
+                        {moment(value.context.receptionDate)
+                          .locale(locale)
+                          .format(getDateFormat(locale))}
                       </div>
                     </div>
                   </div>

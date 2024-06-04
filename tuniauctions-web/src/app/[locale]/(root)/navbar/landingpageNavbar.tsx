@@ -8,6 +8,7 @@ import { useNavbarState } from "@/helpers/store/general/navbarState";
 import LanguageChanger from "./components/languageChanger";
 import { useBidderNavbarState } from "@/helpers/store/bidder/bidderNavbarStore";
 import UnautherizedModal from "../../bidder/navbar/components/components/unautherizedModal";
+import { useTranslations } from "use-intl";
 
 function Navbar() {
   const {
@@ -19,6 +20,8 @@ function Navbar() {
     isSignupModalOpen,
   } = useNavbarState();
   const { isAnautherizedModalOpen } = useBidderNavbarState();
+  const t = useTranslations("HomePage.navbarTitles");
+
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 px-4 py-4 flex justify-between items-center bg-neutral-900 z-50">
@@ -38,12 +41,12 @@ function Navbar() {
           </button>
         </div>
         <div className="hidden lg:flex items-center">
-          <a className={"text-lg text-white font-bold leading-none "} href="#">
+          <a className="text-lg text-white font-bold leading-none" href="#">
             Tuni-Auctions
           </a>
         </div>
         <ul
-          className={`hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6 ${
+          className={`hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:items-center lg:w-auto lg:space-x-6 ${
             isMobileMenuOpen ? "" : "hidden"
           }`}
         >
@@ -51,20 +54,22 @@ function Navbar() {
           {isLoginModalOpen && <LoginModal />}
           {isSignupModalOpen && <SignupModal />}
         </ul>
-        <button
-          className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-300 hover:bg-gray-100 text-sm text-black font-bold  rounded-xl transition duration-200"
-          onClick={setLoginModalState}
-        >
-          Sign In
-        </button>
+        <div className="flex items-center">
+          <LanguageChanger className="ml-4" />
 
-        <button
-          className="hidden lg:inline-block py-2 px-6 bg-slate-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200"
-          onClick={setSignupModalState}
-        >
-          Sign up
-        </button>
-        <LanguageChanger className="block ml-1 lg:inline-block py-2  bg-neutral-900 text-sm text-white font-bold transition duration-200" />
+          <button
+            className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-300 hover:bg-gray-100 text-sm text-black font-bold rounded-xl transition duration-200"
+            onClick={setLoginModalState}
+          >
+            {t("signin")}
+          </button>
+          <button
+            className="hidden lg:inline-block py-2 px-6 bg-slate-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200"
+            onClick={setSignupModalState}
+          >
+            {t("signup")}
+          </button>
+        </div>
         {isAnautherizedModalOpen && <UnautherizedModal />}
       </nav>
       <div
@@ -72,7 +77,7 @@ function Navbar() {
           isMobileMenuOpen ? "" : "hidden"
         }`}
       >
-        {isMobileMenuOpen && <MobileNavbar />}*
+        {isMobileMenuOpen && <MobileNavbar />}
         {isAnautherizedModalOpen && <UnautherizedModal />}
       </div>
     </>

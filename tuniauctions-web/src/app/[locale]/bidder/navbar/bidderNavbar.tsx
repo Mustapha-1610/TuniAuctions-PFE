@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import NavigationItems from "./components/navigationItems";
 import MobileNavbar from "./components/mobileNavbar";
 
@@ -36,6 +36,9 @@ export default function BidderNavbar() {
   const router = useRouter();
   const [isCongratsModalOpen, setCongratsModal] = useState<boolean>(false);
   const [congratsAuctionTitle, setCongratsAuctionTitle] = useState<string>("");
+
+  const notificationsMenuRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     async function getData() {
       const res = await fetch("/api/bidder/getData", {
@@ -46,7 +49,7 @@ export default function BidderNavbar() {
         setBidderLocalStorageData(resData.bidderFrontData);
         bidderSocket.emit("bidderConnection", resData.bidderFrontData.socketId);
       } else if (resData.authError) {
-        console.log("loggin out");
+        console.log("logging out");
         signoutBidder();
         setAnautherizedModalState(true);
         router.push(`/${locale}`);
@@ -65,6 +68,18 @@ export default function BidderNavbar() {
       setCongratsModal(true);
     });
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        notificationsMenuRef.current &&
+        !notificationsMenuRef.current.contains(event.target as Node)
+      ) {
+        setNotificationsMenuState();
+      }
+    };
+  }, [setNotificationsMenuState]);
+
   async function clearNotifications() {
     if (
       bidderLocalStorageData!.notifications.filter(
@@ -84,6 +99,7 @@ export default function BidderNavbar() {
       }
     }
   }
+
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 px-4 py-4 flex justify-between items-center bg-neutral-900 z-50">
@@ -118,29 +134,28 @@ export default function BidderNavbar() {
           <NavigationItems />
         </ul>
         <div className="flex items-center space-x-4">
-          <LanguageChanger className="ml-1 lg:inline-block py-2  bg-neutral-900 text-sm text-white font-bold  transition duration-200" />
-          <div className="relative ">
+          <LanguageChanger className="ml-1  py-2  bg-neutral-900 text-sm text-white font-bold transition duration-200" />
+          <div className="relative" ref={notificationsMenuRef}>
             <div
               className="cursor-pointer"
               onClick={() => {
-                setNotificationsMenuState(), clearNotifications();
+                setNotificationsMenuState();
+                clearNotifications();
               }}
             >
               {bidderLocalStorageData &&
                 bidderLocalStorageData.notifications.filter(
                   (notification: any) => !notification.readStatus
                 ).length > 0 && (
-                  <>
-                    <div className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center">
-                      <span className="text-sm font-bold">
-                        {
-                          bidderLocalStorageData.notifications.filter(
-                            (notification: any) => !notification.readStatus
-                          ).length
-                        }
-                      </span>
-                    </div>
-                  </>
+                  <div className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center">
+                    <span className="text-sm font-bold">
+                      {
+                        bidderLocalStorageData.notifications.filter(
+                          (notification: any) => !notification.readStatus
+                        ).length
+                      }
+                    </span>
+                  </div>
                 )}
               <MdNotifications color="white" size={25} />
             </div>
@@ -157,7 +172,7 @@ export default function BidderNavbar() {
             href={"/" + locale + "/bidder/balance"}
           >
             <GiWallet size={25} className="cursor-pointer" color="white" />
-            <span className="text-white  ml-1">
+            <span className="text-white ml-1">
               ${bidderLocalStorageData?.balance.activeBalance}
             </span>
           </Link>
@@ -180,6 +195,7 @@ export default function BidderNavbar() {
             setCongratsModal={setCongratsModal}
           />
         )}
+        {isAnautherizedModalOpen && <UnautherizedModal />}
       </div>
     </>
   );

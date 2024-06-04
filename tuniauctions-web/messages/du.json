@@ -1,0 +1,198 @@
+{
+  "AuctionPage": {
+    "Title": "Veilingen"
+  },
+  "HomePage": {
+    "HeroTitle": "Bied met Vreugde, Win met Rechtvaardigheid",
+    "BrowseButton": "Bladeren",
+    "FeaturedAuctions": "Uitgelichte Veilingen",
+    "DealsOfThisWeek": "Aanbiedingen van Deze Week",
+    "OpeningBid": "Startbod",
+    "UpComingAuctions": "Aankomende Veilingen",
+    "ViewProductButton": "Bekijk Product",
+    "ViewAllButton": "Bekijk Alles",
+    "Categories": "Categorieën",
+    "Winners": "Winnaars",
+    "LatestAuctionWinners": "Laatste Veilingwinnaars"
+  },
+  "Seller": {
+    "NavigationSection": {
+      "dashboard": "Dashboard",
+      "earnings": "Inkomsten",
+      "auctionListings": "Veilinglijsten",
+      "auction'sList": "Veilinglijst",
+      "create": "Aanmaken",
+      "deliveries": "Leveringen",
+      "delivered": "Geleverd",
+      "pending": "In Afwachting",
+      "transactions": "Transacties",
+      "pricing": "Prijzen",
+      "documentation": "Documentatie",
+      "help": "Hulp",
+      "profile": "Profiel",
+      "logout": "Uitloggen"
+    },
+    "PricingPage": {
+      "promotionalVideo": "Lengte Promotievideo",
+      "buyItNowSection": "Koop Nu Sectie",
+      "listingsCount": "Aantal Advertenties",
+      "platformFees": "Platformkosten",
+      "genderViews": "Geslachtsweergaven Statistieken",
+      "socialsSection": "Sociale Media Promotie Sectie",
+      "featured": "Uitgelicht"
+    }
+  },
+  "errors": {
+    "authErros": {
+      "accountExists": "Account bestaat al!",
+      "missingInputs": "Ontbrekende invoer!",
+      "disabledAccount": "Account uitgeschakeld door admins",
+      "unverifiedAccount": "Account wacht op verificatie!",
+      "gmailAccount": "Account alleen toegankelijk via Gmail-login!",
+      "wrongInputs": "Verkeerde e-mail of wachtwoord!",
+      "sellerGmailLogin": "Verkopersaccount alleen toegankelijk via reguliere login!"
+    },
+    "passwordResetErrors": {
+      "success": "Resetcode naar inbox gestuurd",
+      "mismatch": "Verkeerde code!",
+      "gmailAccount": "Gmail-accounts zijn niet geldig voor wachtwoordreset",
+      "userNonExistant": "Als e-mail bestaat, is de resetcode naar uw inbox gestuurd",
+      "invalidAccount": "Account verwijderd of niet meer bestaand",
+      "Unactive": "Code niet meer beschikbaar, stuur een nieuwe wanneer mogelijk",
+      "oldPasswordMatch": "Kan niet wijzigen naar oud wachtwoord!",
+      "passwordMismatch": "Wachtwoorden komen niet overeen"
+    }
+  },
+  "loginModal": {
+    "signin": "Inloggen",
+    "signup": "Aanmelden",
+    "submit": "Indienen",
+    "loading": "Laden ...",
+    "or": "OF",
+    "dontHaveAnAccount": "Heb je nog geen account?",
+    "forgotPassword": "Wachtwoord vergeten?",
+    "email": "E-mailadres",
+    "password": "Wachtwoord",
+    "zodErrors": {
+      "email": "Ongeldig e-mailadres!",
+      "password": "Wachtwoord moet tussen 6 en 40 tekens lang zijn!"
+    }
+  },
+  "signupModal": {
+    "bidderText": "Bieder",
+    "sellerText": "Verkoper",
+    "signupText": "Aanmelden",
+    "signinText": "Inloggen",
+    "haveAnAccount": "Heb je een account?",
+    "bidder": {
+      "success": "Verificatiemail verzonden. Controleer de inbox!",
+      "fullName": "Voornaam",
+      "email": "E-mailadres",
+      "password": "Wachtwoord",
+      "gender": "Geslacht",
+      "male": "Man",
+      "female": "Vrouw",
+      "terms": "Ik ga akkoord met de Gebruiksvoorwaarden en het Privacybeleid.",
+      "submit": "Indienen",
+      "loading": "Laden ...",
+      "zodErrors": {
+        "fullName": "Volledige naam moet tussen 6 en 35 tekens lang zijn!",
+        "email": "Ongeldig e-mailadres!",
+        "password": "Wachtwoord moet tussen 6 en 40 tekens lang zijn!",
+        "gender": "Je moet man of vrouw kiezen!"
+      }
+    },
+    "seller": {
+      "success": "Dank u voor uw aanvraag. Uw nieuwe account wordt door onze beheerders geverifieerd. U ontvangt een e-mail zodra de verificatie is voltooid. Wij waarderen uw geduld.",
+      "name": "Bedrijfsnaam",
+      "email": "E-mailadres",
+      "password": "Wachtwoord",
+      "description": "Beschrijving",
+      "registrationLicense": "Registratielicentie uploaden",
+      "street": "Straat",
+      "apply": "Toepassen",
+      "terms": "Ik ga akkoord met de Gebruiksvoorwaarden en het Privacybeleid.",
+      "loading": "Laden ...",
+      "zodErrors": {
+        "name": "Bedrijfsnaam moet tussen 3 en 30 tekens lang zijn!",
+        "email": "Ongeldig e-mailadres!",
+        "password": "Wachtwoord moet tussen 6 en 40 tekens lang zijn!",
+        "description": "Bedrijfsbeschrijving moet langer zijn dan 20 tekens!",
+        "registrationLicense": "Registratielicentie is vereist voor de aanvraag van een verkopersaccount!",
+        "street": "Straatnaam moet worden opgegeven!",
+        "city": "Stadsinformatie is vereist!",
+        "municipality": "Gemeenteinformatie is vereist!"
+      }
+    }
+  },
+  "resetPasswordModal": {
+    "email": "E-mailadres",
+    "resetPassword": "Wachtwoord resetten",
+    "confirm": "Bevestigen",
+    "loading": "Laden ...",
+    "success": "Wachtwoord succesvol gereset",
+    "login": "Inloggen",
+    "newPassword": "Nieuw wachtwoord",
+    "confirmNewPassword": "Bevestig nieuw wachtwoord",
+    "resendCode": "Code opnieuw verzenden in: 5 minuten",
+    "resend": "Code opnieuw verzenden",
+    "codePlaceholder": "Resetcode",
+    "reset": "Resetten",
+    "zodErrors": {
+      "email": "Ongeldig e-mailadres!"
+    }
+  },
+  "admin": {
+    "notifications": {
+      "auctionStart": "Veiling gestart voor: "
+    }
+  },
+  "bidder": {
+    "notifications": {
+      "transactionSuccessfull": "Betaling succesvol voor $",
+      "auctionDelayed": "Vanwege onvoldoende deelname is de veiling uitgesteld naar: ",
+      "auctionStart": "Veiling gestart voor: ",
+      "auctionEnded": "Bedankt voor uw deelname, veiling beëindigd voor: ",
+      "auctionWin": "Gefeliciteerd met het winnen van de veiling voor: ",
+      "confirmAuctionParticipation": "Deelname aan veiling bevestigd voor: ",
+      "deliverySuccessfull": "Product succesvol geleverd voor: ",
+      "deliveryShipmentSuccessfull": "Levering bevestigd, product arriveert tussen: ",
+      "sentAt": "Verzonden op:"
+    },
+    "transactions": {
+      "auctionPayment": "Veilingbetaling",
+      "balanceIncrease": "Saldo verhoging"
+    },
+    "transactionTableTitles": {
+      "context": "Context",
+      "amount": "Bedrag",
+      "date": "Datum",
+      "to": "Aan"
+    }
+  },
+  "seller": {
+    "notifications": {
+      "packagePayment": "Betaling succesvol voor pakket: ",
+      "auctionDelayed": "Vanwege onvoldoende deelname is de veiling uitgesteld naar: ",
+      "auctionStart": "Veiling gestart voor: ",
+      "auctionEnded": "Veiling beëindigd voor: ",
+      "deliveryReport": "Een rapport is ingediend voor levering van: ",
+      "sentAt": "Verzonden op:",
+      "auctionPayment": "Veilingbetaling ontvangen voor: "
+    },
+    "transactions": {
+      "auctionPayment": "Veilingbetaling",
+      "packagePayment": "Pakketbetaling"
+    },
+    "transactionTableTitles": {
+      "context": "Context",
+      "date": "Datum",
+      "amount": "Bedrag",
+      "to": "Aan"
+    },
+    "earningsPage": {
+      "platformFees": "Platformkosten",
+      "earningsReceived": "Inkomsten ontvangen"
+    }
+  }
+}

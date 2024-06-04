@@ -3,23 +3,23 @@
     "Title": "Enchères"
   },
   "HomePage": {
-    "HeroTitle": "Enchérir avec Joie, Gagner avec Équité",
+    "HeroTitle": "Enchérissez avec Joie, Gagnez avec Équité",
     "BrowseButton": "Parcourir",
-    "FeaturedAuctions": "Enchères à la Une",
+    "FeaturedAuctions": "Enchères en Vedette",
     "DealsOfThisWeek": "Offres de la Semaine",
-    "OpeningBid": "Offre Actuelle",
+    "OpeningBid": "Mise de Départ",
     "UpComingAuctions": "Prochaines Enchères",
     "ViewProductButton": "Voir le Produit",
     "ViewAllButton": "Voir Tout",
     "Categories": "Catégories",
     "Winners": "Gagnants",
-    "LatestAuctionWinners": "Derniers Gagnants d'Enchères"
+    "LatestAuctionWinners": "Derniers Gagnants des Enchères"
   },
   "Seller": {
     "NavigationSection": {
       "dashboard": "Tableau de Bord",
       "earnings": "Gains",
-      "auctionListings": "Liste des Enchères",
+      "auctionListings": "Listes des Enchères",
       "auction'sList": "Liste des Enchères",
       "create": "Créer",
       "deliveries": "Livraisons",
@@ -34,149 +34,155 @@
     },
     "PricingPage": {
       "promotionalVideo": "Durée de la Vidéo Promotionnelle",
-      "buyItNowSection": "Section Achetez-le Maintenant",
+      "buyItNowSection": "Section Achat Immédiat",
       "listingsCount": "Nombre de Listes",
       "platformFees": "Frais de Plateforme",
-      "genderViews": "Statistiques des Vues par Genre",
+      "genderViews": "Statistiques par Genre",
       "socialsSection": "Section Promotion sur les Réseaux Sociaux",
       "featured": "En Vedette"
     }
   },
   "errors": {
     "authErros": {
-      "accountExists": "Compte déjà existant!",
-      "missingInputs": "Entrées Manquantes!",
+      "accountExists": "Le compte existe déjà !",
+      "missingInputs": "Informations manquantes !",
       "disabledAccount": "Compte désactivé par les administrateurs",
-      "unverifiedAccount": "Compte en attente de vérification!",
-      "gmailAccount": "Compte accessible uniquement via la connexion Gmail!",
-      "wrongInputs": "Adresse e-mail ou mot de passe incorrect!",
-      "sellerGmailLogin": "Compte vendeur accessible uniquement via la connexion régulière!"
+      "unverifiedAccount": "Compte en attente de vérification !",
+      "gmailAccount": "Compte accessible uniquement via Gmail !",
+      "wrongInputs": "Email ou mot de passe incorrect !",
+      "sellerGmailLogin": "Compte vendeur accessible uniquement via la connexion normale !"
     },
     "passwordResetErrors": {
-      "success": "Code de réinitialisation envoyé à la boîte de réception",
-      "mismatch": "Code incorrect!",
-      "gmailAccount": "Les comptes Gmail ne sont pas valides pour la réinitialisation du mot de passe",
-      "userNonExistant": "Si l'e-mail existe, le code de réinitialisation a été envoyé à votre boîte de réception",
-      "invalidAccount": "Compte supprimé ou n'existe plus",
-      "Unactive": "Code plus disponible, veuillez en envoyer un nouveau dès que possible",
-      "oldPasswordMatch": "Impossible de revenir à l'ancien mot de passe!",
-      "passwordMismatch": "Incohérence de Mot de Passe"
+      "success": "Code de réinitialisation envoyé à votre boîte de réception",
+      "mismatch": "Code incorrect !",
+      "gmailAccount": "Les comptes Gmail ne sont pas valides pour la réinitialisation",
+      "userNonExistant": "Si l'email existe, le code de réinitialisation a été envoyé",
+      "invalidAccount": "Compte supprimé ou inexistant",
+      "Unactive": "Code expiré, veuillez en demander un nouveau",
+      "oldPasswordMatch": "Impossible d'utiliser l'ancien mot de passe !",
+      "passwordMismatch": "Les mots de passe ne correspondent pas"
     }
   },
   "loginModal": {
-    "signin": "Se Connecter",
+    "signin": "Se connecter",
     "signup": "S'inscrire",
-    "submit": "Soumettre",
-    "loading": "Chargement ...",
+    "submit": "Envoyer",
+    "loading": "Chargement...",
     "or": "OU",
-    "dontHaveAnAccount": "Vous n'avez pas de compte?",
-    "forgotPassword": "Mot de passe oublié?",
-    "email": "Adresse E-mail",
-    "password": "Mot de Passe",
+    "dontHaveAnAccount": "Pas de compte ?",
+    "forgotPassword": "Mot de passe oublié ?",
+    "email": "Adresse Email",
+    "password": "Mot de passe",
     "zodErrors": {
-      "email": "E-mail invalide!",
-      "password": "Le mot de passe doit comporter entre 6 et 40 caractères!"
+      "email": "Email invalide !",
+      "password": "Le mot de passe doit comporter entre 6 et 40 caractères !"
     }
   },
   "signupModal": {
     "bidderText": "Enchérisseur",
     "sellerText": "Vendeur",
     "signupText": "S'inscrire",
-    "signinText": "Se Connecter",
-    "haveAnAccount": "Vous avez un compte?",
+    "signinText": "Se connecter",
+    "haveAnAccount": "Vous avez déjà un compte ?",
     "bidder": {
       "success": "Mail de vérification envoyé. Vérifiez votre boîte de réception !",
       "fullName": "Prénom",
-      "email": "E-mail",
-      "password": "Mot de Passe",
+      "email": "Email",
+      "password": "Mot de passe",
       "gender": "Genre",
       "male": "Homme",
       "female": "Femme",
-      "terms": "J'accepte les Conditions Générales et la Politique de Confidentialité.",
-      "submit": "Soumettre",
-      "loading": "Chargement ...",
+      "terms": "J'accepte les Conditions d'Utilisation et la Politique de Confidentialité.",
+      "submit": "Envoyer",
+      "loading": "Chargement...",
       "zodErrors": {
-        "fullName": "Le Nom Complet doit comporter entre 6 et 35 caractères!",
-        "email": "E-mail invalide!",
-        "password": "Le mot de passe doit comporter entre 6 et 40 caractères!",
-        "gender": "Vous devez choisir homme ou femme!"
+        "fullName": "Le prénom doit comporter entre 6 et 35 caractères !",
+        "email": "Email invalide !",
+        "password": "Le mot de passe doit comporter entre 6 et 40 caractères !",
+        "gender": "Vous devez choisir homme ou femme !"
       }
     },
     "seller": {
-      "success": "Merci pour votre demande. Votre nouveau compte est en cours de vérification par nos administrateurs. Vous recevrez un email une fois la vérification terminée. Nous apprécions votre patience.",
-      "name": "Nom de l'Entreprise",
-      "email": "E-mail",
-      "password": "Mot de Passe",
+      "success": "Merci pour votre demande. Votre nouveau compte est en cours de vérification par nos administrateurs. Vous recevrez un email une fois la vérification terminée. Nous vous remercions de votre patience.",
+      "name": "Nom de l'entreprise",
+      "email": "Email",
+      "password": "Mot de passe",
       "description": "Description",
-      "registrationLicense": "Télécharger la Licence d'Enregistrement",
+      "registrationLicense": "Télécharger la Licence de Registre",
       "street": "Rue",
-      "apply": "Appliquer",
-      "terms": "J'accepte les Conditions Générales et la Politique de Confidentialité.",
-      "loading": "Chargement ...",
+      "apply": "Postuler",
+      "terms": "J'accepte les Conditions d'Utilisation et la Politique de Confidentialité.",
+      "loading": "Chargement...",
       "zodErrors": {
-        "name": "Le Nom de l'Entreprise doit comporter entre 3 et 30 caractères!",
-        "email": "E-mail invalide!",
-        "password": "Le mot de passe doit comporter entre 6 et 40 caractères!",
-        "description": "La description de l'entreprise doit comporter plus de 20 caractères!",
-        "registrationLicense": "La licence d'enregistrement est requise pour la demande de compte vendeur!",
-        "street": "Vous devez fournir le nom de la rue!",
-        "city": "Les informations sur la ville sont requises!",
-        "municipality": "Les informations sur la municipalité sont requises!"
+        "name": "Le nom de l'entreprise doit comporter entre 3 et 30 caractères !",
+        "email": "Email invalide !",
+        "password": "Le mot de passe doit comporter entre 6 et 40 caractères !",
+        "description": "La description de l'entreprise doit comporter plus de 20 caractères !",
+        "registrationLicense": "La licence de registre est requise pour la demande de compte vendeur !",
+        "street": "Vous devez fournir le nom de la rue !",
+        "city": "La ville est requise !",
+        "municipality": "La municipalité est requise !"
       }
     }
   },
   "resetPasswordModal": {
-    "email": "E-mail",
-    "resetPassword": "Réinitialiser le Mot de Passe",
+    "email": "Email",
+    "resetPassword": "Réinitialiser le mot de passe",
     "confirm": "Confirmer",
-    "loading": "Chargement ...",
+    "loading": "Chargement...",
     "success": "Mot de passe réinitialisé avec succès",
-    "login": "Se Connecter",
-    "newPassword": "Nouveau Mot de Passe",
+    "login": "Connexion",
+    "newPassword": "Nouveau mot de passe",
     "confirmNewPassword": "Confirmer le nouveau mot de passe",
     "resendCode": "Renvoyer le code dans : 5 minutes",
-    "resend": "Renvoyer",
-    "codePlaceholder": "Code de Réinitialisation",
+    "resend": "Renvoyer le Code",
+    "codePlaceholder": "Code de réinitialisation",
     "reset": "Réinitialiser",
     "zodErrors": {
-      "email": "E-mail invalide!"
+      "email": "Email invalide !"
     }
   },
   "admin": {
     "notifications": {
-      "auctionStart": "Salle d'enchères démarrée pour : "
+      "auctionStart": "Salle des enchères commencée pour : "
     }
   },
   "bidder": {
     "notifications": {
-      "transactionSuccessfull": "Paiement réussie pour $",
-      "auctionDelayed": "En raison du seuil minimum de participation des enchérisseurs non atteint, l'enchère a été retardée à : ",
-      "auctionStart": "Salle d'enchères commencée pour : ",
-      "auctionEnded": "Merci pour votre participation, salle d'enchères terminée pour : ",
+      "transactionSuccessfull": "Paiement réussi pour $",
+      "auctionDelayed": "En raison du seuil minimal de participation des enchérisseurs non atteint, l'enchère est reportée au :",
+      "auctionStart": "Salle des enchères commencée pour : ",
+      "auctionEnded": "Merci pour votre participation, salle des enchères terminée pour : ",
       "auctionWin": "Félicitations pour avoir remporté l'enchère pour : ",
       "confirmAuctionParticipation": "Participation confirmée pour : ",
-      "deliverySuccessfull": "Livraison réussie du produit pour : ",
-      "deliveryShipmentSuccessfull": "Expédition de livraison confirmée, le produit arrivera entre : ",
-      "sentAt": "Envoyé à:"
+      "deliverySuccessfull": "Livraison du produit réussie pour : ",
+      "deliveryShipmentSuccessfull": "Envoi de livraison confirmé, le produit arrivera entre : ",
+      "sentAt": "Envoyé à :"
     },
     "transactions": {
-      "auctionPayment": "Paiement d'enchères",
+      "auctionPayment": "Paiement de l'enchère",
       "balanceIncrease": "Augmentation du solde"
+    },
+    "transactionTableTitles": {
+      "context": "Contexte",
+      "amount": "Montant",
+      "date": "Date",
+      "to": "À"
     }
   },
   "seller": {
     "notifications": {
-      "packagePayment": "Paiement réussi pour le forfait : ",
-      "auctionDelayed": "En raison du seuil minimum de participation des enchérisseurs non atteint, l'enchère a été retardée à :",
-      "auctionStart": "La salle des enchères a commencé pour : ",
-      "auctionEnded": "La salle des enchères s'est terminée pour : ",
+      "packagePayment": "Paiement réussi pour le package : ",
+      "auctionDelayed": "En raison du seuil minimal de participation des enchérisseurs non atteint, l'enchère est reportée au :",
+      "auctionStart": "Salle des enchères commencée pour : ",
+      "auctionEnded": "Salle des enchères terminée pour : ",
       "deliveryReport": "Un rapport a été soumis pour la livraison de : ",
       "sentAt": "Envoyé à :",
       "auctionPayment": "Paiement de l'enchère reçu pour : "
     },
     "transactions": {
       "auctionPayment": "Paiement de l'enchère",
-      "packagePayment": "Paiement du forfait"
+      "packagePayment": "Paiement du package"
     },
     "transactionTableTitles": {
       "context": "Contexte",
@@ -185,8 +191,8 @@
       "to": "À"
     },
     "earningsPage": {
-      "platformFees": "Frais de la plateforme",
-      "earningsReceived": "Revenus reçus"
+      "platformFees": "Frais de Plateforme",
+      "earningsReceived": "Gains Reçus"
     }
   }
 }

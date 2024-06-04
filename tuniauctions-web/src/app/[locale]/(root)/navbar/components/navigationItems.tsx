@@ -7,7 +7,7 @@ import { useLocale, useTranslations } from "next-intl";
 
 export default function NavigationItems() {
   const locale = useLocale();
-
+  const t = useTranslations("HomePage.navbarTitles");
   return (
     <>
       <li className="flex items-center">
@@ -17,7 +17,7 @@ export default function NavigationItems() {
           href={"/" + locale}
         >
           <FaHome size={22} color="white" className="mr-2" />
-          Home
+          {t("home")}
         </Link>
       </li>
       <li className="text-gray-300">
@@ -42,7 +42,7 @@ export default function NavigationItems() {
           href={"/" + locale + "/auctions"}
         >
           <RiAuctionFill size={22} className="mr-2" />
-          Auctions
+          {t("auctions")}
         </Link>
       </li>
       <li className="text-gray-300">
@@ -67,7 +67,7 @@ export default function NavigationItems() {
           href={"/" + locale + "/aboutus"}
         >
           <FaBuildingCircleExclamation size={22} className="mr-2" />
-          About Us
+          {t("aboutus")}
         </Link>
       </li>
       <li className="text-gray-300">
@@ -92,7 +92,7 @@ export default function NavigationItems() {
           href={"/" + locale + "/howitworks"}
         >
           <BsPatchQuestionFill size={22} className="mr-2" />
-          How It Works
+          {t("howitworks")}
         </Link>
       </li>
     </>

@@ -1,0 +1,198 @@
+{
+  "AuctionPage": {
+    "Title": "Auktiounen"
+  },
+  "HomePage": {
+    "HeroTitle": "Bid mat Freed, Gewannt mat Gerechtegkeet",
+    "BrowseButton": "Duerchsichen",
+    "FeaturedAuctions": "Featured Auktiounen",
+    "DealsOfThisWeek": "Offere vun dëser Woch",
+    "OpeningBid": "Startgebot",
+    "UpComingAuctions": "Kommend Auktiounen",
+    "ViewProductButton": "Produit uweisen",
+    "ViewAllButton": "Alles uweisen",
+    "Categories": "Kategorien",
+    "Winners": "Gewënner",
+    "LatestAuctionWinners": "Lescht Auktiounsgewënner"
+  },
+  "Seller": {
+    "NavigationSection": {
+      "dashboard": "Dashboard",
+      "earnings": "Akommes",
+      "auctionListings": "Auktiounslëschten",
+      "auction'sList": "Auktiounslëscht",
+      "create": "Erstellen",
+      "deliveries": "Liwwerungen",
+      "delivered": "Geliwwert",
+      "pending": "Amgaang",
+      "transactions": "Transaktiounen",
+      "pricing": "Präisser",
+      "documentation": "Dokumentatioun",
+      "help": "Hëllef",
+      "profile": "Profil",
+      "logout": "Ofmellen"
+    },
+    "PricingPage": {
+      "promotionalVideo": "Längt vum Promotiounsvideo",
+      "buyItNowSection": "Kaaft elo Sektioun",
+      "listingsCount": "Zuel vun den Annoncen",
+      "platformFees": "Plattformkäschten",
+      "genderViews": "Geschlechtsspezifesch Statistik",
+      "socialsSection": "Sozial Medien Promotioun Sektioun",
+      "featured": "Featured"
+    }
+  },
+  "errors": {
+    "authErros": {
+      "accountExists": "Account existéiert scho!",
+      "missingInputs": "Fehlend Informatiounen!",
+      "disabledAccount": "Account duerch Admins desaktivéiert",
+      "unverifiedAccount": "Account muss nach verifizéiert ginn!",
+      "gmailAccount": "Account nëmmen iwwer Gmail Zougang!",
+      "wrongInputs": "Falsch E-Mail oder Passwuert!",
+      "sellerGmailLogin": "Verkeeferkonto nëmme mat reguläre Login zougänglech!"
+    },
+    "passwordResetErrors": {
+      "success": "Reset Code un Inbox geschéckt",
+      "mismatch": "Falsche Code!",
+      "gmailAccount": "Gmail-Konten sinn net valabel fir Passwuert zrécksetzen",
+      "userNonExistant": "Wann d'E-Mail existéiert, gouf de Reset Code un d'Inbox geschéckt",
+      "invalidAccount": "Account geläscht oder existéiert net méi",
+      "Unactive": "Code net méi verfügbar, schéckt en neien wann méiglech",
+      "oldPasswordMatch": "Kann net op dat al Passwuert zréckänneren!",
+      "passwordMismatch": "Passwierder stëmmen net iwwereneen"
+    }
+  },
+  "loginModal": {
+    "signin": "Aloggen",
+    "signup": "Umellen",
+    "submit": "Ofschécken",
+    "loading": "Lueden ...",
+    "or": "ODER",
+    "dontHaveAnAccount": "Hutt Dir keen Account?",
+    "forgotPassword": "Passwuert vergiess?",
+    "email": "E-Mail Adress",
+    "password": "Passwuert",
+    "zodErrors": {
+      "email": "Ongülteg E-Mail!",
+      "password": "Passwuert muss tëscht 6 an 40 Zeechen hunn!"
+    }
+  },
+  "signupModal": {
+    "bidderText": "Bieter",
+    "sellerText": "Verkeefer",
+    "signupText": "Umellen",
+    "signinText": "Aloggen",
+    "haveAnAccount": "Hutt Dir e Konto?",
+    "bidder": {
+      "success": "Verifizéierungs E-Mail geschéckt. Kuckt an der Inbox!",
+      "fullName": "Virnumm",
+      "email": "E-Mail",
+      "password": "Passwuert",
+      "gender": "Geschlecht",
+      "male": "Männlech",
+      "female": "Weiblech",
+      "terms": "Ech stëmmen den Notzungsbedingungen a Privatsphär Politik zou.",
+      "submit": "Ofschécken",
+      "loading": "Lueden ...",
+      "zodErrors": {
+        "fullName": "Virnumm muss tëscht 6 an 35 Zeechen hunn!",
+        "email": "Ongülteg E-Mail!",
+        "password": "Passwuert muss tëscht 6 an 40 Zeechen hunn!",
+        "gender": "Dir musst männlech oder weiblech auswielen!"
+      }
+    },
+    "seller": {
+      "success": "Merci fir Är Ufro. Äre neien Account gëtt vun eise Administrateuren verifizéiert. Dir kritt eng E-Mail wann d'Verifizéierung ofgeschloss ass. Mir schätzen Är Gedold.",
+      "name": "Firma Numm",
+      "email": "E-Mail",
+      "password": "Passwuert",
+      "description": "Beschreiwung",
+      "registrationLicense": "Registréierungslizenz eroplueden",
+      "street": "Strooss",
+      "apply": "Uwenden",
+      "terms": "Ech stëmmen den Notzungsbedingungen a Privatsphär Politik zou.",
+      "loading": "Lueden ...",
+      "zodErrors": {
+        "name": "Firma Numm muss tëscht 3 an 30 Zeechen hunn!",
+        "email": "Ongülteg E-Mail!",
+        "password": "Passwuert muss tëscht 6 an 40 Zeechen hunn!",
+        "description": "Firma Beschreiwung muss méi wéi 20 Zeechen hunn!",
+        "registrationLicense": "Registréierungslizenz ass erfuerderlech fir Verkeeferkonto Uwendung!",
+        "street": "Dir musst den Stroossennumm uginn!",
+        "city": "Stad Informatioun ass erfuerderlech!",
+        "municipality": "Gemeng Informatioun ass erfuerderlech!"
+      }
+    }
+  },
+  "resetPasswordModal": {
+    "email": "E-Mail",
+    "resetPassword": "Passwuert zrécksetzen",
+    "confirm": "Bestätegen",
+    "loading": "Lueden ...",
+    "success": "Passwuert erfollegräich zréckgesat",
+    "login": "Aloggen",
+    "newPassword": "Neit Passwuert",
+    "confirmNewPassword": "Neit Passwuert bestätegen",
+    "resendCode": "Code nei schécken an: 5 Minutten",
+    "resend": "Code nei schécken",
+    "codePlaceholder": "Reset Code",
+    "reset": "Zrécksetzen",
+    "zodErrors": {
+      "email": "Ongülteg E-Mail!"
+    }
+  },
+  "admin": {
+    "notifications": {
+      "auctionStart": "Auktioun gestart fir: "
+    }
+  },
+  "bidder": {
+    "notifications": {
+      "transactionSuccessfull": "Bezuelen erfollegräich fir $",
+      "auctionDelayed": "Wéinst net genuch Biedere gëtt d'Auktioun verréckelt op: ",
+      "auctionStart": "Auktioun gestart fir: ",
+      "auctionEnded": "Merci fir Är Participatioun, d'Auktioun ass eriwwer fir: ",
+      "auctionWin": "Gratulatioun fir d'Gewënn vun der Auktioun fir: ",
+      "confirmAuctionParticipation": "Participatioun un der Auktioun bestätegt fir: ",
+      "deliverySuccessfull": "Produit erfollegräich geliwwert fir: ",
+      "deliveryShipmentSuccessfull": "Liwwerung confirméiert, Produit kënnt tëscht: ",
+      "sentAt": "Geschéckt um:"
+    },
+    "transactions": {
+      "auctionPayment": "Auktiounsbezuelen",
+      "balanceIncrease": "Saldoerhéijung"
+    },
+    "transactionTableTitles": {
+      "context": "Kontext",
+      "amount": "Betrag",
+      "date": "Datum",
+      "to": "Un"
+    }
+  },
+  "seller": {
+    "notifications": {
+      "packagePayment": "Bezuelen erfollegräich fir Package: ",
+      "auctionDelayed": "Wéinst net genuch Biedere gëtt d'Auktioun verréckelt op: ",
+      "auctionStart": "Auktioun gestart fir: ",
+      "auctionEnded": "Auktioun eriwwer fir: ",
+      "deliveryReport": "E Bericht gouf fir d'Liwwerung vun: ofginn",
+      "sentAt": "Geschéckt um:",
+      "auctionPayment": "Auktiounsbezuelen kritt fir: "
+    },
+    "transactions": {
+      "auctionPayment": "Auktiounsbezuelen",
+      "packagePayment": "Package Bezuelen"
+    },
+    "transactionTableTitles": {
+      "context": "Kontext",
+      "date": "Datum",
+      "amount": "Betrag",
+      "to": "Un"
+    },
+    "earningsPage": {
+      "platformFees": "Plattformkäschten",
+      "earningsReceived": "Akommes kritt"
+    }
+  }
+}

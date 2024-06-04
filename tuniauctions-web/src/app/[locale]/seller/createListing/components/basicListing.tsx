@@ -25,6 +25,8 @@ import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
 import OriginalAndStartingBiddingPriceWithMinParticipatingBiddersSection from "./components/originalAndStartingBidPricesAndMinParticipatingBidders";
+import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
 
 export default function BasicListing() {
   const [auctionListingForm, setAuctionListingForm] =
@@ -45,6 +47,7 @@ export default function BasicListing() {
     });
 
   const [isPreviewModalOpen, setPreviewModalOpen] = useState<boolean>(false);
+  const locale = useLocale();
   const [pictureFiles, setPictureFiles] = useState<pictureFiles>({
     promotionalPicture: undefined,
     productPictures: null,
@@ -62,6 +65,7 @@ export default function BasicListing() {
   const [tip, setTip] = useState<string>();
   const { setSellerLocalStorageData, sellerLocaleStorageData } =
     useSellerProfileStore();
+  const router = useRouter();
   async function handleFormSubmission(e: any) {
     setLoading(true);
     e.preventDefault();
@@ -102,9 +106,9 @@ export default function BasicListing() {
 
     setLoading(false);
     setTip("");
-    console.log(resBody);
     if (resBody.sellerFrontData) {
       setSellerLocalStorageData(resBody.sellerFrontData);
+      router.push(`/${locale}/seller/auctionListings`);
     }
   }
   return (
@@ -143,7 +147,7 @@ export default function BasicListing() {
           <DatePickingSection setAuctionListingForm={setAuctionListingForm} />
           <GuarenteeSection setAuctionListingForm={setAuctionListingForm} />
 
-          <div className="mb-6">
+          <div className="mb-6 mt-4">
             <button
               className="bg-blue-500 mr-2 text-white px-4 py-2 rounded-md"
               type="submit"

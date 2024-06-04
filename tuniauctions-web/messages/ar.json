@@ -3,75 +3,75 @@
     "Title": "المزادات"
   },
   "HomePage": {
-    "HeroTitle": "المزايدة بفرح، الفوز بالعدالة",
+    "HeroTitle": "زايد بفرح، اربح بعدل",
     "BrowseButton": "تصفح",
     "FeaturedAuctions": "المزادات المميزة",
     "DealsOfThisWeek": "عروض هذا الأسبوع",
-    "OpeningBid": "العرض الحالي",
+    "OpeningBid": "العطاء الافتتاحي",
     "UpComingAuctions": "المزادات القادمة",
     "ViewProductButton": "عرض المنتج",
     "ViewAllButton": "عرض الكل",
     "Categories": "الفئات",
-    "Winners": "الفائزين",
-    "LatestAuctionWinners": "آخر الفائزين في المزادات"
+    "Winners": "الفائزون",
+    "LatestAuctionWinners": "أحدث الفائزين في المزادات"
   },
   "Seller": {
     "NavigationSection": {
       "dashboard": "لوحة التحكم",
       "earnings": "الأرباح",
-      "auctionListings": "قائمة المزادات",
+      "auctionListings": "قوائم المزادات",
       "auction'sList": "قائمة المزادات",
       "create": "إنشاء",
       "deliveries": "التسليمات",
-      "delivered": "تم التوصيل",
+      "delivered": "تم التسليم",
       "pending": "قيد الانتظار",
       "transactions": "المعاملات",
       "pricing": "التسعير",
-      "documentation": "الوثائق",
+      "documentation": "التوثيق",
       "help": "المساعدة",
       "profile": "الملف الشخصي",
       "logout": "تسجيل الخروج"
     },
     "PricingPage": {
       "promotionalVideo": "مدة الفيديو الترويجي",
-      "buyItNowSection": "قسم اشتره الآن",
+      "buyItNowSection": "قسم الشراء الآن",
       "listingsCount": "عدد القوائم",
       "platformFees": "رسوم المنصة",
-      "genderViews": "إحصائيات آراء الجنس",
-      "socialsSection": "قسم الترويج الاجتماعي",
+      "genderViews": "إحصائيات المشاهدات حسب الجنس",
+      "socialsSection": "قسم الترويج عبر وسائل التواصل الاجتماعي",
       "featured": "مميز"
     }
   },
   "errors": {
     "authErros": {
       "accountExists": "الحساب موجود بالفعل!",
-      "missingInputs": "المدخلات مفقودة!",
-      "disabledAccount": "الحساب معطل من قبل المشرفين",
-      "unverifiedAccount": "الحساب قيد الانتظار للتحقق!",
-      "gmailAccount": "الحساب يمكن الوصول إليه فقط عبر تسجيل الدخول بالبريد الإلكتروني!",
-      "wrongInputs": "البريد الإلكتروني أو كلمة المرور خاطئة!",
-      "sellerGmailLogin": "حساب البائع يمكن الوصول إليه فقط عبر تسجيل الدخول العادي!"
+      "missingInputs": "بيانات مفقودة!",
+      "disabledAccount": "الحساب معطل من قبل الإدارة",
+      "unverifiedAccount": "الحساب بانتظار التحقق!",
+      "gmailAccount": "الحساب متاح فقط من خلال تسجيل الدخول بجوجل!",
+      "wrongInputs": "بريد إلكتروني أو كلمة مرور غير صحيحة!",
+      "sellerGmailLogin": "حساب البائع متاح فقط من خلال تسجيل الدخول العادي!"
     },
     "passwordResetErrors": {
       "success": "تم إرسال رمز إعادة التعيين إلى صندوق الوارد",
-      "mismatch": "الرمز غير صحيح!",
-      "gmailAccount": "حسابات Gmail غير صالحة لإعادة تعيين كلمة المرور",
-      "userNonExistant": "إذا كان البريد الإلكتروني موجودًا ، تم إرسال رمز إعادة التعيين إلى صندوق الوارد الخاص بك",
-      "invalidAccount": "الحساب محذوف أو غير موجود بعد الآن",
-      "Unactive": "الرمز غير متاح بعد، يرجى إرسال واحد جديد عند الإمكان",
-      "oldPasswordMatch": "لا يمكن تغيير كلمة المرور القديمة!",
-      "passwordMismatch": "عدم تطابق كلمة المرور"
+      "mismatch": "رمز خاطئ!",
+      "gmailAccount": "الحسابات بجوجل غير صالحة لإعادة تعيين كلمة المرور",
+      "userNonExistant": "إذا كان البريد الإلكتروني موجودًا، فقد تم إرسال رمز إعادة التعيين",
+      "invalidAccount": "الحساب محذوف أو غير موجود",
+      "Unactive": "الرمز لم يعد صالحًا، يرجى طلب رمز جديد",
+      "oldPasswordMatch": "لا يمكن تغيير كلمة المرور إلى كلمة المرور القديمة!",
+      "passwordMismatch": "كلمة المرور غير متطابقة"
     }
   },
   "loginModal": {
     "signin": "تسجيل الدخول",
-    "signup": "التسجيل",
+    "signup": "إنشاء حساب",
     "submit": "إرسال",
     "loading": "جار التحميل ...",
     "or": "أو",
     "dontHaveAnAccount": "ليس لديك حساب؟",
     "forgotPassword": "نسيت كلمة المرور؟",
-    "email": "البريد الإلكتروني",
+    "email": "عنوان البريد الإلكتروني",
     "password": "كلمة المرور",
     "zodErrors": {
       "email": "بريد إلكتروني غير صالح!",
@@ -79,47 +79,47 @@
     }
   },
   "signupModal": {
-    "bidderText": "المزايد",
-    "sellerText": "البائع",
-    "signupText": "التسجيل",
+    "bidderText": "مزايد",
+    "sellerText": "بائع",
+    "signupText": "إنشاء حساب",
     "signinText": "تسجيل الدخول",
-    "haveAnAccount": "لديك حساب؟",
+    "haveAnAccount": "هل لديك حساب؟",
     "bidder": {
-      "success": "تم إرسال رسالة التحقق. تحقق من صندوق الوارد!",
-      "fullName": "الاسم الكامل",
+      "success": "تم إرسال بريد التحقق. تحقق من صندوق الوارد!",
+      "fullName": "الاسم الأول",
       "email": "البريد الإلكتروني",
       "password": "كلمة المرور",
       "gender": "الجنس",
       "male": "ذكر",
       "female": "أنثى",
-      "terms": "أوافق على الشروط وسياسة الخصوصية.",
+      "terms": "أوافق على شروط الخدمة وسياسة الخصوصية.",
       "submit": "إرسال",
       "loading": "جار التحميل ...",
       "zodErrors": {
         "fullName": "يجب أن يكون الاسم الكامل بين 6 و 35 حرفًا!",
         "email": "بريد إلكتروني غير صالح!",
         "password": "يجب أن تكون كلمة المرور بين 6 و 40 حرفًا!",
-        "gender": "يجب عليك اختيار ذكر أو أنثى!"
+        "gender": "يجب اختيار ذكر أو أنثى!"
       }
     },
     "seller": {
-      "success": ".شكرًا لطلبك. يتم التحقق من حسابك الجديد من قبل مسؤولينا. ستتلقى رسالة بريد إلكتروني عند اكتمال التحقق. نقدر صبرك",
+      "success": "شكرًا لطلبك. حسابك الجديد قيد التحقق من قبل الإدارة. ستتلقى بريدًا إلكترونيًا بمجرد اكتمال التحقق. نشكرك على صبرك.",
       "name": "اسم الشركة",
       "email": "البريد الإلكتروني",
       "password": "كلمة المرور",
       "description": "الوصف",
       "registrationLicense": "تحميل رخصة التسجيل",
       "street": "الشارع",
-      "apply": "تطبيق",
-      "terms": "أوافق على الشروط وسياسة الخصوصية.",
+      "apply": "تقديم الطلب",
+      "terms": "أوافق على شروط الخدمة وسياسة الخصوصية.",
       "loading": "جار التحميل ...",
       "zodErrors": {
         "name": "يجب أن يكون اسم الشركة بين 3 و 30 حرفًا!",
         "email": "بريد إلكتروني غير صالح!",
         "password": "يجب أن تكون كلمة المرور بين 6 و 40 حرفًا!",
         "description": "يجب أن يكون وصف الشركة أكثر من 20 حرفًا!",
-        "registrationLicense": "مطلوب رخصة التسجيل لطلب حساب البائع!",
-        "street": "يجب عليك تقديم اسم الشارع!",
+        "registrationLicense": "رخصة التسجيل مطلوبة لتقديم طلب حساب البائع!",
+        "street": "يجب تقديم اسم الشارع!",
         "city": "معلومات المدينة مطلوبة!",
         "municipality": "معلومات البلدية مطلوبة!"
       }
@@ -130,13 +130,13 @@
     "resetPassword": "إعادة تعيين كلمة المرور",
     "confirm": "تأكيد",
     "loading": "جار التحميل ...",
-    "success": "تمت إعادة تعيين كلمة المرور بنجاح",
+    "success": "تم إعادة تعيين كلمة المرور بنجاح",
     "login": "تسجيل الدخول",
     "newPassword": "كلمة المرور الجديدة",
     "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
-    "resendCode": "إعادة إرسال الرمز في: 5 دقائق",
-    "resend": "إعادة إرسال",
-    "codePlaceholder": "رمز الإعادة",
+    "resendCode": "إعادة إرسال الرمز خلال: 5 دقائق",
+    "resend": "إعادة إرسال الرمز",
+    "codePlaceholder": "رمز إعادة التعيين",
     "reset": "إعادة تعيين",
     "zodErrors": {
       "email": "بريد إلكتروني غير صالح!"
@@ -149,34 +149,40 @@
   },
   "bidder": {
     "notifications": {
-      "transactionSuccessfull": "تمت الدفع بنجاح لـ $",
-      "auctionDelayed": "نظرًا لعدم تحقيق الحد الأدنى لمشاركة المزايدين، تم تأجيل المزاد إلى: ",
-      "auctionStart": "بدء غرفة المزاد لـ: ",
-      "auctionEnded": "شكرًا لمشاركتك، انتهت غرفة المزاد لـ: ",
-      "auctionWin": "تهانينا على الفوز بالمزاد على: ",
-      "confirmAuctionParticipation": "تأكيد المشاركة في المزاد لـ: ",
-      "deliverySuccessfull": "تم تسليم المنتج بنجاح لـ: ",
-      "deliveryShipmentSuccessfull": "تم تأكيد شحن التسليم، سيصل المنتج بين: ",
-      "sentAt": "أرسل في:"
+      "transactionSuccessfull": "تم الدفع بنجاح مقابل $",
+      "auctionDelayed": "بسبب عدم الوصول إلى الحد الأدنى من المشاركين، تم تأجيل المزاد إلى :",
+      "auctionStart": "تم بدء غرفة المزاد لـ : ",
+      "auctionEnded": "شكرًا لمشاركتكم، تم إنهاء غرفة المزاد لـ : ",
+      "auctionWin": "تهانينا على الفوز بالمزاد لـ : ",
+      "confirmAuctionParticipation": "تم تأكيد المشاركة في المزاد لـ : ",
+      "deliverySuccessfull": "تم تسليم المنتج بنجاح لـ : ",
+      "deliveryShipmentSuccessfull": "تم تأكيد شحنة التسليم، المنتج سيصل بين : ",
+      "sentAt": "تم الإرسال في:"
     },
     "transactions": {
       "auctionPayment": "دفع المزاد",
       "balanceIncrease": "زيادة الرصيد"
+    },
+    "transactionTableTitles": {
+      "context": "السياق",
+      "amount": "المبلغ",
+      "date": "التاريخ",
+      "to": "إلى"
     }
   },
   "seller": {
     "notifications": {
-      "packagePayment": "تم الدفع بنجاح للحزمة : ",
-      "auctionDelayed": "نظرًا لعدم تحقيق الحد الأدنى لمشاركة المزايدين، تم تأجيل المزاد إلى :",
+      "packagePayment": "تم الدفع بنجاح للباقة : ",
+      "auctionDelayed": "بسبب عدم الوصول إلى الحد الأدنى من المشاركين، تم تأجيل المزاد إلى :",
       "auctionStart": "تم بدء غرفة المزاد لـ : ",
       "auctionEnded": "تم إنهاء غرفة المزاد لـ : ",
       "deliveryReport": "تم تقديم تقرير عن التسليم لـ : ",
-      "sentAt": "أُرسلت في:",
-      "auctionPayment": "تم استلام دفع المزاد لـ : "
+      "sentAt": "تم الإرسال في:",
+      "auctionPayment": "تم استلام دفعة المزاد لـ : "
     },
     "transactions": {
-      "auctionPayment": "دفع المزاد",
-      "packagePayment": "دفع الحزمة"
+      "auctionPayment": "دفعة المزاد",
+      "packagePayment": "دفعة الباقة"
     },
     "transactionTableTitles": {
       "context": "السياق",

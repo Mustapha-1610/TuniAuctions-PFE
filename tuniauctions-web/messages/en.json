@@ -13,7 +13,15 @@
     "ViewAllButton": "View All",
     "Categories": "Categories",
     "Winners": "Winners",
-    "LatestAuctionWinners": "Latest Auction Winners"
+    "LatestAuctionWinners": "Latest Auction Winners",
+    "navbarTitles": {
+      "home": "Home",
+      "auctions": "Auctions",
+      "aboutus": "About Us",
+      "howitworks": "How It Works",
+      "signin": "Sign in",
+      "signup": "Sign up"
+    }
   },
   "Seller": {
     "NavigationSection": {
@@ -182,7 +190,8 @@
     },
     "transactions": {
       "auctionPayment": "Auction Payment",
-      "packagePayment": "Package Payment"
+      "packagePayment": "Package Payment",
+      "platformPayment": "Platform Payment"
     },
     "transactionTableTitles": {
       "context": "Context",

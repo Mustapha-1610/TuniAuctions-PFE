@@ -74,9 +74,9 @@ export default function LatestTransactionsSection() {
                                   {tableTranslations(item.context)}
                                 </td>
                                 <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                  {moment(item.date).format(
-                                    "ddd, MMM D, YYYY [at] h:mm A"
-                                  )}
+                                  {moment(item.date)
+                                    .locale(locale)
+                                    .format("ddd, MMM D, YYYY [at] h:mm A")}
                                 </td>
                                 <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
                                   ${item.amount}

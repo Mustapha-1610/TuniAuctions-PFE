@@ -49,7 +49,7 @@ export default function CreateForm() {
         className="h-full w-11/12  relative overflow-y-auto lg:ml-64"
       >
         <h2 className="text-xl font-semibold text-gray-800 mb-6">
-          Add New Product
+          Create New Listing
         </h2>
         <div className="flex flex-col mb-6 sm:flex-row">
           <div className="w-full sm:w-1/2 sm:mr-2">

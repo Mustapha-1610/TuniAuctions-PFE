@@ -1,0 +1,198 @@
+{
+  "AuctionPage": {
+    "Title": "Auktionen"
+  },
+  "HomePage": {
+    "HeroTitle": "Bieten mit Freude, Gewinnen mit Fairness",
+    "BrowseButton": "Durchsuchen",
+    "FeaturedAuctions": "Ausgewählte Auktionen",
+    "DealsOfThisWeek": "Angebote dieser Woche",
+    "OpeningBid": "Startgebot",
+    "UpComingAuctions": "Bevorstehende Auktionen",
+    "ViewProductButton": "Produkt ansehen",
+    "ViewAllButton": "Alle ansehen",
+    "Categories": "Kategorien",
+    "Winners": "Gewinner",
+    "LatestAuctionWinners": "Neueste Auktionsgewinner"
+  },
+  "Seller": {
+    "NavigationSection": {
+      "dashboard": "Dashboard",
+      "earnings": "Einnahmen",
+      "auctionListings": "Auktionslisten",
+      "auction'sList": "Auktionsliste",
+      "create": "Erstellen",
+      "deliveries": "Lieferungen",
+      "delivered": "Geliefert",
+      "pending": "Ausstehend",
+      "transactions": "Transaktionen",
+      "pricing": "Preisgestaltung",
+      "documentation": "Dokumentation",
+      "help": "Hilfe",
+      "profile": "Profil",
+      "logout": "Abmelden"
+    },
+    "PricingPage": {
+      "promotionalVideo": "Länge des Werbevideos",
+      "buyItNowSection": "Jetzt kaufen Abschnitt",
+      "listingsCount": "Anzahl der Einträge",
+      "platformFees": "Plattformgebühren",
+      "genderViews": "Geschlechteransichten Statistik",
+      "socialsSection": "Social-Media-Werbung Abschnitt",
+      "featured": "Hervorgehoben"
+    }
+  },
+  "errors": {
+    "authErros": {
+      "accountExists": "Konto existiert bereits!",
+      "missingInputs": "Fehlende Eingaben!",
+      "disabledAccount": "Konto wurde von Admins deaktiviert",
+      "unverifiedAccount": "Konto wartet auf Verifizierung!",
+      "gmailAccount": "Konto nur über Gmail-Login zugänglich!",
+      "wrongInputs": "Falsche E-Mail oder Passwort!",
+      "sellerGmailLogin": "Verkäuferkonto nur über regulären Login zugänglich!"
+    },
+    "passwordResetErrors": {
+      "success": "Reset-Code an Posteingang gesendet",
+      "mismatch": "Falscher Code!",
+      "gmailAccount": "Gmail-Konten sind für das Zurücksetzen des Passworts nicht gültig",
+      "userNonExistant": "Falls E-Mail existiert, wurde der Reset-Code an Ihren Posteingang gesendet",
+      "invalidAccount": "Konto gelöscht oder nicht mehr existent",
+      "Unactive": "Code nicht mehr verfügbar, neuen anfordern wenn möglich",
+      "oldPasswordMatch": "Kann nicht zum alten Passwort ändern!",
+      "passwordMismatch": "Passwort stimmt nicht überein"
+    }
+  },
+  "loginModal": {
+    "signin": "Anmelden",
+    "signup": "Registrieren",
+    "submit": "Einreichen",
+    "loading": "Lädt ...",
+    "or": "ODER",
+    "dontHaveAnAccount": "Noch keinen Account?",
+    "forgotPassword": "Passwort vergessen?",
+    "email": "E-Mail Adresse",
+    "password": "Passwort",
+    "zodErrors": {
+      "email": "Ungültige E-Mail!",
+      "password": "Passwort muss zwischen 6 und 40 Zeichen lang sein!"
+    }
+  },
+  "signupModal": {
+    "bidderText": "Bieter",
+    "sellerText": "Verkäufer",
+    "signupText": "Registrieren",
+    "signinText": "Anmelden",
+    "haveAnAccount": "Haben Sie ein Konto?",
+    "bidder": {
+      "success": "Bestätigungs-E-Mail gesendet. Überprüfen Sie den Posteingang!",
+      "fullName": "Vorname",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "gender": "Geschlecht",
+      "male": "Männlich",
+      "female": "Weiblich",
+      "terms": "Ich stimme den Nutzungsbedingungen und der Datenschutzrichtlinie zu.",
+      "submit": "Einreichen",
+      "loading": "Lädt ...",
+      "zodErrors": {
+        "fullName": "Vollständiger Name muss zwischen 6 und 35 Zeichen lang sein!",
+        "email": "Ungültige E-Mail!",
+        "password": "Passwort muss zwischen 6 und 40 Zeichen lang sein!",
+        "gender": "Sie müssen männlich oder weiblich wählen!"
+      }
+    },
+    "seller": {
+      "success": "Vielen Dank für Ihre Anfrage. Ihr neues Konto wird von unseren Administratoren überprüft. Sie erhalten eine E-Mail, sobald die Verifizierung abgeschlossen ist. Wir schätzen Ihre Geduld.",
+      "name": "Firmenname",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "description": "Beschreibung",
+      "registrationLicense": "Registrierungslizenz hochladen",
+      "street": "Straße",
+      "apply": "Bewerben",
+      "terms": "Ich stimme den Nutzungsbedingungen und der Datenschutzrichtlinie zu.",
+      "loading": "Lädt ...",
+      "zodErrors": {
+        "name": "Firmenname muss zwischen 3 und 30 Zeichen lang sein!",
+        "email": "Ungültige E-Mail!",
+        "password": "Passwort muss zwischen 6 und 40 Zeichen lang sein!",
+        "description": "Firmenbeschreibung muss mehr als 20 Zeichen lang sein!",
+        "registrationLicense": "Registrierungslizenz ist erforderlich für die Bewerbung des Verkäuferkontos!",
+        "street": "Straßenname muss angegeben werden!",
+        "city": "Stadtinformationen sind erforderlich!",
+        "municipality": "Gemeindeinformationen sind erforderlich!"
+      }
+    }
+  },
+  "resetPasswordModal": {
+    "email": "E-Mail",
+    "resetPassword": "Passwort zurücksetzen",
+    "confirm": "Bestätigen",
+    "loading": "Lädt ...",
+    "success": "Passwort erfolgreich zurückgesetzt",
+    "login": "Anmelden",
+    "newPassword": "Neues Passwort",
+    "confirmNewPassword": "Neues Passwort bestätigen",
+    "resendCode": "Code erneut senden in: 5 Minuten",
+    "resend": "Code erneut senden",
+    "codePlaceholder": "Reset-Code",
+    "reset": "Zurücksetzen",
+    "zodErrors": {
+      "email": "Ungültige E-Mail!"
+    }
+  },
+  "admin": {
+    "notifications": {
+      "auctionStart": "Auktionsraum gestartet für: "
+    }
+  },
+  "bidder": {
+    "notifications": {
+      "transactionSuccessfull": "Zahlung erfolgreich für $",
+      "auctionDelayed": "Aufgrund der Nichterfüllung der Mindestteilnehmerzahl wurde die Auktion verschoben auf: ",
+      "auctionStart": "Auktionsraum gestartet für: ",
+      "auctionEnded": "Danke für Ihre Teilnahme, Auktionsraum beendet für: ",
+      "auctionWin": "Herzlichen Glückwunsch zum Gewinn der Auktion für: ",
+      "confirmAuctionParticipation": "Teilnahme an der Auktion bestätigt für: ",
+      "deliverySuccessfull": "Erfolgreiche Produktlieferung für: ",
+      "deliveryShipmentSuccessfull": "Lieferung bestätigt, das Produkt wird ankommen zwischen: ",
+      "sentAt": "Gesendet am:"
+    },
+    "transactions": {
+      "auctionPayment": "Auktionszahlung",
+      "balanceIncrease": "Guthabenerhöhung"
+    },
+    "transactionTableTitles": {
+      "context": "Kontext",
+      "amount": "Betrag",
+      "date": "Datum",
+      "to": "An"
+    }
+  },
+  "seller": {
+    "notifications": {
+      "packagePayment": "Zahlung erfolgreich für Paket: ",
+      "auctionDelayed": "Aufgrund der Nichterfüllung der Mindestteilnehmerzahl wurde die Auktion verschoben auf: ",
+      "auctionStart": "Auktionsraum gestartet für: ",
+      "auctionEnded": "Auktionsraum beendet für: ",
+      "deliveryReport": "Ein Bericht wurde eingereicht zur Lieferung für: ",
+      "sentAt": "Gesendet am:",
+      "auctionPayment": "Auktionszahlung erhalten für: "
+    },
+    "transactions": {
+      "auctionPayment": "Auktionszahlung",
+      "packagePayment": "Paketzahlung"
+    },
+    "transactionTableTitles": {
+      "context": "Kontext",
+      "date": "Datum",
+      "amount": "Betrag",
+      "to": "An"
+    },
+    "earningsPage": {
+      "platformFees": "Plattformgebühren",
+      "earningsReceived": "Einnahmen erhalten"
+    }
+  }
+}

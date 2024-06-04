@@ -1,8 +1,15 @@
 "use client";
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
-import { ObjectId } from "mongodb";
 import React, { useEffect, useState } from "react";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, LabelList } from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  LabelList,
+  ResponsiveContainer,
+} from "recharts";
 
 type transactions =
   | {
@@ -12,6 +19,7 @@ type transactions =
       context: string;
     }[]
   | undefined;
+
 export default function PackageCountSection() {
   const { sellerLocaleStorageData } = useSellerProfileStore();
 
@@ -67,19 +75,21 @@ export default function PackageCountSection() {
           Monthly Earnings
         </h3>
         {data.length > 0 ? (
-          <BarChart width={1000} height={500} data={data} className="mt-2">
-            <XAxis dataKey="month" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="earnings" fill="#46a683">
-              <LabelList
-                dataKey="earnings"
-                position="top"
-                formatter={(value: number) => `$${value.toFixed(2)}`}
-                className="font-bold text-black" // Add dollar sign and format amount
-              />
-            </Bar>
-          </BarChart>
+          <ResponsiveContainer width="100%" height={500} className="mt-2">
+            <BarChart data={data}>
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="earnings" fill="#46a683">
+                <LabelList
+                  dataKey="earnings"
+                  position="top"
+                  formatter={(value: number) => `$${value.toFixed(2)}`}
+                  className="font-bold text-black" // Add dollar sign and format amount
+                />
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
         ) : (
           <div className="flex items-center justify-center h-40 text-xl font-bold text-gray-600">
             No Earnings Yet
