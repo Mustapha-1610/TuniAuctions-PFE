@@ -13,7 +13,15 @@
     "ViewAllButton": "عرض الكل",
     "Categories": "الفئات",
     "Winners": "الفائزون",
-    "LatestAuctionWinners": "أحدث الفائزين في المزادات"
+    "LatestAuctionWinners": "أحدث الفائزين في المزادات",
+    "navbarTitles": {
+      "home": "الرئيسية",
+      "auctions": "المزادات",
+      "aboutus": "من نحن",
+      "howitworks": "كيف يعمل",
+      "signin": "تسجيل الدخول",
+      "signup": "اشتراك"
+    }
   },
   "Seller": {
     "NavigationSection": {

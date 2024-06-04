@@ -13,7 +13,7 @@ export default function UnautherizedModal() {
   return (
     <>
       <Modal
-        title="Anautherized Access"
+        title="Unauthorized Access"
         centered
         open={isAnautherizedModalOpen}
         width={600}
@@ -24,8 +24,8 @@ export default function UnautherizedModal() {
         maskClosable={false}
       >
         <p>
-          Your Account has been accessed from a different browser, you will be
-          redirected to home page
+          Your Account has been accessed from a different browser, you will now
+          be redirected to home page
         </p>
       </Modal>
     </>

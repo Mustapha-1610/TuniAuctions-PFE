@@ -13,7 +13,15 @@
     "ViewAllButton": "Voir Tout",
     "Categories": "Catégories",
     "Winners": "Gagnants",
-    "LatestAuctionWinners": "Derniers Gagnants des Enchères"
+    "LatestAuctionWinners": "Derniers Gagnants des Enchères",
+    "navbarTitles": {
+      "home": "Accueil",
+      "auctions": "Enchères",
+      "aboutus": "À Propos",
+      "howitworks": "Fonctionnement",
+      "signin": "Connexion",
+      "signup": "Inscription"
+    }
   },
   "Seller": {
     "NavigationSection": {

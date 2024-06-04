@@ -13,7 +13,15 @@
     "ViewAllButton": "Bekijk Alles",
     "Categories": "Categorieën",
     "Winners": "Winnaars",
-    "LatestAuctionWinners": "Laatste Veilingwinnaars"
+    "LatestAuctionWinners": "Laatste Veilingwinnaars",
+    "navbarTitles": {
+      "home": "Startseite",
+      "auctions": "Auktionen",
+      "aboutus": "Über uns",
+      "howitworks": "Funktionsweise",
+      "signin": "Einloggen",
+      "signup": "Registrieren"
+    }
   },
   "Seller": {
     "NavigationSection": {
