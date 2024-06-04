@@ -27,7 +27,7 @@ export default function SellerPromotionSection({
             <Image
               loading="lazy"
               src={sellerData.coverPicture || ""}
-              className="object-cover absolute inset-0 size-full rounded rounded-lg"
+              className="object-contain absolute inset-0 size-full rounded rounded-lg"
               alt="Cover Picture"
               width={700}
               height={200}

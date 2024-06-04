@@ -34,7 +34,7 @@ export default function ActiveSellersTable({ sellers }: Props) {
       title: "Description",
       dataIndex: "description",
       key: "description",
-      width: 150,
+      width: 400,
       align: "center",
     },
     {

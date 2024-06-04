@@ -25,6 +25,8 @@ import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useSellerProfileStore } from "@/helpers/store/seller/sellerProfileStore";
 import OriginalAndStartingBiddingPriceWithMinParticipatingBiddersSection from "./components/originalAndStartingBidPricesAndMinParticipatingBidders";
+import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
 
 export default function StandardListing() {
   const [auctionListingForm, setAuctionListingForm] =
@@ -68,6 +70,8 @@ export default function StandardListing() {
   const { setSellerLocalStorageData, sellerLocaleStorageData } =
     useSellerProfileStore();
   //
+  const router = useRouter();
+  const locale = useLocale();
   async function handleFormSubmission(e: any) {
     setLoading(true);
     e.preventDefault();
@@ -121,6 +125,7 @@ export default function StandardListing() {
     console.log(resBody);
     if (resBody.sellerFrontData) {
       setSellerLocalStorageData(resBody.sellerFrontData);
+      router.push(`/${locale}/seller/auctionListings`);
     }
   }
   //

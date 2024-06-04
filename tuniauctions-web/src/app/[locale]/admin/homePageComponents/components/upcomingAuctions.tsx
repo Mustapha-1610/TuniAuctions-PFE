@@ -86,7 +86,9 @@ export default function UpcomingAuctions({ upcomingAuctions }: Props) {
             align: "center",
             width: 120,
             render: (_, record) =>
-              moment(record.startingDate).format("dddd, MMM D, YYYY hh:mm A "),
+              moment(record.startingDate)
+                .locale(locale)
+                .format("dddd, MMM D, YYYY hh:mm A "),
           },
         ],
       },

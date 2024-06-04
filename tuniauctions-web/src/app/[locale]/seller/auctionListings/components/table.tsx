@@ -6,6 +6,7 @@ import { useSellerStore } from "@/helpers/store/seller/sellerStore";
 import SellerAuctionListingModal from "@/app/[locale]/seller/modals/auctionListingModal";
 import SellerBiddingRoomModal from "../../modals/biddingRoomModal";
 import AuctionStatisticsModal from "../../modals/auctionStatistics";
+import { useLocale } from "next-intl";
 export default function StatisticsTable({
   auctionListings,
 }: auctionListingsChildrenProps) {
@@ -31,6 +32,7 @@ export default function StatisticsTable({
       setOngoingAuctionModalState(true);
     }
   }
+  const locale = useLocale();
   const UpcomingAuctionsColumnType: TableColumnsType<AuctionListingType> = [
     {
       title: "Listing Type",
@@ -107,9 +109,9 @@ export default function StatisticsTable({
         moment(a.startingDate).unix() - moment(b.startingDate).unix(),
       sortDirections: ["descend", "ascend"],
       render: (value, record, index) => {
-        return moment(record.startingDate).format(
-          "ddd, MMM D, YYYY [at] h:mm A"
-        );
+        return moment(record.startingDate)
+          .locale(locale)
+          .format("ddd, MMM D, YYYY [at] h:mm A");
       },
     },
     {

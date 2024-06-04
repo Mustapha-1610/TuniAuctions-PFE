@@ -20,6 +20,7 @@ export default function AdminAuctionListingProductInformationSection({
   auctionListing,
 }: Props) {
   const [selectedImage, setSelectedImage] = useState("");
+  const locale = useLocale();
   return (
     <>
       {auctionListing ? (
@@ -112,9 +113,9 @@ export default function AdminAuctionListingProductInformationSection({
                       </div>
                       <div className="my-auto text-right">
                         <p>
-                          {moment(auctionListing.startingDate).format(
-                            "MMMM DD, YYYY HH:mm"
-                          )}
+                          {moment(auctionListing.startingDate)
+                            .locale(locale)
+                            .format("MMMM DD, YYYY HH:mm")}
                         </p>
                       </div>
                     </div>

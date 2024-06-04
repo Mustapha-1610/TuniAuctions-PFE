@@ -61,7 +61,7 @@ export default function DeliveryStatusDisplay({
                     <div className="flex flex-col w-[33%] max-md:ml-0 max-md:w-full">
                       <img
                         src={deliveryData.productInformations.productPicture}
-                        className="shrink-0 max-w-full rounded-2xl  border-solid h-[405px] w-[442px] max-md:mt-10"
+                        className="shrink-0 max-w-full rounded-2xl  border-solid h-[405px] w-[442px] max-md:mt-10 object-contain"
                       />
                     </div>
                     <div className="flex flex-col ml-5 w-[67%] max-md:ml-0 max-md:w-full">

@@ -78,7 +78,7 @@ export default function PendingSellers({ pendingSellers }: Props) {
             Sellers Pending Approval
           </h3>
           <Link
-            href={`/${locale}/admin/pendingSellers`}
+            href={`/${locale}/admin/activeSellers`}
             className="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg inline-flex items-center p-2"
           >
             View all

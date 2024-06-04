@@ -29,7 +29,7 @@ export default function SellerPromotionSection({ auctionListing }: Props) {
             <img
               loading="lazy"
               srcSet={sellerLocaleStorageData?.coverPicture}
-              className="object-cover absolute inset-0 size-full rounded rounded-lg"
+              className="object-contain absolute inset-0 size-full rounded rounded-lg"
             />
             <img
               loading="lazy"

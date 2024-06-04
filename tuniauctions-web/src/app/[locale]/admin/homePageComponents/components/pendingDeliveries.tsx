@@ -43,9 +43,9 @@ export default function PendingDeliveries({ pendingDeliveries }: Props) {
                 </>
               )}
               {record.deliveryDate &&
-                moment(record.deliveryDate).format(
-                  "dddd, MMMM D, YYYY hh:mm A "
-                )}
+                moment(record.deliveryDate)
+                  .locale(locale)
+                  .format("dddd, MMMM D, YYYY hh:mm A ")}
             </>
           );
         },
@@ -78,7 +78,7 @@ export default function PendingDeliveries({ pendingDeliveries }: Props) {
       <div className="bg-white shadow rounded-lg  p-4 sm:p-6 h-full border border-gray-400">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-xl font-bold leading-none text-gray-900">
-            Pending Deliveries
+            Reported Deliveries
           </h3>
           <Link
             href={`/${locale}/admin/pendingDeliveries`}

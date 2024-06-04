@@ -49,6 +49,21 @@ export default function SellerSignupForm() {
       }
     } catch (err) {}
   };
+  const cityMunicipalityData = [
+    { city: "Tunis", municipalities: ["La Marsa", "Carthage"] },
+    { city: "Sfax", municipalities: ["Sidi Bou Said", "Ariana"] },
+    // Add more cities and municipalities as needed
+  ];
+  const [municipalities, setMunicipalities] = useState<string[]>([
+    "La Marsa",
+    "Carthage",
+  ]);
+  const handleCityChange = (selectedCity: string) => {
+    const selectedCityData = cityMunicipalityData.find(
+      (item) => item.city === selectedCity
+    );
+    setMunicipalities(selectedCityData?.municipalities || []);
+  };
   return (
     <>
       <form
@@ -98,16 +113,25 @@ export default function SellerSignupForm() {
         )}
         <div className="mt-4 grid grid-cols-2 gap-4">
           <div className="px-4 py-2 w-full  border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500">
-            <select {...register("city")}>
-              <option>Option 1</option>
-              <option>Option 2</option>
+            <select
+              {...register("city")}
+              onChange={(e) => handleCityChange(e.target.value)}
+            >
+              {cityMunicipalityData.map((item) => (
+                <option key={item.city} value={item.city}>
+                  {item.city}
+                </option>
+              ))}
             </select>
             {errors.city && <ErrText errText={selTrans.zodErrors.city} />}
           </div>
           <div className="px-4 py-2 w-full  border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500">
             <select {...register("municipality")}>
-              <option>Option 3</option>
-              <option>Option 4</option>
+              {municipalities.map((municipality) => (
+                <option key={municipality} value={municipality}>
+                  {municipality}
+                </option>
+              ))}
             </select>
             {errors.municipality && (
               <ErrText errText={selTrans.zodErrors.municipality} />

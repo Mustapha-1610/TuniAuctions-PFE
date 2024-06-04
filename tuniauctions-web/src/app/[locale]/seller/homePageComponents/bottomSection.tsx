@@ -4,6 +4,8 @@ import { AuctionListingType } from "@/models/types/auctionListing";
 import { DeliveryType } from "@/models/types/delivery";
 import { Image } from "antd";
 import moment from "moment";
+import { useLocale } from "next-intl";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface ResponseType {
@@ -32,6 +34,7 @@ export default function BottomSection() {
     }
     handleFetch();
   }, []);
+  const locale = useLocale();
   return (
     <>
       <div className="grid grid-cols-1 2xl:grid-cols-2 xl:gap-4 my-4">
@@ -40,12 +43,12 @@ export default function BottomSection() {
             <h3 className="text-xl font-bold leading-none text-gray-900">
               Upcoming Auctions
             </h3>
-            <a
-              href="#"
+            <Link
+              href={`/${locale}/seller/auctionListings`}
               className="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg inline-flex items-center p-2"
             >
               View all
-            </a>
+            </Link>
           </div>
           <div className="flow-root">
             <ul role="list" className="divide-y divide-gray-200">
@@ -73,9 +76,9 @@ export default function BottomSection() {
                             </p>
                           </div>
                           <div className="inline-flex items-center text-base font-semibold text-gray-900">
-                            {moment(value.startingDate).format(
-                              "ddd, MMM D, YYYY [at] h:mm A"
-                            )}
+                            {moment(value.startingDate)
+                              .locale(locale)
+                              .format("ddd, MMM D, YYYY [at] h:mm A")}
                           </div>
                         </div>
                       </li>
@@ -89,12 +92,12 @@ export default function BottomSection() {
             <h3 className="text-xl font-bold leading-none text-gray-900">
               Pending Deliveries
             </h3>
-            <a
-              href="#"
+            <Link
+              href={`/${locale}/seller/pendingDeliveries`}
               className="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg inline-flex items-center p-2"
             >
               View all
-            </a>
+            </Link>
           </div>
           <div className="flow-root">
             <ul role="list" className="divide-y divide-gray-200">

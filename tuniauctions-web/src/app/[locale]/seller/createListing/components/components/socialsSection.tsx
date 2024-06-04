@@ -36,7 +36,7 @@ export default function SocialsSection({
   };
   return (
     <>
-      <div className="mb-6">
+      <div className="mb-6 mt-4">
         <label
           htmlFor="description"
           className="block text-sm font-medium text-gray-700"

@@ -47,7 +47,7 @@ export default function TopStatisticsSection() {
                   {(
                     sellerLocaleStorageData.reviews.rating /
                     sellerLocaleStorageData.reviews.total
-                  ).toFixed(1)}
+                  ).toFixed(1) || 0}
                 </span>
                 <h3 className="text-base text-white font-normal ">
                   Service Rating
